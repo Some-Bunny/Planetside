@@ -26,6 +26,10 @@ using static Planetside.BoxOfGrenadesController;
 using AK.Wwise;
 using static Planetside.RiftakerProjectile;
 using Planetside.Components.Other_Components;
+using static UnityEngine.UI.GridLayoutGroup;
+using static ShamberController;
+using Alexandria.PrefabAPI;
+using System.Runtime.Remoting.Messaging;
 
 namespace Planetside
 {
@@ -41,7 +45,7 @@ namespace Planetside
 				{
 					var item = (BasicEliteType)System.Activator.CreateInstance(EliteType);
 					basicEliteTypes.Add(item.GetType());
-					
+
 				}
 
 				var SpecialEliteTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(SpecialEliteType)));
@@ -120,20 +124,153 @@ namespace Planetside
 
 				};
 
-                b.Bullets.Add(sewwpCopy);
-                b.Bullets.Add(entryCopy);
-                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("homingPop"));
-                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
+				b.Bullets.Add(sewwpCopy);
+				b.Bullets.Add(entryCopy);
+				b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("homingPop"));
+				b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
 
-                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("bigBullet"));
-                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
-                b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+				b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("bigBullet"));
+				b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+				b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("4d164ba3f62648809a4a82c90fc22cae").bulletBank.GetBullet("big_one"));
+				b.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
 
-                b.transforms = new List<Transform>() { };
+				b.transforms = new List<Transform>() { };
 
 				BulletBankDummy = b.gameObject;
 
+				LabelRedditGold = PrefabBuilder.BuildObject("MainPanelOuroborous").AddComponent<dfScrollPanel>();
+				LabelRedditGold.cachedManager = GameUIRoot.Instance.Manager;
+				LabelRedditGold.gameObject.SetActive(false);
+				LabelRedditGold.pivot = dfPivotPoint.MiddleCenter;
+				LabelRedditGold.anchorStyle = dfAnchorStyle.CenterHorizontal;
+				LabelRedditGold.cachedManager = GameUIRoot.Instance.Manager;
+				LabelRedditGold.BackgroundSprite = "";
+				LabelRedditGold.size = new Vector2(300, 64);
+				LabelRedditGold.clipChildren = false;
+				//var scrollPanel = LabelRedditGold.AddComponent<dfScrollPanel>();
+				LabelRedditGold.AutoLayout = true;
+				//LabelRedditGold.AutoArrange();
+				LabelRedditGold.controls = new dfList<dfControl> { };
+				LabelRedditGold.flowPadding = new RectOffset(2, 2, 0, 0);
+				//LabelRedditGold.cachedManager = 
+
+				dfSprite NubLeft = PrefabBuilder.BuildObject("NubLeft").AddComponent<dfSprite>();
+				NubLeft.renderOrder = 30;
+				NubLeft.Atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+				NubLeft.atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+				NubLeft.spriteName = "ouroborosmedal";
+				NubLeft.zindex = 0;
+				NubLeft.transform.SetParent(LabelRedditGold.transform);
+				NubLeft.size = new Vector2(17, 9) * 4;
+				NubLeft.minSize = Vector2.zero;
+				NubLeft.maxSize = Vector2.zero;
+				NubLeft.parent = LabelRedditGold;
+				NubLeft.pivot = dfPivotPoint.MiddleCenter;
+
+				LabelRedditGold.controls.Add(NubLeft);
+
+				GameObject textObj = PrefabBuilder.Clone((GameObject)BraveResources.Load("DamagePopupLabel", ".prefab"));
+				dfLabel Label = textObj.GetComponent<dfLabel>();
+				Label.Text = "0";
+				Label.Color = Color.gray * 0.7f;
+				Label.TextAlignment = TextAlignment.Center;
+				Label.zindex = 1;
+				Label.Padding = new RectOffset(3, 6, -12, 0);
+				textObj.transform.localScale *= 1.35f;
+				textObj.transform.SetParent(LabelRedditGold.transform);
+				Label.parent = LabelRedditGold;
+				LabelRedditGold.controls.Add(Label);
+
+				dfSprite NubRight = PrefabBuilder.BuildObject("NubRight").AddComponent<dfSprite>();
+				NubRight.renderOrder = 30;
+				NubRight.Atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+				NubRight.atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+				NubRight.size = new Vector2(17, 9) * 4;
+				NubRight.transform.localPosition = new Vector3(0.01f, 0);
+				NubRight.spriteName = "ouroborosmedal";
+				NubRight.zindex = 2;
+				NubRight.flip = dfSpriteFlip.FlipHorizontal;
+				NubRight.transform.SetParent(LabelRedditGold.transform);
+				NubRight.parent = LabelRedditGold;
+				NubRight.pivot = dfPivotPoint.MiddleCenter;
+				LabelRedditGold.controls.Add(NubRight);
+
+                FancyLeft = PrefabBuilder.BuildObject("OuroborousLeftFancy").AddComponent<dfSprite>();
+                FancyLeft.renderOrder = 30;
+                FancyLeft.Atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+                FancyLeft.atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+                FancyLeft.size = new Vector2(20, 27) * 4;
+                FancyLeft.transform.localPosition = new Vector3(0.01f, 0);
+                FancyLeft.spriteName = "ouroborosMedal2Left";
+                //FancyLeft.zindex = 2;
+                //FancyLeft.flip = dfSpriteFlip.FlipHorizontal;
+                FancyLeft.pivot = dfPivotPoint.MiddleCenter;
+
+                FancyRight = PrefabBuilder.BuildObject("OuroborousRightFancy").AddComponent<dfSprite>();
+                FancyRight.renderOrder = 30;
+                FancyRight.Atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+                FancyRight.atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+                FancyRight.size = new Vector2(20, 27) * 4;
+                FancyRight.transform.localPosition = new Vector3(0.01f, 0);
+                FancyRight.spriteName = "ouroborosMedal2Left";
+                //FancyLeft.zindex = 2;
+                FancyRight.flip = dfSpriteFlip.FlipHorizontal;
+                FancyRight.pivot = dfPivotPoint.MiddleCenter;
+
+
+                AmmonomiconAPI.CustomActions.OnPreDeathPageBuildRight += (ammonomiconPageRenderer) =>
+				{
+					//AmmonomiconDeathPageController component = ammonomiconPageRenderer.guiManager.GetComponent<AmmonomiconDeathPageController>();
+
+					GameManager.Instance.StartCoroutine(TheFuckYouDelay(ammonomiconPageRenderer));
+                    //edge_1.gameObject.SetActive(OuroborosMode());
+                    //edge_2.gameObject.SetActive(OuroborosMode());
+
+                    return true;
+					
+				};
+
+				/*
+                dfPanel.anchorStyle = dfAnchorStyle.All;
+                dfPanel.isEnabled = false;
+                dfPanel.isVisible = true;
+                dfPanel.isInteractive = true;
+                dfPanel.tooltip = "";
+                dfPanel.pivot = dfPivotPoint.TopLeft;
+                dfPanel.zindex = -1;
+                dfPanel.color = new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+                dfPanel.disabledColor = new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+                dfPanel.size = new Vector2(640, 360);
+                dfPanel.minSize = Vector2.zero;
+                dfPanel.maxSize = Vector2.zero;
+                dfPanel.clipChildren = false;
+                dfPanel.inverseClipChildren = false;
+                dfPanel.tabIndex = 1;
+                dfPanel.canFocus = false;
+                dfPanel.autoFocus = false;
+                dfPanel.layout = new dfControl.AnchorLayout(dfAnchorStyle.All)
+                {
+                    margins = new dfAnchorMargins
+                    {
+                        bottom = 0f,
+                        left = 0f,
+                        right = 0f,
+                        top = 0f
+                    },
+                    owner = dfPanel
+                };
+                dfPanel.renderOrder = 30;
+                dfPanel.isLocalized = true;
+                dfPanel.hotZoneScale = Vector2.one;
+                dfPanel.allowSignalEvents = true;
+                dfPanel.PrecludeUpdateCycle = false;
+                dfPanel.Atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+                dfPanel.atlas = StaticSpriteDefinitions.PlanetsideGenericAtlas;
+                dfPanel.backgroundSprite = "ouroborosmedal";
+                dfPanel.backgroundColor = new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+                dfPanel.gameObject.SetActive(true);
+                */
+				/*
                 var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
                 GameObject logoObj = ItemBuilder.AddSpriteToObjectAssetbundle("Big Piece Bottom", Collection.GetSpriteIdByName("ouroborosmedal"), Collection);
                 FakePrefab.MarkAsFakePrefab(logoObj);
@@ -178,43 +315,151 @@ namespace Planetside
                     logoObj2.transform.localScale *= 4;
                     WinIconTwoRight = logoObj2;
                 }
-				
-                GameObject textObj = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("DamagePopupLabel", ".prefab"));
-                FakePrefab.MarkAsFakePrefab(textObj);
-                UnityEngine.Object.DontDestroyOnLoad(textObj);
-                textObj.transform.position = textObj.transform.position.WithZ(0);
-                dfLabel Label = textObj.GetComponent<dfLabel>();
-
-                dfLabel targetLabel = Label as dfLabel;
-                targetLabel.gameObject.SetActive(false);
-                targetLabel.Text = 0.ToString();
-                targetLabel.Color = Color.gray * 0.7f;
-				targetLabel.TextAlignment = TextAlignment.Center;
-                textObj.transform.localScale *= 1.35f;
-
-                Text = textObj;
-
-                new Hook(typeof(AmmonomiconDeathPageController).GetMethod("InitializeRightPage", BindingFlags.Instance | BindingFlags.NonPublic),
-					typeof(OuroborosController).GetMethod("InitializeRightPageHook"));
+				*/
 
 
-                new Hook(typeof(AmmonomiconDeathPageController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic),
-                    typeof(OuroborosController).GetMethod("UpdatePageHook"));
 
-                chestPickupsLootTable = LootTableTools.CreateLootTable();
-				chestPickupsLootTable.AddItemsToPool(new Dictionary<int, float> { { 120, 1 }, {224, 0.8f }, {600, 0.5f}, {78, 0.75f } });
+
+
+
+				//new Hook(typeof(AmmonomiconDeathPageController).GetMethod("InitializeRightPage", BindingFlags.Instance | BindingFlags.NonPublic),
+				//	typeof(OuroborosController).GetMethod("InitializeRightPageHook"));
+
+
+				//new Hook(typeof(AmmonomiconDeathPageController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic),
+				//    typeof(OuroborosController).GetMethod("UpdatePageHook"));
+
+				chestPickupsLootTable = LootTableTools.CreateLootTable();
+				chestPickupsLootTable.AddItemsToPool(new Dictionary<int, float> { { 120, 1 }, { 224, 0.8f }, { 600, 0.5f }, { 78, 0.75f } });
 
 				Actions.OnRunStart += OnRunStartMethod;
 				Debug.Log("Finished OuroborosController setup without failure!");
 
+				Actions.PreDungeonTrueStart += (_) =>
+				{
+					if (OuroborosMode())
+					{
+						if (CurrentLoop() >= 5)
+						{
+							if (UnityEngine.Random.value < ChanceAccordingToGivenValues(0.01f, 0.05f, 100))
+							{
+								Debug.Log("Activating One Elite Type Floor Mod!");
+								currentlyOneEliteType = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
+							}
+							else
+							{
+								currentlyOneEliteType = null;
+							}
 
-            }
+						}
+						else
+						{
+							currentlyOneEliteType = null;
+						}
+					}
+				};
+			}
 			catch (Exception e)
 			{
 				Debug.Log("Unable to finish OuroborosController setup!");
 				Debug.Log(e);
 			}
 		}
+
+		public IEnumerator TheFuckYouDelay(AmmonomiconDeathPageController ammonomiconPageRenderer)
+		{
+			yield return null;
+            Transform component2 = ammonomiconPageRenderer.transform.Find("Scroll Panel").Find("KilledByZone");//.Find("ScrollItemsPanel").GetComponent<dfScrollPanel>();
+            var pp = component2.Find("MainPanelOuroborous(Clone)");
+            if (pp == null)
+            {
+                pp = Instantiate(LabelRedditGold, component2).transform;
+				//component2.GetComponent<dfPanel>().controls.Add(pp.AddComponent<dfScrollPanel>());
+            }
+            pp.transform.position = component2.position;
+            //pp.localPosition = new Vector3(0, -0.3125f);
+            var lab = pp.GetComponentInChildren<dfLabel>();
+            lab.text = CurrentLoop().ToString();
+            GameManager.Instance.StartCoroutine(DoDelayToSetPosition(pp.gameObject, lab));
+
+            Transform component22 = ammonomiconPageRenderer.transform.Find("Scroll Panel").Find("KilledByZone").Find("TapeLabel 1");
+            var edge_1 = component22.Find("OuroborousLeftFancy(Clone)");
+            if (edge_1 == null)
+            {
+                edge_1 = Instantiate(FancyLeft, component22).transform;
+            }
+            var edge_2 = component22.Find("OuroborousRightFancy(Clone)");
+            if (edge_2 == null)
+            {
+                edge_2 = Instantiate(FancyRight, component22).transform;
+            }
+			edge_1.gameObject.SetActive(false);
+            edge_2.gameObject.SetActive(false);
+
+            edge_1.transform.position = component22.position;
+            edge_2.transform.position = component22.position;
+            GameManager.Instance.StartCoroutine(GetBoundsForObject(edge_1.gameObject, component22.GetComponentInChildren<dfSlicedSprite>(), true));
+            GameManager.Instance.StartCoroutine(GetBoundsForObject(edge_2.gameObject, component22.GetComponentInChildren<dfSlicedSprite>(), false));
+
+			yield return null;
+            pp.GetComponent<dfScrollPanel>().RebuildControlOrder();
+			edge_1.GetComponent<dfSprite>().RebuildControlOrder();
+            edge_2.GetComponent<dfSprite>().RebuildControlOrder();
+
+            yield break;
+        }
+
+        private IEnumerator DoDelayToSetPosition(GameObject gameObject, dfLabel dfLabel)
+		{
+			yield return null;
+
+            gameObject.transform.localPosition = new Vector3(0.7f, -0.3125f);
+			//dfLabel.transform.localPosition = new Vector3(0, 0.0125f);
+            yield return null;
+            gameObject.gameObject.SetActive(OuroborosMode());
+            yield break;
+		}
+        private IEnumerator GetBoundsForObject(GameObject gameObject, dfSlicedSprite sliced, bool Left)
+        {
+            yield return null;
+			while (sliced.size == Vector2.zero)
+			{
+				yield return null;
+			}
+            while (sliced.size.x == float.NaN)
+            {
+                yield return null;
+            }
+			while (sliced.GetCenter() == null)
+			{
+				yield return null;
+			}
+            yield return null;
+
+            if (Left)
+			{     
+                gameObject.transform.position = sliced.GetCenter() - new Vector3(sliced.size.x / 160, 0) + new Vector3(0.05f, 0);
+            }
+			else
+			{
+                gameObject.transform.position = sliced.GetCenter() + (new Vector3(sliced.size.x / 160, 0)) - new Vector3(0.05f, 0);
+            }
+			yield return null;
+            gameObject.gameObject.SetActive(OuroborosMode());
+
+            //Debug.Log(gameObject.name + " : " + gameObject.transform.position);
+            //gameObject.transform.localPosition = new Vector3(0.7f, -0.3125f);
+            //dfLabel.transform.localPosition += new Vector3(0, 0.0125f);
+            yield break;
+        }
+
+        private static Type currentlyOneEliteType = null;
+
+        public static dfScrollPanel LabelRedditGold;
+        public static dfSprite FancyLeft;
+        public static dfSprite FancyRight;
+
+        /*
         public static GameObject WinIconTwoLeft;
         public static GameObject WinIconTwoRight;
 
@@ -228,10 +473,11 @@ namespace Planetside
 
         public static GameObject Text;
         public static GameObject ExtantText;
+		*/
 
-		public static GameObject BulletBankDummy;
+        public static GameObject BulletBankDummy;
 
-
+		/*
         public static void UpdatePageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
 		{
             orig(self);
@@ -244,6 +490,8 @@ namespace Planetside
                 ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
             }
         }
+		*/
+		/*
         public static void InitializeRightPageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
 		{
 			orig(self);
@@ -300,6 +548,8 @@ namespace Planetside
 
             }
         }
+		*/
+
 
 		public static void OnRunStartMethod(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
         {
@@ -518,6 +768,8 @@ namespace Planetside
 			return Chance;
         }
         private static List<AIBulletBank.Entry> BulletList = new List<AIBulletBank.Entry>();
+
+
         public static void StartHookBehaviorSpeculator(Action<BehaviorSpeculator> orig, BehaviorSpeculator self)
 		{
 			orig(self);
@@ -529,21 +781,25 @@ namespace Planetside
                     {
                         bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
                         float specialChance = ChanceAccordingToGivenValues(0.005f, 0.25f, 100);
-                        if (UnityEngine.Random.value <= specialChance && BossCheck == false)
-                        {
-                            var SpecialElite = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
-                            if (self.aiActor.gameObject.GetComponent(SpecialElite) == null)
+
+						Type EliteType = currentlyOneEliteType;
+
+						//EliteType = typeof(ShieldedElite);
+
+						if (EliteType == null)
+						{
+                            if (UnityEngine.Random.value <= specialChance && BossCheck == false)
                             {
-                                self.aiActor.gameObject.AddComponent(SpecialElite);
+                                EliteType = specialEliteTypes[UnityEngine.Random.Range(0, specialEliteTypes.Count)];
+                            }
+                            else
+                            {
+                                EliteType = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
                             }
                         }
-                        else
+                        if (self.aiActor.gameObject.GetComponent(EliteType) == null)
                         {
-                            var elite = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
-                            if (self.aiActor.gameObject.GetComponent(elite) == null)
-                            {
-                                self.aiActor.gameObject.AddComponent(elite);
-                            }
+                            self.aiActor.gameObject.AddComponent(EliteType);
                         }
                     }
                 }
@@ -710,6 +966,7 @@ namespace Planetside
 			EnemyGUIDs.Pinhead_GUID,
 			EnemyGUIDs.Tarnisher_GUID,
 			ArchGunjurer.guid,
+            "PSOG_Revenant"
         };
 
         public static List<string> EliteBlackListDefault = new List<string>()
@@ -1458,6 +1715,164 @@ namespace Planetside
                 yield break;
             }
         }
+    }
+
+
+    public class ShieldedElite : BasicEliteType
+    {
+        public override float DamageMultiplier => 1.2f;
+        public override float HealthMultiplier => 0.8f;
+        public override float CooldownMultiplier => 1f;
+        public override float MovementSpeedMultiplier => 0.85f;
+        public override Color EliteOutlineColor => new Color(0, 50, 4);
+        public override Color EliteParticleColor => new Color(0, 1, 0.08f);
+        public override Color SecondaryEliteParticleColor => new Color(0, 1, 0.08f);
+        public override List<string> EnemyBlackList => new List<string>()
+        {
+            EnemyGuidDatabase.Entries["rat_candle"],
+            EnemyGUIDs.Fusebot_GUID,
+               EnemyGUIDs.Blobulin_GUID,
+               EnemyGUIDs.Blobuloid_GUID,
+               EnemyGUIDs.Poisbulin_GUID,
+               EnemyGUIDs.Poisbuloiud_GUID,
+               EnemyGUIDs.Mine_Flayers_Bell_GUID,
+               EnemyGUIDs.Mine_Flayers_Claymore_GUID,
+               EnemyGUIDs.Flesh_Cube_GUID,
+               EnemyGUIDs.Lead_Cube_GUID,
+               EnemyGUIDs.Bullat_GUID,
+               EnemyGUIDs.Shotgat_GUID,
+               EnemyGUIDs.Spirat_GUID,
+               EnemyGUIDs.Grenat_GUID,
+               EnemyGUIDs.Spent_GUID,
+               EnemyGUIDs.Mouser_GUID,
+               EnemyGUIDs.Fusebot_GUID,
+             EnemyGUIDs.Tarnisher_GUID
+
+        };
+
+        public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> {
+            new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.None },
+        };
+        public override void Start()
+        {
+            Timer = IsBoss ? 1 : 2.5f;
+            base.Start();
+			this.aiActor.healthHaver.ModifyDamage += ModDamage;
+        }
+
+		public void ModDamage(HealthHaver healthHaver, HealthHaver.ModifyDamageEventArgs modifyDamageEventArgs)
+		{
+			if (currentShieldInst != null && Timer <= 0)
+			{
+				modifyDamageEventArgs.ModifiedDamage = 0;
+                modifyDamageEventArgs.InitialDamage = 0;
+				aiActor.healthHaver.TriggerInvulnerabilityPeriod(IsBoss ? 1 : 0.25f);
+                currentShieldInst.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("pointnull_shield_down");
+                AkSoundEngine.PostEvent("Play_BOSS_agunim_deflect_01", base.aiActor.gameObject);
+				//AkSoundEngine.PostEvent("Stop_OBJ_cursepot_loop_01", currentShieldInst.gameObject);
+				float Dist = IsBoss ? 5 : 2;
+                float Max = IsBoss ? 50 : 30;
+                float Pwe = IsBoss ? 0.7f : 0.3f;
+				int Cap = IsBoss ? 12 : 3;
+                ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
+                if (allProjectiles != null && allProjectiles.Count > 0)
+                {
+                    for (int i = 0; i < allProjectiles.Count; i++)
+                    {
+                        Projectile proj = allProjectiles[i];
+                        if (proj != null && proj.Owner != null && proj.Owner is PlayerController)
+                        {
+							//Debug.Log(i);
+                            Vector2 position = proj.sprite != null ? proj.sprite.WorldCenter : proj.transform.PositionVector2();
+
+							Debug.Log(Vector2.Distance(position, base.aiActor.sprite.WorldCenter));
+                            if (Vector2.Distance(position, base.aiActor.sprite.WorldCenter) < Dist)
+                            {
+                                BeamController beamController = proj.GetComponent<BeamController>();
+                                BasicBeamController basicBeamController = proj.GetComponent<BasicBeamController>();
+                                bool isNotBeam = basicBeamController == null && beamController == null;
+								if (proj.CanBeCaught && isNotBeam)
+								{
+									Cap--;
+									if (Cap <= 0)
+										break;
+                                    proj.sprite.color = new Color(1f, 0.1f, 0.1f);
+                                    proj.MakeLookLikeEnemyBullet(false);
+
+
+
+                                    proj.Shooter = base.aiActor.specRigidbody;
+                                    proj.Owner = base.aiActor;
+									proj.SendInDirection(proj.Direction * -1, true);
+                                    proj.baseData.speed = Mathf.Min(Max, proj.baseData.speed * Pwe);
+									proj.UpdateSpeed();
+                                    proj.ResetDistance();
+                                    proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                                    proj.collidesWithPlayer = true;
+                                    proj.UpdateCollisionMask();
+                                    proj.RemovePlayerOnlyModifiers();
+    
+                                }
+
+        
+                            }
+                        }
+                    }
+                }
+
+
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = aiActor.sprite.WorldCenter,
+                    startSize = 8,
+                    rotation = 0,
+                    startLifetime = 0.3f,
+                    startColor = Color.white.WithAlpha(0.4f)
+                });
+                Timer = IsBoss ? 7.5f : 6;
+            }
+        }
+
+
+		private tk2dBaseSprite currentShieldInst = null;
+		float e = 0;
+        public override void Update()
+        {
+            base.Update();
+            if (base.aiActor && base.aiActor.State == AIActor.ActorState.Normal)
+            {
+                if (Timer > 0) { Timer -= BraveTime.DeltaTime; }
+
+				if (Timer <= 0 && !currentShieldInst)
+				{
+					e = 0;
+
+                    //var objec = UnityEngine.Object.Instantiate(PointNull.PointNullShield, GameManager.Instance.PrimaryPlayer.specRigidbody.UnitCenter.ToVector3ZUp(6), Quaternion.identity, GameManager.Instance.PrimaryPlayer.transform);
+                    var objec = UnityEngine.Object.Instantiate(PointNull.PointNullShield,aiActor.transform);
+
+                    var _ = aiActor.sprite.GetBounds().size;
+					float max =Mathf.Max(Mathf.Max(_.x * 0.5f, _.y * 0.5f), 1);
+                    objec.transform.localScale = new Vector3(max, max, max);
+                    
+                    //AkSoundEngine.PostEvent("Play_OBJ_cursepot_loop_01", objec.gameObject);
+                    currentShieldInst = objec.GetComponent<tk2dBaseSprite>();
+					//currentShieldInst.HeightOffGround = 2;
+					//currentShieldInst.Awake();
+					//currentShieldInst.PlaceAtLocalPositionByAnchor(this.aiActor.specRigidbody.UnitCenter, tk2dBaseSprite.Anchor.MiddleCenter);
+                    aiActor.healthHaver.TriggerInvulnerabilityPeriod(0.5f);
+
+                }
+                if (currentShieldInst)
+				{
+					currentShieldInst.transform.position = this.aiActor.specRigidbody.UnitCenter + new Vector2(0, 0.5f);
+
+                    //currentShieldInst.renderer.material.SetColor("_DashColor", Color.cyan * 255);
+                    currentShieldInst.renderer.material.SetColor("_DashColor", Color.Lerp(Color.cyan * 5, Color.white * 5, Mathf.PingPong(Time.timeSinceLevelLoad, 1)));
+
+                }
+            }
+        }
+        private float Timer;
     }
 
 }

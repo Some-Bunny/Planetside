@@ -37,9 +37,9 @@ namespace Planetside
 		{
 			AkSoundEngine.PostEvent("Play_BOSS_wall_slam_01", base.gameObject);
 
-            float MaxHP = aiActor != null ? aiActor.healthHaver.GetMaxHealth() : 35;
-            float ZoneSize = (MaxHP / 66.6f) + 0.25f;
-            CustomDragunBoulderController.Instantiate(this.aiActor.sprite.WorldCenter, base.aiActor != null ? ((MaxHP / 75f) * Time) + 1 : Time, 0).UpdateScale(ZoneSize, 0.5f);
+            float MaxHP = aiActor != null ? aiActor.healthHaver.GetMaxHealth() : 25;
+            float ZoneSize = Mathf.Min((MaxHP / 75f) + 0.25f, 2.125f);
+            CustomDragunBoulderController.Instantiate(this.aiActor.sprite.WorldCenter, base.aiActor != null ? ((MaxHP / 60f)) + 2.5f : Time, 0).UpdateScale(ZoneSize, 0.75f);
 
 
             //what was i thinking
@@ -80,23 +80,6 @@ namespace Planetside
 			}
 			*/
         }
-        private IEnumerator IncreaseInSize(tk2dSprite CircleSprite, float SizeMultiplier=1)
-		{
-			float elapsed = 0f;
-			float duration = 0.75f;
-			while (elapsed < duration)
-			{
-				elapsed += BraveTime.DeltaTime;
-				float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
-				if (CircleSprite != null && CircleSprite.gameObject != null)
-				{
-					CircleSprite.scale = Vector3.Lerp(Vector3.zero, Vector3.one * SizeMultiplier, t);
-				}
-				yield return null;
-			}
-			yield break;
-		}
-
 		public float Time;
 		public float minimumHealth;
 		public float CheatDeath = 2f;

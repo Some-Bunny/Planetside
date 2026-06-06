@@ -111,8 +111,7 @@ namespace Planetside
 					comp.Initialize(player);
                     Prime.CompanionOwner = player;
                     Prime.specRigidbody.Reinitialize();
-
-					
+			
 				}
 				yield return null;
 			}
@@ -180,7 +179,7 @@ namespace Planetside
 				float t = (float)elapsed / (float)Tim;
 				if (component2 != null)
 				{
-					aimDir++;
+					aimDir += 45 * BraveTime.DeltaTime;
 					component2.dimensions = new Vector2(1000f, 1f);
 					if (elapsed % 0.2f == 0.1f) { GlobalSparksDoer.DoSingleParticle(Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t), Vector3.up, null, null, null, GlobalSparksDoer.SparksType.EMBERS_SWIRLING); }
 					component2.transform.position = Vector2.Lerp(startPosition + MathToolbox.GetUnitOnCircle(aimDir, 4), startPosition + MathToolbox.GetUnitOnCircle(aimDir, 0), t);

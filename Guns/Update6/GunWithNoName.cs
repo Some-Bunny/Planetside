@@ -26,6 +26,7 @@ using Planetside.Toolboxes;
 using static UnityEngine.UI.GridLayoutGroup;
 using static Planetside.Inquisitor.Repel;
 using static Planetside.GunWithNoName;
+using Planetside.Controllers;
 
 namespace Planetside
 {
@@ -1132,13 +1133,21 @@ namespace Planetside
     {
         public static void Add()
         {
-            Gun gun = ETGMod.Databases.Items.NewGun("Gun With No Name", "gunwithnoname");
-            Game.Items.Rename("outdated_gun_mods:gun_with_no_name", "psog:gun_with_no_name");
+            Gun gun = ETGMod.Databases.Items.NewGun(FoolMode.isFoolish ? "Pastramimancer" : "Gun With No Name", "gunwithnoname");
+            Game.Items.Rename(FoolMode.isFoolish ? "outdated_gun_mods:pastramimancer" : "outdated_gun_mods:gun_with_no_name", FoolMode.isFoolish ? "psog:pastramimancer" : "psog:gun_with_no_name");
             gun.gameObject.AddComponent<GunWithNoName>();
             gun.SetShortDescription("...");
-            gun.SetLongDescription("There is no hiding from the Gun With No Name.\n\nA silence has befallen the Proper. Gundead, by the dozens, line the halls and corridors, ready. The Gungeon will remain theirs to rule.\n\nBut there is no hiding from the Gun With No Name." +
+            
+            if (FoolMode.isFoolish)
+            {
+                gun.SetLongDescription("oh yeah, straihtt up pastramiming it. and by it, haha well, letrs just ra say .... my pastrami");
+            }
+            else
+            {
+                gun.SetLongDescription("There is no hiding from the Gun With No Name.\n\nA silence has befallen the Proper. Gundead, by the dozens, line the halls and corridors, ready. The Gungeon will remain theirs to rule.\n\nBut there is no hiding from the Gun With No Name." +
                 "\n\nA lone gunslinger, revolvers for ribs and break-action for an arm, enters the room. The Gundead ready.\n\nBut there is no hiding from the Gun With No Name." +
                 "\n\nGundead on the ground fall to the ground. Gundead up high fall to the ground. Gundead in places the lone gunslinger never even looked towards fall to the ground. Just as soon as gunfights started, they would finish. Soon, interrupted only by lone footsteps, was silence.\n\nFor there is no hiding from the Gun With No Name.");
+            }
 
 
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "gwnn_ammonomicon");
@@ -1352,6 +1361,8 @@ namespace Planetside
                     PickupObjectDatabase.GetById(SurgeGrenade.SurgeGrenadeID),
                     PickupObjectDatabase.GetById(StormBringer.StormBringerID),
                 });
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 0.75f);
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
 
         }
 

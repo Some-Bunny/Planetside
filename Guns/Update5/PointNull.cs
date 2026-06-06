@@ -267,7 +267,7 @@ namespace Planetside
 				if (e_ <= 1)
 				{
 					e_ = 0;
-					for (int i = 0; i < 2; i++)
+					for (int i = 0; i < 1; i++)
 					{
                         Vector3 vector = sprite.WorldBottomLeft.ToVector3ZisY(0);
                         Vector3 vector2 = sprite.WorldTopRight.ToVector3ZisY(0);

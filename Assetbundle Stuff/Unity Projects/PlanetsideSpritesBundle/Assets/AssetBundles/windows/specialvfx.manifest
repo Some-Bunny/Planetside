@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1302152892
+CRC: 2006186467
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9275fa4e37153b8970cc743bc8ac2f35
+    Hash: 56e32f63bcb7cfb38a5f478f5d41ddfe
   TypeTreeHash:
     serializedVersion: 2
     Hash: 71e1c6464f3f49e3166f25e1b5360a04
@@ -28,17 +28,22 @@ ClassTypes:
 Assets:
 - Assets/UI/UIElements/Clips/SawGun_002.png
 - Assets/UI/UIElements/Clips/Whistler_001.png
+- Assets/UI/Generic/ouroborosMedal2Left.png
 - Assets/UI/UIElements/Clips/EndOfEverythingClip_001.png
 - Assets/UI/Ammonomicon/bookmark_psog_004.png
 - Assets/UI/Ammonomicon/bookmark_psog_001.png
 - Assets/UI/UIElements/Clips/pointnullclip_001.png
 - Assets/UI/UIElements/Clips/gunknownclipfull.png
+- Assets/UI/Generic/GenericAtlas.png
 - Assets/UI/ClipAtlas.png
 - Assets/UI/UIElements/Clips/RiftakerOut_001.png
 - Assets/UI/UIElements/Clips/EndOfEverythingClip_002.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_001.png
+- Assets/UI/Generic/logo.png
+- Assets/UI/Generic/logofunmode.png
 - Assets/UI/UIElements/Clips/pointnullclip_002.png
 - Assets/UI/UIElements/Clips/gunknownclipemptyl.png
+- Assets/UI/Generic/ouroborosmedal.png
 - Assets/UI/UIElements/Clips/RiftakerIn_001.png
 - Assets/UI/Ammonomicon/bookmark_psog_hover_001.png
 - Assets/UI/UIElements/Clips/SawGun_001.png

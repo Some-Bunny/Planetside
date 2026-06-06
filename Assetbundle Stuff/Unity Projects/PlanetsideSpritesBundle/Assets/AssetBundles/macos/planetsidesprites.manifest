@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2949382906
+CRC: 2355406395
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1c486d4dfbd65bb0be2d2a3c0f297e5b
+    Hash: cbaa132bf697f3373c703bd637d345ea
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -98,6 +98,7 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/detscavatorivonammo.png
 - Assets/UI/Alphabet Letters/letter_14.png
 - Assets/Ammonomicon/Ammonomicon Icons/snipeidolonsheet.png
+- Assets/UI/Generic/GenericAtlas.prefab
 - Assets/Enemies/Fodder/fodder_die_001.png
 - Assets/Ammonomicon/Ammonomicon Icons/sheetcollectiveTrespass.png
 - Assets/Enemies/Barretina/BarretinaCollection Data/barretina material.mat
@@ -125,6 +126,7 @@ Assets:
 - Assets/BossCards/bulletbanker_bosscard.png
 - Assets/RoomObjects/RoomObjectCollection Data/roomobject material.mat
 - Assets/Enemies/Detscavator/DetscavatorCollection Data/DetscavatorCollection.prefab
+- Assets/UI/Generic/GenericAtlasMat.mat
 - Assets/Ammonomicon/Ammonomicon Icons/sheetBolatTrespass.png
 - Assets/VFX/Random Bits/OddmentsCollection Data/oddments material.mat
 - Assets/Enemies/Cursebulon/CursebulonCollection Data/CursebulonCollection.prefab

@@ -45,7 +45,7 @@ namespace Planetside
             hellAnim.frames[21].triggerEvent = true;
             hellAnim.frames[21].eventInfo = "disableCollider";
             hellAnim.frames[13].triggerEvent = true;
-            hellAnim.frames[13].eventAudio = "Play_OBJ_moondoor_close_01";
+            hellAnim.frames[13].eventAudio = "Play_Moondoor_close";
             hellAnim.frames[13].eventInfo = "isNowLowering";
             hellAnim.frames[2].triggerEvent = true;
             hellAnim.frames[2].eventAudio = "Play_OBJ_hook_pull_01";

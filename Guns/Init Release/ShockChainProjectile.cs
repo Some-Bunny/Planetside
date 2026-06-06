@@ -78,7 +78,7 @@ namespace Planetside
         public bool IsLeft;
 
 
-        private Dictionary<Projectile, GameObject> ExtantTethers = new Dictionary<Projectile, GameObject>();
+        private Dictionary<Projectile, tk2dTiledSprite> ExtantTethers = new Dictionary<Projectile, tk2dTiledSprite>();
         private HashSet<AIActor> m_damagedEnemies = new HashSet<AIActor>();
 
         public void Update()
@@ -99,7 +99,7 @@ namespace Planetside
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
                                 {
-                                    GameObject obj = SpawnManager.SpawnVFX(StatiBlast.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
+                                    tk2dTiledSprite obj = SpawnManager.SpawnVFX(StatiBlast.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>();
                                     ExtantTethers.Add(ai, obj);
                                 }
                             }
@@ -107,9 +107,9 @@ namespace Planetside
                             {
                                 if (ExtantTethers.ContainsKey(ai))
                                 {
-                                    GameObject obj;
+                                    tk2dTiledSprite obj;
                                     ExtantTethers.TryGetValue(ai, out obj);
-                                    SpawnManager.Despawn(obj);
+                                    SpawnManager.Despawn(obj.gameObject);
                                     ExtantTethers.Remove(ai);
                                 }
                             }
@@ -122,7 +122,7 @@ namespace Planetside
             {
                 if (this.projectile && si.Value != null && si.Key != null)
                 {
-                    UpdateLink(this.projectile, si.Value.GetComponent<tk2dTiledSprite>(), si.Key);
+                    UpdateLink(this.projectile, si.Value, si.Key);
                 }
                 if (si.Key != null && si.Value != null && this.projectile == null)
                 {

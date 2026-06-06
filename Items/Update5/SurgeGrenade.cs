@@ -25,6 +25,7 @@ namespace Planetside
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             ItemBuilder.SetCooldownType(item, ItemBuilder.CooldownType.Damage, 250);
             item.consumable = false;
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
 
             lightningData = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericLargeExplosion);
             lightningData.effect = EnemyDatabase.GetOrLoadByGuid("dc3cd41623d447aeba77c77c99598426").GetComponent<BossFinalMarineDeathController>().bigExplosionVfx[0];//(PickupObjectDatabase.GetById(328) as Gun).DefaultModule.chargeProjectiles[0].Projectile.hitEffects.overrideMidairDeathVFX;

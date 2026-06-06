@@ -30,6 +30,10 @@ namespace Planetside
 
         public static void Add()
         {
+            Actions.PostDungeonTrueStart += (_) =>
+            {
+                BoscoCompanionBehavior.BodiesToIgnore.Clear();
+            };
             Gun gun = ETGMod.Databases.Items.NewGun("Drone Control Unit", "dronecontrolunit");
             Game.Items.Rename("outdated_gun_mods:drone_control_unit", "psog:drone_control_unit");
             gun.gameObject.AddComponent<BoscoDesignator>();
@@ -1107,12 +1111,10 @@ namespace Planetside
 
                 var room = new List<AIActor>();
                 room.AddRange(aIActors);
-
                 room.RemoveAll(self => self.healthHaver.IsDead);
                 room.RemoveAll(self => self.healthHaver.vulnerable == false);
                 room.RemoveAll(self => self.spriteAnimator.QueryInvulnerabilityFrame() == true);
                 room.RemoveAll(x => x.EnemyGuid == FodderEnemy.guid | x.EnemyGuid == Shamber.guid);
-
                 return room;
             }
 
@@ -1187,7 +1189,7 @@ namespace Planetside
 
             public static void AddPriorityToAllBoscos(BoscoPriorityTarget? boscoPriorityTarget, PlayerController playerController)
             {
-                //Debug.Log(boscoPriorityTarget != null ? boscoPriorityTarget.Value.boscoBehaviorType.ToString() : "");
+                Debug.Log(boscoPriorityTarget != null ? boscoPriorityTarget.Value.boscoBehaviorType.ToString() : "");
                 AllBoscos.RemoveAll(x => x.m_aiActor == null);
                 var _ = AllBoscos.Where(x => x.m_companionController.m_owner == playerController);
                 if (_ != null && _.Count() > 0)
@@ -1215,7 +1217,6 @@ namespace Planetside
                     UnityEngine.Object.Destroy(instEffectOverhead);
                 instEffectOverhead = m_aiActor.SmarterPlayEffectOnActor(BoscoDesignator.BoscoEffectInst.gameObject, new Vector3(0, 1));
                 instEffectOverhead.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("bosco_warn");
-
                 ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                 {
                     position = m_aiActor.sprite.WorldCenter,
@@ -1250,7 +1251,7 @@ namespace Planetside
                 return true;
             }
 
-            private List<SpeculativeRigidbody> BodiesToIgnore = new List<SpeculativeRigidbody>();
+            public static List<SpeculativeRigidbody> BodiesToIgnore = new List<SpeculativeRigidbody>();
 
             private float DamageTick;
 

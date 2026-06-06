@@ -16,6 +16,11 @@ namespace Planetside.Components.Other_Components
             var _ = Instantiate(customDragunBoulderController.gameObject, vector3, Quaternion.identity).GetComponent<CustomDragunBoulderController>();
             _.LifeTime = Duration;
             _.UpdateScale(Scale);
+            _.CircleSprite.HeightOffGround = 20;
+            _.CircleSprite.SortingOrder = 1;
+            _.CircleSprite.IsPerpendicular = true;
+            _.CircleSprite.ShouldDoTilt = false;
+            _.CircleSprite.Awake();
             return _;
         }
 
@@ -41,7 +46,11 @@ namespace Planetside.Components.Other_Components
                         var c = obj.AddComponent<CustomDragunBoulderController>();
                         c.CircleSprite = b.CircleSprite;
                         c.specRigidbody = b.specRigidbody;
-                        c.CircleSprite.gameObject.layer = Layers.FG_Nonsense;
+                        c.CircleSprite.IsPerpendicular = true;
+                        c.CircleSprite.SortingOrder = 10;
+                        c.CircleSprite.HeightOffGround = 11;
+
+                        //c.CircleSprite.gameObject.layer = Layers.FG_Nonsense;
 
 
                         List<PixelCollider> colliders = c.specRigidbody.PixelColliders.ToList();

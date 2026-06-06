@@ -51,6 +51,7 @@ namespace Planetside
 
         public static dfAtlas PlanetsideUIAtlas;
         public static dfAtlas PlanetsideClipUIAtlas;
+        public static dfAtlas PlanetsideGenericAtlas;
 
         private static bool DebugMode = false;
         public static void Init()
@@ -59,12 +60,18 @@ namespace Planetside
             GameObject obj = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("PlanetsideDFAtlas");
             UnityEngine.Object.DontDestroyOnLoad(obj);
             PlanetsideUIAtlas = obj.GetComponent<dfAtlas>();
-            PlanetsideUIAtlas.Material = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("PlanetsideDFAtlasMat");
+            PlanetsideUIAtlas.Material = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("PlanetsideDFAtlasMat.mat");
 
             obj = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ClipAtlas");
             UnityEngine.Object.DontDestroyOnLoad(obj);
             PlanetsideClipUIAtlas = obj.GetComponent<dfAtlas>();
-            PlanetsideClipUIAtlas.Material =  PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("ClipAtlasMat");
+            PlanetsideClipUIAtlas.Material =  PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("ClipAtlasMat.mat");
+
+            obj = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("GenericAtlas");
+            UnityEngine.Object.DontDestroyOnLoad(obj);
+            PlanetsideGenericAtlas = obj.GetComponent<dfAtlas>();
+            PlanetsideGenericAtlas.Material = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("GenericAtlasMat.mat");
+            PlanetsideGenericAtlas.material = PlanetsideGenericAtlas.Material;
 
             Modder_Bullet_Sheet_Data = DoFastSetup("ModderBulletCollection", "modderbullet material.mat");
             if (Modder_Bullet_Sheet_Data == null) { ETGModConsole.Log("Modder_Bullet_Sheet_Data is NULL"); }

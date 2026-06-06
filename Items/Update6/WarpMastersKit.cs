@@ -108,6 +108,7 @@ namespace Planetside
             ItemIDs.AddToList(activeitem.PickupObjectId);
             TeleporterToPlace = CreateTeleporter();
             activeitem.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1.3f);
+            activeitem.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1.3f);
 
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.TELEPORTER_ACCIDENT);
 

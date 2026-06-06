@@ -2766,15 +2766,14 @@ namespace Planetside
 						{
                             for (int i = 0; i < 5; i++)
                             {
-                                this.Fire(new Direction(72f * i, DirectionType.Aim, -1f), new Speed(10f), new SpeedChangingBullet("amuletRing", 5.5f, 120));
-                                this.Fire(new Direction(72f * i, DirectionType.Aim, -1f), new Speed(8f), new SpeedChangingBullet("poundSmall", 5.5f, 120));
+                                this.Fire(new Direction(72f * i, DirectionType.Aim, -1f), new Speed(7f), new SpeedChangingBullet("amuletRing", 5f, 120));
                             }
                         }
 						if (_Tier > 1)
 						{
-							for (int i = 0; i < 16; i++)
+							for (int i = 0; i < 12; i++)
 							{
-                                this.Fire(new Direction(22.5f * i, DirectionType.Aim, -1f), new Speed(i % 2 == 0 ? 2 : 2 + _Tier), new SpeedChangingBullet("poundSmall", 0, 60, 150 + (150 * _Tier)));
+                                this.Fire(new Direction(30f * i, DirectionType.Aim, -1f), new Speed(i % 2 == 0 ? 1 : 0.25f + _Tier), new SpeedChangingBullet("poundSmall", 0, 60, 150 + (150 * _Tier)));
                             }
                         }
 

@@ -43,6 +43,9 @@ namespace Planetside
             ItemAPI.ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.C;
             ID = item.PickupObjectId;
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1);
+
+
             GenerateLockboxAndBuriedTreasure();
             item.AddSynergy("Loot Crate", new List<PickupObject> { Items.Ring_Of_Chest_Friendship });
             item.AddItemToSynergy(CustomSynergyType.ALTERNATIVE_ROCK);

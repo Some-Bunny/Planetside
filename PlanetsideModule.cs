@@ -41,7 +41,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.200";
+        public const string VERSION = "1.3.201";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -733,7 +733,8 @@ namespace Planetside
                 "DESTROY",
                 "Check out Project Hail Mary!",
                 "Amaze. Amaze. Amaze.",
-                "Time go fishing, question?"
+                "Time go fishing, question?",
+                "Grumpy Angry Stupid, when last sleep, question?"
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

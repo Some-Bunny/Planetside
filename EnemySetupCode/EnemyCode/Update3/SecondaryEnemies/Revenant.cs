@@ -702,9 +702,9 @@ namespace Planetside
                         {
                             base.PostWwiseEvent("Play_ENM_ironmaiden_blast_01", null);
                         }
-                        if (i > 180)
+                        if (i > 135)
                         {
-                            if (i % 60 == 1)
+                            if ((i - 15) % 60 == 1)
                             {
                                 base.PostWwiseEvent("Play_BOSS_lichC_zap_01", null);
                                 base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(7, SpeedType.Absolute), new SpeedChanger("poundSmall"));

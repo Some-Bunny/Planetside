@@ -115,7 +115,7 @@ namespace Planetside
             ThunderShot.fleeData = new FleePlayerData();
             ThunderShot.fleeData.StartDistance = 100f;
             gun.gunClass = GunClass.EXPLOSIVE;
-            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1.5f);
         }
         public static int ThunderShotID;
 

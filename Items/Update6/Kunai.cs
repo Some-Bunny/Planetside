@@ -29,6 +29,7 @@ namespace Planetside
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.C;
             Kunai.ItemID = item.PickupObjectId;
+            item.AddToSubShop(ItemBuilder.ShopType.Cursula, 1);
 
             Gun gun4 = PickupObjectDatabase.GetById(43) as Gun;
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun4.DefaultModule.projectiles[0]);

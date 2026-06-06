@@ -290,6 +290,7 @@ namespace Planetside
             AdvancedDualWieldSynergyProcessor advancedDualWieldSynergyProcessor1 = (PickupObjectDatabase.GetById(Guns.Shock_Rifle.PickupObjectId) as Gun).gameObject.AddComponent<AdvancedDualWieldSynergyProcessor>();
             advancedDualWieldSynergyProcessor1.PartnerGunID = gun.PickupObjectId;
             advancedDualWieldSynergyProcessor1.SynergyNameToCheck = "AA";
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
         }
         public static int ItemID;
 

@@ -15,57 +15,39 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Misc;
+using static ETGMod;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace Planetside
 {
 	internal class BurningSunProjectile : MonoBehaviour
 	{
-		public BurningSunProjectile()
-		{
-		}
-
-        public static List<BurningSunProjectile> burningSunProjectiles = new List<BurningSunProjectile>();
 
         public void Start()
         {
-            burningSunProjectiles.Add(this);
             this.projectile = base.GetComponent<Projectile>();
             if (this.projectile != null)
             {
 				AkSoundEngine.PostEvent("Play_Burn", this.projectile.gameObject);
 				this.ShockRing(projectile);
                 projectile.OnDestruction += this.EndRingEffect;
-				var _lightObject = new GameObject("light");
-                lightObject = _lightObject.AddComponent<AdditionalBraveLight>();
-				lightObject.transform.position = projectile.sprite.WorldCenter;
-                lightObject.LightColor = new Color(1, 0.12f, 0);
-                lightObject.LightIntensity = 0f;
-                lightObject.LightRadius = 0f;
-				lightObject.gameObject.transform.parent = this.projectile.transform;
-
-			}
+                EasyLight.Create(projectile.specRigidbody.UnitCenter, projectile.transform, new Color(1, 0.6f, 0, 1), -1, 10, true, 10, 1, 1, true);
+            }
             cachedgravitationalForceActors = gravitationalForceActors;
             this.m_radiusSquared = this.radius * this.radius;
         }
-		private float elapsed;
-		public void Update()
-        {
-			
+		public void FixedUpdate()
+        {			
 			if (this.projectile != null)
             {
-				if (elapsed <= 1) 
-				{ 
-					this.elapsed += BraveTime.DeltaTime;
-                    lightObject.LightIntensity = Mathf.Lerp(0f, 5f, elapsed);
-                    lightObject.LightRadius = Mathf.Lerp(0f, 4f, elapsed);
-				}
 				if (!GameManager.Instance.IsPaused) 
                 {
-                    Exploder.DoDistortionWave(this.projectile.sprite.WorldCenter, 0.025f / burningSunProjectiles.Count, 0.25f, 6, 0.5f); 
+                    Exploder.DoDistortionWave(this.projectile.sprite.WorldCenter, 0.02f, 0.25f, 6, 0.5f); 
                 }
 			}
 
-            Elapsed = Elapsed += BraveTime.DeltaTime;
+            Elapsed += Time.fixedDeltaTime;
             gravitationalForceActors = Mathf.Lerp(0, cachedgravitationalForceActors, Elapsed);
             for (int i = 0; i < PhysicsEngine.Instance.AllRigidbodies.Count; i++)
             {
@@ -85,21 +67,22 @@ namespace Planetside
         }
 		private void EndRingEffect(Projectile projectile)
 		{
-			if (lightObject != null) { Destroy(lightObject); }
-			Exploder.DoDistortionWave(projectile.sprite.WorldCenter, 1f, 0.25f, 6, 0.25f);
+			Exploder.DoDistortionWave(projectile.sprite.WorldCenter, 1f, 0.25f, 8, 0.5f);
 			AkSoundEngine.PostEvent("Stop_Burn", projectile.gameObject);
 			AkSoundEngine.PostEvent("Play_BOSS_lichB_charge_01", projectile.gameObject);
 			DeadlyDeadlyGoopManager goopManagerForGoopType = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.FireDef);
-            burningSunProjectiles.Remove(this);
             goopManagerForGoopType.TimedAddGoopCircle(projectile.sprite.WorldCenter, 4f, 0.8f, false);
-		}
-		private HeatIndicatorController m_radialIndicator;
-
-
-        public void OnDestroy()
-        {
-            burningSunProjectiles.Remove(this);
+            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+            {
+                position = projectile.sprite.WorldCenter,
+                startSize = 8,
+                rotation = 0,
+                startLifetime = 0.3f,
+                startColor = Color.red.WithAlpha(0.4f)
+            });
+            EasyLight.Create(projectile.specRigidbody.UnitCenter, null, new Color(1, 0.6f, 0, 1), 1, 15, false, 10, 0, 1, false, false);
         }
+		private HeatIndicatorController m_radialIndicator;
 
         private void ShockRing(Projectile projectile)
 		{
@@ -220,6 +203,7 @@ namespace Planetside
                     vector *= 0.02f / BraveTime.DeltaTime;
                 }
                 other.Velocity = vector;
+                /*
                 if (projectile != null)
                 {
                     projectile.collidesWithPlayer = false;
@@ -246,6 +230,7 @@ namespace Planetside
                         }
                     }
                 }
+                */
                 return true;
             }
             return false;

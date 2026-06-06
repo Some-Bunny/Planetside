@@ -229,7 +229,7 @@ namespace Planetside
 
 
             //new Hook(typeof(CerebralBoreProjectile).GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Sawcon).GetMethod("OnDestroyHook"));
-            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1);
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1.5f);
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
         }
 

@@ -28,6 +28,9 @@ namespace Planetside
 			string longDesc = "Emits a gravitational pull towards enemies.\n\nTiny chunks of neutronium are very carefully inserted into every bullet by severely underpaid neutron gnomes.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.C;
+            item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
+
+
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ID = item.PickupObjectId;

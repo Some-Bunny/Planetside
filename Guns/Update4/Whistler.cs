@@ -79,7 +79,7 @@ namespace Planetside
 			yes.dashColor = new Color(0.7f, 0f, 1f, 1f);
 
 			projectile.AdditionalScaleMultiplier *= 1;
-			projectile.baseData.damage = 3.5f;
+			projectile.baseData.damage = 2.5f;
 			projectile.baseData.speed = 30;
 			projectile.pierceMinorBreakables = true;
 			projectile.hitEffects.alwaysUseMidair = true;
@@ -102,7 +102,7 @@ namespace Planetside
 			spook.penetratesBreakables = true;
 
 			MaintainDamageOnPierce noDamageLoss = projectile.gameObject.GetOrAddComponent<MaintainDamageOnPierce>();
-			noDamageLoss.damageMultOnPierce = 1.05f;
+			noDamageLoss.damageMultOnPierce = 1.03f;
 
 			HomingModifier HomingMod = projectile.gameObject.GetOrAddComponent<HomingModifier>();
 			HomingMod.AngularVelocity = 210;
@@ -157,6 +157,7 @@ namespace Planetside
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			Whistler.WhistlerID = gun.PickupObjectId;
             Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
+            gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
 
             ItemIDs.AddToList(gun.PickupObjectId);			
 		}
