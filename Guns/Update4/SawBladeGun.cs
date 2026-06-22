@@ -64,7 +64,7 @@ namespace Planetside
             hit.baseData = new ProjectileData();
             hit.CopyFrom<Projectile>(projectile);
             hit.baseData.CopyFrom<ProjectileData>(projectile.baseData);
-            hit.baseData.damage = 60f;
+            hit.baseData.damage = 75f;
             hit.baseData.speed = 50f;
 			hit.baseData.range *= 15;
             Destroy(projectile);
@@ -100,7 +100,7 @@ namespace Planetside
             yes.spawnShadows = true;
             yes.shadowLifetime = 0.3f;
             yes.shadowTimeDelay = 0.025f;
-            yes.dashColor = new Color(0.5f, 0.5f, 0.5f, 0);
+            yes.dashColor = new Color(0.2f, 0.2f, 0.2f, 0);
 			yes.targetHeight = 0.4f;
 		
             projectile = hit;

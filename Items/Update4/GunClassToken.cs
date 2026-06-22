@@ -31,7 +31,7 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("favouritism"), data, obj);
             string shortDesc = "Gee, Why Do You Get Two?";
-			string longDesc = "Increases rate of fire. Adds favouritism to any weapons you may find.\n\nA necklace made my someone who really, *really* preferred a certain type of weaponry.";
+			string longDesc = "Increases rate of fire. Adds favouritism for any weapons you may find.\n\nA necklace made my someone who really, *really* preferred a certain type of weaponry.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.D;
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RateOfFire, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
@@ -53,19 +53,6 @@ namespace Planetside
 				if (player.HasPickupID(GunClassToken.GunClassTokenID)) { return true; }
 			}
 			return false;
-		}
-		public override DebrisObject Drop(PlayerController player)
-		{
-			DebrisObject result = base.Drop(player);
-			return result;
-		}
-		public override void Pickup(PlayerController player)
-		{
-			base.Pickup(player);
-		}
-		public override void OnDestroy()
-		{
-			base.OnDestroy();
 		}
 	}
 }

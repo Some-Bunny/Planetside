@@ -1,5 +1,6 @@
 ﻿using Dungeonator;
 using Planetside;
+using Planetside.DungeonPlaceables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,10 +80,102 @@ namespace Planetside
                     lastFrameCheck = true;
                     PhysicsEngine.SkipCollision = true;
                 }
+            };
 
+            this.projectile.specRigidbody.OnPreRigidbodyCollision += (SpeculativeRigidbody myRigidbody, PixelCollider myPixelCollider, SpeculativeRigidbody otherBody, PixelCollider tilePixelCollider) =>
+            {
+                if (otherBody != null)
+                {
+
+                    if (isIgnoringTillExit == false)
+                    {
+                        if (Warps < Cap)
+                        {
+                            isIgnoringTillExit = true;
+                            projectile.UpdateCollisionMask();
+
+                            var p = projectile.LastVelocity.normalized * -1;
+                            p.x = Mathf.RoundToInt(p.x);
+                            p.y = Mathf.RoundToInt(p.y);
+
+                            WoopShoop(projectile, p);
+
+                            var c = otherBody.GetComponentsInParent(typeof(Component));
+                            foreach (var c2 in c)
+                            {
+                                if (c2 is DungeonDoorController door)
+                                {
+
+
+
+                                    //RelAngleTo((-tileCollision.Normal).ToAngle(), this._LastVelocity.ToAngle()) > 0;
+
+                                    foreach (var d in door.doorModules)
+                                    {
+                                        projectile.specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 3);
+                                    }
+                                    foreach (var c_1 in door.GetComponentsInChildren<SpeculativeRigidbody>())
+                                    {
+                                        projectile.specRigidbody.RegisterTemporaryCollisionException(c_1, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 3);
+                                    }
+                                    PhysicsEngine.SkipCollision = true;
+                                    break;
+                                }
+                            }
+                            c = otherBody.GetComponents(typeof(Component));
+                            foreach (var c2 in c)
+                            {
+                                if (c2 is FireplaceController fireplace)
+                                {
+                                    projectile.specRigidbody.RegisterTemporaryCollisionException(fireplace.specRigidbody, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 2);
+                                    PhysicsEngine.SkipCollision = true;
+                                    break;
+                                }
+
+                                if (c2 is MajorBreakable breakable)
+                                {
+                                    if (breakable.IsSecretDoor)
+                                    {
+                                        projectile.specRigidbody.RegisterTemporaryCollisionException(breakable.specRigidbody, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 2);
+                                        PhysicsEngine.SkipCollision = true;
+                                        break;
+
+                                    }
+
+                                }
+
+                                if (c2 is DungeonDoorSubsidiaryBlocker blocker)
+                                {
+                                    projectile.specRigidbody.RegisterTemporaryCollisionException(blocker.parentDoor.specRigidbody, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 2);
+                                    foreach (var d in blocker.parentDoor.doorModules)
+                                    {
+                                        projectile.specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 2);
+                                    }
+                                    PhysicsEngine.SkipCollision = true;
+                                    break;
+
+                                }
+                                if (c2 is ForgeCrushDoorController crusher)
+                                {
+                                    if (crusher.m_isCrushing)
+                                    {
+
+                                        PhysicsEngine.SkipCollision = true;
+                                        projectile.specRigidbody.RegisterTemporaryCollisionException(crusher.specRigidbody, projectile.LastVelocity.magnitude * BraveTime.DeltaTime * 2);
+                                        PhysicsEngine.SkipCollision = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             };
         }
-
+        public static float RelAngleTo(float angle, float other)
+        {
+            return BraveMathCollege.ClampAngle180((other - angle));
+        }
 
         private int Warps = 0;
         private float RangeMultiplier = 4;
@@ -99,6 +192,69 @@ namespace Planetside
                 var Position = cast.Contact;
                 if (p != null && Position != null)
                 {
+                    if (cast.SpeculativeRigidbody != null)
+                    {
+                        //prevent collision with door objects temporarily
+                        var c = cast.SpeculativeRigidbody.GetComponentsInParent(typeof(Component));
+                        foreach (var c2 in c)
+                        {
+                            if (c2 is DungeonDoorController door)
+                            {
+                                foreach (var d in door.doorModules)
+                                {
+                                    p.specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, p.LastVelocity.magnitude * BraveTime.DeltaTime * 3);
+                                }
+                                foreach (var c_1 in door.GetComponentsInChildren<SpeculativeRigidbody>())
+                                {
+                                    p.specRigidbody.RegisterTemporaryCollisionException(c_1, p.LastVelocity.magnitude * BraveTime.DeltaTime * 3);
+                                }
+                                break;
+                            }
+                        }
+                        c = cast.SpeculativeRigidbody.GetComponents(typeof(Component));
+                        foreach (var c2 in c)
+                        {
+                            if (c2 is FireplaceController fireplace)
+                            {
+                                p.specRigidbody.RegisterTemporaryCollisionException(fireplace.specRigidbody, 0.3f);
+                                break;
+                            }
+
+                            if (c2 is MajorBreakable breakable)
+                            {
+                                if (breakable.IsSecretDoor)
+                                {
+                                    p.specRigidbody.RegisterTemporaryCollisionException(breakable.specRigidbody, 0.3f);
+                                    break;
+
+                                }
+
+                            }
+
+                            if (c2 is DungeonDoorSubsidiaryBlocker blocker)
+                            {
+                                p.specRigidbody.RegisterTemporaryCollisionException(blocker.parentDoor.specRigidbody, 0.3f);
+                                foreach (var d in blocker.parentDoor.doorModules)
+                                {
+                                    p.specRigidbody.RegisterTemporaryCollisionException(d.rigidbody, 0.3f);
+                                }
+                                break;
+
+                            }
+                            if (c2 is ForgeCrushDoorController crusher)
+                            {
+                                if (crusher.m_isCrushing)
+                                {
+
+                                    PhysicsEngine.SkipCollision = true;
+                                    p.specRigidbody.RegisterTemporaryCollisionException(crusher.specRigidbody, 0.3f);
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+
                     if (OnWrappedAround != null)
                     {
                         OnWrappedAround(p, p.transform.PositionVector2(), Position);

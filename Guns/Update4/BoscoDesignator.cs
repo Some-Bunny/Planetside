@@ -20,6 +20,7 @@ using Alexandria.Misc;
 using static Planetside.PrisonerSecondSubPhaseController;
 using Alexandria;
 using SynergyAPI;
+using static ETGMod;
 
 namespace Planetside
 {
@@ -208,10 +209,40 @@ namespace Planetside
                 p.Owner = gun.CurrentOwner;
                 p.Shooter = gun.CurrentOwner.specRigidbody;
 
-                p.specRigidbody.OnPreRigidbodyCollision += (myBody, myPixel, _otherBody, __otherPixel) =>
+                p.specRigidbody.OnPreTileCollision += (myBody, myPixel, _Tile, __otherPixel) =>
                 {
                     if (Fart)
                         return;
+                    Fart = true;
+
+                   
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = _Tile.Position.ToVector3(),
+                        startColor = Color.red.WithAlpha(0.33f),
+                        startLifetime = 0.25f,
+                        startSize = 5
+                    });
+                };
+
+                p.specRigidbody.OnPreRigidbodyCollision += (myBody, myPixel, _otherBody, __otherPixel) =>
+                {
+                    if (_otherBody.minorBreakable)
+                    {
+                        return;
+                    }
+
+                    if (Fart)
+                        return;
+
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = p.sprite.WorldCenter,
+                        startColor = Color.red.WithAlpha(0.33f),
+                        startLifetime = 0.25f,
+                        startSize = 5
+                    });
+
 
                     Fart = true;
                     SpeculativeRigidbody otherBody = (_otherBody as SpeculativeRigidbody);
@@ -279,12 +310,23 @@ namespace Planetside
                                     BoscoCompanionBehavior.AddPriorityToAllBoscos(
                                                    new BoscoCompanionBehavior.BoscoPriorityTarget(
                                                        BoscoCompanionBehavior.BoscoPriorityTarget.BoscoBehaviorType.ChestTamper,
-                                                       otherBody, 0.75f, 2f, new Vector2(0, -1)),
+                                                       otherBody, 0.5f, 1f, new Vector2(0, -0.5f)),
                                                    gun.CurrentOwner as PlayerController);
                                     break;
 
                                 }
-
+                                if (component is InteractableLock locked)
+                                {
+                                    if (!locked.IsBusted && locked.IsLocked && locked.lockMode == InteractableLock.InteractableLockMode.NORMAL)
+                                    {
+                                        BoscoCompanionBehavior.AddPriorityToAllBoscos(
+                                            new BoscoCompanionBehavior.BoscoPriorityTarget(
+                                                BoscoCompanionBehavior.BoscoPriorityTarget.BoscoBehaviorType.Unlock,
+                                                otherBody, 0.25f, 0.75f, new Vector2(0, -0f)),
+                                            gun.CurrentOwner as PlayerController);
+                                        break;
+                                    }
+                                }
 
 
                                 if (component is RewardPedestal pedestal)
@@ -304,7 +346,7 @@ namespace Planetside
                             c = otherBody.GetComponentsInChildren(typeof(Component));
                             foreach (Component component in c)
                             {
-
+                                //Debug.Log(component.GetType());
                                 if (component is FireplaceController fireplace)
                                 {
                                     if (fireplace.FireObject.activeSelf)
@@ -326,6 +368,18 @@ namespace Planetside
                                         gun.CurrentOwner as PlayerController);
                                     break;
                                 }
+                                if (component is InteractableLock locked)
+                                {
+                                    if (!locked.IsBusted && locked.IsLocked && locked.lockMode == InteractableLock.InteractableLockMode.NORMAL)
+                                    {
+                                        BoscoCompanionBehavior.AddPriorityToAllBoscos(
+                                            new BoscoCompanionBehavior.BoscoPriorityTarget(
+                                                BoscoCompanionBehavior.BoscoPriorityTarget.BoscoBehaviorType.Unlock,
+                                                otherBody, 0.25f, 0.75f, new Vector2(0, -0f)),
+                                            gun.CurrentOwner as PlayerController);
+                                        break;
+                                    }
+                                }
                             }
                             c = otherBody.GetComponentsInParent(typeof(Component));
                             foreach (Component component in c)
@@ -343,12 +397,27 @@ namespace Planetside
                                         break;
                                     }
                                 }
+                                if (component is InteractableLock locked)
+                                {
+                                    if (!locked.IsBusted && locked.IsLocked && locked.lockMode == InteractableLock.InteractableLockMode.NORMAL)
+                                    {
+                                        BoscoCompanionBehavior.AddPriorityToAllBoscos(
+                                            new BoscoCompanionBehavior.BoscoPriorityTarget(
+                                                BoscoCompanionBehavior.BoscoPriorityTarget.BoscoBehaviorType.Unlock,
+                                                otherBody, 0.25f, 0.75f, new Vector2(0, -0f)),
+                                            gun.CurrentOwner as PlayerController);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
                 };
             }
         }
+
+
+
 
         private GameObject extantCompanion;
 
@@ -427,8 +496,6 @@ namespace Planetside
             companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
             companion.reinforceType = AIActor.ReinforceType.Instant;
             companion.AwakenAnimType = AIActor.AwakenAnimationType.Default;
-            //companion.DesiredCombatDistance = 5;
-
             companion.aiActor.sprite.SetSprite(StaticSpriteDefinitions.Companion_Sheet_Data, 0);
 
             companion.aiActor.HasShadow = true;
@@ -506,19 +573,7 @@ namespace Planetside
             aIBulletBank.Bullets = new List<AIBulletBank.Entry>() {  };
 
             var bs = companion.GetComponent<BehaviorSpeculator>();
-            /*
-            bs.AttackBehaviors.Add(new ShootBehavior()
-            {
-                LeadAmount = 0.7f,
-                AttackCooldown = 3.5f,
-                FireAnimation = "attack",
-                BulletName = "Shoot",
-                ShootPoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "candle_point"),
-                StopDuring = ShootBehavior.StopType.Attack,
-                MinRange = 9
-            });
-            */
-            //bs.MovementBehaviors.Add(new BabyGoodCandleKin.ApproachEnemiesBehavior());
+
             bs.MovementBehaviors = new List<MovementBehaviorBase>();
             bs.MovementBehaviors.Add(new BoscoCompanionBehavior() {  });
 
@@ -549,11 +604,6 @@ namespace Planetside
             companion.spriteAnimator.GetClipByName("bosco_zzap_loop").frames[0].eventAudio = "Play_obj_computer_break_01";
             companion.spriteAnimator.GetClipByName("bosco_zzap_loop").frames[0].triggerEvent = true;
 
-            //13 15
-
-            //SND_OBJ_item_throw_01
-
-            //m_obj_computer_break_01
         }
         public static tk2dSpriteAnimator BoscoEffectInst;
 
@@ -592,7 +642,7 @@ namespace Planetside
                 {
                     return;
                 }
-                var p = SpawnManager.SpawnProjectile(BoscoDesignator.BoscoProjectile.gameObject, m_aiActor.sprite.WorldCenter, Quaternion.Euler(0, 0, (this.m_aiActor.TargetRigidbody.specRigidbody.UnitCenter - this.m_aiActor.specRigidbody.UnitCenter).ToAngle() + UnityEngine.Random.Range(-3f * PanicAtTheDisco, (3f * PanicAtTheDisco) + 1))).GetComponent<Projectile>();
+                var p = SpawnManager.SpawnProjectile(BoscoDesignator.BoscoProjectile.gameObject, m_aiActor.sprite.WorldCenter - new Vector2(0, 0.375f), Quaternion.Euler(0, 0, (this.m_aiActor.TargetRigidbody.specRigidbody.UnitCenter - (this.m_aiActor.specRigidbody.UnitCenter - new Vector2(0, 0.375f))).ToAngle() + UnityEngine.Random.Range(-3f * PanicAtTheDisco, (3f * PanicAtTheDisco) + 1))).GetComponent<Projectile>();
                 if (p != null)
                 {        
                     p.SetOwnerSafe(m_companionController.m_owner, "Bosco");
@@ -605,9 +655,9 @@ namespace Planetside
                 ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                 {
                     position = m_aiActor.sprite.WorldCenter,
-                    startColor = Color.cyan.WithAlpha(0.75f),
+                    startColor = Color.cyan.WithAlpha(0.3f),
                     startLifetime = 0.1f,
-                    startSize = 3
+                    startSize = 2
                 });
                 currentStandardFireAmount++;
                 InstCooldownBurst += CooldownBurst / PanicAtTheDisco;
@@ -747,7 +797,7 @@ namespace Planetside
 
                     if (InAttackRange() && CurrentBoscoPriority.Value.boscoBehaviorType == BoscoPriorityTarget.BoscoBehaviorType.PriorityAttack)
                     {
-                        PanicAtTheDisco = 1.5f;
+                        PanicAtTheDisco = 2f;
                         DoBasicAttack();
                     }
 
@@ -911,14 +961,6 @@ namespace Planetside
                     return BehaviorResult.Continue;
                 }
 
-
-                /*
-                bool flag = false;
-                if (this.m_companionController && this.m_companionController.IsBeingPet)
-                {
-                    flag = true;
-                }
-                */
 
                 float num = Vector2.Distance(playerController.CenterPosition, this.m_aiActor.CenterPosition);
                 if (num <= this.IdealRadius)// && !flag)
@@ -1175,7 +1217,8 @@ namespace Planetside
                     AreaDamage,
                     ChestTamper,
                     PedestalMimicHoldDown,
-                    FireplaceWater
+                    FireplaceWater,
+                    Unlock
                 }
 
                 public bool isNear(Vector2 BoscoPos, Vector2 To)
@@ -1189,7 +1232,7 @@ namespace Planetside
 
             public static void AddPriorityToAllBoscos(BoscoPriorityTarget? boscoPriorityTarget, PlayerController playerController)
             {
-                Debug.Log(boscoPriorityTarget != null ? boscoPriorityTarget.Value.boscoBehaviorType.ToString() : "");
+                //Debug.Log(boscoPriorityTarget != null ? boscoPriorityTarget.Value.boscoBehaviorType.ToString() : "");
                 AllBoscos.RemoveAll(x => x.m_aiActor == null);
                 var _ = AllBoscos.Where(x => x.m_companionController.m_owner == playerController);
                 if (_ != null && _.Count() > 0)
@@ -1271,13 +1314,13 @@ namespace Planetside
                             SetTazeIdle();
                             if (DamageTick <= 0)
                             {
-                                AkSoundEngine.PostEvent("Play_obj_computer_break_01", m_aiActor.gameObject);
+                                AkSoundEngine.PostEvent("Play_ENV_puddle_zap_01", m_aiActor.gameObject);
                                 DamageTick = 0.25f;
                                 priority.PriorityBody.aiActor.healthHaver.ApplyDamage(2.5f, Vector2.zero, "Taze");
                                 ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                                 {
                                     position = m_aiActor.sprite.WorldCenter,
-                                    startColor = Color.cyan.WithAlpha(0.1f),
+                                    startColor = Color.cyan.WithAlpha(0.25f),
                                     startLifetime = 0.25f,
                                     startSize = 3
                                 });
@@ -1373,10 +1416,141 @@ namespace Planetside
                             this.m_aiActor.StartCoroutine(Piss());
                         }
                         break;
+                    case BoscoPriorityTarget.BoscoBehaviorType.Unlock:
+                        if (!isPerformingPriorityTask)
+                        {
+                            isPerformingPriorityTask = true;
+                            this.m_aiActor.StartCoroutine(DoLockTamper());
+                        }
+                        break;
                     default:
                         break;
                 }
             }
+            public IEnumerator DoLockTamper()
+            {
+                var Chest = CurrentBoscoPriority.Value.PriorityBody.GetComponent<InteractableLock>();
+                if (Chest == null)
+                {
+                    Chest = CurrentBoscoPriority.Value.PriorityBody.GetComponentInChildren<InteractableLock>();
+                }
+
+
+                if (Chest == null)
+                {
+                    isPerformingPriorityTask = false;
+                    CurrentBoscoPriority = null;
+                    m_aiActor.OverrideTarget = null;
+                    yield break;
+                }
+
+
+                if (Chest.IsLocked == false)
+                {
+                    isPerformingPriorityTask = false;
+                    CurrentBoscoPriority = null;
+                    m_aiActor.OverrideTarget = null;
+                    yield break;
+                }
+
+                SetTazeIdle();
+
+                AkSoundEngine.PostEvent("Play_SawLoop", Chest.gameObject);
+                AkSoundEngine.PostEvent("Play_SawStart", Chest.gameObject);
+
+                float e = 0;
+                while (e < 3)
+                {
+
+                    if (!Chest.IsLocked || Chest.IsBusted)
+                    {
+                        AkSoundEngine.PostEvent("Play_MetalImpactHit", m_aiActor.gameObject);
+                        BodiesToIgnore.Add(Chest.specRigidbody);
+                        CurrentBoscoPriority = null;
+                        isPerformingPriorityTask = false;
+                        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = m_aiActor.sprite.WorldCenter,
+                            startColor = Color.yellow.WithAlpha(0.2f),
+                            startLifetime = 0.2f,
+                            startSize = 5
+                        });
+                        m_aiActor.OverrideTarget = null;
+                        yield break;
+                    }
+
+                    if (Chest == null)
+                    {
+                        AkSoundEngine.PostEvent("Play_MetalImpactHit", m_aiActor.gameObject);
+                        CurrentBoscoPriority = null;
+                        isPerformingPriorityTask = false;
+                        ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = m_aiActor.sprite.WorldCenter,
+                            startColor = Color.yellow.WithAlpha(0.2f),
+                            startLifetime = 0.2f,
+                            startSize = 5
+                        });
+                        m_aiActor.OverrideTarget = null;
+                        yield break;
+                    }
+
+
+
+                    e += BraveTime.DeltaTime;
+                    ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = Chest.sprite.WorldCenter,
+                        rotation = 0,
+                        startLifetime = 0.2f,
+                        startSize = 0.125f,
+                        startColor = Color.yellow,
+                        velocity = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), Mathf.Min(e, 3) * UnityEngine.Random.Range(2.4f, 5.3f))
+                    });
+                    yield return null;
+                }
+                BodiesToIgnore.Add(Chest.specRigidbody);
+                AkSoundEngine.PostEvent("Stop_SawLoop", Chest.gameObject);
+                m_aiActor.OverrideTarget = null;
+
+                if (UnityEngine.Random.value < 0.5)
+                {
+                    AkSoundEngine.PostEvent("Play_OBJ_lock_pick_01", m_aiActor.gameObject);
+                    Chest.ForceUnlock();
+                    ResetIdle();
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = m_aiActor.sprite.WorldCenter,
+                        startColor = Color.white.WithAlpha(0.5f),
+                        startLifetime = 0.333f,
+                        startSize = 8
+                    });
+                    this.m_aiActor.aiAnimator.Play("bosco_yippie", AIAnimator.AnimatorState.StateEndType.UntilFinished, 1.25f, -1, true, "");
+                    while (this.m_aiActor.aiAnimator.IsPlaying("bosco_yippie"))
+                    {
+                        yield return null;
+                    }
+                }
+                else
+                {
+
+                    ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                    {
+                        position = m_aiActor.sprite.WorldCenter,
+                        startColor = Color.yellow.WithAlpha(0.5f),
+                        startLifetime = 0.333f,
+                        startSize = 8
+                    });
+                    AkSoundEngine.PostEvent("Play_OBJ_metronome_fail_01", m_aiActor.gameObject);
+                    AkSoundEngine.PostEvent("Play_MetalImpactHit", m_aiActor.gameObject);
+                    ResetIdle();
+                }
+                CurrentBoscoPriority = null;
+                isPerformingPriorityTask = false;
+                yield break;
+            }
+
+
             private IEnumerator DoBlankForSecret()
             {
                 float t = 0.5f;

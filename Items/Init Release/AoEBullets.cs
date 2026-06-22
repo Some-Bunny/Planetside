@@ -89,7 +89,7 @@ namespace Planetside
 					PlayerController player = base.Owner;
 					AoEDamageComponent Values = sourceProjectile.gameObject.AddComponent<AoEDamageComponent>();
 					Values.DamageperDamageEvent = ((sourceProjectile.baseData.damage * 0.15f)+0.5f);
-					Values.Radius = 2.75f;
+					Values.Radius = 3f;
 					Values.TimeBetweenDamageEvents = 0.2f;
 					Values.DealsDamage = true;
 					Values.AreaIncreasesWithProjectileSizeStat = true;
@@ -120,7 +120,7 @@ namespace Planetside
             PlayerController player = base.Owner;
             AOEBeamTipController Values = beamC.gameObject.GetOrAddComponent<AOEBeamTipController>();
             Values.DamageperDamageEvent = ((beamC.projectile.baseData.damage * 0.15f) + 0.5f);
-            Values.radiusValue = 2.75f;
+            Values.radiusValue = 3;
             Values.TimeBetweenDamageEvents = 0.2f;
             Values.DealsDamage = true;
             Values.AreaIncreasesWithProjectileSizeStat = true;
@@ -150,7 +150,7 @@ namespace Planetside
 			num = (player.stats.GetStatValue(PlayerStats.StatType.PlayerBulletScale));
             HeatIndicatorController m_radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.RadialRing, projectile.sprite.WorldCenter, Quaternion.identity, projectile.transform)).GetComponent<HeatIndicatorController>();
 			m_radialIndicator.CurrentColor = Color.white.WithAlpha(4f);
-			m_radialIndicator.CurrentRadius = 1.75f* num;
+			m_radialIndicator.CurrentRadius = 2.8f * num;
 			m_radialIndicator.IsFire = f;
 			m_radialIndicator.gameObject.transform.parent = projectile.transform;
             var material = m_radialIndicator.GetComponent<MeshRenderer>().material;

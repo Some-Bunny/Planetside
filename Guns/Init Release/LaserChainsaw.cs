@@ -62,8 +62,8 @@ namespace Planetside
 			gun.DefaultModule.numberOfShotsInClip = 500;
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.BEAM;
 			gun.barrelOffset.transform.localPosition = new Vector3(0.75f, 0.375f, 0f);
-			gun.SetBaseMaxAmmo(500);
-			gun.ammo = 500;
+			gun.SetBaseMaxAmmo(300);
+			gun.ammo = 300;
 			gun.gunClass = GunClass.BEAM;
 
 
@@ -86,7 +86,7 @@ namespace Planetside
 
             projectile.gameObject.SetActive(false);
 
-			projectile.baseData.damage = 180f;
+			projectile.baseData.damage = 120f;
 			projectile.baseData.force *= 0.1f;
 			projectile.baseData.range = 4.5f;
 			projectile.baseData.speed *= 1f;

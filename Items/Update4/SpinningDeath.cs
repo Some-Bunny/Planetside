@@ -195,7 +195,7 @@ namespace Planetside
                         BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, (90f * i), 30f, true, true, Flipped ? 360 : -360);
                         Projectile component3 = beamController3.GetComponent<Projectile>();
                         float Dmg = sourceProjectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-                        component3.baseData.damage = Dmg * 3f;
+                        component3.baseData.damage = Dmg * 2.25f;
                         component3.AdditionalScaleMultiplier *= 0.66f;
                     }
                 }
@@ -206,7 +206,7 @@ namespace Planetside
                         BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 30f, true, true, Flipped ? -720 : 720);
                         Projectile component3 = beamController3.GetComponent<Projectile>();
                         float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-                        component3.baseData.damage = Dmg * 4.5f;
+                        component3.baseData.damage = Dmg * 3.33f;
                         component3.AdditionalScaleMultiplier *= 0.66f;
                     }
                 }
@@ -234,7 +234,7 @@ namespace Planetside
 							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeath.SpinningDeathBeam, Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, (90f * i) + FlippedORama, 30f, true, true, Flipped ? 360 : -360);
 							Projectile component3 = beamController3.GetComponent<Projectile>();
 							float Dmg = sourceProjectile.baseData.damage *= Owner != null ? Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-							component3.baseData.damage = Dmg * 2f;
+							component3.baseData.damage = Dmg * 1.5f;
 							component3.AdditionalScaleMultiplier *= 0.66f;
 						}
 					}
@@ -246,7 +246,7 @@ namespace Planetside
 							BeamController beamController3 = BeamToolbox.FreeFireBeamFromAnywhere(SpinningDeathBeam, base.Owner, sourceProjectile.gameObject, sourceProjectile.gameObject.transform.PositionVector2(), false, 180f * i, 30f, true, true, Flipped ? -720 : 720);
 							Projectile component3 = beamController3.GetComponent<Projectile>();
 							float Dmg = sourceProjectile.baseData.damage *= base.Owner != null ? base.Owner.stats.GetStatValue(PlayerStats.StatType.Damage) : 1;
-							component3.baseData.damage = Dmg * 3f;
+							component3.baseData.damage = Dmg * 2.25f;
 							component3.AdditionalScaleMultiplier *= 0.66f;
 						}
 					}

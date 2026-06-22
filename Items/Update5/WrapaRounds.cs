@@ -35,7 +35,6 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
             item.AddPassiveStatModifier(PlayerStats.StatType.AdditionalShotPiercing, 1, StatModifier.ModifyMethod.ADDITIVE);
             item.AddPassiveStatModifier(PlayerStats.StatType.ProjectileSpeed, 0.8f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            item.AddPassiveStatModifier(PlayerStats.StatType.Damage, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 0.75f);
 
             WrapaRounds.WrapaRoundsID = item.PickupObjectId;
@@ -52,9 +51,9 @@ namespace Planetside
             CustomSynergies.Add("Continuum", mandatoryConsoleIDs, optionalConsoleIDs, true);
         }
 
-    
-        public static string SFX = (PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
+		public static GameObject effect = Guns.AC15_Armored.DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;// (PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+		public static string SFX = (PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
         public static int WrapaRoundsID;
 
 	
@@ -69,12 +68,19 @@ namespace Planetside
 				{
 					if (projectile != null)
 					{
-                        GameObject gameObject1 = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos1, Quaternion.identity);
-                        GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect, pos2, Quaternion.identity);
+						//effect.SpawnAtPosition(pos1);
+                        //effect.SpawnAtPosition(pos2);
+                        GameObject gameObject1 = UnityEngine.Object.Instantiate<GameObject>(effect, pos1, Quaternion.identity);
+                        GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(effect, pos2, Quaternion.identity);
+
+
+
                         Destroy(gameObject1, 2);
                         Destroy(gameObject2, 2);
-						projectile.baseData.damage *= 0.95f;
-                        projectile.baseData.speed *= 0.95f;
+
+
+                        projectile.baseData.damage *= 0.93f;
+                        projectile.baseData.speed *= 0.9f;
 						projectile.UpdateSpeed();
                         AkSoundEngine.PostEvent("Play_WPN_" + SFX + "_impact_01", projectile.gameObject);
                     }

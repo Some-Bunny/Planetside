@@ -732,7 +732,7 @@ namespace Planetside
                         var entry = enm[a];
                         if (entry.State == AIActor.ActorState.Normal && entry.healthHaver.IsVulnerable)
                         {
-                            if (Vector2.Distance(entry.transform.position, this.transform.position) < 1.75f * this.transform.localScale.magnitude)
+                            if (Vector2.Distance(entry.transform.position, this.transform.position) < 2f * this.transform.localScale.magnitude)
                             {
                                 if (!EnemyHitCooldown.ContainsKey(entry))
                                 {

@@ -29,7 +29,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("precursor1"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Completely Stabile";
-            string longDesc = "Transmutes all of your projectiles to a pool of goop.\n\nReload on a full clip to change transmutation type.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
+            string longDesc = "Transmutes all of your projectiles to a pool of goop.\n\nReload on a full clip to change goop type.\n\nDespite what the label says, this is actually a bottle of lead paint. Don't drink it...";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 10f);
             activeitem.quality = PickupObject.ItemQuality.D;
@@ -259,15 +259,7 @@ namespace Planetside
         private static List<string> ActiveIDS = new List<string>();
         private static int CurrentCount;
 
-        private static readonly string[] spritePaths = new string[]
-        {
-            "Planetside/Resources/precursor1.png",
-            "Planetside/Resources/precursor2.png",
-            "Planetside/Resources/precursor3.png",
-            "Planetside/Resources/precursor4.png",
-            "Planetside/Resources/precursor5.png",
-            "Planetside/Resources/precursor6.png"
-        };
+
     }
 }
 

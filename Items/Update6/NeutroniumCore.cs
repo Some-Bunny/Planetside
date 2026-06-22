@@ -32,7 +32,7 @@ namespace Planetside
 
 
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ID = item.PickupObjectId;
 
         }
@@ -70,8 +70,14 @@ namespace Planetside
                 arg1.baseData.speed *= 0.7f;
                 arg1.UpdateSpeed();
                 var well = arg1.gameObject.AddComponent<EnemyGravityWell>();
-                var ___ = (arg1.sprite.GetBounds().size.x * 32) * (arg1.sprite.GetBounds().size.y * 32);
-                float Pull = arg1.sprite == null ? 125f :Mathf.Max(256, Mathf.Sqrt(___) * 12);
+                var ___ = arg1.baseData.damage;
+                if (arg1.sprite != null)
+                {
+                    ___ = (arg1.sprite.GetBounds().size.x * 32) * (arg1.sprite.GetBounds().size.y * 32);
+
+                }
+
+                float Pull = arg1.sprite == null ? arg1.baseData.damage * 2 : Mathf.Max(256, Mathf.Sqrt(___) * 12);
                 well.gravitationalForce = Pull * 0.04f;
                 well.gravitationalForceActors = Pull * 0.4f * arg1.AdditionalScaleMultiplier;
                 well.self = arg1;

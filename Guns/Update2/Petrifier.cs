@@ -24,7 +24,7 @@ namespace Planetside
 			Game.Items.Rename("outdated_gun_mods:petrifier", "psog:petrifier");
 			gun.gameObject.AddComponent<Petrifier>();
 			gun.SetShortDescription("Fear Is The Mindkiller");
-			gun.SetLongDescription("Crude, yet powerful. Fires bursts of fast bolts. A primitive form of the railgun, designed by the insane and patented by the irrational.");
+			gun.SetLongDescription("Increases clip size for the next clip every kill.\nAn insatiable weapon with a constant thirst to kill more and more.");
             GunInt.SetupSpritePrebaked(gun, StaticSpriteDefinitions.Gun_2_Sheet_Data, "petrifier_idle_001");
             gun.spriteAnimator.Library = StaticSpriteDefinitions.Gun_2_Animation_Data;
             gun.sprite.SortingOrder = 2;

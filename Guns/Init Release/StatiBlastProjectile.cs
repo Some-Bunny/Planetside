@@ -32,7 +32,7 @@ namespace Planetside
             }
         }
 
-        private Dictionary<AIActor, GameObject> ExtantTethers = new Dictionary<AIActor, GameObject>();
+        private Dictionary<AIActor, tk2dTiledSprite> ExtantTethers = new Dictionary<AIActor, tk2dTiledSprite>();
         public void Update()
         {
             if (this.projectile != null)
@@ -51,7 +51,7 @@ namespace Planetside
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
                                 {
-                                    GameObject obj = SpawnManager.SpawnVFX(StatiBlast.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
+                                    tk2dTiledSprite obj = SpawnManager.SpawnVFX(StatiBlast.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>();
                                     ExtantTethers.Add(ai, obj);
                                 }
                             }
@@ -59,9 +59,9 @@ namespace Planetside
                             {
                                 if (ExtantTethers.ContainsKey(ai))
                                 {
-                                    GameObject obj;
+                                    tk2dTiledSprite obj;
                                     ExtantTethers.TryGetValue(ai, out obj);
-                                    SpawnManager.Despawn(obj);
+                                    SpawnManager.Despawn(obj.gameObject);
                                     ExtantTethers.Remove(ai);
                                 }
                             }
@@ -74,7 +74,7 @@ namespace Planetside
             {
                 if (this.projectile && si.Value != null && si.Key != null)
                 {
-                    UpdateLink(this.projectile, si.Value.GetComponent<tk2dTiledSprite>(), si.Key);
+                    UpdateLink(this.projectile, si.Value, si.Key);
                 }
                 if (si.Key != null && si.Value != null && this.projectile == null)
                 {

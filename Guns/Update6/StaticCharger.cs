@@ -49,8 +49,8 @@ namespace Planetside
             GunExt.AddProjectileModuleFrom(gun, PickupObjectDatabase.GetById(62) as Gun, true, false);
 
 
-            gun.SetBaseMaxAmmo(500);
-			gun.ammo = 500;
+            gun.SetBaseMaxAmmo(350);
+			gun.ammo = 350;
 
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(13) as Gun).gunSwitchGroup;
 
@@ -126,7 +126,7 @@ namespace Planetside
                         projectile_1.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_1.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_1);
-                        projectile_1.baseData.damage = 6.5f;
+                        projectile_1.baseData.damage = 6f;
                         projectile_1.baseData.speed  = 30f;
                         projectile_1.AppliesFreeze = false;
                         projectile_1.baseData.range = 25;
@@ -168,7 +168,7 @@ namespace Planetside
                         projectile_2.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_2.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_2);
-                        projectile_2.baseData.damage = 11f;
+                        projectile_2.baseData.damage = 9.5f;
                         projectile_2.baseData.speed = 33.3f;
                         projectile_2.baseData.range = 30;
                         projectile_2.baseData.force = 8;
@@ -194,7 +194,7 @@ namespace Planetside
                         projectile_3.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_3.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_3);
-                        projectile_3.baseData.damage = 16f;
+                        projectile_3.baseData.damage = 14f;
                         projectile_3.baseData.speed = 50f;
                         projectile_3.AppliesStun = true;
                         projectile_3.StunApplyChance = 0.05f;
@@ -223,7 +223,7 @@ namespace Planetside
                         projectile_4.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_4.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_4);
-                        projectile_4.baseData.damage = 22f;
+                        projectile_4.baseData.damage = 18f;
                         projectile_4.AppliesStun = true;
                         projectile_4.StunApplyChance = 0.08f;
                         projectile_4.AppliedStunDuration = 1.5f;
@@ -245,7 +245,7 @@ namespace Planetside
                         projectile_5.gameObject.SetActive(false);
                         FakePrefab.MarkAsFakePrefab(projectile_5.gameObject);
                         UnityEngine.Object.DontDestroyOnLoad(projectile_5);
-                        projectile_5.baseData.damage = 26f;
+                        projectile_5.baseData.damage = 22.5f;
                         projectile_5.AppliesStun = true;
                         projectile_5.StunApplyChance = 0.11f;
                         projectile_5.AppliedStunDuration = 2f;

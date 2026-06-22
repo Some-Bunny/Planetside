@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Planetside.Toolboxes;
 
 namespace Planetside
 {   
@@ -55,15 +56,13 @@ namespace Planetside
                 CustomPriceMultiplier = CanMult,
             });
 
-            List<string> mandatoryConsoleIDs = new List<string>
+            item.AddSynergy("Hearts In Halves", new List<PickupObject>()
             {
-                "psog:candy_heart",
-            };
-            List<string> optionalConsoleIDs = new List<string>
-            {
-                "antibody"
-            };
-            CustomSynergies.Add("Hearts In Halves", mandatoryConsoleIDs, optionalConsoleIDs, true);
+                Items.Antibody,
+                Items.Pink_Guon_Stone,
+                Actives.Medkit,
+            });
+            //Magic Sweet Synergy
         }
         public static int CandyHeartID;
 
@@ -100,17 +99,6 @@ namespace Planetside
             }
             return 0.5f;
         }
-
-        public override DebrisObject Drop(PlayerController player)
-		{
-            DebrisObject result = base.Drop(player);	
-			return result;
-		}
-
-		public override void Pickup(PlayerController player)
-		{
-            base.Pickup(player);
-		}
 	}
 }
 
