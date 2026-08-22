@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using Brave.BulletScript;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -62,9 +63,10 @@ namespace Planetside
 
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Rebar", "Planetside/Resources/GunClips/RebarPuncher/rebarfull", "Planetside/Resources/GunClips/RebarPuncher/rebarempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Rebar", "Planetside/Resources/GunClips/RebarPuncher/rebarfull", "Planetside/Resources/GunClips/RebarPuncher/rebarempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Rebar", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "rebarfull", "rebarempty");
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_Railgun";
+            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_Railgun";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[8].eventAudio = "Play_OBJ_lock_unlock_01";
 			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[8].triggerEvent = true;
@@ -123,6 +125,7 @@ namespace Planetside
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(gun, CustomSynergyType.THORNPRICK);
 
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Switching away and back to this gun causes the next shot to fire bonus nails.");
 		}
 		public static int RebarerID;
 

@@ -16,6 +16,7 @@ using static Planetside.Nemesis;
 using static Planetside.Tower;
 using static Planetside.PrisonerSecondSubPhaseController;
 using Planetside.Static_Storage;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -23,26 +24,30 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "oppressor_psog";
-		private static tk2dSpriteCollectionData OppressorCollection;
+
+		
 
 		public static void Init()
 		{
-            Oppressor.BuildPrefab();
-		}
-
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OppressorAnimation").GetComponent<tk2dSpriteAnimation>();
+            //OppressorLeftHandAnimation
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("oppressor", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab = EnemyBuilder.BuildPrefabBundle("oppressor", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 351, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				var companion = prefab.AddComponent<OppressorBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
                 prefab.AddComponent<OppressorController>();
 
-               
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
                 companion.aiActor.knockbackDoer.weight = 1000;
 				companion.aiActor.MovementSpeed = 1.2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -59,7 +64,7 @@ namespace Planetside
 				companion.aiActor.SetIsFlying(true, "I can fly", true, true);
 
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(95f);
+                companion.aiActor.healthHaver.ForceSetCurrentHealth(150f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -67,7 +72,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1f, 0.5f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(95f, null, false);
+                companion.aiActor.healthHaver.SetHealthMaximum(150f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -109,7 +114,8 @@ namespace Planetside
 
 
 				});
-				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
+
+                companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
 
@@ -121,7 +127,7 @@ namespace Planetside
 					Flipped = new DirectionalAnimation.FlipType[1]
 				};
 
-                
+
 
 
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
@@ -132,7 +138,7 @@ namespace Planetside
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "uncharge_basic", new string[] { "uncharge_basic" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
-
+                /*
                 bool flag3 = OppressorCollection == null;
 				if (flag3)
 				{
@@ -158,7 +164,6 @@ namespace Planetside
                     26,
                     27
                     }, "charge_basic", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "charge_basic", new Dictionary<int, string> { { 0, "Play_PrisonerLaugh" } });
 
                     SpriteBuilder.AddAnimation(companion.spriteAnimator, OppressorCollection, new List<int>
                     {
@@ -178,10 +183,8 @@ namespace Planetside
                     SpriteBuilder.AddAnimation(companion.spriteAnimator, OppressorCollection, new List<int>
                     {
                     5,
-					6,
-					
-					7,
-					
+					6,			
+					7,		
 					8,
 					8,
 					9,				
@@ -219,10 +222,7 @@ namespace Planetside
 					19,
 					
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_VO_lichB_death_01" }, { 4, "Play_VO_lichB_death_01" } });
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 10, "ploompy" }, });
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 16, "megaDie" } });
-
+                                   
                     SpriteBuilder.AddAnimation(companion.spriteAnimator, OppressorCollection, new List<int>
                     {
                     28,
@@ -240,13 +240,22 @@ namespace Planetside
                     40
 
                     }, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" },{ 5, "Play_PrisonerLaugh" } });
 
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> { { 0, "hide_hands" }, { 12, "show_hands" } });
-
+                
                 }
+                */
 
-                tk2dSpriteAnimationClip awakenClip = prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("awaken");
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "charge_basic", new Dictionary<int, string> { { 0, "Play_PrisonerLaugh" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_VO_lichB_death_01" }, { 4, "Play_VO_lichB_death_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 10, "ploompy" }, });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 16, "megaDie" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "awaken", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" }, { 5, "Play_PrisonerLaugh" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "awaken", new Dictionary<int, string> { { 0, "hide_hands" }, { 12, "show_hands" } });
+
+                tk2dSpriteAnimationClip awakenClip = companion.aiActor.spriteAnimator.GetClipByName("awaken");
                 float[] offsetsX = new float[] { -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f, -0.6875f };
                 float[] offsetsY = new float[] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
                 for (int i = 0; i < offsetsX.Length && i < offsetsY.Length && i < awakenClip.frames.Length; i++)
@@ -264,12 +273,19 @@ namespace Planetside
 
 
                 {
-                    GameObject vfxObj = ItemBuilder.AddSpriteToObject("Left_Hand", DefPath + $"arms/oppressor_leftarm_idle_001", null);
+                    GameObject vfxObj = PrefabBuilder.BuildObject("Oppressor Hand (Left)");
+                    DontDestroyOnLoad(vfxObj);
                     vfxObj.transform.parent = companion.gameObject.transform;
                     vfxObj.transform.position = new Vector3(-0.8125f, 0.75f);
-                    tk2dSpriteAnimator animator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+
+                    var spr = vfxObj.AddComponent<tk2dSprite>();
+                    spr.collection = StaticSpriteDefinitions.Forgotten_Enemmy_Data;
+
+                    tk2dSpriteAnimator animator = vfxObj.AddComponent<tk2dSpriteAnimator>();
+                    animator.sprite = spr;
                     tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
                     AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
+                    //SpriteOutlineManager.AddOutlineToSprite(animator.sprite, Color.black);
 
 
                     animator.sprite.usesOverrideMaterial = true;
@@ -286,16 +302,19 @@ namespace Planetside
                         Flipped = new DirectionalAnimation.FlipType[2],
                         AnimNames = new string[]
                         {
-                        "idle",
-						"idle"
+                            "idle",
+                            "idle"
                         }
                     };
-                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                    //EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "diehandleft" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                    //EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "fire", new string[] { "firehandleft" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die", "die" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "fire", new string[] { "fire", "fire" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
                     vfxObj.AddComponent<MeshFilter>();
                     vfxObj.AddComponent<MeshRenderer>();
 
-
+                    /*
                     tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(vfxObj, ("Oppressor_Left_Arm"));
 
                     tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
@@ -352,13 +371,18 @@ namespace Planetside
 
                     idleClip.frames = frames.ToArray();
                     idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Loop;
+                    */
 
-                    animator.Library = animation;
-                    animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip, deathClip, fireClip };
-                    animator.DefaultClipId = animator.GetClipIdByName("idle");
+
+                    animator.Library = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OppressorLeftHandAnimation").GetComponent<tk2dSpriteAnimation>();
+                    //OppressorLeftHandAnimation
+                    animator.DefaultClipId = animator.GetClipIdByName("idlehandleft");
                     animator.playAutomatically = true;
 
+
+
                     EnemyToolbox.AddSoundsToAnimationFrame(animator, "die", new Dictionary<int, string>() { {1, "Play_Big_Break" } });
+
 
                     AdvancedBodyPartController bodyPart = vfxObj.AddComponent<AdvancedBodyPartController>();
                     bodyPart.Name = "Left_Hand";
@@ -371,7 +395,7 @@ namespace Planetside
                     body.CollideWithOthers = true;
                     body.CollideWithTileMap = false;
 
-                    vfxObj.GetComponent<tk2dBaseSprite>().OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_SIMPLE;
+                    //vfxObj.GetComponent<tk2dBaseSprite>().OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_SIMPLE;
 
                     body.PixelColliders = new List<PixelCollider>();
                     body.PixelColliders.Add(new PixelCollider
@@ -395,8 +419,8 @@ namespace Planetside
 
                     });
                     HealthHaver healthHaver = vfxObj.AddComponent<HealthHaver>();
-                    healthHaver.SetHealthMaximum(35);
-                    healthHaver.ForceSetCurrentHealth(35);
+                    healthHaver.SetHealthMaximum(55);
+                    healthHaver.ForceSetCurrentHealth(55);
                     healthHaver.flashesOnDamage = true;
                     vfxObj.GetOrAddComponent<GameActor>();
 
@@ -409,12 +433,23 @@ namespace Planetside
                     UnityEngine.Object.DontDestroyOnLoad(vfxObj);
                 }
                 {
-                    GameObject vfxObj = ItemBuilder.AddSpriteToObject("Right_Hand", DefPath + $"arms/oppressor_rightarm_idle_001", null);
+                    //GameObject vfxObj = ItemBuilder.AddSpriteToObject("Right_Hand", DefPath + $"arms/oppressor_rightarm_idle_001", null);
+
+                    GameObject vfxObj = PrefabBuilder.BuildObject("Oppressor Hand (Right)");
+                    DontDestroyOnLoad(vfxObj);
+
                     vfxObj.transform.parent = companion.gameObject.transform;
                     vfxObj.transform.position = new Vector3(1.375f, 0.75f);
-                    tk2dSpriteAnimator animator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+
+                    var spr = vfxObj.AddComponent<tk2dSprite>();
+                    spr.collection = StaticSpriteDefinitions.Forgotten_Enemmy_Data;
+
+
+                    tk2dSpriteAnimator animator = vfxObj.AddComponent<tk2dSpriteAnimator>();
+                    animator.sprite = spr;
                     tk2dSpriteAnimation animation = vfxObj.AddComponent<tk2dSpriteAnimation>();
                     AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
+
 
                     animator.sprite.usesOverrideMaterial = true;
                     Material Handmat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -430,19 +465,19 @@ namespace Planetside
                         Flipped = new DirectionalAnimation.FlipType[2],
                         AnimNames = new string[]
                         {
-                        "idle",
-                        "idle"
+                            "idle",
+                            "idle"
                         }
                     };
 
-                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "idle", new string[] { "idle" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
-                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die", "die" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "fire", new string[] { "fire", "fire" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
                     vfxObj.AddComponent<MeshFilter>();
                     vfxObj.AddComponent<MeshRenderer>();
 
-
+                    /*
                     tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(vfxObj, ("Oppressor_Right_Arm"));
                     tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
                     List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
@@ -501,9 +536,9 @@ namespace Planetside
                     deathClip.frames = deathFrames.ToArray();
                     deathClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
 
+                    */
 
-                    animator.Library = animation;
-                    animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip, deathClip, fireClip };
+                    animator.Library = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OppressorRightHandAnimation").GetComponent<tk2dSpriteAnimation>();
 
                     animator.DefaultClipId = animator.GetClipIdByName("idle");
                     animator.playAutomatically = true;
@@ -520,7 +555,6 @@ namespace Planetside
                     body.CollideWithOthers = true;
                     body.CollideWithTileMap = false;
 
-                    vfxObj.GetComponent<tk2dBaseSprite>().OverrideMaterialMode = tk2dBaseSprite.SpriteMaterialOverrideMode.OVERRIDE_MATERIAL_SIMPLE;
 
                     body.PixelColliders = new List<PixelCollider>();
                     body.PixelColliders.Add(new PixelCollider
@@ -544,8 +578,8 @@ namespace Planetside
 
                     });
                     HealthHaver healthHaver = vfxObj.AddComponent<HealthHaver>();
-                    healthHaver.SetHealthMaximum(35);
-                    healthHaver.ForceSetCurrentHealth(35);
+                    healthHaver.SetHealthMaximum(55);
+                    healthHaver.ForceSetCurrentHealth(55);
                     healthHaver.flashesOnDamage = true;
                     vfxObj.GetOrAddComponent<GameActor>();
 
@@ -807,11 +841,11 @@ namespace Planetside
                 trespassEngager.PortalSize = 0.35f;
 
 
-                DebrisObject shoulder1 = BreakableAPIToolbox.GenerateDebrisObject(DefPath + "debris/oppressor_debris_001.png", true, 0.5f, 1, 140, 20, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
-                DebrisObject shoulder2 = BreakableAPIToolbox.GenerateDebrisObject(DefPath + "debris/oppressor_debris_002.png", true, 0.5f, 1, 140, 20, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
-                DebrisObject shoulder3 = BreakableAPIToolbox.GenerateDebrisObject(DefPath + "debris/oppressor_debris_003.png", true, 0.5f, 1, 140, 20, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
-                DebrisObject shoulder4 = BreakableAPIToolbox.GenerateDebrisObject(DefPath + "debris/oppressor_debris_004.png", true, 0.5f, 0.5f, 240,60, null, 0.9f, null, null, 0);
-                DebrisObject shoulder5 = BreakableAPIToolbox.GenerateDebrisObject(DefPath + "debris/oppressor_debris_005.png", true, 0.5f, 0.5f, 360, 100, null, 0.9f, null, null, 0);
+                DebrisObject shoulder1 = BreakableAPI_Bundled.GenerateDebrisObject("oppressor_debris_001", StaticSpriteDefinitions.Forgotten_Enemmy_Data, true, 0.5f, 1, 140, 20, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
+                DebrisObject shoulder2 = BreakableAPI_Bundled.GenerateDebrisObject("oppressor_debris_002", StaticSpriteDefinitions.Forgotten_Enemmy_Data, true, 0.5f, 1, 140, 20, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
+                DebrisObject shoulder3 = BreakableAPI_Bundled.GenerateDebrisObject("oppressor_debris_003", StaticSpriteDefinitions.Forgotten_Enemmy_Data, true, 0.5f, 1, 140, 20, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
+                DebrisObject shoulder4 = BreakableAPI_Bundled.GenerateDebrisObject("oppressor_debris_004", StaticSpriteDefinitions.Forgotten_Enemmy_Data, true, 0.5f, 0.5f, 240,60, null, 0.9f, null, null, 0);
+                DebrisObject shoulder5 = BreakableAPI_Bundled.GenerateDebrisObject("oppressor_debris_005", StaticSpriteDefinitions.Forgotten_Enemmy_Data, true, 0.5f, 0.5f, 360, 100, null, 0.9f, null, null, 0);
 
 
                 ShardCluster BONES = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shoulder1, shoulder2, shoulder3, shoulder4, shoulder5 }, 0.9f, 2f, 3, 6, 1f);
@@ -832,8 +866,11 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:oppressor", companion.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection(DefPath + "oppressor_awaken_012.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("oppressor_awaken_012"),
+                SpriteBuilder.ammonomiconCollection);
+
+
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -845,7 +882,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = DefPath + "oppressor_awaken_012";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "oppressor_awaken_012";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetOppressorTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetOppressorTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR", "Oppressor");
 				PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR_SHORTDESC", "Overpowered");
@@ -854,13 +891,14 @@ namespace Planetside
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#OPPRESSOR_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#OPPRESSOR_LONGDESC";
 				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:oppressor");
-				EnemyDatabase.GetEntry("psog:oppressor").ForcedPositionInAmmonomicon = 80;
-				EnemyDatabase.GetEntry("psog:oppressor").isInBossTab = false;
-				EnemyDatabase.GetEntry("psog:oppressor").isNormalEnemy = true;
 
 
+                var entry = EnemyDatabase.GetEntry("psog:oppressor");
+                entry.ForcedPositionInAmmonomicon = 80;
+                entry.isInBossTab = false;
+                entry.isNormalEnemy = true;
 
-				companion.aiActor.sprite.usesOverrideMaterial = true;
+                companion.aiActor.sprite.usesOverrideMaterial = true;
 				Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
 				mat.mainTexture = companion.aiActor.sprite.renderer.material.mainTexture;
 				mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
@@ -1188,16 +1226,19 @@ namespace Planetside
             {
                 get
                 {
-                    if (this.BulletBank.aiActor.GetComponent<OppressorController>().rightArm == null)
+                    var c = this.BulletBank.aiActor.GetComponent<OppressorController>();
+
+
+                    if (c.rightArm == null)
                     {
                         return new Vector2(-1, -1);
                     }
-                    if (this.BulletBank.aiActor.GetComponent<OppressorController>().rightArm.sprite == null)
+                    if (c.rightArm.sprite == null)
                     {
                         return new Vector2(-1, -1);
                     }
 
-                    return this.BulletBank.aiActor.GetComponent<OppressorController>().rightArm.sprite.WorldBottomRight + new Vector2(-0.5f, 0.5f);
+                    return c.rightArm.sprite.WorldBottomRight + new Vector2(-0.5f, 0.5f);
                 }
             }
             public override AdvancedBodyPartController part
@@ -1214,16 +1255,17 @@ namespace Planetside
             {
                 get
                 {
-                    if (this.BulletBank.aiActor.GetComponent<OppressorController>().rightArm == null)
+                    var c = this.BulletBank.aiActor.GetComponent<OppressorController>();
+                    if (c.rightArm == null)
                     {
                         return new Vector2(-1, -1);
                     }
-                    if (this.BulletBank.aiActor.GetComponent<OppressorController>().rightArm.sprite == null)
+                    if (c.rightArm.sprite == null)
                     {
                         return new Vector2(-1, -1);
                     }
 
-                    return this.BulletBank.aiActor.GetComponent<OppressorController>().rightArm.sprite.WorldBottomRight + new Vector2(-0.5f, 0.5f);
+                    return c.rightArm.sprite.WorldBottomRight + new Vector2(-0.5f, 0.5f);
                 }
             }
             public override bool IsHard
@@ -1530,43 +1572,13 @@ namespace Planetside
 
         };
 
-		public class EnemyBehavior : BraveBehaviour
+		public class OppressorBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			private void Start()
 			{
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
                 {
 

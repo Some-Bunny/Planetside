@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using GungeonAPI;
 using SaveAPI;
 using SGUI;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -35,14 +36,6 @@ namespace Planetside
 
                 ETGMod.AIActor.OnPreStart += this.CurseAIActorChanges;
 
-                new Hook(
-                typeof(PlayerController).GetMethod("OnRoomCleared", BindingFlags.Instance | BindingFlags.Public),
-                typeof(CursesController).GetMethod("OnRoomClearedHook", BindingFlags.Static | BindingFlags.Public));
-
-                new Hook(
-                typeof(PlayerController).GetMethod("LateUpdate", BindingFlags.Instance | BindingFlags.NonPublic),
-                typeof(CursesController).GetMethod("LateUpdateHook", BindingFlags.Static | BindingFlags.Public));
-
                 DungeonHooks.OnPostDungeonGeneration += this.ResetFloorSpecificData;
                 Debug.Log("Finished CursesController setup without failure!");
 
@@ -54,6 +47,7 @@ namespace Planetside
             }
         }
 
+        /*
         public void MyMethod(AIActor ai)
         {
             if (ai != null)
@@ -89,6 +83,7 @@ namespace Planetside
                 }
             }
         }
+        */
 
         public void CurseAIActorChanges(AIActor target)
         {
@@ -135,76 +130,95 @@ namespace Planetside
             }
         }
 
-
-        public static void LateUpdateHook(Action<PlayerController> orig, PlayerController self)
+        [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.LateUpdate))]
+        public class Patch_PlayerController_LateUpdate
         {
-            if (self.CurrentRoom != null)
+            [HarmonyPostfix]
+            private static void Awake(PlayerController __instance)
             {
-                bool m_isInCombat = PlanetsideReflectionHelper.ReflectGetField<bool>(typeof(PlayerController), "m_isInCombat", self);
-                bool isInCombat = m_isInCombat;
-                m_isInCombat = self.CurrentRoom.HasActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
-                if (m_isInCombat && !isInCombat && DarknessCurseState != DarknessCurseStates.DISABLED)
+                if (__instance.CurrentRoom != null)
                 {
-                    float ConeAngle = 37.5f;
-                    float Speed = 2f;
-                    if (DarknessCurseState == DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT) { ConeAngle = 15; Speed = 1.5f; }
-                    AkSoundEngine.PostEvent("Play_ENM_darken_world_01", self.gameObject);
-                    NevernamedsDarknessHandler.EnableDarkness(ConeAngle, Speed);
-                    IsDark = true;
+                    if (!IsDark && __instance.IsInCombat)
+                    {
+                        bool m_isInCombat = __instance.CurrentRoom.HasActiveEnemies(RoomHandler.ActiveEnemyType.RoomClear);
+                        if (m_isInCombat && DarknessCurseState != DarknessCurseStates.DISABLED)
+                        {
+                            float ConeAngle = 37.5f;
+                            float Speed = 2f;
+                            if (DarknessCurseState == DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT) { ConeAngle = 15; Speed = 1.5f; }
+                            AkSoundEngine.PostEvent("Play_ENM_darken_world_01", __instance.gameObject);
+                            NevernamedsDarknessHandler.EnableDarkness(ConeAngle, Speed);
+                            IsDark = true;
+                        }
+                    }
                 }
             }
-            orig(self);
         }
+
+
+
         static bool IsDark;
 
-        public static void OnRoomClearedHook(Action<PlayerController> orig, PlayerController self)
+        [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.OnRoomCleared))]
+        public class Patch_PlayerController_OnRoomCleared
         {
-            orig(self);
-            if (IsDark == true)
+            [HarmonyPostfix]
+            private static void Awake(PlayerController __instance)
             {
-                IsDark = !IsDark;
-                AkSoundEngine.PostEvent("Play_ENM_lighten_world_01", self.gameObject); 
-                NevernamedsDarknessHandler.DisableDarkness(1);
-            }
-            if (self.CurrentRoom != null && UnityEngine.Random.value <= ChestDropChance())
-            {
-                IntVector2 bestRewardLocation = self.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
-                Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(bestRewardLocation);
-                chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
-            }
-            
-            if (PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT)
-            {PetrifyCurseState = PetrifyCurseStates.DISABLED;
-                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEPETRIFY, true);
-                OtherTools.Notify("Curse Of Petrification cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
-                SpawnSpecialChest(self);
-            }
+                if (IsDark == true)
+                {
+                    IsDark = !IsDark;
+                    AkSoundEngine.PostEvent("Play_ENM_lighten_world_01", __instance.gameObject);
+                    NevernamedsDarknessHandler.DisableDarkness(1);
+                }
+                if (__instance.CurrentRoom != null && UnityEngine.Random.value <= ChestDropChance())
+                {
+                    IntVector2 bestRewardLocation = __instance.CurrentRoom.GetBestRewardLocation(IntVector2.One * 3, RoomHandler.RewardLocationStyle.PlayerCenter, true);
+                    Chest chest2 = GameManager.Instance.RewardManager.SpawnTotallyRandomChest(bestRewardLocation);
+                    chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
+                }
 
-            if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT)
-            { JamnationCurseState = JamnationCurseStates.DISABLED;
-                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEJAM, true);
-                OtherTools.Notify("Curse Of Jamnation cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
-                SpawnSpecialChest(self);
-            }
+                if (PetrifyCurseState == PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT)
+                {
+                    PetrifyCurseState = PetrifyCurseStates.DISABLED;
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEPETRIFY, true);
+                    OtherTools.Notify("Hex Of Petrification cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                    SpawnSpecialChest(__instance);
+                }
 
-            if (DarknessCurseState == DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT)
-            { DarknessCurseState = DarknessCurseStates.DISABLED;
-                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEDARKEN, true);
-                OtherTools.Notify("Curse Of Darkness cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
-                SpawnSpecialChest(self);
-            }
+                if (JamnationCurseState == JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT)
+                {
+                    JamnationCurseState = JamnationCurseStates.DISABLED;
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEJAM, true);
+                    OtherTools.Notify("Hex Of Jamnation cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                    SpawnSpecialChest(__instance);
+                }
 
-            if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT)
-            { BolsterCurseState = BolsterCurseStates.DISABLED;
-                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEBOLSTER, true);
-                OtherTools.Notify("Curse Of Bolstering cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
-                SpawnSpecialChest(self);
-            }
-            if (CheckIfUnlocked() == true)
-            {
-                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
+                if (DarknessCurseState == DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT)
+                {
+                    DarknessCurseState = DarknessCurseStates.DISABLED;
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEDARKEN, true);
+                    OtherTools.Notify("Hex Of Darkness cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                    SpawnSpecialChest(__instance);
+                }
+
+                if (BolsterCurseState == BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT)
+                {
+                    BolsterCurseState = BolsterCurseStates.DISABLED;
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DEBOLSTER, true);
+                    OtherTools.Notify("Hex Of Bolstering cleansed", "You are proven.", "Planetside/Resources/ShrineIcons/PurityIcon", UINotificationController.NotificationColor.GOLD);
+                    SpawnSpecialChest(__instance);
+                }
+                if (CheckIfUnlocked() == true)
+                {
+                    AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK, true);
+                }
             }
         }
+
+
+
+
         private static void SpawnSpecialChest(PlayerController player)
         {
             if (player.CurrentRoom == null) { return; }
@@ -238,7 +252,7 @@ namespace Planetside
 
 
 
-        public static void EnableDarkness(bool IsSuperPowered = false, string OverrideTextLineOne = "You Obtained The", string OverrideTextLineTwo = "Curse Of Darkness.")
+        public static void EnableDarkness(bool IsSuperPowered = false, string OverrideTextLineOne = "Afflicted With", string OverrideTextLineTwo = "Hex Of Darkness.")
         {
             if (IsSuperPowered == true)
             { DarknessCurseState = DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT; }
@@ -248,7 +262,7 @@ namespace Planetside
             {AkSoundEngine.PostEvent("Play_ENM_darken_world_01", GameManager.Instance.BestActivePlayer.gameObject);}
         }
 
-        public static void EnablePetrification(bool IsSuperPowered = false, string OverrideTextLineOne = "You Obtained The", string OverrideTextLineTwo = "Curse Of Petrification.")
+        public static void EnablePetrification(bool IsSuperPowered = false, string OverrideTextLineOne = "Afflicted With", string OverrideTextLineTwo = "Hex Of Petrification.")
         {
             if (IsSuperPowered == true)
             { PetrifyCurseState = PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT; }
@@ -257,7 +271,7 @@ namespace Planetside
             if (GameManager.Instance != null && GameManager.Instance.BestActivePlayer != null)
             { AkSoundEngine.PostEvent("Play_ENM_darken_world_01", GameManager.Instance.BestActivePlayer.gameObject); }
         }
-        public static void EnableJamnation(bool IsSuperPowered = false, string OverrideTextLineOne = "You Obtained The", string OverrideTextLineTwo = "Curse Of Jamnation.")
+        public static void EnableJamnation(bool IsSuperPowered = false, string OverrideTextLineOne = "Afflicted With", string OverrideTextLineTwo = "Hex Of Jamnation.")
         {
             if (IsSuperPowered == true)
             { JamnationCurseState = JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT; }
@@ -266,7 +280,7 @@ namespace Planetside
             if (GameManager.Instance != null && GameManager.Instance.BestActivePlayer != null)
             { AkSoundEngine.PostEvent("Play_ENM_darken_world_01", GameManager.Instance.BestActivePlayer.gameObject); }
         }
-        public static void EnableBolster(bool IsSuperPowered = false, string OverrideTextLineOne = "You Obtained The", string OverrideTextLineTwo = "Curse Of Bolstering.")
+        public static void EnableBolster(bool IsSuperPowered = false, string OverrideTextLineOne = "Afflicted With", string OverrideTextLineTwo = "Hex Of Bolstering.")
         {
             if (IsSuperPowered == true)
             { BolsterCurseState = BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT; }

@@ -23,6 +23,7 @@ using AnimationType = ItemAPI.EnemyBuilder.AnimationType;
 using SpriteBuilder = ItemAPI.SpriteBuilder;
 using DirectionType = DirectionalAnimation.DirectionType;
 using static DirectionalAnimation;
+using Alexandria.Integrations;
 
 
 
@@ -53,7 +54,7 @@ namespace Planetside
 
             ForgiveMePlease.NeverForgiveMeID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
-
+            activeitem.AddItemTip("Creates a dummy that triggers item 'On Enemy Damaged' and 'On Enemy Killed' effects, and finishes of with a 'On Player Damaged' trigger. This trigger does not prevent Master Rounds from being obtained.");
         }
         public static int NeverForgiveMeID;
         public static void BuildPrefab()

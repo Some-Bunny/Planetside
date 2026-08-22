@@ -10,6 +10,7 @@ using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -159,7 +160,7 @@ namespace Planetside
             ThunderShot.ThunderShotID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
             gun.gunClass = GunClass.PISTOL;
-
+            gun.AddItemTip("Charge to fire a coin projectile. Coins can be shot, blanked, punched & shot with beams to massively increase the damage potential of any player projectile ricocheting off the coin, or the coin itself. This guns projectiles gain massive bonus ricochet damage off of coins.");
         }
         public static int CoinShotID;
 

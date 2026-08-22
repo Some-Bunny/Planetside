@@ -16,6 +16,7 @@ using HarmonyLib;
 using Alexandria.Assetbundle;
 using System.ComponentModel;
 using static ETGMod;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -173,9 +174,9 @@ namespace Planetside
                 SpriteOffseter.MakeOffset(StaticSpriteDefinitions.Gun_Sheet_Data, fireClip2.frames[i].spriteCollection.spriteDefinitions[id],
 				new Vector3(offsetsX2[i], offsetsY2[i]), new string[4] { "PrimaryHand", "SecondaryHand", "Clip", "Casing" });
             }
-			
 
 
+			gun.AddItemTip("Restores its ammo when reloading over goop. Reloading over goop give special effects to the Mop, unique to the goop absorbed.");
         }
 
 

@@ -22,22 +22,30 @@ namespace Planetside
 		public static readonly string guid = "unwilling";
 		private static tk2dSpriteCollectionData UnwillingCollection;
 
+
+
 		public static void Init()
 		{
-			Unwilling.BuildPrefab();
-		}
 
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("UnwillingAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Unwilling", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab = EnemyBuilder.BuildPrefabBundle("Unwilling", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 547, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				var companion = prefab.AddComponent<UnwillingBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
-				companion.aiActor.knockbackDoer.weight = 120;
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+                companion.aiActor.knockbackDoer.weight = 120;
 				companion.aiActor.MovementSpeed = 1.5f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -53,7 +61,7 @@ namespace Planetside
 				companion.aiActor.SetIsFlying(true, "I can fly", true, true);
 
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(12f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(18f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -61,7 +69,7 @@ namespace Planetside
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, 0.25f), "shadowPos");
 
 
-				companion.aiActor.healthHaver.SetHealthMaximum(12f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(18f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -124,6 +132,7 @@ namespace Planetside
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 
+				/*
 				bool flag3 = UnwillingCollection == null;
 				if (flag3)
 				{
@@ -193,12 +202,13 @@ namespace Planetside
 					25
 					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
 				}
+				*/
 
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> { { 2, "Play_ENM_critter_poof_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "charge", new Dictionary<int, string> { { 6, "Play_ENM_cannonarmor_charge_01" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge", new Dictionary<int, string> { { 8, "SpawnBlueChargy" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "DeathMper" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "awaken", new Dictionary<int, string> { { 2, "Play_ENM_critter_poof_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "charge", new Dictionary<int, string> { { 6, "Play_ENM_cannonarmor_charge_01" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge", new Dictionary<int, string> { { 8, "SpawnBlueChargy" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 0, "DeathMper" } });
 
 
 				/*
@@ -211,7 +221,8 @@ namespace Planetside
 				GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "UnwillingShootpoint");
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
-				prefab.GetComponent<ObjectVisibilityManager>();
+				//prefab.GetComponent<ObjectVisibilityManager>();
+				
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
@@ -277,11 +288,14 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Unwilling/willing_chargeup_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("willing_die_001"),
+                SpriteBuilder.ammonomiconCollection);
+                var encOld = companion.GetComponent<EncounterTrackable>();
+                if (encOld != null)
 				{
-					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
+					UnityEngine.Object.Destroy(encOld);
 				}
+
 				companion.encounterTrackable = companion.gameObject.AddComponent<EncounterTrackable>();
 				companion.encounterTrackable.journalData = new JournalEntry();
 				companion.encounterTrackable.EncounterGuid = "psog:unwilling";
@@ -290,7 +304,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Unwilling/willing_chargeup_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "willing_die_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetUnwillingTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetUnwillingTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#UNWILLING", "Unwilling");
 				PlanetsideModule.Strings.Enemies.Set("#UNWILLING_SHORTDESC", "Forced Conversion");
@@ -299,9 +313,10 @@ namespace Planetside
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#UNWILLING_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#UNWILLING_LONGDESC";
 				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:unwilling");
-				EnemyDatabase.GetEntry("psog:unwilling").ForcedPositionInAmmonomicon = 80;
-				EnemyDatabase.GetEntry("psog:unwilling").isInBossTab = false;
-				EnemyDatabase.GetEntry("psog:unwilling").isNormalEnemy = true;
+				var entry = EnemyDatabase.GetEntry("psog:unwilling");
+                entry.ForcedPositionInAmmonomicon = 80;
+                entry.isInBossTab = false;
+                entry.isNormalEnemy = true;
 
 
 				//companion.healthHaver.spawnBulletScript = true;
@@ -368,43 +383,12 @@ namespace Planetside
 			"Planetside/Resources/Enemies/Unwilling/willing_die_006.png",//31
 		};
 
-		public class EnemyBehavior : BraveBehaviour
+		public class UnwillingBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
 			private void Start()
 			{
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>{};
 			}
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)

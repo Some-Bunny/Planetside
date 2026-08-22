@@ -1,4 +1,5 @@
 ﻿using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 using Gungeon;
 using ItemAPI;
 using System;
@@ -113,9 +114,10 @@ namespace Planetside
 			projectile1.transform.parent = gun.barrelOffset;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Shock Chain", "Planetside/Resources/GunClips/ShockChain/shocklaserfull", "Planetside/Resources/GunClips/ShockChain/shocklaserempty");
+			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Shock Chain", "Planetside/Resources/GunClips/ShockChain/shocklaserfull", "Planetside/Resources/GunClips/ShockChain/shocklaserempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Shock Chain", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "shocklaserfull", "shocklaserempty");
 
-			gun.encounterTrackable.EncounterGuid = "):";
+            gun.encounterTrackable.EncounterGuid = "):";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 
 			gun.barrelOffset.transform.localPosition = new Vector3(1.5f, 0.375f, 0f);
@@ -142,10 +144,11 @@ namespace Planetside
 				"psog:shockchain",
 				"shock_rounds"
 			};
-			CustomSynergies.Add("Single A", AAA, null, false);
+			CustomSynergies.Add("Single A", AAA, null, false).AddItemTip("Doubles electric tether damage.");
 			ShockChain.ElectricMusicID = gun.PickupObjectId;
 
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Shoots 2 projectiles in a perpendicular line tethered with damaging electricity.");
 		}
 		public static int ElectricMusicID;
 

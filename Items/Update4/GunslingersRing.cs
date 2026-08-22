@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using Brave.BulletScript;
 using HarmonyLib;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -40,7 +41,9 @@ namespace Planetside
 
             GunslingersRing.GunslingersRingID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-		}
+			item.AddItemTip("Grants a unique effect depending on your currently held gun. Only 1 effect can be active at a time.");
+
+        }
 		public static int GunslingersRingID;
 
         [HarmonyPatch(typeof(GameUIRoot), nameof(GameUIRoot.UpdateGunDataInternal))]

@@ -38,6 +38,9 @@ namespace Planetside.Static_Storage
 
         public static Shader Default_Object_Shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTilted");
 
+        public static Shader Default_Decal_Shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTiltedCutout");
+
+        //Brave/LitTk2dCustomFalloffTiltedCutout
 
         public static Shader Space_Fog_Shader = ShaderCache.Acquire("Brave/Internal/SpaceFogShader");
         public static Shader Gonner_Shader = ShaderCache.Acquire("tk2d/CutoutVertexColorTiltedGonner");

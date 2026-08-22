@@ -17,6 +17,7 @@ using Alexandria.Misc;
 using UnityEngine.UI;
 using Planetside.Controllers;
 using Planetside.Toolboxes;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -47,10 +48,10 @@ namespace Planetside
             if (troll)
             {
                 ImprovedSynergySetup.Add("Hidden Tech Dissolution",
-                    new List<PickupObject>() { minigunrounds }, new List<PickupObject>() { Items.Irradiated_Lead });
+                    new List<PickupObject>() { minigunrounds }, new List<PickupObject>() { Items.Irradiated_Lead }).AddItemTip("Goop lines created are significantly wider.");
 
                 ImprovedSynergySetup.Add("Trash Talks",
-                    new List<PickupObject>() { minigunrounds }, new List<PickupObject>() { Guns.Trash_Cannon });
+                    new List<PickupObject>() { minigunrounds }, new List<PickupObject>() { Guns.Trash_Cannon }).AddItemTip("Restores 1 ammo to the Trashcannon, and fires 3 Trashcannon shots when a table is flipped.");
             }
             else
             {
@@ -59,13 +60,13 @@ namespace Planetside
                     "psog:table_tech_ignition",
                     "hot_lead"
                 };
-                CustomSynergies.Add("Hidden Tech Incineration", mandatoryConsoleIDs, null, true);
+                CustomSynergies.Add("Hidden Tech Incineration", mandatoryConsoleIDs, null, true).AddItemTip("Fire goop is replaced with more potent green fire.");
                 List<string> mandatoryConsoleIDs_1 = new List<string>
                 {
                     "psog:table_tech_ignition",
                     "pitchfork"
                 };
-                CustomSynergies.Add("Tri-Forked", mandatoryConsoleIDs_1, null, true);
+                CustomSynergies.Add("Tri-Forked", mandatoryConsoleIDs_1, null, true).AddItemTip("Creates 2 additional lines of fire goop.");
             }
 
 
@@ -73,7 +74,7 @@ namespace Planetside
 
             TableTechNullReferenceException.TableTechNullID = minigunrounds.PickupObjectId;
             ItemIDs.AddToList(minigunrounds.PickupObjectId);
-
+            minigunrounds.AddItemTip(troll ? "Flipping tables creates a trail of poison." : "Flipping tables creates a trail of fire.");
         }
         public static int TableTechNullID;
 

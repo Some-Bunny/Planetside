@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -125,6 +126,7 @@ namespace Planetside
 
 			Petrifier.fleeData = new FleePlayerData();
 			Petrifier.fleeData.StartDistance = 100f;
+			gun.AddItemTip("Each enemy killed increases the next clips ammo count by 1.");
 		}
 		public static int ThunderShotID;
 

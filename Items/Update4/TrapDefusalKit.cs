@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Brave.BulletScript;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -54,6 +55,7 @@ namespace Planetside
             new Hook(typeof(TrapEnemyConfigurator).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TrapDefusalKit).GetMethod("UpdateTrapEnemyConfiguratorHook"));
             new Hook(typeof(PowderSkullSpinBulletsBehavior).GetMethod("ContinuousUpdate", BindingFlags.Instance | BindingFlags.Public), typeof(TrapDefusalKit).GetMethod("ContinuousUpdatePowderSkullSpinBulletsBehaviorHook"));
 
+			item.AddItemTip("Disables nearly every trap type in the game. This also includes: Resourceful Rats poison grates, mouse traps, minecart turrets and High Priests wall projectiles.");
         }
         public static ContinuousBehaviorResult ContinuousUpdatePowderSkullSpinBulletsBehaviorHook(Func<PowderSkullSpinBulletsBehavior, ContinuousBehaviorResult> orig, PowderSkullSpinBulletsBehavior self)
         {

@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using tk2dRuntime.TileMap;
+using Alexandria.Integrations;
 
 //Garbage Code Incoming
 namespace Planetside
@@ -31,12 +32,17 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("aurabullets"), data, obj);
             item.sprite.SortingOrder = 3;
 
+
+
             string shortDesc = "Radiant";
             string longDesc = "Makes bullets deal damage to enemies near them." +
                 "\n\nThese bullets contain a very rare and powerful radioactive isotope. Don't lick them!";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.ProjectileSpeed, 0.7f, StatModifier.ModifyMethod.MULTIPLICATIVE);
-			item.quality = PickupObject.ItemQuality.B;
+
+            item.AddItemTip("Your projectiles and beams deal damage to enemies in a radius around them. Damage scales with projectile damage, and radius scales with projectile size multipliers.");
+
+            item.quality = PickupObject.ItemQuality.B;
 			List<string> mandatoryConsoleIDs = new List<string>
 			{
 				"psog:aura_bullets",
@@ -52,7 +58,7 @@ namespace Planetside
 				"plunger",
 				"plague_pistol"
 			};
-			CustomSynergies.Add("Khh..k k k k", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Khh..k k k k", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Projectile auras can inflict poison.");
 			List<string> optionalConsoleID1s = new List<string>
 			{
 				"hot_lead",
@@ -63,8 +69,8 @@ namespace Planetside
 				"phoenix",
 				"pitchfork"
 			};
-			CustomSynergies.Add("Handle The Heat", mandatoryConsoleIDs, optionalConsoleID1s, true);
-			List<string> optionalConsoleID2s = new List<string>
+			CustomSynergies.Add("Handle The Heat", mandatoryConsoleIDs, optionalConsoleID1s, true).AddItemTip("Projectile auras can set enemies on fire.");
+            List<string> optionalConsoleID2s = new List<string>
 			{
 				"frost_bullets",
 				"frost_ammolet",
@@ -73,8 +79,8 @@ namespace Planetside
 				"ice_bomb",
 				"glacier"
 			};
-			CustomSynergies.Add("Below Zero", mandatoryConsoleIDs, optionalConsoleID2s, true);
-			AoEBullets.AuraBulletsID = item.PickupObjectId;
+			CustomSynergies.Add("Below Zero", mandatoryConsoleIDs, optionalConsoleID2s, true).AddItemTip("Projectile auras can freeze enemies.");
+            AoEBullets.AuraBulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 
 		}

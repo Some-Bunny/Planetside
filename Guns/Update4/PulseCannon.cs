@@ -10,6 +10,7 @@ using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -98,9 +99,10 @@ namespace Planetside
                 mod.projectiles[0] = projectile;
 
                 gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-                gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("RadPulseCannon", "Planetside/Resources/GunClips/PulseCannon/pulseclipFull", "Planetside/Resources/GunClips/PulseCannon/pulseclipEmpty");
+                //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("RadPulseCannon", "Planetside/Resources/GunClips/PulseCannon/pulseclipFull", "Planetside/Resources/GunClips/PulseCannon/pulseclipEmpty");
+                gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("RadPulseCannon", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "pulseclipFull", "pulseclipEmpty");
 
-                
+
 
                 /*
                 projectile.AnimateProjectile(new List<string> {
@@ -136,9 +138,10 @@ namespace Planetside
                 "hexagun",
                 "sixth_chamber",
             };
-            CustomSynergies.Add("Hexadecimally!", mandatoryConsoleIDs1, optionalConsoleIDs, false);
+            CustomSynergies.Add("Hexadecimally!", mandatoryConsoleIDs1, optionalConsoleIDs, false).AddItemTip("Fires 6 evenly spread out projectiles in a circle at a random angle.");
             PulseCannonID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
+            gun.AddItemTip("Fires 4 evenly spread out projectiles in a circle at a random angle.");
         }
         public static int PulseCannonID;
 

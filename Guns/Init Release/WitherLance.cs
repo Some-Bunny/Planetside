@@ -16,6 +16,7 @@ using HutongGames.PlayMaker.Actions;
 using Alexandria.Assetbundle;
 using Planetside.Toolboxes;
 using HarmonyLib;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -114,9 +115,11 @@ namespace Planetside
             gun.gunClass = GunClass.FULLAUTO;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Wither Lance", "Planetside/Resources/GunClips/WitherLance/lancefull", "Planetside/Resources/GunClips/WitherLance/lanceempty");
+			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Wither Lance", "Planetside/Resources/GunClips/WitherLance/lancefull", "Planetside/Resources/GunClips/WitherLance/lanceempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Wither Lance", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "lancefull", "lanceempty");
 
             gun.barrelOffset.transform.localPosition = new Vector3(2.4375f, 0.625f, 0f);
+
 
 
             //projectile.baseData.range = 5.8f;
@@ -126,6 +129,7 @@ namespace Planetside
 			WitherLance.WitherLanceID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 
+            gun.AddItemTip("Rapidly fires stars. Stars attach to other player projectiles, granting various buffs to the projectiles.");
             //make sure the animation name and variable names are correct, the program may have made the wrong decision 
             // it is better to be getting your clips like so "gun.sprite.spriteAnimator.GetClipByName(gun.shootAnimation);" and vary the animation name of coursetk2dSpriteAnimationClip animationclip = gun.sprite.spriteAnimator.GetClipByName(magicstaffofpower_reload_004);
             float[] offsetsX = new float[] { 0f, 0f, 0f, 0f, 0f, 0f};
@@ -147,11 +151,11 @@ namespace Planetside
             {
                 "mourning_star"
             };
-            CustomSynergies.Add("Cry Of The Sun", mandatoryConsoleIDs, BlessedSynergy, false);
+            CustomSynergies.Add("Cry Of The Sun", mandatoryConsoleIDs, BlessedSynergy, false).AddItemTip("Mourning Star creates red stars while the Mourning Star laser is active.");
             new Hook(typeof(HammerOfDawnController).GetMethod("ApplyBeamTickToEnemiesInRadius", BindingFlags.Instance | BindingFlags.NonPublic), typeof(WitherLance).GetMethod("ApplyBeamTickToEnemiesInRadiusHook"));
 
             ImprovedSynergySetup.Add("Starsign",
-            new List<PickupObject> { gun, Guns.Crescent_Crossbow }, null, true);
+            new List<PickupObject> { gun, Guns.Crescent_Crossbow }, null, true).AddItemTip("Crescent Crossbows projectiles split into Heavens Call stars.");
             var mod = Guns.Crescent_Crossbow.gameObject.AddComponent<CrescentModifier>();
             mod.self = Guns.Crescent_Crossbow;
         }

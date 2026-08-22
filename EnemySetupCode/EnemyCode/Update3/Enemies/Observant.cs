@@ -23,22 +23,33 @@ namespace Planetside
 		private static tk2dSpriteCollectionData ObservantCollection;
 
 
+		
+
 		public static void Init()
 		{
-			Observant.BuildPrefab();
-		}
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ObservantAnimation").GetComponent<tk2dSpriteAnimation>();
 
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Observant", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Observant", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 316, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
-				companion.aiActor.knockbackDoer.weight = 120;
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+
+
+
+                prefab.AddComponent<ForgottenEnemyComponent>();
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                companion.aiActor.knockbackDoer.weight = 120;
 				companion.aiActor.MovementSpeed = 0.6f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -111,7 +122,7 @@ namespace Planetside
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					Prefix = "run",
-					AnimNames = new string[] { "run_right", "run_left" },
+					AnimNames = new string[] { "idle_right", "idle_left" },
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 
@@ -128,7 +139,7 @@ namespace Planetside
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 				Creationist.TrespassEnemyEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<Creationist.TrespassEnemyEngageDoer>();
 
-
+				/*
 				bool flag3 = ObservantCollection == null;
 				if (flag3)
 				{
@@ -166,6 +177,7 @@ namespace Planetside
 					6,
 					7
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, ObservantCollection, new List<int>
 					{
 					8,
@@ -265,14 +277,16 @@ namespace Planetside
 					}, "reappear", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
 				}
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "disappear", new Dictionary<int, string> { { 0, "spawnGloop" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "reappear", new Dictionary<int, string> { { 0, "spawnGloop" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "disappear", new Dictionary<int, string> { { 2, "Play_ENM_blobulord_reform_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "reappear", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" } });
+				*/
+
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "disappear", new Dictionary<int, string> { { 0, "spawnGloop" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "reappear", new Dictionary<int, string> { { 0, "spawnGloop" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "disappear", new Dictionary<int, string> { { 2, "Play_ENM_blobulord_reform_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "reappear", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_charge_01" } });
 
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 5, "deathBurst" }});
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 5, "deathBurst" }});
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
 				//EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeattack", new Dictionary<int, string> { { 0, "Play_EnergySwirl" } });
 				//EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack", new Dictionary<int, string> { { 0, "Play_Stomp" } });
 
@@ -437,9 +451,10 @@ namespace Planetside
 
 
 
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("observant_idle_left_001"),
+                SpriteBuilder.ammonomiconCollection);
 
-				SpriteBuilder.AddSpriteToCollection(basePath + "observant_idle_left_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -451,7 +466,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Observant/observant_idle_left_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "observant_idle_left_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("observantsheetTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\observantsheetTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#OBSERVANT", "Observant");
 				PlanetsideModule.Strings.Enemies.Set("#OBSERVANT_SHORTDESC", "Foresighted");

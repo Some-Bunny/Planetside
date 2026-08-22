@@ -29,17 +29,25 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+			if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
                 tk2dSpriteCollectionData FodderColection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderCollection").GetComponent<tk2dSpriteCollectionData>();
                 Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat");
+                var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FodderAnimation").GetComponent<tk2dSpriteAnimation>();
 
                 prefab = EnemyBuilder.BuildPrefabBundle("Fodder Enemy", guid, FodderColection, 0, new IntVector2(0, 0), new IntVector2(0,0), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, FodderColection, mat);
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 companion.aiActor.knockbackDoer.weight = 100000;
 				companion.aiActor.MovementSpeed = 0f;
@@ -57,7 +65,10 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.IgnoreForRoomClear = true;
 
-				companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
+				Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
+
+
+				//companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
 
 				companion.aiActor.healthHaver.SetHealthMaximum(2f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
@@ -117,7 +128,7 @@ namespace Planetside
 				};
 
 
-             			
+             	/*		
                 {
                 SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
                 {
@@ -145,7 +156,7 @@ namespace Planetside
                 //17
                 }, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
                 }
-				
+				*/
 
 
                 var bs = prefab.GetComponent<BehaviorSpeculator>();
@@ -186,8 +197,10 @@ namespace Planetside
 				Game.Enemies.Add("psog:fodder", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Fodder/fodder_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Fodder/fodder_idle_001.png", SpriteBuilder.ammonomiconCollection);
+                SpriteBuilder.AddSpriteToCollection(FodderColection.GetSpriteDefinition("fodder_idle_001"), SpriteBuilder.ammonomiconCollection);
+
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -209,7 +222,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Fodder/fodder_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "fodder_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("fodderammonomiconentry");
                 //StaticSpriteDefinitions.Amooncomicon_Enemy_Sheet_Data.spriteDefinitions[11].material.mainTexture
                 PlanetsideModule.Strings.Enemies.Set("#THE_FODDER", "Fodder");

@@ -330,15 +330,15 @@ namespace Planetside
 
             AkSoundEngine.PostEvent("Play_WPN_egg_impact_01", this.gameObject);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 12; i++)
             {
 
-                Vector2 Launch = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1);
-                ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
+                Vector2 Launch = MathToolbox.GetUnitOnCircle(30 * i, 1);
+                ParticleBase.EmitParticles("CeramicParticle", 1, new ParticleSystem.EmitParams()
                 {
                     position = obj.sprite.WorldCenter,
                     rotation = 0,
-                    startLifetime = UnityEngine.Random.Range(0.375f, 0.625f),
+                    startLifetime = 0.5f,
                     startColor = new Color(1, 0.03f, 0).WithAlpha(1f),
                     angularVelocity = 0,
                     velocity = Launch.normalized * UnityEngine.Random.Range(12.5f - RollsTillBreak, 16f - RollsTillBreak),

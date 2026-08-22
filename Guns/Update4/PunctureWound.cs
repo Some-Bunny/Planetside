@@ -9,6 +9,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -62,7 +63,8 @@ namespace Planetside
             gun.SetBaseMaxAmmo(45);
             gun.gunClass = GunClass.CHARGE;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PunctureWoundPSOG", "Planetside/Resources/GunClips/PunctureWound/punctureFull", "Planetside/Resources/GunClips/PunctureWound/punctureEmpty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PunctureWoundPSOG", "Planetside/Resources/GunClips/PunctureWound/punctureFull", "Planetside/Resources/GunClips/PunctureWound/punctureEmpty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PunctureWoundPSOG", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "punctureFull", "punctureEmpty");
 
             //BULLET STATS
             Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
@@ -108,7 +110,7 @@ namespace Planetside
             { chargeproj };
 
             gun.gameObject.transform.Find("Clip").transform.position = new Vector3(0.3125f, 0.5f);
-            gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/glassVialClip.png", true, 1, 3, 180, 60, null, 0.6f, null, null, 3).gameObject;
+            gun.clipObject = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("glassVialClip", StaticSpriteDefinitions.Gun_2_Sheet_Data,  true, 1, 3, 180, 60, null, 0.6f, null, null, 3).gameObject;
             gun.reloadClipLaunchFrame = 2;
             gun.clipsToLaunchOnReload = 1;
 
@@ -117,7 +119,7 @@ namespace Planetside
             PunctureWoundID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1);
-
+            gun.AddItemTip("Fires bolts that inflict Tarnish to enemies in a radius. Tarnished enemies have slower movement speed, and player projectiles always pierce enemies affected with Tarnish.");
         }
         public static int PunctureWoundID;
         private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)

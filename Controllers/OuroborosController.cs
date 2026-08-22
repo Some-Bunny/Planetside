@@ -30,6 +30,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 using static ShamberController;
 using Alexandria.PrefabAPI;
 using System.Runtime.Remoting.Messaging;
+using Alexandria.ItemAPI;
 
 namespace Planetside
 {
@@ -64,7 +65,7 @@ namespace Planetside
 				AIBulletBank.Entry entryCopy = StaticBulletEntries.CopyFields<AIBulletBank.Entry>(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.GetBullet("homing"));
 				RobotechProjectile projectile = UnityEngine.Object.Instantiate<GameObject>(entryCopy.BulletObject).GetComponent<RobotechProjectile>();
 				projectile.gameObject.SetActive(false);
-				FakePrefab.MarkAsFakePrefab(projectile.gameObject);
+				Alexandria.ItemAPI.FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 				UnityEngine.Object.DontDestroyOnLoad(projectile);
 				projectile.projectileHitHealth = 1;
 				entryCopy.Name = "homingOuroboros";
@@ -356,7 +357,9 @@ namespace Planetside
 						{
 							currentlyOneEliteType = null;
 						}
-					}
+						//currentlyOneEliteType = typeof(VolatileElite);
+
+                    }
 				};
 			}
 			catch (Exception e)
@@ -713,6 +716,9 @@ namespace Planetside
             {
                 if (self.aiActor != null)
 				{
+					if (self.aiActor.HasTag("PSOG:OuroborousSkullsBlacklist"))
+						return;
+
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 1.5f, 250); }
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.66f, 250); }
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
@@ -775,8 +781,11 @@ namespace Planetside
 			orig(self);
 			if (OuroborosMode() == true && self != null)
             {
-                if (self != null && self.aiActor != null && !EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
+                if (self.aiActor != null && !EliteBlackListDefault.Contains(self.aiActor.EnemyGuid) && EnemyIsValid(self.aiActor) == true)
                 {
+                    if (self.aiActor.HasTag("PSOG:OuroborousEliteBlacklist"))
+                        return;
+
                     if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
                     {
                         bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
@@ -1096,7 +1105,7 @@ namespace Planetside
 		public override List<ActorEffectResistance> DebuffImmunities => new List<ActorEffectResistance> { new ActorEffectResistance() { resistAmount = 1, resistType = EffectResistanceType.Freeze } };
 		public override void Start()
 		{
-			Timer = 2f;
+			Timer = 1.5f;
 			base.Start();
 			if (IsBoss == true)
 			{
@@ -1104,7 +1113,7 @@ namespace Planetside
 
             }
 		}
-		public float Cooldown = 6;
+		public float Cooldown = 6f;
 		public override void OnPreDeath(Vector2 obj)
 		{
 
@@ -1243,7 +1252,7 @@ namespace Planetside
             }
         }
         public float Cooldown = 9;
-        private float Timer = 3;
+        private float Timer = 1.5f;
 		private float T = 1.5f;
 
 
@@ -1281,6 +1290,7 @@ namespace Planetside
                 float direction2 = (vector - base.Position).ToAngle();
                 base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
                 (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
+                (bullet2.Projectile as ArcProjectile).gravity *= 0.9f;
                 bullet2.Projectile.ImmuneToSustainedBlanks = true;
 				if (IsHard)
 				{
@@ -1288,6 +1298,7 @@ namespace Planetside
                     bullet2 = new Bullet("grenade", false, false, false);
                     direction2 = (vector - base.Position).ToAngle();
                     base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
+					(bullet2.Projectile as ArcProjectile).gravity *= 0.666f;
                     (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
                     bullet2.Projectile.ImmuneToSustainedBlanks = true;
                 }
@@ -1628,11 +1639,11 @@ namespace Planetside
 		};
 		public override void Start()
 		{
-			Timer = 1.25f;
+			Timer = 1;
 			base.Start();
 			if (IsBoss == true)
 			{
-                Timer = 3.5f;
+                Timer = 3f;
             }
         }
 
@@ -1640,7 +1651,7 @@ namespace Planetside
         {
 			if (Timer <= 0)
             {
-				Timer = IsBoss == true ? 2.25f : 0.75f;
+				Timer = IsBoss == true ? 2.5f : 0.75f;
 				if (base.aiActor != null)
 				{
                     EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), (IsBoss == true ? new CustomBulletScriptSelector(typeof(EliteReflectBoss)) : new CustomBulletScriptSelector(typeof(EliteReflect))), "Reflection");
@@ -1771,7 +1782,7 @@ namespace Planetside
                 AkSoundEngine.PostEvent("Play_BOSS_agunim_deflect_01", base.aiActor.gameObject);
 				//AkSoundEngine.PostEvent("Stop_OBJ_cursepot_loop_01", currentShieldInst.gameObject);
 				float Dist = IsBoss ? 5 : 2;
-                float Max = IsBoss ? 50 : 30;
+                float Max = IsBoss ? 35 : 25;
                 float Pwe = IsBoss ? 0.7f : 0.3f;
 				int Cap = IsBoss ? 12 : 3;
                 ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
@@ -1835,7 +1846,7 @@ namespace Planetside
 
 
 		private tk2dBaseSprite currentShieldInst = null;
-		float e = 0;
+		//float e = 0;
         public override void Update()
         {
             base.Update();
@@ -1845,7 +1856,7 @@ namespace Planetside
 
 				if (Timer <= 0 && !currentShieldInst)
 				{
-					e = 0;
+					//e = 0;
 
                     //var objec = UnityEngine.Object.Instantiate(PointNull.PointNullShield, GameManager.Instance.PrimaryPlayer.specRigidbody.UnitCenter.ToVector3ZUp(6), Quaternion.identity, GameManager.Instance.PrimaryPlayer.transform);
                     var objec = UnityEngine.Object.Instantiate(PointNull.PointNullShield,aiActor.transform);
@@ -1859,7 +1870,7 @@ namespace Planetside
 					//currentShieldInst.HeightOffGround = 2;
 					//currentShieldInst.Awake();
 					//currentShieldInst.PlaceAtLocalPositionByAnchor(this.aiActor.specRigidbody.UnitCenter, tk2dBaseSprite.Anchor.MiddleCenter);
-                    aiActor.healthHaver.TriggerInvulnerabilityPeriod(0.5f);
+                    aiActor.healthHaver.TriggerInvulnerabilityPeriod(0.75f);
 
                 }
                 if (currentShieldInst)
@@ -2440,7 +2451,7 @@ namespace Planetside
 			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
 			{
 				
-				ParticleSystem = StaticVFXStorage.EliteParticleSystem.GetComponent<ParticleSystem>();
+				ParticleSystem = StaticVFXStorage.EliteParticleSystem;
 				if (base.aiActor != null)
 				{
 					if (base.aiActor.healthHaver.IsBoss)
@@ -2480,19 +2491,24 @@ namespace Planetside
 			if (aiActor == null) { return; }
 			if (!EnemyBlackList.Contains(base.aiActor.EnemyGuid) && EnemyBlackList != null)
 			{
-				Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(base.aiActor.sprite);
-				if (base.aiActor.healthHaver != null && base.aiActor != null && outlineMaterial1)
+				if (base.aiActor.sprite != null)
 				{
-					if (!base.aiActor.healthHaver.IsDead && outlineMaterial1 != null)
-					{
-						outlineMaterial1.SetColor("_OverrideColor", OverrideEliteOutlineColor != null ? OverrideEliteOutlineColor.Value : EliteOutlineColor);
-					}
-				}
+                    Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(base.aiActor.sprite);
+                    if (base.aiActor.healthHaver != null && outlineMaterial1)
+                    {
+                        if (!base.aiActor.healthHaver.IsDead && outlineMaterial1 != null)
+                        {
+                            outlineMaterial1.SetColor("_OverrideColor", OverrideEliteOutlineColor != null ? OverrideEliteOutlineColor.Value : EliteOutlineColor);
+                        }
+                    }
+                }
+
 				
             }			
 		}
 		public virtual void FixedUpdate()
 		{
+            if (aiActor == null) { return; }
             if (DoParticles == true)
             {
                 if (base.aiActor.sprite && !GameManager.Instance.IsPaused && (UnityEngine.Random.value > 0.7f))

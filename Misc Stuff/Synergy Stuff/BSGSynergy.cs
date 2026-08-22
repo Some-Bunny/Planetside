@@ -57,13 +57,16 @@ namespace Planetside
         {
             this.projectile = base.GetComponent<Projectile>();
             PlayerController player = this.projectile.Owner as PlayerController;
-            if (this.projectile != null && player.PlayerHasActiveSynergy("Big Shocking Gun 9000"))
+            if (player != null)
             {
-                this.projectile.AdditionalScaleMultiplier *= 0.5f;
+                if (this.projectile != null && player.PlayerHasActiveSynergy("Big Shocking Gun 9000"))
+                {
+                    this.projectile.AdditionalScaleMultiplier *= 0.5f;
+                }
             }
         }
 
-        private Dictionary<AIActor, GameObject> ExtantTethers = new Dictionary<AIActor, GameObject>();
+        private Dictionary<AIActor, tk2dTiledSprite> ExtantTethers = new Dictionary<AIActor, tk2dTiledSprite>();
         public void Update()
         {
             if (this.projectile != null)
@@ -77,13 +80,11 @@ namespace Planetside
                     {
                         foreach (AIActor ai in activeEnemies)
                         {
-                            bool flag8 = ai && ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) < 30f;
-                            if (flag8)
+                            if (ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) < 30f)
                             {
                                 if (!ExtantTethers.ContainsKey(ai))
                                 {
-                                    GameObject obj = SpawnManager.SpawnVFX(StatiBlast.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>().gameObject;
-                                    tk2dTiledSprite tiledSprite = obj.GetComponentInChildren<tk2dTiledSprite>();
+                                    tk2dTiledSprite tiledSprite = SpawnManager.SpawnVFX(StatiBlast.LinkVFXPrefab, false).GetComponent<tk2dTiledSprite>();
                                     tiledSprite.sprite.usesOverrideMaterial = true;
                                     Material material = new Material(ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive"));
                                     Material sharedMaterial = tiledSprite.sprite.renderer.sharedMaterial;
@@ -95,7 +96,7 @@ namespace Planetside
                                     var lel = tiledSprite.scale;
                                     lel.y *= 2;
 
-                                    ExtantTethers.Add(ai, obj);
+                                    ExtantTethers.Add(ai, tiledSprite);
                                 }
                             }
                             bool fuckoff = ai && ai != null && Vector2.Distance(ai.CenterPosition, this.projectile.sprite.WorldCenter) > 30f;
@@ -103,9 +104,9 @@ namespace Planetside
                             {
                                 if (ExtantTethers.ContainsKey(ai))
                                 {
-                                    GameObject obj;
+                                    tk2dTiledSprite obj;
                                     ExtantTethers.TryGetValue(ai, out obj);
-                                    SpawnManager.Despawn(obj);
+                                    SpawnManager.Despawn(obj.gameObject);
                                     ExtantTethers.Remove(ai);
                                 }
                             }
@@ -118,7 +119,7 @@ namespace Planetside
             {
                 if (this.projectile && si.Value != null && si.Key != null)
                 {
-                    UpdateLink(this.projectile, si.Value.GetComponent<tk2dTiledSprite>(), si.Key);
+                    UpdateLink(this.projectile, si.Value, si.Key);
                 }
                 if (si.Key != null && si.Value != null && this.projectile == null)
                 {

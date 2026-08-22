@@ -10,6 +10,7 @@ using Brave.BulletScript;
 using Alexandria.cAPI;
 using Alexandria.PrefabAPI;
 using Planetside.Toolboxes;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -35,8 +36,8 @@ namespace Planetside
             {
                 Guns.Crescent_Crossbow,
                 Guns.Mr_Accretion_Jr,
-            });
-
+            }).AddItemTip("Reloading the Crescent Crossbow or Mr. Accrection Jr creates a lot more stars.");
+            item.AddItemTip("Reloading creates multiple stars. Stars attach to your projectiles and grant them various buffs.");
         }
 
         public static int ItemID;

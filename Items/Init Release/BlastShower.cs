@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -48,7 +49,8 @@ namespace Planetside
                 "glacier",
                 "ice_cube"
             };
-            CustomSynergies.Add("Watered Down", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            activeitem.AddItemTip("Damages all enemies and grants immunity to all debuffs for 10 seconds. Any debuffs the player had is inflicted on enemies.");
+            CustomSynergies.Add("Watered Down", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("A fraction of enemy max HP is inflicted as bonus damage on use.");
             BlastShower.BlastShowerID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
         }
@@ -85,7 +87,7 @@ namespace Planetside
             DamageTypeModifier fire = GenSpecImmunity(CoreDamageTypes.Fire);
             DamageTypeModifier poison = GenSpecImmunity(CoreDamageTypes.Poison);
             player.healthHaver.damageTypeModifiers.AddRange(new List<DamageTypeModifier>() { fire, poison});
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
             player.healthHaver.damageTypeModifiers.Remove(fire);
             player.healthHaver.damageTypeModifiers.Remove(poison);
             yield break;

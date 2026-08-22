@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using Brave.BulletScript;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -37,7 +38,8 @@ namespace Planetside
 			item.SetupUnlockOnCustomFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE, true);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Curse, 1, StatModifier.ModifyMethod.ADDITIVE);
 			AnchorID = item.PickupObjectId;
-		}
+			item.AddItemTip("Blue portals are guaranteed to spawn after a boss kill.");
+        }
 		public static int AnchorID;
 	}
 }

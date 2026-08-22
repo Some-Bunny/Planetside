@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 using Gungeon;
 using ItemAPI;
 using UnityEngine;
@@ -46,15 +47,15 @@ namespace Planetside
             gun.DefaultModule.ammoCost = 1;
 
             
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_shot_01";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_reload";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
+            gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_shot_01";
+            gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+            gun.spriteAnimator.GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_reload";
+            gun.spriteAnimator.GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
 
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.alternateShootAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_shot_01";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.alternateShootAnimation).frames[0].triggerEvent = true;
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.alternateReloadAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_reload";
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.alternateReloadAnimation).frames[0].triggerEvent = true;
+            gun.spriteAnimator.GetClipByName(gun.alternateShootAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_shot_01";
+            gun.spriteAnimator.GetClipByName(gun.alternateShootAnimation).frames[0].triggerEvent = true;
+            gun.spriteAnimator.GetClipByName(gun.alternateReloadAnimation).frames[0].eventAudio = "Play_WPN_dl45heavylaser_reload";
+            gun.spriteAnimator.GetClipByName(gun.alternateReloadAnimation).frames[0].triggerEvent = true;
 
 
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(89) as Gun).gunSwitchGroup;
@@ -69,10 +70,9 @@ namespace Planetside
             spear.baseData.range = 11;
 
 
-            Projectile replacementProjectile = spear.projectile;
             gun.DefaultModule.usesOptionalFinalProjectile = true;
             gun.DefaultModule.numberOfFinalProjectiles = 0;
-            gun.DefaultModule.finalProjectile = replacementProjectile;
+            gun.DefaultModule.finalProjectile = spear;
             gun.DefaultModule.finalCustomAmmoType = gun.DefaultModule.customAmmoType;
             gun.DefaultModule.finalAmmoType = gun.DefaultModule.ammoType;
 
@@ -121,6 +121,7 @@ namespace Planetside
             };
             HardlightNailgun.HardAsNailsID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
+            gun.AddItemTip("Trigger the active reload to switch firing modes. Default mode has more damage but alternate mode has better crowd control.");
         }
         public static int HardAsNailsID;
 

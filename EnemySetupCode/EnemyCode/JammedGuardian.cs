@@ -612,8 +612,9 @@ namespace Planetside
 				Game.Enemies.Add("psog:jammed_guardian", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/JammedGuardian/stevelord_idle_left_001", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("stevelord_attack_left_001"), SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/JammedGuardian/stevelord_idle_left_001", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -625,7 +626,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/JammedGuardian/stevelord_idle_left_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "stevelord_attack_left_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("jammedguardicon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\jammedguardicon.png");
 
                 string basepath = "Planetside/Resources/Enemies/JammedGuardian/SteveShards/";

@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -162,7 +163,7 @@ namespace Planetside
 			sharedMaterials[sharedMaterials.Length - 1] = material;
 			component.sharedMaterials = sharedMaterials;
 
-
+			gun.AddItemTip("The longer the fire button is held, the more damage the volley does, but decreases accuracy of the volley.");
 		}
 
 

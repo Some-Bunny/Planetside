@@ -21,6 +21,7 @@ using static Planetside.PrisonerSecondSubPhaseController;
 using Alexandria;
 using SynergyAPI;
 using static ETGMod;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -187,6 +188,7 @@ namespace Planetside
             ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             gun.AddItemToSynergy(CustomSynergyType.TEA_FOR_TWO);
+            gun.AddItemTip("Spawns a companion that attacks enemies. Pinging certain objects or enemies gives the companion certain commands that it will perform.");
 
             BuildPrefab();
         }

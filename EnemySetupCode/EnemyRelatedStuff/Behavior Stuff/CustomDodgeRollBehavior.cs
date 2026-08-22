@@ -31,6 +31,8 @@ namespace Planetside
 			{
 
 			}
+
+
 			public override IEnumerator Top()
 			{
 				HasDetonated = false;
@@ -62,11 +64,13 @@ namespace Planetside
 			{
 				if (HasDetonated == false)
                 {
-					AkSoundEngine.PostEvent("Play_ENM_bulletking_slam_01", base.Projectile.gameObject);
-					float f = UnityEngine.Random.Range(0, 72);
-					for (int i = 0; i <= 20; i++)
+					HasDetonated = true;
+
+                    AkSoundEngine.PostEvent("Play_ENM_bulletking_slam_01", base.Projectile.gameObject);
+					float f = BraveUtility.RandomAngle();
+					for (int i = 0; i < 16; i++)
 					{
-						this.Fire(new Direction((float)(i * 18) + f, DirectionType.Aim, -1f), new Speed(20f, SpeedType.Absolute), new Shrapnel(true));
+						this.Fire(new Direction((float)(i * 22.5f) + f, DirectionType.Aim, -1f), new Speed(20f, SpeedType.Absolute), new Shrapnel(true));
 					}
 				}
 				
@@ -76,13 +80,13 @@ namespace Planetside
 				}
                 base.Vanish(true);
             }
-            public bool HasDetonated;
+            public bool HasDetonated = false;
 			public GameObject Ring;
 		}
 
 		public class Shrapnel : Bullet
 		{
-			public Shrapnel(bool fires) : base(StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+			public Shrapnel(bool fires) : base(StaticBulletEntries.undodgeableLargeSpore.Name, false, false, false)
 			{
 				FiresBullets = fires;
 			}
@@ -90,7 +94,7 @@ namespace Planetside
 			{
 				for (int i = 0; i <= 3; i++)
                 {
-					if (FiresBullets == true) { this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new Shrapnel(false)); }
+                    this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.undodgeableSmallSpore.Name, 0, 0, 10)); 
 					yield return this.Wait(3f);
 				}
 				base.Vanish(true);
@@ -161,13 +165,7 @@ namespace Planetside
 		{
 			var nem = base.m_aiActor.healthHaver.GetComponent<NemesisController>();
             this.Cooldown = ActiveCooldown();
-			if (nem)
-			{
-				if (nem.HeldPrimaryPassive == "ice_cube")
-				{
-					this.Cooldown *= 0.7f;
-                }
-			}
+
 			currentContainer = BraveUtility.RandomElement<FakeActiveContainer>(fakeActives);
 			IsActive = false;
 			IsTrulyActive = false;
@@ -178,6 +176,21 @@ namespace Planetside
 			StaticReferenceManager.ProjectileAdded += this.ProjectileAdded;
 			StaticReferenceManager.ProjectileRemoved += this.ProjectileRemoved;
             base.m_aiActor.healthHaver.OnPreDeath += PreDeath;
+			this.m_aiActor.StartCoroutine(WaitForAFrame(nem));
+		}
+
+		public IEnumerator WaitForAFrame(NemesisController nemesisController)
+		{
+			yield return null;
+            if (nemesisController != null)
+			{
+                if (nemesisController.HeldPrimaryPassive == Items.Ice_Cube.PickupObjectId)
+                {
+                    this.Cooldown *= 0.7f;
+                }
+            }
+           
+            yield break;
 		}
 
         private void PreDeath(Vector2 obj)
@@ -297,7 +310,7 @@ namespace Planetside
 			elapsed = 0;
 			while (elapsed < ActiveTime())
 			{
-				float T = Mathf.Min(elapsed*2, 1);
+				float T = Mathf.Min(elapsed * 2, 1);
 				if (obj != null) { obj.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, T); }
 				elapsed += BraveTime.DeltaTime;
 				yield return null;

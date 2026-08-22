@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2355406395
+CRC: 8321198
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cbaa132bf697f3373c703bd637d345ea
+    Hash: 8f5ba5bf47539d8c08dcc59746ddd48c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -41,25 +41,31 @@ Assets:
 - Assets/Companions/CompanionCollection Data/CompanionCollection.prefab
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/archgunjurericonsilly.png
+- Assets/Enemies/Blue Guys/Stagnant/StagnantAnimation.prefab
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
 - Assets/Enemies/Fodder/fodder_die_004.png
 - Assets/UI/Alphabet Letters/letter_17.png
 - Assets/UI/PlanetsideDFAtlas.prefab
 - Assets/Pickups/PickupCollection Data/pickup material.mat
 - Assets/Enemies/Shamber/ShamberCollection Data/ShamberAnimation.prefab
+- Assets/Enemies/Fodder/FodderAnimation.prefab
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/modderbullet material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/glockulussheet.png
 - Assets/Projectiles/BeamCollection Data/BeamCollection.prefab
 - Assets/Items/Guon Stones/GuonAnimation.prefab
 - Assets/Enemies/SpecificEnemyCollection Data/enemyspecific material.mat
+- Assets/Enemies/Blue Guys/Observant/ObservantAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_08.png
+- Assets/Enemies/Glockulus/GlockulusAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/ophanaimsheetrt.png
 - Assets/UI/Alphabet Letters/letter_26.png
+- Assets/Enemies/Blue Guys/Tower/TowerAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_04.png
 - Assets/Enemies/Glockulus/GlockulusCollection Data/GlockulusCollection.prefab
 - Assets/Minibosses/Nemesis/NemesisCollection Data/NemesisCollection.prefab
 - Assets/Items/Guon Stones/PSOGGuonCollection Data/PSOGGuonCollection.prefab
 - Assets/RoomObjects/RoomObjectCollection Data/atlas0.png
+- Assets/Bosses/HM Prime/HMPrimeAnimation.prefab
 - Assets/RoomObjects/BlessedIdol/blessed_pot_circle_001.png
 - Assets/RoomObjects/RoomObjectCollection Data/RoomObjectCollectionKillingMyself.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/wailericonammo.png
@@ -82,7 +88,9 @@ Assets:
 - Assets/Enemies/Cursebulon/CursebulonCollection Data/curseBulon material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/silveridolsheet.png
 - Assets/Projectiles/ProjectileImpactCollection Data/ProjectileImpactCollection.prefab
+- Assets/Enemies/Wailer/WailerAnimation.prefab
 - Assets/Enemies/Fodder/fodder_idle_007.png
+- Assets/Enemies/Blue Guys/ForgottenEnemyCollection Data/ForgottenEnemyCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/creationistTemplateTrespass.png
 - Assets/BossCards/fungannon_bosscard.png
 - Assets/VFX/VFXAnimation.prefab
@@ -93,6 +101,7 @@ Assets:
 - Assets/BossCards/shellrax_bosscard.png
 - Assets/UI/Alphabet Letters/letter_22.png
 - Assets/UI/Alphabet Letters/letter_06.png
+- Assets/Enemies/Barretina/BarretinaAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/stagnantTrespass.png
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Hollow.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/detscavatorivonammo.png
@@ -115,12 +124,16 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/bankericon.png
 - Assets/Enemies/Fodder/FodderCollection Data/FodderCollection.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/ShellraxCollection.prefab
+- Assets/Enemies/Blue Guys/Collective/CollectiveAnimation.prefab
 - Assets/UI/PlanetsideDFAtlasMat.mat
 - Assets/Enemies/SpecificEnemyCollection Data/SpecificEnemyCollection.prefab
 - Assets/Items/Passive Items/Item_Collection Data/item_collection material.mat
 - Assets/RoomObjects/Trespass Objects/TrespassRoomObjectCollection Data/TrespassRoomObjectCollection.prefab
+- Assets/Minibosses/AnnihiChamber/AnnihiChamberAnimation.prefab
+- Assets/Enemies/Detscavator/DetscavatorAnimation.prefab
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Forge.prefab
 - Assets/Minibosses/Bullet Banker/BulletBankerCollection Data/bulletbanker material.mat
+- Assets/Enemies/Blue Guys/Bloat/BloatAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/observantsheetTrespass.png
 - Assets/UI/ClipAtlas.prefab
 - Assets/BossCards/bulletbanker_bosscard.png
@@ -135,6 +148,7 @@ Assets:
 - Assets/Bosses/Fungannon/FungannonCollection Data/fungannon material.mat
 - Assets/Ammonomicon/Ammonomicon Icons/sheetvesselTrespass.png
 - Assets/Ammonomicon/Ammonomicon Icons/sheetOppressorTrespass.png
+- Assets/Enemies/Blue Guys/Oppressor/OppressorLeftHandAnimation.prefab
 - Assets/UI/ClipAtlasMat.mat
 - Assets/UI/Alphabet Letters/letter_03.png
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/propercube material.mat
@@ -143,6 +157,7 @@ Assets:
 - Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/ArchGunjurerCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/nemesissheetTrespass.png
 - Assets/Ammonomicon/Ammonomicon Icons/cursebulonsmmonomiconportrait.png
+- Assets/Enemies/Blue Guys/Unwilling/UnwillingAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_09.png
 - Assets/Minibosses/Nemesis/NemesisCollection Data/nemesis material.mat
 - Assets/BossCards/annihichamber_bosscard.png
@@ -164,9 +179,11 @@ Assets:
 - Assets/Guns (2)/Gun2Animation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/jammedguardicon.png
 - Assets/Ammonomicon/Ammonomicon Icons/coalleticon.png
+- Assets/Enemies/Cursebulon/CursebulonAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/barretinaiconthing.png
 - Assets/UI/Alphabet Letters/letter_24.png
 - Assets/Enemies/Fodder/fodder_die_007.png
+- Assets/Enemies/Blue Guys/Oppressor/OppressorRightHandAnimation.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/shellrax material.mat
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/AnnihiChamberCollection.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/archgunjurericon.png
@@ -174,6 +191,8 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/sheetInquisitorTrespass.png
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeCollection.prefab
 - Assets/VFX/Gradient_Round_White.png
+- Assets/Bosses/Ophanaim/OphanaimAnimation.prefab
+- Assets/Enemies/Blue Guys/Nemesis/NemesisAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_23.png
 - Assets/Bosses/Ophanaim/OphanaimCollection Data/OphanaimCollection.prefab
 - Assets/Enemies/SpecificEnemyAnimation.prefab
@@ -187,31 +206,39 @@ Assets:
 - Assets/NPCs/NPCSpriteCollection Data/NPCSpriteCollection.prefab
 - Assets/Guns/PlanetsideGunAnimation.prefab
 - Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/archgunjurer material.mat
+- Assets/Enemies/Blue Guys/Inquisitor/InquisitorAnimation.prefab
 - Assets/Enemies/Fodder/fodder_idle_001.png
 - Assets/UI/Alphabet Letters/letter_25.png
 - Assets/Enemies/Fodder/fodder_die_002.png
+- Assets/Bosses/Fungannon/FungannonAnimation.prefab
 - Assets/Enemies/Wailer/WailerCollection Data/wailer material.mat
 - Assets/UI/Alphabet Letters/letter_15.png
 - Assets/Bosses/HM Prime/HMPrimeCollection Data/HMPrimeCollection.prefab
 - Assets/Enemies/Inquisitor/InquisitorCollection Data/inquisitor material.mat
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation_Proper.prefab
+- Assets/Enemies/Blue Guys/Creationist/CreationistAnimation.prefab
 - Assets/Enemies/Detscavator/DetscavatorCollection Data/detscavator material.mat
 - Assets/Enemies/Arch Gunjurer/ArchGunjurerCollection Data/ArchGunjurerAnimation.prefab
 - Assets/BossCards/ophanaim_bosscard.png
 - Assets/Ammonomicon/Ammonomicon Icons/hmprimesheet.png
+- Assets/Enemies/Blue Guys/Oppressor/OppressorAnimation.prefab
 - Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/jamguard material.mat
 - Assets/Enemies/Fodder/fodder_die_008.png
 - Assets/Enemies/Fodder/fodder_idle_006.png
 - Assets/BossCards/hmprime_bosscard.png
 - Assets/Projectiles/PlanetsideProjectileCollection Data/projectile material.mat
 - Assets/Bosses/HM Prime/HMPrimeCollection Data/hmprime material.mat
+- Assets/Enemies/Blue Guys/Vessel/VesselAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_07.png
 - Assets/UI/Alphabet Letters/letter_11.png
 - Assets/Enemies/Fodder/fodder_die_003.png
+- Assets/Enemies/Coallet/CoalletAnimation.prefab
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/skullvenant material.mat
+- Assets/Minibosses/Bullet Banker/BulletBankerAnimation.prefab
 - Assets/Items/Active Items/Active_Collection Data/active_item material.mat
 - Assets/Enemies/ModderBullets/ModderBulletCollection Data/ModderBulletCollection.prefab
 - Assets/Enemies/Shamber/ShamberCollection Data/ShamberCollection.prefab
+- Assets/Minibosses/Shellrax/ShellraxAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/shamberammonomicoenrtytab.png
 - Assets/RoomObjects/RingCollection Data/rhingthing material.mat
 - Assets/Enemies/ProperCube/ProperCubeCollection Data/ProperCubeAnimation.prefab

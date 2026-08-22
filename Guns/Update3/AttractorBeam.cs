@@ -8,6 +8,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 
 
@@ -122,14 +123,15 @@ namespace Planetside
             gun.gunClass = GunClass.BEAM;
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("TractorBeam", "Planetside/Resources/GunClips/TractorBeam/tractorfull", "Planetside/Resources/GunClips/TractorBeam/tractorempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("TractorBeam", "Planetside/Resources/GunClips/TractorBeam/tractorfull", "Planetside/Resources/GunClips/TractorBeam/tractorempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("TractorBeam", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "tractorfull", "tractorempty");
 
 
 
             gun.quality = PickupObject.ItemQuality.C; //D
             ETGMod.Databases.Items.Add(gun, false, "ANY");
             Colossus.ColossusID = gun.PickupObjectId;
-
+            gun.AddItemTip("Pulls enemies it hits.");
 
             ItemIDs.AddToList(gun.PickupObjectId);
         }

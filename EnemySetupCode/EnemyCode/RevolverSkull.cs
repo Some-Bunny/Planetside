@@ -18,14 +18,10 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "skullvenant";
-		//private static tk2dSpriteCollectionData SkullVenantCollection;
-		//public static GameObject shootpoint;
-		public static void Init()
-		{
-			RevolverSkull.BuildPrefab();
-		}
 
-		public static void BuildPrefab()
+
+
+		public static void Init()
 		{
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("SkullvenantCollection").GetComponent<tk2dSpriteCollectionData>();
@@ -354,8 +350,9 @@ namespace Planetside
 				Game.Enemies.Add("psog:skullvenant", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/RevolverSkull/revolverskull_idle_front_001", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("revolverskull_idle_front_001"), SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/RevolverSkull/revolverskull_idle_front_001", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -367,7 +364,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/RevolverSkull/revolverskull_idle_front_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "revolverskull_idle_front_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("skullvenanticonaoo");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\skullvenanticonaoo.png");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT", "Skullvenant");
 				PlanetsideModule.Strings.Enemies.Set("#THE_SKULLVENANT_SHORTDESC", "Headache");

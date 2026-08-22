@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -61,13 +62,13 @@ namespace Planetside
                 "partially_eaten_cheese",
                 "rat_boots"
             };
-            CustomSynergies.Add("You Can Liquidate That???", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("You Can Liquidate That???", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Adds Cheese as a possible transmutation.");
             List<string> optionalConsoleIDs2 = new List<string>
             {
                 "psog:frailty_ammolet",
                 "psog:frailty_rounds",
             };
-            CustomSynergies.Add("Epic ____ Moments No.17", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            CustomSynergies.Add("Epic ____ Moments No.17", mandatoryConsoleIDs, optionalConsoleIDs2, true).AddItemTip("Adds Frailty as a possible transmutation.");
             List<string> optionalConsoleIDs3 = new List<string>
             {
                 "plunger",
@@ -76,16 +77,18 @@ namespace Planetside
                 "weird_egg",
                 "psog:injector_rounds"
             };
-            CustomSynergies.Add("You Killed Us All!", mandatoryConsoleIDs, optionalConsoleIDs3, true);
+            CustomSynergies.Add("You Killed Us All!", mandatoryConsoleIDs, optionalConsoleIDs3, true).AddItemTip("Doubles goop and blast radius.");
             List<string> optionalConsoleIDs4 = new List<string>
             {
                 "psog:tarnished_rounds",
                 "psog:tarnished_ammolet",
             };
-            CustomSynergies.Add("Rust Bucket", mandatoryConsoleIDs, optionalConsoleIDs4, true);
+            CustomSynergies.Add("Rust Bucket", mandatoryConsoleIDs, optionalConsoleIDs4, true).AddItemTip("Adds Tarnish as a possible transmutation.");
 
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.GUON_UPGRADE_CLEAR);
 
+
+            activeitem.AddItemTip("On use, makes all player projectiles burst and turn into goop. Goop type can be switched by pressing reload on a full clip.");
             activeitem.CanSwitch = true;
         }
 
@@ -199,62 +202,87 @@ namespace Planetside
                 component2.HeightOffGround = 5f;
                 component2.UpdateZDepth();
             }
-            Exploder.DoDistortionWave(user.sprite.WorldCenter, 2, 0.05f, 24, 0.5f);
+            Exploder.DoDistortionWave(user.sprite.WorldCenter, 0.5f, 0.05f, 30, 0.35f);
             AkSoundEngine.PostEvent("Play_OBJ_bottle_cork_01", user.gameObject);
-            for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
+
+            GoopDefinition goop = null;
+            AlchemicalVial.GoopKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1], out goop);
+
+            Color color = new Color();
+            ColorKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1] != null ? AlchemicalVial.ActiveIDS[CurrentCount - 1] : "nAn", out color);
+            float rad = user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 4.5f : 2.25f;
+            for (int i = StaticReferenceManager.AllProjectiles.Count - 1; i > -1; i--)
             {
                 Projectile proj = StaticReferenceManager.AllProjectiles[i];
-                PlayerController player = proj.Owner as PlayerController;
-                bool isBem = proj.GetComponent<BasicBeamController>() != null;
-                if (isBem != true && proj.Owner != null && proj.Owner == player && proj != null)
+                if (proj != null)
                 {
-                    GoopDefinition goop = null;
-                    AlchemicalVial.GoopKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1], out goop);
-                    DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goop != null ? goop: EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 4.5f : 2.25f, 0.5f, false);
-                    GameObject PoofVFX = (GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.BlueSynergyPoofVFX, proj.transform.position, Quaternion.identity);
-                    tk2dBaseSprite PoofVFXSprite = PoofVFX.GetComponent<tk2dBaseSprite>();
-                    PoofVFXSprite.PlaceAtPositionByAnchor(proj.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
-                    tk2dSpriteAnimator component2 = PoofVFXSprite.GetComponent<tk2dSpriteAnimator>();
-                    if (component2 != null)
+                    if (proj.GetComponent<BasicBeamController>() == null && proj.Owner != null && proj.Owner == user)
                     {
-                        Color color = new Color();
-                        ColorKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1] != null ? AlchemicalVial.ActiveIDS[CurrentCount - 1] : "nAn", out color);
-                        PoofVFXSprite.scale *= 1.25f;
-                        component2.playAutomatically = true;
-                        component2.sprite.usesOverrideMaterial = true;
-                        component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
-                        component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
-                        component2.sprite.renderer.material.SetFloat("_EmissivePower", 1);
-                        component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.1f);
-                        component2.sprite.renderer.material.SetColor("_OverrideColor", color);
-                        component2.sprite.renderer.material.SetColor("_EmissiveColor", color);
+                        GameManager.Instance.StartCoroutine(DoTinyDelay(user, proj, goop, color, rad));
                     }
-                    Exploder.Explode(proj.sprite.WorldCenter, new ExplosionData()
-                    {
-                        breakSecretWalls = false,
-                        damage = 5 + (proj.baseData.damage * 0.333f),
-                        debrisForce = 0,
-                        damageRadius = user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 5 : 3,
-                        damageToPlayer = 0,
-                        comprehensiveDelay = 0,
-                        doForce = false,
-                        doExplosionRing = false,
-                        effect = null,
-                        force = 0,
-                        explosionDelay = 0,
-                        doDamage = true,
-                        doDestroyProjectiles = false,
-                        doScreenShake = false,
-                        ignoreList = new List<SpeculativeRigidbody>() { base.LastOwner.specRigidbody },
-                        isFreezeExplosion = false,
-                        pushRadius = 0,
-                        playDefaultSFX = false,
-                        
-                    }, Vector2.zero);
-                    proj.DieInAir();
                 }
             }
         }
+
+        private IEnumerator DoTinyDelay(PlayerController user, Projectile proj, GoopDefinition goop, Color color, float  Rad)
+        {
+            float r = UnityEngine.Random.Range(0.01f, 0.2f);
+            yield return new WaitForSeconds(r);
+            if (proj)
+            {
+                proj.baseData.range += proj.baseData.speed * r;
+
+                DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goop != null ? goop : EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), Rad, 0.5f, false);
+                GameObject PoofVFX = (GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.BlueSynergyPoofVFX, proj.transform.position, Quaternion.identity);
+                tk2dBaseSprite PoofVFXSprite = PoofVFX.GetComponent<tk2dBaseSprite>();
+                if (PoofVFXSprite != null)
+                {
+                    PoofVFXSprite.sprite.usesOverrideMaterial = true;
+                    PoofVFXSprite.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                    PoofVFXSprite.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                    PoofVFXSprite.sprite.renderer.material.SetFloat("_EmissivePower", 1);
+                    PoofVFXSprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.1f);
+                    PoofVFXSprite.sprite.renderer.material.SetColor("_OverrideColor", color);
+                    PoofVFXSprite.sprite.renderer.material.SetColor("_EmissiveColor", color);
+                }
+
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = proj.sprite.WorldCenter,
+                    startSize = Rad,
+                    rotation = 0,
+                    startLifetime = 0.333f,
+                    startColor = color.WithAlpha(0.75f)
+                });
+
+                Exploder.Explode(proj.sprite.WorldCenter, new ExplosionData()
+                {
+                    breakSecretWalls = false,
+                    damage = 5 + (proj.baseData.damage * 0.333f),
+                    debrisForce = 0,
+                    damageRadius = Rad * 1.25f,
+                    damageToPlayer = 0,
+                    comprehensiveDelay = 0,
+                    doForce = false,
+                    doExplosionRing = false,
+                    effect = null,
+                    force = 0,
+                    explosionDelay = 0,
+                    doDamage = true,
+                    doDestroyProjectiles = false,
+                    doScreenShake = false,
+                    ignoreList = new List<SpeculativeRigidbody>() { base.LastOwner.specRigidbody },
+                    isFreezeExplosion = false,
+                    pushRadius = 0,
+                    playDefaultSFX = false,
+
+                }, Vector2.zero);
+                proj.DieInAir();
+            }
+            yield break; 
+        }
+
+
         private static Dictionary<string, int> spriteIDs = new Dictionary<string, int>();
         private static List<string> ActiveIDS = new List<string>();
         private static int CurrentCount;

@@ -19,6 +19,7 @@ using MonoMod.Utils;
 using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
+using Alexandria.Integrations;
 
 //Garbage Code Incoming
 namespace Planetside
@@ -78,10 +79,10 @@ namespace Planetside
                 "shotgun_full_of_hate",
                 "psog:death_warrant"
             };
-            CustomSynergies.Add("Vermincide.", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Vermincide", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("A random enemy is slain when the item is used.");
             DeadKingsDesparation.DeadKingsDesparationID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
-
+            activeitem.AddItemTip("Usable once per room. When used, all enemies for the room will have reduced HP, have their debuff resistances stripped, and grant the player increased damage for each enemy encountered. Effect lasts for 1 room.");
         }
         public static int DeadKingsDesparationID;
         public static void BuildPrefab()
@@ -186,7 +187,7 @@ namespace Planetside
                 {
                     this.AffectEnemy(activeEnemies[i], user);
                 }
-                if (user.PlayerHasActiveSynergy("Vermincide."))
+                if (user.PlayerHasActiveSynergy("Vermincide"))
                 {
                     base.StartCoroutine(this.HandlePlaceDoll(user.CurrentRoom, user));
                 }
@@ -292,7 +293,8 @@ namespace Planetside
             {
                 if (target != null && base.LastOwner != null)
                 {
-                    target.healthHaver.SetHealthMaximum(target.healthHaver.GetMaxHealth() * 0.8f);
+                    //target.healthHaver.SetHealthMaximum(target.healthHaver.GetMaxHealth() * 0.8f);
+                    target.healthHaver.AllDamageMultiplier *= 1.2f;
 
                     if (base.LastOwner != null)
                     {

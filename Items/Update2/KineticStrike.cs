@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.PrefabAPI;
 using Alexandria;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -94,6 +95,8 @@ namespace Planetside
             yeah.shadowTimeDelay = 0.01f;
             yeah.shadowLifetime = 1.5f;
             FalldownPrefab = _Fall;
+
+            activeitem.AddItemTip("Using the item creates a targeting reticle. Using the item again locks the reticle to its current position, landing a *massive* damage strike after 10 seconds.");
         }
         public static int KineticBombardmentID;
         public static GameObject KineticStrikeTargetReticle;

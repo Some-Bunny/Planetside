@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 namespace Planetside
 {   
@@ -27,7 +28,7 @@ namespace Planetside
             var item = obj.AddComponent<GunWarrant>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("gunwarrant"), data, obj);
-            string shortDesc = "The Buy To Carry";
+            string shortDesc = "The Right To Carry";
             string longDesc = "Although being a Gungeoneer doesn't require a warrant, the benefits of having one is hard to pass by, especially for Gungeoneers that enjoy a steady supply of new weaponry.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			item.quality = PickupObject.ItemQuality.A;
@@ -36,7 +37,7 @@ namespace Planetside
                 "psog:gun_warrant",
                 "siren"
             };
-            CustomSynergies.Add("Ultra", mandatoryConsoleIDs, null, true);
+            CustomSynergies.Add("Ultra", mandatoryConsoleIDs, null, true).AddItemTip("The Siren achieves its Ultra form.");
             item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
             item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 0.5f);
 
@@ -64,6 +65,7 @@ namespace Planetside
             */
 
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
+            item.AddItemTip("Refills ammo on all your guns. All guns are 50% cheaper, and each standard shop is guaranteed to sell a random gun.");
         }
 
         public static bool Can(ShopItemController s)

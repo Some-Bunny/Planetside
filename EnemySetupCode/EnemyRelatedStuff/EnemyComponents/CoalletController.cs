@@ -14,14 +14,13 @@ using GungeonAPI;
 using SpriteBuilder = ItemAPI.SpriteBuilder;
 using DirectionType = DirectionalAnimation.DirectionType;
 using static DirectionalAnimation;
+using Planetside;
 
 public class CoalletController : BraveBehaviour
 {
-	// Token: 0x06005D0A RID: 23818 RVA: 0x0023A27C File Offset: 0x0023847C
 	public void Start()
 	{
 		base.healthHaver.OnDamaged += this.OnDamaged;
-		base.healthHaver.OnPreDeath += this.OnPreDeath;
 		m_StartRoom = aiActor.GetAbsoluteParentRoom();
 
 	}
@@ -30,47 +29,12 @@ public class CoalletController : BraveBehaviour
 	public void Update()
 	{
 		m_StartRoom = aiActor.GetAbsoluteParentRoom();
-		if (!base.aiActor.HasBeenEngaged)
-		{
-			CheckPlayerRoom();
-		}
-	}
-	private void CheckPlayerRoom()
-	{
-		if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-		{
-			GameManager.Instance.StartCoroutine(LateEngage());
-		}
-		else
-		{
-			base.aiActor.HasBeenEngaged = false;
-		}
-	}
-	private IEnumerator LateEngage()
-	{
-		yield return new WaitForSeconds(0.5f);
-		if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom && base.aiActor.HasBeenEngaged == false)
-		{
-			base.StartCoroutine(SelfIgnite());
-			base.aiActor.HasBeenEngaged = true;
-		}
-		yield break;
 	}
 
-	public override void OnDestroy()
-	{
-		if (base.healthHaver)
-		{
-			base.healthHaver.OnDamaged -= this.OnDamaged;
-			base.healthHaver.OnPreDeath -= this.OnPreDeath;
-		}
-		base.OnDestroy();
-	}
 
 	private IEnumerator SelfIgnite()
     {
-		float RNG = UnityEngine.Random.Range(4, 20);
-		ETGModConsole.Log(RNG.ToString());
+		float RNG = UnityEngine.Random.Range(6, 20);
 		yield return new WaitForSeconds(RNG);
 		if (base.healthHaver != null)
 		{
@@ -80,10 +44,7 @@ public class CoalletController : BraveBehaviour
 		}
 		yield break;
 	}
-	private void OnPreDeath(Vector2 obj)
-	{
-		//AkSoundEngine.PostEvent("Play_TRP_flame_torch_01", base.aiActor.gameObject);
-	}
+
 	private void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
 	{
 		if ((damageTypes & CoreDamageTypes.Water) == CoreDamageTypes.Water)
@@ -105,18 +66,21 @@ public class CoalletController : BraveBehaviour
 
 	private void FIREFIREAAAAAAAAAA()
 	{
-		BulletStatusEffectItem Firecomponent = PickupObjectDatabase.GetById(295).GetComponent<BulletStatusEffectItem>();
-		GameActorFireEffect gameActorFire = Firecomponent.FireModifierEffect;
-		base.aiActor.ApplyEffect(gameActorFire, 1000000f, null);
+		GameActorFireEffect fire = new GameActorFireEffect();
+		fire.CopyEffectFrom(DebuffStatics.hotLeadEffect);
+		fire.duration = 100000;
+		fire.DamagePerSecondToEnemies = 2;
+
+
+        base.aiActor.ApplyEffect(fire, 1, null);
 		base.healthHaver.ApplyDamageModifiers(this.onFireDamageTypeModifiers);
 
 		for(int i = 0; i < base.behaviorSpeculator.MovementBehaviors.Count; i++)
-			{
+		{
 			if (base.behaviorSpeculator.MovementBehaviors[i] is MoveErraticallyBehavior)
 			{
 				MoveErraticallyBehavior moveErraticallyBehavior = base.aiActor.behaviorSpeculator.MovementBehaviors[i] as MoveErraticallyBehavior;
 				moveErraticallyBehavior.PointReachedPauseTime = 0;
-				//moveErraticallyBehavior.ResetPauseTimer();
 			}
 		}
 		base.aiActor.ClearPath();
@@ -130,7 +94,6 @@ public class CoalletController : BraveBehaviour
 				this.ProcessAttackGroup(base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup);
 			}
 		}
-		//base.behaviorSpeculator.AttackCooldown = 0f;
 	}
 
 	private void ProcessAttackGroup(AttackBehaviorGroup attackGroup)
@@ -145,9 +108,6 @@ public class CoalletController : BraveBehaviour
 		}
 	}
 
-	[FormerlySerializedAs("fireEffect2")]
-	public GameActorFireEffect fireEffect;
-
 
 	public float overrideMoveSpeed = -1f;
 
@@ -155,5 +115,22 @@ public class CoalletController : BraveBehaviour
 
 	public string overrideAnimation;
 
-	public List<DamageTypeModifier> onFireDamageTypeModifiers;
+	public List<DamageTypeModifier> onFireDamageTypeModifiers = new List<DamageTypeModifier>() 
+	{
+		new DamageTypeModifier()
+		{
+			damageType = CoreDamageTypes.Fire,
+			damageMultiplier = 0.1f,
+		},
+		new DamageTypeModifier()
+		{
+			damageType = CoreDamageTypes.Ice,
+			damageMultiplier = 25f,
+		},
+        new DamageTypeModifier()
+        {
+            damageType = CoreDamageTypes.Water,
+            damageMultiplier = 25f,
+        }
+    };
 }

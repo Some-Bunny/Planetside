@@ -15,6 +15,7 @@ using MonoMod;
 using SaveAPI;
 using Alexandria.Assetbundle;
 using Planetside.Controllers;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -72,9 +73,10 @@ namespace Planetside
             gun.gunClass = GunClass.EXPLOSIVE;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Funcannon", "Planetside/Resources/GunClips/Funcannon/funcannonfull", "Planetside/Resources/GunClips/Funcannon/funcannonempty");
+			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Funcannon", "Planetside/Resources/GunClips/Funcannon/funcannonfull", "Planetside/Resources/GunClips/Funcannon/funcannonempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Funcannon", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "funcannonfull", "funcannonempty");
 
-			FuncannonProjectileComponent crossbowHandler = projectile.gameObject.AddComponent<FuncannonProjectileComponent>();
+            FuncannonProjectileComponent crossbowHandler = projectile.gameObject.AddComponent<FuncannonProjectileComponent>();
             crossbowHandler.m_projectile = projectile;
 
             Alexandria.Assetbundle.ProjectileBuilders.SetProjectileCollisionRight(projectile, "funcannon_projectile_001", StaticSpriteDefinitions.Projectile_Sheet_Data, 18, 6, false, tk2dBaseSprite.Anchor.MiddleCenter, 16, 6);
@@ -93,7 +95,7 @@ namespace Planetside
 
             Funcannon.FuncannonID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
-
+			gun.AddItemTip("Fires rockets that leave a trail of spores, and burst into a large cloud of spores.");
         }
         public static int FuncannonID;
 		public static Projectile FuncannonSpores;

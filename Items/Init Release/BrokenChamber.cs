@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using SaveAPI;
 using Brave.BulletScript;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -27,6 +28,7 @@ namespace Planetside
 			ItemBuilder.SetupItem(warVase, shortDesc, longDesc, "psog");
 			warVase.quality = PickupObject.ItemQuality.EXCLUDED;
 			warVase.CanBeDropped = false;
+			warVase.AddItemTip("You've met with a terrible fate, haven't you?");
 			BrokenChamber.BrokenChamberID = warVase.PickupObjectId;
 		}
 		public static int BrokenChamberID;

@@ -50,9 +50,10 @@ namespace Planetside
                 laserPointer.transform.parent = shootPosition.gameObject.transform;
                 laserPointer.layer = 22;
                 laserPointerTiledSprite = laserPointer.GetComponent<tk2dTiledSprite>();
-                laserPointerTiledSprite.HeightOffGround = 11;
+                laserPointerTiledSprite.HeightOffGround = 50;
                 laserPointerTiledSprite.renderer.enabled = true;
                 laserPointerTiledSprite.transform.localRotation = Quaternion.Euler(0f, 0f, ReturnDirection().ToAngle());
+                laserPointerTiledSprite.SortingOrder = -10;
             }
         }
 

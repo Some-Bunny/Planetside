@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using SynergyAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -137,7 +138,8 @@ namespace Planetside
 			gun.carryPixelOffset += new IntVector2(9, -1);
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Sawcon", "Planetside/Resources/GunClips/Sawcon/sawfull", "Planetside/Resources/GunClips/Sawcon/sawemptyl");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Sawcon", "Planetside/Resources/GunClips/Sawcon/sawfull", "Planetside/Resources/GunClips/Sawcon/sawemptyl");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Sawcon", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "sawfull", "sawemptyl");
 
 
 
@@ -206,7 +208,7 @@ namespace Planetside
                 "psog:saw_controlled_dispenser",
                 "bullet_bore"
             };
-            CustomSynergies.Add("Screwdriver", yah, null, false);
+			CustomSynergies.Add("Screwdriver", yah, null, false).AddItemTip("Saw Controlled Dispensers projectiles do a stunning explosion on destruction, and Bullet Bores projectiles to damage over time while boring into enemies.");
             new Hook(typeof(CerebralBoreProjectile).GetMethod("HandleBoring", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Sawcon).GetMethod("HandleBoringHook"));
 
 
@@ -219,7 +221,7 @@ namespace Planetside
                 "buzzkill",
 				"super_meat_gun"
             };
-            CustomSynergies.Add("Saw Your Heart Out", two, twoTwo, false);
+			CustomSynergies.Add("Saw Your Heart Out", two, twoTwo, false).AddItemTip("Saw Controlled Dispensers projectiles magnetize Buzzkill and Super Meat Guns projectiles.");
 
 			Gun buzzkill = (PickupObjectDatabase.GetById(341) as Gun);
 			buzzkill.DefaultModule.projectiles[0].gameObject.AddComponent<SawconMagnetAffected>();
@@ -227,7 +229,7 @@ namespace Planetside
             Gun superMeatGun = (PickupObjectDatabase.GetById(479) as Gun);
             superMeatGun.DefaultModule.projectiles[0].gameObject.AddComponent<SawconMagnetAffected>();
 
-
+			gun.AddItemTip("Fires projectiles that stick to enemies, dealing damage over time and exploding after a short period of time.");
             //new Hook(typeof(CerebralBoreProjectile).GetMethod("OnDestroy", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Sawcon).GetMethod("OnDestroyHook"));
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1.5f);
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);

@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Collections;
 using SaveAPI;
 using Brave.BulletScript;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -27,6 +28,7 @@ namespace Planetside
 			ItemBuilder.SetupItem(chamber, shortDesc, longDesc, "psog");
 			chamber.quality = PickupObject.ItemQuality.EXCLUDED;
 			NetheriteChamber.ChaamberID = chamber.PickupObjectId;
+			chamber.AddItemTip("Master Rounds grant bonus health, fire rate and money earned. All items with the word 'Chamber' in it grant 25% damage, including itself.");
 
 		}
 		public static int ChaamberID;

@@ -26,9 +26,8 @@ namespace Planetside
 		{
 			base.aiActor.SetIsFlying(true, "wing");
             base.aiActor.RegisterOverrideColor(GhostColor, "oiled");
-
-            float fard = UnityEngine.Random.Range(1, 25);
-			if (fard == 1)
+            base.aiActor.MovementSpeed *= 0.8f;
+			if (UnityEngine.Random.Range(1, 20) == 1)
             {
 				if (base.aiActor != null && !base.aiActor.healthHaver.IsBoss)
 				{
@@ -36,10 +35,6 @@ namespace Planetside
 					base.aiActor.EraseFromExistence(true);
 				}
 			}
-		}
-		public void Update()
-		{
-
 		}
         private IEnumerator HandleEnemySuck(AIActor target)
         {

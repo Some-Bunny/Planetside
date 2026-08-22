@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -44,7 +45,7 @@ namespace Planetside
             JammedJar.JammedJarID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
-
+            activeitem.AddItemTip("On use, grants a guon stone and 1.5 Curse.");
         }
         public static int JammedJarID;
         public override void Pickup(PlayerController player)

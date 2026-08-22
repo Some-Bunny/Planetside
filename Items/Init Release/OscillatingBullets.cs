@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -51,7 +52,7 @@ namespace Planetside
                 new Keyframe(){time = 0.95f, value = 0.7f, inTangent = 0.75f, outTangent = 0.25f},
                 }
             };
-			
+			item.AddItemTip("Increases damage by 30%. Player projectile speed will oscillate.");
 		}
 		public static AnimationCurve curve;
         public static int OscillatingBulletsID;

@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Dungeonator;
+using FullInspector;
+using UnityEngine;
 namespace Planetside.EnemySetupCode.EnemyRelatedStuff.Behavior_Stuff
 {
-    using System;
-    using System.Collections.Generic;
-    using Dungeonator;
-    using FullInspector;
-    using UnityEngine;
 
-    // Token: 0x02000D15 RID: 3349
+
     public class ModifiedChargeBehavior : BasicAttackBehavior
     {
-        // Token: 0x060046A7 RID: 18087 RVA: 0x0016F7CC File Offset: 0x0016D9CC
         public override void Start()
         {
             base.Start();
@@ -52,14 +48,12 @@ namespace Planetside.EnemySetupCode.EnemyRelatedStuff.Behavior_Stuff
             }
         }
 
-        // Token: 0x060046A8 RID: 18088 RVA: 0x0016F934 File Offset: 0x0016DB34
         public override void Upkeep()
         {
             base.Upkeep();
             base.DecrementTimer(ref this.m_timer, false);
         }
 
-        // Token: 0x060046A9 RID: 18089 RVA: 0x0016F94C File Offset: 0x0016DB4C
         public override BehaviorResult Update()
         {
             base.Update();
@@ -241,6 +235,7 @@ namespace Planetside.EnemySetupCode.EnemyRelatedStuff.Behavior_Stuff
                 if (!string.IsNullOrEmpty(this.hitAnim))
                 {
                     this.State = ChargeBehavior.FireState.Bouncing;
+                    this.m_aiAnimator.PlayUntilFinished(this.hitAnim, true, null, -1f, false);
                 }
                 else
                 {

@@ -20,6 +20,7 @@ using Alexandria.PrefabAPI;
 using HutongGames.PlayMaker.Actions;
 using static UnityEngine.UI.GridLayoutGroup;
 using HarmonyLib;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -144,8 +145,8 @@ namespace Planetside
                 "psog:warp-techs_kit",
                 "psog:teleporting_gunfire"
             };
-            Alexandria.ItemAPI.CustomSynergies.Add("Warp Sickness", mandatoryConsoleIDs, null, true);
-
+            Alexandria.ItemAPI.CustomSynergies.Add("Warp Sickness", mandatoryConsoleIDs, null, true).AddItemTip("Teleporting Gunfires proc chance is temporarily increased to 100% after warping.");
+            activeitem.AddItemTip("On use, places down a Teleporter that can be used from the map. If a Teleporter is already present in the room, warps the player to the teleporter, damaging enemies along the way. Teleporters can be interacted with after warping to them to warp the player back to their starting position.");
         }
 
 

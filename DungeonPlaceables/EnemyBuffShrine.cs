@@ -18,6 +18,9 @@ using UnityEngine.Playables;
 using Alexandria.PrefabAPI;
 using static Planetside.EnemyBuffShrineController;
 using System.Diagnostics;
+using static Planetside.PrisonerSecondSubPhaseController;
+using Alexandria.cAPI;
+using Planetside.Static_Storage;
 
 
 namespace Planetside
@@ -181,16 +184,20 @@ namespace Planetside
 
                                     if (am == 1)
                                     {
-                                        DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(GoopToSpawn()).TimedAddGoopCircle(enemy.sprite.WorldBottomCenter, 2.5f, 0.5f);
+                                        DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(GoopToSpawn()).TimedAddGoopCircle(enemy.sprite.WorldBottomCenter, 2.5f, 0.35f);
+                                        if (__.effectTypes[0] == EffectType.ICE)
+                                        {
+                                            GameManager.Instance.StartCoroutine(DoDelayedFreezing(enemy.sprite.WorldBottomCenter));
+                                        }
                                     }
                                     else
                                     {
                                         for (int a = 0; a < am; a++)
                                         {
-                                            DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(GoopToSpawn(__.effectTypes[a])).TimedAddGoopCircle(enemy.sprite.WorldBottomCenter, 2.5f - (0.625f * a), 0.5f);
+                                            DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(GoopToSpawn(__.effectTypes[a])).TimedAddGoopCircle(enemy.sprite.WorldBottomCenter, 2.5f - (0.625f * a), 0.35f);
                                             if (__.effectTypes[a] == EffectType.ICE)
                                             {
-                                                DeadlyDeadlyGoopManager.FreezeGoopsCircle(enemy.sprite.WorldBottomCenter, 4);
+                                                GameManager.Instance.StartCoroutine(DoDelayedFreezing(enemy.sprite.WorldBottomCenter));
                                             }
                                         }
                                     }
@@ -221,6 +228,14 @@ namespace Planetside
                 }
             }
 
+        }
+
+        private IEnumerator DoDelayedFreezing(Vector3 pos)
+        {
+            yield return new WaitForSeconds(0.1f);
+            yield return null;
+            DeadlyDeadlyGoopManager.FreezeGoopsCircle(pos, 4);
+            yield break;
         }
 
         public void LateUpdate()
@@ -474,8 +489,10 @@ namespace Planetside
 
             var gem = PrefabBuilder.BuildObject("gem [Ice]");
             var spriteGem = gem.AddComponent<tk2dSprite>();
-            spriteGem.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "ice_gem_idle_001");
-
+            spriteGem.sprite.renderer.material.shader = StaticShaders.Default_Shader;
+            
+            spriteGem.renderer.material = new Material(StaticShaders.Default_Shader);
+            
             var animatorGem = gem.AddComponent<tk2dSpriteAnimator>();
             animatorGem.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
             animatorGem.playAutomatically = true;
@@ -488,6 +505,7 @@ namespace Planetside
             sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "enemybuffshrine_idle_001");
             sprite.SortingOrder = 4;
             spriteGem.SortingOrder = 5;
+            sprite.renderer.material = new Material(StaticShaders.Default_Shader);
 
             shrineObject.layer = Layers.FG_Critical;
             sprite.HeightOffGround = 0.25f;
@@ -497,6 +515,7 @@ namespace Planetside
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.HighObstacle);
 
             MajorBreakable statue = shrineObject.AddComponent<MajorBreakable>();
             statue.HitPoints = 25;
@@ -554,6 +573,7 @@ namespace Planetside
             animatorGem.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
             animatorGem.playAutomatically = true;
             animatorGem.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("gempoison");
+            spriteGem.renderer.material = new Material(StaticShaders.Default_Shader);
 
 
 
@@ -562,6 +582,7 @@ namespace Planetside
             sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "enemybuffshrine_idle_001");
             sprite.SortingOrder = 4;
             spriteGem.SortingOrder = 5;
+            sprite.renderer.material = new Material(StaticShaders.Default_Shader);
 
             shrineObject.layer = Layers.FG_Critical;
             sprite.HeightOffGround = 0.25f;
@@ -571,6 +592,7 @@ namespace Planetside
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.HighObstacle);
 
             MajorBreakable statue = shrineObject.AddComponent<MajorBreakable>();
             statue.HitPoints = 25;
@@ -628,6 +650,7 @@ namespace Planetside
             var gem = PrefabBuilder.BuildObject("gem [Fire]");
             var spriteGem = gem.AddComponent<tk2dSprite>();
             spriteGem.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "fire_gem_idle_001");
+            spriteGem.renderer.material = new Material(StaticShaders.Default_Shader);
 
             var animatorGem = gem.AddComponent<tk2dSpriteAnimator>();
             animatorGem.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
@@ -643,12 +666,14 @@ namespace Planetside
             shrineObject.layer = Layers.FG_Critical;
             sprite.HeightOffGround = 0.25f;
             sprite.SortingOrder = 4;
+            sprite.renderer.material = new Material(StaticShaders.Default_Shader);
 
 
             var specBody = shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BulletBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.BeamBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBlocker);
             shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.EnemyBulletBlocker);
+            shrineObject.CreateFastBody(new IntVector2(18, 22), new IntVector2(-1, -5), CollisionLayer.HighObstacle);
 
             MajorBreakable statue = shrineObject.AddComponent<MajorBreakable>();
             statue.HitPoints = 25;

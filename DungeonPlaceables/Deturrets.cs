@@ -237,14 +237,23 @@ namespace Planetside
 
 		}
 
-		public void RunContinuousUpdate()
+		public void OnDisable()
+		{
+            for (int k = this.m_projectiles.Count - 1; k > - 1; k--)
+			{
+				if (this.m_projectiles[k] != null)
+				{
+					if (this.m_projectiles[k].projectile != null)
+                        this.m_projectiles[k].projectile.DieInAir(true);
+                }
+            }
+        }
+
+        public void RunContinuousUpdate()
 		{
 			m_regenTimer -= BraveTime.DeltaTime;
 			IsEnabled = true;
-			if (this)
-			{
-				
-			}
+
 			for (int j = 0; j < this.m_projectiles.Count; j++)
 			{
 				if (!this.m_projectiles[j].projectile || !this.m_projectiles[j].projectile.gameObject.activeSelf)

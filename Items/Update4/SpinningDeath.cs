@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -161,13 +162,15 @@ namespace Planetside
 			{
 				"directional_pad"
 			};
-			CustomSynergies.Add("D-rectional", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			CustomSynergies.Add("D-rectional", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Creates 2 additional spinning beams.");
 
             List<string> optionalConsoleIDs2 = new List<string>
             {
                 "psog:shockchain"
             };
-            CustomSynergies.Add("Overclock", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+			CustomSynergies.Add("Overclock", mandatoryConsoleIDs, optionalConsoleIDs2, true).AddItemTip("Shock-Chain is guaranteed to proc Spinning Death.");
+			item.AddItemTip("Player projectiles have a chance to have 2 rotating beams attached to them. Beams have a chance on hit to create static rotating beams.");
+
         }
 
 

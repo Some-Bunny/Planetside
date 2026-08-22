@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -158,6 +159,8 @@ namespace Planetside
 			Whistler.WhistlerID = gun.PickupObjectId;
             Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
+
+			gun.AddItemTip("Fires low damage, but extremely long lasting projectiles with bouncing, piercing and homing. Projectiles increases in damage when piercing.");
 
             ItemIDs.AddToList(gun.PickupObjectId);			
 		}

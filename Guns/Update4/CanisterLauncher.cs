@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -138,7 +139,8 @@ namespace Planetside
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.gunClass = GunClass.EXPLOSIVE;
 
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Canister", "Planetside/Resources/GunClips/Canister/canister_full", "Planetside/Resources/GunClips/Canister/canister_empty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Canister", "Planetside/Resources/GunClips/Canister/canister_full", "Planetside/Resources/GunClips/Canister/canister_empty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Canister", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "canister_full", "canister_empty");
 
             gun.gunHandedness = GunHandedness.HiddenOneHanded;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(332) as Gun).gunSwitchGroup;
@@ -147,6 +149,7 @@ namespace Planetside
 			gun.encounterTrackable.EncounterGuid = "Can gun can gun, whacha gonna do";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			CanisterLauncher.CanisterLauncherID = gun.PickupObjectId;
+			gun.AddItemTip("Fires canisters that explode on contact with projectiles, turning enemy projectiles friendly and launching them, and doubling the damage of nearby player projectiles.");
 
 		}
 		public static int CanisterLauncherID;

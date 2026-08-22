@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using System.Collections.ObjectModel;
 using SynergyAPI;
+using Alexandria.Integrations;
 namespace Planetside
 {
     public class TableTechDevour: PassiveItem
@@ -48,14 +49,14 @@ namespace Planetside
                 "super_meat_gun",
                 "bloody_9mm"
             };
-            CustomSynergies.Add("KILL KILL KILL", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("KILL KILL KILL", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Increases gore proejctiles fired, guarantees 1 enemy to be devoured per flip.");
             List<string> optionalConsoleIDs2 = new List<string>
             {
                 "ring_of_chest_vampirism",
                 "antibody",
                 "pink_guon_stone"
             };
-            CustomSynergies.Add("Blood For Wood", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            CustomSynergies.Add("Blood For Wood", mandatoryConsoleIDs, optionalConsoleIDs2, true).AddItemTip("Devoured enemies have a chance to spawn heart pickups.");
             TableTechDevour.TableTechDevourID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
 
@@ -122,8 +123,8 @@ namespace Planetside
             projectile.hitEffects.alwaysUseMidair = true;
             projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
             goreProj = projectile;
-            
 
+            item.AddItemTip("Flipped tables fire blood projectiles, scaling with enemy amount. Enemies with low enough HP will get devoured.");
 
         }
         public static Projectile goreProj;

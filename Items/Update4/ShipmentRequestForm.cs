@@ -16,6 +16,7 @@ using GungeonAPI;
 using Pathfinding;
 using SaveAPI;
 using static GameManager;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -64,6 +65,7 @@ namespace Planetside
                 });
             Actions.OnRunStart += OnRunStart;
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
+            activeitem.AddItemTip("On use, air drops 6 random pickups. In the item is instead held until the run is finished (wins and deaths count), air drops 6 higher value pickups at the start of the next run.");
 
         }
         public static void OnRunStart(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)

@@ -24,6 +24,7 @@ using System.IO;
 using Planetside;
 using FullInspector.Internal;
 using UnityEngine.SceneManagement;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -61,7 +62,7 @@ namespace Planetside
             HeresyHammer.HeresyBreakerID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
-
+            activeitem.AddItemTip("Grants passive fire rate. Allows the player to destroy shrines. Destroyed shrines grant rewards such as pickups, money and occasionally items.");
         }
         public static int HeresyBreakerID;
 

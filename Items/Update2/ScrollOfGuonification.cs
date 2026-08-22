@@ -26,6 +26,7 @@ using FullInspector.Internal;
 using Alexandria.PrefabAPI;
 using Planetside.Toolboxes;
 using static UnityEngine.UI.GridLayoutGroup;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -62,8 +63,8 @@ namespace Planetside
 				"pink_guon_stone",
 				"charming_rounds"
 			};
-			CustomSynergies.Add("More To Hearts", mandatoryConsoleIDs, optionalConsoleIDs, true);
-			List<string> ForAmmoSunergy = new List<string>
+			CustomSynergies.Add("More To Hearts", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Heart orbitals have 33% more HP.");
+            List<string> ForAmmoSunergy = new List<string>
 			{
 				"ancient_heros_bandana",
 				"ammo_synthesizer",
@@ -73,8 +74,8 @@ namespace Planetside
 				"holey_grail",
 				"magazine_rack"
 			};
-			CustomSynergies.Add("More To Ammo", mandatoryConsoleIDs, ForAmmoSunergy, true);
-			List<string> ForBlankSunergy = new List<string>
+			CustomSynergies.Add("More To Ammo", mandatoryConsoleIDs, ForAmmoSunergy, true).AddItemTip("Ammo orbitals have 33% more HP.");
+            List<string> ForBlankSunergy = new List<string>
 			{
 				"white_guon_stone",
 				"gold_ammolet",
@@ -87,16 +88,16 @@ namespace Planetside
 				"elder_blank",
 				"blank_bullets"
 			};
-			CustomSynergies.Add("More To Blanks", mandatoryConsoleIDs, ForBlankSunergy, true);
-			List<string> ForKeySynergy = new List<string>
+			CustomSynergies.Add("More To Blanks", mandatoryConsoleIDs, ForBlankSunergy, true).AddItemTip("Blank orbitals have 33% more HP.");
+            List<string> ForKeySynergy = new List<string>
 			{
 				"master_of_unlocking",
 				"shelleton_key",
 				"akey47",
 				"book_of_chest_anatomy"
 			};
-			CustomSynergies.Add("More To Keys", mandatoryConsoleIDs, ForKeySynergy, true);
-			List<string> ForArmorSynergy = new List<string>
+			CustomSynergies.Add("More To Keys", mandatoryConsoleIDs, ForKeySynergy, true).AddItemTip("Key orbitals have 33% more HP.");
+            List<string> ForArmorSynergy = new List<string>
 			{
 				"ac15",
 				"armor_synthesizer",
@@ -105,7 +106,7 @@ namespace Planetside
 				"gunknight_gauntlet",
 				"gunknight_armor"
 			};
-			CustomSynergies.Add("More To Armor", mandatoryConsoleIDs, ForArmorSynergy, true);
+            CustomSynergies.Add("More To Armor", mandatoryConsoleIDs, ForArmorSynergy, true).AddItemTip("Armor orbitals have 33% more HP.");
 
             List<PickupObject> ForCreditSynergy = new List<PickupObject>
             {
@@ -115,11 +116,12 @@ namespace Planetside
 				Items.Loot_Bag,
 				Guns.Microtransaction_Gun
             };
-            ImprovedSynergySetup.Add("More To Greed", new List<PickupObject>() { activeitem }, ForCreditSynergy, true);
+            ImprovedSynergySetup.Add("More To Greed", new List<PickupObject>() { activeitem }, ForCreditSynergy, true).AddItemTip("Credit orbitals have 33% more HP.");
 
             ResourceGuonMaker.ScrollOfGuonificationID = activeitem.PickupObjectId;
 			ItemIDs.AddToList(activeitem.PickupObjectId);
             BuildGuonDummy();
+            activeitem.AddItemTip("Pickups can be turned into protective orbitals with varying stats. Rarer pickups can last longer and can have varying effects.");
         }
 		public static int ScrollOfGuonificationID;
 

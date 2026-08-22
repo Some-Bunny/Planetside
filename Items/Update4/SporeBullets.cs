@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Planetside.Controllers;
+using Alexandria.Integrations;
 
 
 
@@ -204,7 +205,7 @@ namespace Planetside
                 "psog:spore_shot",
 				FoolMode.isFoolish ? "psog:fungannon" :  "psog:funcannon"
             };
-            CustomSynergies.Add("Big Fungus", mandatoryConsoleIDs, null, true);
+            CustomSynergies.Add("Big Fungus", mandatoryConsoleIDs, null, true).AddItemTip("Spores burst into non-reproducing spores that damage enemies.");
 
             BounceProjModifier bouncy = projectile.gameObject.AddComponent<BounceProjModifier>();
 			bouncy.numberOfBounces = 1;
@@ -271,7 +272,9 @@ namespace Planetside
 			sporeProjectile = projectile;
 
 			item.quality = PickupObject.ItemQuality.C;
-		}
+			item.AddItemTip("Chance to fire out spores that stick to enemies. Spores stuck to enemies burst after a short period of time, creating more spores.");
+
+        }
 
 		public static Projectile sporeProjectile;
 

@@ -10,7 +10,7 @@ using Planetside;
 using Brave.BulletScript;
 using Dungeonator;
 
-public class TeleportationImmunity : BraveBehaviour { }
+//public class TeleportationImmunity : BraveBehaviour { }
 
 
 public class FungannonController : BraveBehaviour

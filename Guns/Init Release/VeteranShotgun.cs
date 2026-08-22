@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -116,9 +117,10 @@ namespace Planetside
 				"air_strike",
 				"napalm_strike"
 			};
-			CustomSynergies.Add("Old War", mandatoryConsoleIDs1, optionalConsoleIDs, false);
+			CustomSynergies.Add("Old War", mandatoryConsoleIDs1, optionalConsoleIDs, false).AddItemTip("Turns the shotgugn red and makes it fire in a V formation. Increases the chance to inflict debuffs.");
 			VeteranShotgun.VeteranID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("A standard shotgun that can inflict a large variety of debuffs at random. Debuffs include: Burning, Poison, Freezing, slowness, Cheese, Tarnish, Frailty, Broken Armor, Stun, Green Fire, Charm and Solar Burn.");
 		}
 		public static int VeteranID;
 	}

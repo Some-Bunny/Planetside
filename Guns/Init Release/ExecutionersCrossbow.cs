@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -159,6 +160,7 @@ namespace Planetside
 
             ExecutionersCrossbow.ExecutionersCrossbowID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Charge to fire a spectral arrow that inflicts enemies with Execute. Execute makes enemies explode when they next take damage, dealing a percentage of dealt damage in a large radius.");
 		}
 
         public static int ExecutionersCrossbowID;

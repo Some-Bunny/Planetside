@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -142,6 +143,7 @@ namespace Planetside
 
 			LaserChainsaw.LaserChainsawID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Grants a speed boost while held. Massive damage and stun potential but with very short range.");
 		}
 		public static int LaserChainsawID;
 

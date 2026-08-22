@@ -17,6 +17,7 @@ using static ETGMod;
 using Planetside.DungeonPlaceables;
 using Planetside.Toolboxes;
 using System.Security.Policy;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -112,11 +113,13 @@ namespace Planetside
                 Items.Heavy_Bullets,
                 Actives.Potion_Of_Lead_Skin,
                 Guns.Anvillian
-            });
+            }).AddItemTip("Greatly increases damage and knockback of the Lead Baton.");
+
             item.AddSynergy("Silver Baton", new List<PickupObject>()
             {
                 Items.Silver_Bullets
-            });
+            }).AddItemTip("Deals massively incraesed damage to Jammed Enemies. Instantly kills Umbral enemies.");
+            item.AddItemTip("Swapping weapons creates a melee range slash with very high damage, and can reflect projectiles. Recharges every 10 seconds.");
         }
 
         private static Projectile CaseyBaseProjectileLaunch = (PickupObjectDatabase.GetById(541) as Gun).DefaultModule.chargeProjectiles[0].Projectile.GetComponent<KilledEnemiesBecomeProjectileModifier>().BaseProjectile;

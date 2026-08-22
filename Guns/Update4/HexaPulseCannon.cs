@@ -93,9 +93,10 @@ namespace Planetside
                 mod.projectiles[0] = projectile;
 
                 gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-                gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HexPulseCannon", "Planetside/Resources/GunClips/Pulse/pulseclipFull", "Planetside/Resources/GunClips/Pulse/pulseclipEmpty");
+                //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HexPulseCannon", "Planetside/Resources/GunClips/Pulse/pulseclipFull", "Planetside/Resources/GunClips/Pulse/pulseclipEmpty");
+                gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HexPulseCannon", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "pulseclipYellowFull", "pulseclipEmpty");
 
-                
+
 
 
                 /*

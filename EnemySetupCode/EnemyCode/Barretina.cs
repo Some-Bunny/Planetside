@@ -19,27 +19,33 @@ namespace Planetside
 		public static GameObject prefab;
 		public static readonly string guid = "barretina";
 		//private static tk2dSpriteCollectionData BarretinaCollection;
-		public static GameObject shootpoint;
+		//public static GameObject shootpoint;
+
+
+
 		public static void Init()
-		{
-			Barretina.BuildPrefab();
-		}
-
-
-		public static void BuildPrefab()
 		{
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BarretinaCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("barretina material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BarretinaAnimation").GetComponent<tk2dSpriteAnimation>();
 
-            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				prefab = EnemyBuilder.BuildPrefabBundle("Barretina", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0.8f;
@@ -50,14 +56,14 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = false;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(75f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(70f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.SetIsFlying(true, "Gamemode: Creative");
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1f, 0.25f), "shadowPos");
 
-				companion.aiActor.healthHaver.SetHealthMaximum(75f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(70f, null, false);
 				companion.aiActor.PathableTiles = CellTypes.PIT | CellTypes.FLOOR;
 
 				ImprovedAfterImage image = companion.aiActor.gameObject.AddComponent<ImprovedAfterImage>();
@@ -147,7 +153,7 @@ namespace Planetside
 
 
                 companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-
+				/*
 				List<int> idle_front = new List<int>()
 				{
 					0,
@@ -214,17 +220,12 @@ namespace Planetside
 					46,
 					47
 				};
-
+				*/
 				//bool flag3 = BarretinaCollection == null;
 				//if (flag3)
+				/*
 				{
-					/*
-					BarretinaCollection = SpriteBuilder.ConstructCollection(prefab, "Barretina_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(BarretinaCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], BarretinaCollection);
-					}*/
+
 
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6;
@@ -281,32 +282,33 @@ namespace Planetside
                     EnemyToolbox.MarkAnimationAsSpawn(companion.gameObject.GetComponent<tk2dSpriteAnimator>(), "awake");
 
                 }
+				*/
 
-                EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 1, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_right", new Dictionary<int, string> { { 1, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_right", new Dictionary<int, string> { { 1, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front", new Dictionary<int, string> { { 1, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_left", new Dictionary<int, string> { { 1, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_left", new Dictionary<int, string> { { 1, "Charge" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge_back", new Dictionary<int, string> { { 1, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge_back_right", new Dictionary<int, string> { { 1, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge_front_right", new Dictionary<int, string> { { 1, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge_front", new Dictionary<int, string> { { 1, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge_front_left", new Dictionary<int, string> { { 1, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge_back_left", new Dictionary<int, string> { { 1, "Charge" } });
 
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "attack_back", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "attack_back_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "attack_front_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "attack_front", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "attack_front_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "attack_back_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
 
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_BOSS_doormimic_charge_01" }, { 4, "Play_BOSS_doormimic_appear_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_BOSS_doormimic_charge_01" }, { 4, "Play_BOSS_doormimic_appear_01" } });
 
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
-				prefab.GetComponent<ObjectVisibilityManager>();
+				//prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
 
 
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = new Vector3(1.0625f, 1.9375f);
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
@@ -470,8 +472,9 @@ namespace Planetside
 
                 Game.Enemies.Add("psog:barretina", companion.aiActor);
 
-                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Berretina/berretina_idle_south_001", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("berretina_die_001"), SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Berretina/berretina_idle_south_001", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -483,7 +486,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Berretina/berretina_idle_south_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "berretina_die_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("barretinaiconthing");// ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\barretinaiconthing.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_BARRETINA", "Barretina");
 				PlanetsideModule.Strings.Enemies.Set("#THE_BARRETINA_SHORTDESC", "Sn-eye-per");
@@ -508,42 +511,8 @@ namespace Planetside
 
 		public class EnemyBehavior : BraveBehaviour
 		{
-
-			/*
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
-			*/
 			private void Start()
 			{
-				//m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 
 				  AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Bite_01", base.aiActor.gameObject);
@@ -630,12 +599,6 @@ namespace Planetside
 			public override IEnumerator Top() 
 			{
 
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
-
-				}
 				base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
 				for (int i = -4; i <= 5; i++)
 				{
@@ -677,8 +640,8 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
+
+                base.PostWwiseEvent("Play_WPN_eyeballgun_shot_01", null);
 				for (int i = -1; i <= 1; i++)
 				{
 					base.Fire(new Direction(10*i, DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new Spit());

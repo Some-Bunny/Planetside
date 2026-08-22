@@ -21,8 +21,6 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "cursebulon";
-		//private static tk2dSpriteCollectionData CurseblobCollection;
-		public static GameObject shootpoint;
 		public static void Init()
 		{
 			Cursebulon.BuildPrefab();
@@ -30,25 +28,32 @@ namespace Planetside
 
 		public static void BuildPrefab()
 		{
-            //
+            
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CursebulonCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("cursebulon material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CursebulonAnimation").GetComponent<tk2dSpriteAnimation>();
 
-            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				prefab = EnemyBuilder.BuildPrefabBundle("Cursebulon", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
                 var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
 				Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "blobulon");
 
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
                 companion.aiActor.knockbackDoer.weight = 25;
 				companion.aiActor.MovementSpeed = 4.75f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
-				companion.aiActor.HasShadow = false;
+				companion.aiActor.HasShadow = true;
 				companion.aiActor.IgnoreForRoomClear = false;
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
@@ -63,6 +68,7 @@ namespace Planetside
                 companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
 
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.75f, 0), "shadowPos");
 
                 companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -155,8 +161,10 @@ namespace Planetside
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "pitfall", new string[] { "pitfall" }, new DirectionalAnimation.FlipType[0], DirectionalAnimation.DirectionType.Single);
 
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken", "awaken" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+                companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
-				/*
+                /*
 				{
                     GameObject vfxObj = ItemBuilder.AddSpriteToObject("TarnishVFX", "Planetside/Resources/VFX/BrainHost/brainnerphehehoo1", null);
 
@@ -435,159 +443,157 @@ namespace Planetside
                 }
 				*/
 
-                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken", "awaken" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
-				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				//bool flag3 = CurseblobCollection == null;
-				//if (flag3)
-				{
-					/*
-					CurseblobCollection = SpriteBuilder.ConstructCollection(prefab, "Curseblob_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(CurseblobCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], CurseblobCollection);
-					}
-					*/
+                //bool flag3 = CurseblobCollection == null;
+                //if (flag3)
+                //{
+                /*
+                CurseblobCollection = SpriteBuilder.ConstructCollection(prefab, "Curseblob_Collection");
+                UnityEngine.Object.DontDestroyOnLoad(CurseblobCollection);
+                for (int i = 0; i < spritePaths.Length; i++)
+                {
+                    SpriteBuilder.AddSpriteToCollection(spritePaths[i], CurseblobCollection);
+                }
+                */
+                /*
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
 
 
-					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					6,
-					7,
-					8,
-					9,
-					10,
-					11
+                }, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
 
 
-					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
+                }, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-					12,
-					13,
-					14,
-					15,
-					16,
-				    17
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
 
-					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					18,
-					19,
-					20,
-					21,
-					22,
-					23
-
-
-					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					12,
-					13,
-					14,
-					15,
-					16,
-					17
+                }, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
+                18,
+                19,
+                20,
+                21,
+                22,
+                23
 
 
-					}, "run_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
+                }, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-					18,
-					19,
-					20,
-					21,
-					22,
-					23
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
 
 
-					}, "run_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
+                }, "run_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
+
+                18,
+                19,
+                20,
+                21,
+                22,
+                23
+
+
+                }, "run_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
 
 
 
-					}, "run_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
+                }, "run_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-				    6,
-					7,
-					8,
-					9,
-					10,
-					11
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
 
 
-					}, "run_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
+                }, "run_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-				 32,
-				 33,
-				 34,
-				 35,
-				 36,
-				 37,
-				 38,
-				 39
+             32,
+             33,
+             34,
+             35,
+             36,
+             37,
+             38,
+             39
 
 
 
 
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
+                }, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-				 24,
-				 25,
-				 26,
-				 27,
-				 28,
-				 29,
-				 30,
-				 31
+             24,
+             25,
+             26,
+             27,
+             28,
+             29,
+             30,
+             31
 
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
+                }, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+                {
 
-				 40,
-				 41,
-				 42,
-				 43,
-				 44
+             40,
+             41,
+             42,
+             43,
+             44
 
-					}, "pitfall", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-				}
+                }, "pitfall", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+            }
 
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-				{
-					18,
-				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
-
+            SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
+            {
+                18,
+            }, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 1f;
+            */
                 EnemyToolbox.MarkAnimationAsSpawn(companion.gameObject.GetComponent<tk2dSpriteAnimator>(), "awaken");
 
 
@@ -595,9 +601,9 @@ namespace Planetside
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
-				shootpoint.transform.position = companion.sprite.WorldCenter;
+				shootpoint.transform.position = companion.sprite.WorldBottomCenter + new Vector2(0, 0.375f);
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
 			{
@@ -632,15 +638,16 @@ namespace Planetside
 				bs.StartingFacingDirection = behaviorSpeculator.StartingFacingDirection;
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:cursebulon", companion.aiActor);
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("cursebulon_idle_front_right_003"), SpriteBuilder.ammonomiconCollection);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_006", SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_006", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
 				GoopDoer goopdoer = companion.gameObject.GetOrAddComponent<GoopDoer>();
 				goopdoer.defaultGoopRadius = 0.8f;
-				goopdoer.goopCenter = companion.gameObject;
+				goopdoer.goopCenter = shootpoint;
 				goopdoer.goopDefinition = DebuffLibrary.CursebulonGoop;
 				goopdoer.goopTime = 0.1f;
 
@@ -652,7 +659,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Cursebulon/cursebulon_idle_front_right_006";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "cursebulon_idle_front_right_003";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("cursebulonsmmonomiconportrait");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\cursebulonsmmonomiconportrait.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_CURSEBULON", "Cursebulon");
 				PlanetsideModule.Strings.Enemies.Set("#THE_CURSEBULON_SHORTDESC", "Jelly Or Jammed?");

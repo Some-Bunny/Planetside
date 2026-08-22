@@ -12,6 +12,8 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
+using Alexandria.ItemAPI;
 
 
 namespace Planetside
@@ -26,27 +28,27 @@ namespace Planetside
             GameObject obj = new GameObject(itemName);
             DiasukesPolymorphine activeitem = obj.AddComponent<DiasukesPolymorphine>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
-            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("daisukespolymorph"), data, obj);
+            ItemAPI.ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("daisukespolymorph"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Chaos! Chaos!";
             string longDesc = "An incredibly volatile potion capable of transmogrifying enemies on a whim, with incredibly unpredictable results. A note reads on the back: 'Getting any on your skin will result in near guaranteed death.'";
-            activeitem.SetupItem(shortDesc, longDesc, "psog");
+            ItemAPI.ItemBuilder.SetupItem(activeitem, shortDesc, longDesc, "psog");
             activeitem.sprite.SortingOrder = 3;
 
 
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 200f);
+            activeitem.SetCooldownType(ItemAPI.ItemBuilder.CooldownType.Damage, 200f);
             activeitem.consumable = false;
 
 
             activeitem.quality = PickupObject.ItemQuality.D;
-            activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
+            activeitem.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1f);
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;
-            var ChargeUpSynergy = ItemBuilder.AddSpriteToObjectAssetbundle("Polymorph Fail", Collection.GetSpriteIdByName("daisukespolymorphfailvfx"), Collection);
-            FakePrefab.MarkAsFakePrefab(ChargeUpSynergy);
+            var ChargeUpSynergy = ItemAPI.ItemBuilder.AddSpriteToObjectAssetbundle("Polymorph Fail", Collection.GetSpriteIdByName("daisukespolymorphfailvfx"), Collection);
+            ItemAPI.FakePrefab.MarkAsFakePrefab(ChargeUpSynergy);
             UnityEngine.Object.DontDestroyOnLoad(ChargeUpSynergy);
             DiasukesPolymorphine.PolyFailVFXPrefab = ChargeUpSynergy;
-
+			activeitem.AddItemTip("Picks a random enemy in the room, and all other enemies will be transmogrified into it. If the enemy picked is invalid (minibosses, bosses), deals a small amount of damage instead.");
 
             DiasukesPolymorphine.DiasukesPolymorphineID = activeitem.PickupObjectId;
 			ItemIDs.AddToList(activeitem.PickupObjectId);
@@ -61,93 +63,113 @@ namespace Planetside
 
 
 
-			public override void DoEffect(PlayerController user)
-			{			
-			try
-			{
-				List<AIActor> activeEnemies = user.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
-				bool flag = activeEnemies != null;
-				if (flag)
-				{
-					RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
-					AIActor randomActiveEnemy;
-					
 
-					randomActiveEnemy = user.CurrentRoom.GetRandomActiveEnemy(true);
-					int num = 5;
-					do
-					{
-						randomActiveEnemy = user.CurrentRoom.GetRandomActiveEnemy(true);
-						num--;
-					}
-					while (num > 0 && (this.enemyBlacklist.Contains(randomActiveEnemy.EnemyGuid)));
-					bool ee = num == 0;
-					if (ee)
-					{
-						AkSoundEngine.PostEvent("Play_OBJ_metronome_fail_01", base.gameObject);
-						GameObject original;
-						original = DiasukesPolymorphine.PolyFailVFXPrefab;
-						tk2dSprite ahfuck = original.GetComponent<tk2dSprite>();
-						user.BloopItemAboveHead(ahfuck, "");
-						//ETGModConsole.Log("Daisukes Polymorph couldn't choose an appropriate enemy from you current room, oops!", false);
-						if (randomActiveEnemy != null)
-                        {
-							randomActiveEnemy.healthHaver.ApplyDamage(25f, Vector2.zero, "Epic Polymorph Fail", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
-						}
-					}
-					else
+
+        public bool EnemyIsValid(AIActor aIActor)
+        {
+            if (this.enemyBlacklist.Contains(aIActor.EnemyGuid))
+                return false;
+
+            if (aIActor.healthHaver.IsBoss || aIActor.healthHaver.IsSubboss)
+                return false;
+
+            if (aIActor.HasTag("PSOG:DiasukePolymorphImmune"))
+                return false;
+
+            return true;
+        }
+
+        public override void DoEffect(PlayerController user)
+        {
+            try
+            {
+                List<AIActor> activeEnemies = user.CurrentRoom.GetActiveEnemies(RoomHandler.ActiveEnemyType.All);
+                bool flag = activeEnemies != null;
+                if (flag)
+                {
+                    RoomHandler absoluteRoom = base.transform.position.GetAbsoluteRoom();
+                    AIActor randomActiveEnemy;
+
+
+                    randomActiveEnemy = user.CurrentRoom.GetRandomActiveEnemy(true);
+                    int num = 10;
+                    while (num > 0)
                     {
-						DiasukesPolymorphine.enemiesToReRoll.Clear();
-						DiasukesPolymorphine.enemiesToPostMogModify.Clear();
-						for (int i = 0; i < activeEnemies.Count; i++)
-						{
-							AIActor item = activeEnemies[i];
-							DiasukesPolymorphine.enemiesToReRoll.Add(item);
-						}
-						foreach (AIActor aiactor in DiasukesPolymorphine.enemiesToReRoll)
-						{
-							if (aiactor != randomActiveEnemy && aiactor.encounterTrackable.EncounterGuid != randomActiveEnemy.encounterTrackable.EncounterGuid && !aiactor.healthHaver.IsBoss)
+                        num--;
+                        randomActiveEnemy = user.CurrentRoom.GetRandomActiveEnemy(true);
+                        if (EnemyIsValid(randomActiveEnemy))
+                        {
+                            break;
+                        }
+
+                    }
+
+                    if (num == 0)
+                    {
+                        AkSoundEngine.PostEvent("Play_OBJ_metronome_fail_01", base.gameObject);
+                        GameObject original;
+                        original = DiasukesPolymorphine.PolyFailVFXPrefab;
+                        tk2dSprite ahfuck = original.GetComponent<tk2dSprite>();
+                        user.BloopItemAboveHead(ahfuck, "");
+                        //ETGModConsole.Log("Daisukes Polymorph couldn't choose an appropriate enemy from you current room, oops!", false);
+                        if (randomActiveEnemy != null)
+                        {
+                            randomActiveEnemy.healthHaver.ApplyDamage(40f, Vector2.zero, "Epic Polymorph Fail", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+                        }
+                    }
+                    else
+                    {
+                        DiasukesPolymorphine.enemiesToReRoll.Clear();
+                        DiasukesPolymorphine.enemiesToPostMogModify.Clear();
+                        for (int i = 0; i < activeEnemies.Count; i++)
+                        {
+                            AIActor item = activeEnemies[i];
+                            DiasukesPolymorphine.enemiesToReRoll.Add(item);
+                        }
+                        foreach (AIActor aiactor in DiasukesPolymorphine.enemiesToReRoll)
+                        {
+                            if (aiactor != randomActiveEnemy && aiactor.encounterTrackable.EncounterGuid != randomActiveEnemy.encounterTrackable.EncounterGuid && !aiactor.healthHaver.IsBoss)
                             {
 
-								bool flag3 = aiactor.gameObject.GetComponent<ExplodeOnDeath>();
-								if (flag3)
-								{
-									UnityEngine.Object.Destroy(aiactor.gameObject.GetComponent<ExplodeOnDeath>());
-								}
-								bool flag4 = !aiactor.healthHaver.IsVulnerable;
-								if (flag4)
-								{
-									aiactor.healthHaver.IsVulnerable = true;
-								}
-								{
-									aiactor.Transmogrify(randomActiveEnemy, (GameObject)ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
-								}
-							}
-							else if (aiactor != randomActiveEnemy && aiactor.encounterTrackable.EncounterGuid == randomActiveEnemy.encounterTrackable.EncounterGuid && !aiactor.healthHaver.IsBoss)
-							{
-								LootEngine.DoDefaultItemPoof(aiactor.sprite.WorldCenter, false, true);
-								aiactor.behaviorSpeculator.Stun(3, true);
+                                bool flag3 = aiactor.gameObject.GetComponent<ExplodeOnDeath>();
+                                if (flag3)
+                                {
+                                    UnityEngine.Object.Destroy(aiactor.gameObject.GetComponent<ExplodeOnDeath>());
+                                }
+                                bool flag4 = !aiactor.healthHaver.IsVulnerable;
+                                if (flag4)
+                                {
+                                    aiactor.healthHaver.IsVulnerable = true;
+                                }
+                                {
+                                    aiactor.Transmogrify(randomActiveEnemy, (GameObject)ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
+                                }
+                            }
+                            else if (aiactor != randomActiveEnemy && aiactor.encounterTrackable.EncounterGuid == randomActiveEnemy.encounterTrackable.EncounterGuid && !aiactor.healthHaver.IsBoss)
+                            {
+                                LootEngine.DoDefaultItemPoof(aiactor.sprite.WorldCenter, false, true);
+                                aiactor.behaviorSpeculator.Stun(3, true);
 
-							}
+                            }
 
-						}
-						foreach (AIActor enemy in DiasukesPolymorphine.enemiesToPostMogModify)
-						{
-							this.HandlePostTransmogLootEnemies(enemy);
-							enemy.behaviorSpeculator.Stun(3, true);
+                        }
+                        foreach (AIActor enemy in DiasukesPolymorphine.enemiesToPostMogModify)
+                        {
+                            this.HandlePostTransmogLootEnemies(enemy);
+                            enemy.behaviorSpeculator.Stun(3, true);
 
-						}
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				ETGModConsole.Log(ex.Message, false);
-				ETGModConsole.Log(ex.StackTrace, false);
-			}
-			
-		}
-		public void HandlePostTransmogLootEnemies(AIActor enemy)
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ETGModConsole.Log(ex.Message, false);
+                ETGModConsole.Log(ex.StackTrace, false);
+            }
+
+        }
+        public void HandlePostTransmogLootEnemies(AIActor enemy)
 		{
 			try
 			{

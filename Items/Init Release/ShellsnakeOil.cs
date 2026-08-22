@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 //Garbage Code Incoming
 namespace Planetside
@@ -49,7 +50,7 @@ namespace Planetside
                 "box",
                 "weird_egg"
             };
-            CustomSynergies.Add("Gun Snek Good Maybe?", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Gun Snek Good Maybe?", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Spawns an allied Ammonconda ball every room.");
             item.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
             item.gameObject.AddComponent<RustyItemPool>();
 
@@ -65,7 +66,7 @@ namespace Planetside
              });
             Alexandria.Misc.CustomActions.OnShopItemStarted += OSIS;
             item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Goopton, 1);
-
+            item.AddItemTip("Increases player projectile knockback and size. Items will randomly go on discount.");
         }
 
         public class RandomBoolComp : MonoBehaviour { public void Start() { B = BraveUtility.RandomBool(); rng = UnityEngine.Random.value; } public bool B; public float rng; }

@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -53,9 +54,10 @@ namespace Planetside
 
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Soul Lantern", "Planetside/Resources/GunClips/SoulLantern/soullaternfull", "Planetside/Resources/GunClips/SoulLantern/soullaternempty");
+			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Soul Lantern", "Planetside/Resources/GunClips/SoulLantern/soullaternfull", "Planetside/Resources/GunClips/SoulLantern/soullaternempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Soul Lantern", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "soullaternfull", "soullaternempty");
 
-			Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
+            Projectile projectile = UnityEngine.Object.Instantiate<Projectile>(gun.DefaultModule.projectiles[0]);
 			projectile.gameObject.SetActive(false);
 			FakePrefab.MarkAsFakePrefab(projectile.gameObject);
 			UnityEngine.Object.DontDestroyOnLoad(projectile);
@@ -127,7 +129,7 @@ namespace Planetside
 			gun.light = glow;
 			gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(372) as Gun).muzzleFlashEffects;//new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
-
+			gun.AddItemTip("Fires homing wisps that inflict Possession onto enemies. Possession makes enemies deal damage in a radius around them, scaling with their max HP.");
 			SoulLantern.SoulLanternID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}

@@ -11,6 +11,7 @@ using ItemAPI;
 using MonoMod.RuntimeDetour;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -52,7 +53,8 @@ namespace Planetside
             gun.InfiniteAmmo = false;
             gun.gunClass = GunClass.EXPLOSIVE;
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("AutoCannon", "Planetside/Resources/GunClips/AutoCannon/autocannonfull", "Planetside/Resources/GunClips/AutoCannon/autocannonempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("AutoCannon", "Planetside/Resources/GunClips/AutoCannon/autocannonfull", "Planetside/Resources/GunClips/AutoCannon/autocannonempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("AutoCannon", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "autocannonfull", "autocannonempty");
 
             gun.barrelOffset.transform.localPosition = new Vector3(2.4375f, 0.375f, 0f);
 
@@ -134,15 +136,15 @@ namespace Planetside
             gun.Volley.ModulesAreTiers = true;
 
             gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.8125f, 0.875f);
-            gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/casingBigGun.png", true, 2, 4, 540, 300, null, 0.75f, null, null, 2).gameObject;
+            gun.shellCasing = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("casingBigGun", StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 2, 4, 540, 300, null, 0.75f, null, null, 2).gameObject;
             gun.shellsToLaunchOnFire = 2;
             gun.shellsToLaunchOnReload = 0;
             gun.reloadShellLaunchFrame = 0;
             gun.shellCasingOnFireFrameDelay = 0;
 
 
-            gun.gameObject.transform.Find("Clip").transform.position = new Vector3(1.125f, 0.1875f);
-            gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/bigassmag.png", true, 1, 3, 60, 20, null, 2, "Play_ITM_Crisis_Stone_Impact_02", null, 1).gameObject;
+            gun.gameObject.transform.Find("Clip").transform.position = new Vector3(1.125f, 0);
+            gun.clipObject = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("bigassmag", StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 1, 3, 60, 20, null, 2, "Play_ITM_Crisis_Stone_Impact_02", null, 1).gameObject;
             gun.reloadClipLaunchFrame = 9;
             gun.clipsToLaunchOnReload = 1;
 
@@ -180,7 +182,7 @@ namespace Planetside
 
             Autocannon.AutoCannonID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
-
+            gun.AddItemTip("Fires faster the longer the fire button is held. Fires explosive rounds.");
         }
         public static int AutoCannonID;
     }

@@ -20,6 +20,7 @@ using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
 using Alexandria.PrefabAPI;
+using Alexandria.Integrations;
 //Garbage Code Incoming
 namespace Planetside
 {
@@ -45,52 +46,53 @@ namespace Planetside
                 "psog:tome_of_guonmancy",
                 "blue_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Time", TimeGuon, null, true);
+            CustomSynergies.Add("Chapter Of Time", TimeGuon, null, true).AddItemTip("Doubles orbit speed of the temporary orbitals.");
             List<string> HPUPGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "pink_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Love", HPUPGuon, null, true);
+            CustomSynergies.Add("Chapter Of Love", HPUPGuon, null, true).AddItemTip("Spawns charming goop when temporary orbitals expire.");
             List<string> ClearGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "clear_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Purity", ClearGuon, null, true);
+            CustomSynergies.Add("Chapter Of Purity", ClearGuon, null, true).AddItemTip("Temporary orbitals clear goop around them.");
             List<string> ShootGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "orange_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of War", ShootGuon, null, true);
+            CustomSynergies.Add("Chapter Of War", ShootGuon, null, true).AddItemTip("Temporary orbitals fire a projectile when they expire.");
             List<string> GreenGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "green_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Restoration", GreenGuon, null, true);
+            CustomSynergies.Add("Chapter Of Restoration", GreenGuon, null, true).AddItemTip("Using the item has a small chance to heal the player.");
             List<string> GlassGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "glass_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Glass", GlassGuon, null, true);
+            CustomSynergies.Add("Chapter Of Glass", GlassGuon, null, true).AddItemTip("Using the item has a small chance to give the player a Glass Guon Stone.");
             List<string> BlankGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "white_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Silence", BlankGuon, null, true);
+            CustomSynergies.Add("Chapter Of Silence", BlankGuon, null, true).AddItemTip("Temporary orbitals have a chance to do a micro-blank when they expire.");
             List<string> RedGuon = new List<string>
             {
                 "psog:tome_of_guonmancy",
                 "red_guon_stone"
             };
-            CustomSynergies.Add("Chapter Of Speed", RedGuon, null, true);
+            CustomSynergies.Add("Chapter Of Speed", RedGuon, null, true).AddItemTip("Grants the player a speed boost for every temporary orbital they have.");
             BulletGuonMaker.BuildBasePrefab();
             BulletGuonMaker.TomeOfGuonmancyID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
+            activeitem.AddItemTip("On use, temporarily turns nearby enemy projectiles into protective orbitals that last 15 seconds.");
 
         }
         public static int TomeOfGuonmancyID;

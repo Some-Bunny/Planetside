@@ -20,26 +20,29 @@ namespace Planetside
 		public static GameObject prefab;
 		public static readonly string guid = "glockulus";
 		//private static tk2dSpriteCollectionData GlockulusCollection;
-		public static GameObject shootpoint;
-		public static void Init()
-		{
-			Glockulus.BuildPrefab();
-		}
 
-		public static void BuildPrefab()
+		public static void Init()
 		{
             //
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("GlockulusCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("glockulus material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("GlockulusAnimation").GetComponent<tk2dSpriteAnimation>();
 
-            bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+
+			if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				prefab = EnemyBuilder.BuildPrefabBundle("Glockulus", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
 				var companion = prefab.AddComponent<EnemyBehavior>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 companion.aiActor.knockbackDoer.weight = 50;
 				companion.aiActor.MovementSpeed = 0.8f;
@@ -167,7 +170,7 @@ namespace Planetside
 
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[] {DirectionalAnimation.FlipType.None});
                 EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
-
+				/*
 				List<int> idle_front = new List<int>()
 				{
 					0,
@@ -214,17 +217,9 @@ namespace Planetside
 
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
-				//bool flag3 = GlockulusCollection == null;
-				//if (flag3)
+
 				{
-					/*
-					GlockulusCollection = SpriteBuilder.ConstructCollection(prefab, "Glockulus_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(GlockulusCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], GlockulusCollection);
-					}
-					*/
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front, "idle_front", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_left, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, idle_front_right, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5;
@@ -272,32 +267,34 @@ namespace Planetside
 
 
                 }
+				*/
+
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
-                EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back", new Dictionary<int, string> { { 0, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_right", new Dictionary<int, string> { { 0, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_right", new Dictionary<int, string> { { 0, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front", new Dictionary<int, string> { { 0, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_front_left", new Dictionary<int, string> { { 0, "Charge" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_back_left", new Dictionary<int, string> { { 0, "Charge" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_back", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_back_right", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_front_right", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_front", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_front_left", new Dictionary<int, string> { { 0, "Charge" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_back_left", new Dictionary<int, string> { { 0, "Charge" } });
 
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_front_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack_back_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack_back", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack_back_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack_front_right", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack_front", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack_front_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack_back_left", new Dictionary<int, string> { { 0, "Play_ENM_cult_spew_01" } });
 
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_BOSS_doormimic_charge_01" }, { 3, "Play_BOSS_doormimic_eyes_01" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_BOSS_doormimic_charge_01" }, { 3, "Play_BOSS_doormimic_eyes_01" } });
 
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
-				prefab.GetComponent<ObjectVisibilityManager>();
+				//prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
 				
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
@@ -412,8 +409,9 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("glockulus_idle_front1"), SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -425,7 +423,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Glockulus/glockulus_idle_front1";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "glockulus_idle_front1";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("glockulussheet");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\glockulussheet.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS", "Glockulus");
 				PlanetsideModule.Strings.Enemies.Set("#THE_GLOCKULUS_SHORTDESC", "Eye Spy");
@@ -437,7 +435,13 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:glockulus").ForcedPositionInAmmonomicon = 80;
 				EnemyDatabase.GetEntry("psog:glockulus").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:glockulus").isNormalEnemy = true;
-			}
+
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.bulletBank.GetBullet("homing"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+            }
 		}
 
 
@@ -489,46 +493,10 @@ namespace Planetside
 
 		public class EnemyBehavior : BraveBehaviour
 		{
-			private RoomHandler m_StartRoom;
 
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			private void Start()
 			{
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("465da2bb086a4a88a803f79fe3a27677").bulletBank.bulletBank.GetBullet("homing"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
-
-
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 	
 				  AkSoundEngine.PostEvent("Play_ENM_Tarnisher_Bite_01", base.aiActor.gameObject);

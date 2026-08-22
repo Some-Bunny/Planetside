@@ -9,6 +9,7 @@ using SaveAPI;
 using Brave.BulletScript;
 using Alexandria.cAPI;
 using Alexandria.PrefabAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -127,13 +128,13 @@ namespace Planetside
                 "psog:kunai",
                 "katana_bullets"
             };
-            Alexandria.ItemAPI.CustomSynergies.Add("Dragun Punch", mandatoryConsoleIDs, null, false);
+            Alexandria.ItemAPI.CustomSynergies.Add("Dragun Punch", mandatoryConsoleIDs, null, false).AddItemTip("Tossing kunai also does a medium range slash.");
             List<string> mandatoryConsoleIDs_2 = new List<string>
             {
                 "psog:kunai",
                 "kruller_glaive"
             };
-            Alexandria.ItemAPI.CustomSynergies.Add("Convenient Option", mandatoryConsoleIDs_2, null, false);
+            Alexandria.ItemAPI.CustomSynergies.Add("Convenient Option", mandatoryConsoleIDs_2, null, false).AddItemTip("Swapping to the Kruller Glaive fires 3 glaives instead of kunai.");
             KatanaSlash = (PickupObjectDatabase.GetById(822) as ComplexProjectileModifier);
 
 
@@ -155,6 +156,7 @@ namespace Planetside
             slash.HitSecretRoomWalls = true;
             customSlash = slash;
             GlaiveProjectile = (PickupObjectDatabase.GetById(656) as Gun).DefaultModule.chargeProjectiles[0].Projectile;
+            item.AddItemTip("Throw 3 kunai when swapping weapons. The cooldown for throwing kunai is per weapon.");
         }
         public static KunaiSpecialSlash customSlash;
         public static Projectile GlaiveProjectile;
@@ -219,7 +221,7 @@ namespace Planetside
 
                 bool isGlaive = player.CurrentGun.PickupObjectId == 656;
 
-                GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(isGlaive ? GlaiveProjectile.gameObject : KunaiProjectile.gameObject, player.gunAttachPoint.position, Quaternion.Euler(0f, 0f, angle), true);
+                GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(isGlaive ? GlaiveProjectile.gameObject : KunaiProjectile.gameObject, player.gunAttachPoint.position + (isGlaive ? MathToolbox.GetUnitOnCircle3(player.CurrentGun.CurrentAngle, 1.25f) : Vector3.zero), Quaternion.Euler(0f, 0f, angle), true);
                 Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
                 if (component != null)
                 {

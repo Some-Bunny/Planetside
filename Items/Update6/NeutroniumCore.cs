@@ -12,6 +12,7 @@ using HutongGames.PlayMaker.Actions;
 using static UnityEngine.UI.GridLayoutGroup;
 using static Planetside.AoEBullets;
 using Planetside.Toolboxes;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -34,6 +35,7 @@ namespace Planetside
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ID = item.PickupObjectId;
+            item.AddItemTip("Increases damage. Enemies will be pulled towards your projectiles and beams. Larger projectiles have stronger gravitational pulls.");
 
         }
 		public static int ID;

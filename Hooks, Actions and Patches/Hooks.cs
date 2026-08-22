@@ -12,6 +12,8 @@ using ItemAPI;
 using AnimationType = ItemAPI.BossBuilder.AnimationType;
 using System.Collections;
 using Brave.BulletScript;
+using HarmonyLib;
+using Alexandria.ItemAPI;
 
 
 
@@ -38,11 +40,11 @@ namespace Planetside
 
                 //new Hook(typeof(Foyer).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PlanetsideModule).GetMethod("ReloadBreachShrinesPSOG"));
 
-                new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
+                //new Hook(typeof(RoomHandler).GetMethod("HandleRoomClearReward", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("GalaxyChestReward"));
 
-                new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GalaxyChestPls"));
+                //new Hook(typeof(Chest).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic), typeof(Hooks).GetMethod("GalaxyChestPls"));
 
-                new Hook(typeof(PlayerController).GetMethod("OnDidDamage", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("DamageHook"));
+                //new Hook(typeof(PlayerController).GetMethod("OnDidDamage", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("DamageHook"));
 
                 
                 Hook h = new Hook(
@@ -70,7 +72,7 @@ namespace Planetside
                 typeof(Projectile).GetMethod("ReturnFromBlackBullet", BindingFlags.Public | BindingFlags.Instance),
                 typeof(Hooks).GetMethod("ReturnFromBlackBulletHook"));
 
-                new Hook(typeof(AIActor).GetMethod("TeleportSomewhere", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TeleportationImmunity"));
+                //new Hook(typeof(AIActor).GetMethod("TeleportSomewhere", BindingFlags.Instance | BindingFlags.Public), typeof(Hooks).GetMethod("TeleportationImmunity"));
 
                 //new Hook(typeof(AkSoundEngine).GetMethods().Single((MethodInfo m) => m.Name == "PostEvent" && m.GetParameters().Length == 2 && m.GetParameters()[0].ParameterType == typeof(string)), typeof(Hooks).GetMethod("PostEventHook", BindingFlags.Static | BindingFlags.Public));
             }
@@ -89,12 +91,30 @@ namespace Planetside
             return orig(name, obj);
         }
 
+        [HarmonyPatch(typeof(AIActor), nameof(AIActor.TeleportSomewhere))]
+        public class Patch_AIActor_TeleportSomewhere
+        {
+            [HarmonyPrefix]
+            private static bool OverrideCanTeleport(AIActor __instance)
+            {
+               if (__instance.HasTag("RelocationImmunity"))
+               {
+                    return false;
+               }
+               //TeleportationImmunity//
+               return true;
+            }
+        }
 
+
+
+        /*
         public static void TeleportationImmunity(Action<AIActor, IntVector2?, bool> orig, AIActor self, IntVector2? overrideClearance = null, bool keepClose = false)
         {
             if (self.GetComponent<TeleportationImmunity>() != null) { return; }
             orig(self, overrideClearance, keepClose);
         }
+        */
 
         public static void BecomeBlackBulletHook(Action<Projectile> orig, Projectile self)
         {
@@ -639,7 +659,7 @@ namespace Planetside
                
             }
         }
-
+        /*
         public static void DamageHook(Action<PlayerController, float, bool, HealthHaver> orig, PlayerController self, float damagedone, bool fatal, HealthHaver target)
         {
             orig(self, damagedone, fatal, target);
@@ -647,8 +667,26 @@ namespace Planetside
             {
                 AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BEAT_A_BOSS_UNDER_A_SECOND, true);
             }
-
         }
+        */
+
+        [HarmonyPatch(typeof(PlayerController), nameof(PlayerController.OnDidDamage))]
+        public class Patch_PlayerController_Initialize
+        {
+            [HarmonyPostfix]
+            private static void OverrideCanTeleport(PlayerController __instance, float damageDone, bool fatal, HealthHaver target)
+            {
+                if (target != null)
+                {
+                    if (target.IsBoss && damageDone >= 500 && fatal == true)
+                    {
+                        AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BEAT_A_BOSS_UNDER_A_SECOND, true);
+                    }
+                }
+            }
+        }
+
+
 
         public static void OnQuickRestart1(Action<GameManager, float, QuickRestartOptions> orig, GameManager self, float duration, QuickRestartOptions options = default(QuickRestartOptions))
         {
@@ -808,56 +846,104 @@ namespace Planetside
             }
 		}
 
-        public static void GalaxyChestPls(Action<Chest> orig, Chest self)
-		{
-            orig(self);
-            float rng;
-            rng = UnityEngine.Random.Range(0.0000f, 1.0000f);
-
-            if (!self.IsGlitched && !self.IsMimic && !self.IsRainbowChest && (rng <= 0.0001f))
+        [HarmonyPatch(typeof(RoomHandler), nameof(RoomHandler.HandleRoomClearReward))]
+        public class Patch_RoomHandler_HandleRoomClearReward
+        {
+            [HarmonyPostfix]
+            private static void OverrideCanTeleport(RoomHandler __instance)
             {
-
-                
-                self.sprite.usesOverrideMaterial = true;
-                self.BecomeRainbowChest();
-
-
-                self.IsLocked= false;
-                var texture = StaticTextures.NebulaTexture;
-
-                self.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
-                self.sprite.renderer.material.SetTexture("_EeveeTex", texture);
-
-                self.sprite.renderer.material.DisableKeyword("BRIGHTNESS_CLAMP_ON");
-                self.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_OFF");
-
-                self.lootTable.S_Chance = 0.2f;
-                self.lootTable.A_Chance = 0.2f;
-                self.lootTable.B_Chance = 0.22f;
-                self.lootTable.C_Chance = 0.22f;
-                self.lootTable.D_Chance = 0.16f;
-                self.lootTable.Common_Chance = 0f;
-                self.lootTable.canDropMultipleItems = true;
-                self.lootTable.multipleItemDropChances = new WeightedIntCollection();
-                self.lootTable.multipleItemDropChances.elements = new WeightedInt[1];
-                self.lootTable.overrideItemLootTables = new List<GenericLootTable>();
-                self.lootTable.lootTable = GameManager.Instance.RewardManager.GunsLootTable;
-                for (int i = 0; i < 12; i++)
+                if (UnityEngine.Random.Range(0.0000000f, 1.0000000f) <= 0.0000001f)
                 {
-                    self.lootTable.overrideItemLootTables.Add(GameManager.Instance.RewardManager.GunsLootTable);
-                    self.lootTable.overrideItemLootTables.Add(GameManager.Instance.RewardManager.ItemsLootTable);
+                    //1,000,000
+
+                    PlayerController player = GameManager.Instance.PrimaryPlayer;
+                    Chest rainbow_Chest = GameManager.Instance.RewardManager.Rainbow_Chest;
+                    Chest chest2 = Chest.Spawn(rainbow_Chest, player.CurrentRoom.GetRandomVisibleClearSpot(1, 1));
+                    chest2.sprite.usesOverrideMaterial = true;
+
+                    var texture = StaticTextures.NebulaTexture;
+                    chest2.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
+                    chest2.sprite.renderer.material.SetTexture("_EeveeTex", texture);
+
+                    chest2.sprite.renderer.material.DisableKeyword("BRIGHTNESS_CLAMP_ON");
+                    chest2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_OFF");
+
+                    chest2.lootTable.S_Chance = 0.2f;
+                    chest2.lootTable.A_Chance = 0.2f;
+                    chest2.lootTable.B_Chance = 0.22f;
+                    chest2.lootTable.C_Chance = 0.22f;
+                    chest2.lootTable.D_Chance = 0.16f;
+                    chest2.lootTable.Common_Chance = 0f;
+                    chest2.lootTable.canDropMultipleItems = true;
+                    chest2.lootTable.multipleItemDropChances = new WeightedIntCollection();
+                    chest2.lootTable.multipleItemDropChances.elements = new WeightedInt[1];
+                    chest2.lootTable.overrideItemLootTables = new List<GenericLootTable>();
+                    chest2.lootTable.lootTable = GameManager.Instance.RewardManager.GunsLootTable;
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        chest2.lootTable.overrideItemLootTables.Add(GameManager.Instance.RewardManager.GunsLootTable);
+                        chest2.lootTable.overrideItemLootTables.Add(GameManager.Instance.RewardManager.ItemsLootTable);
+                    }
+                    WeightedInt weightedInt = new WeightedInt();
+                    weightedInt.value = 24;
+                    weightedInt.weight = 1f;
+                    weightedInt.additionalPrerequisites = new DungeonPrerequisite[0];
+                    chest2.lootTable.multipleItemDropChances.elements[0] = weightedInt;
+                    chest2.lootTable.onlyOneGunCanDrop = false;
+                    chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
                 }
-                WeightedInt weightedInt = new WeightedInt();
-                weightedInt.value = 24;
-                weightedInt.weight = 1f;
-                weightedInt.additionalPrerequisites = new DungeonPrerequisite[0];
-                self.lootTable.multipleItemDropChances.elements[0] = weightedInt;
-                self.lootTable.onlyOneGunCanDrop = false;                
             }
-		}
+        }
+
+        [HarmonyPatch(typeof(Chest), nameof(Chest.Initialize))]
+        public class Patch_Chest_Initialize
+        {
+            [HarmonyPostfix]
+            private static void OverrideCanTeleport(Chest __instance)
+            {
+                if (!__instance.IsGlitched && !__instance.IsMimic && !__instance.IsRainbowChest && (UnityEngine.Random.Range(0.0000f, 1.0000f) <= 0.0001f))
+                {
 
 
+                    __instance.sprite.usesOverrideMaterial = true;
+                    __instance.BecomeRainbowChest();
 
+
+                    __instance.IsLocked = false;
+                    var texture = StaticTextures.NebulaTexture;
+
+                    __instance.sprite.renderer.material.shader = Shader.Find("Brave/PlayerShaderEevee");
+                    __instance.sprite.renderer.material.SetTexture("_EeveeTex", texture);
+
+                    __instance.sprite.renderer.material.DisableKeyword("BRIGHTNESS_CLAMP_ON");
+                    __instance.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_OFF");
+
+                    __instance.lootTable.S_Chance = 0.2f;
+                    __instance.lootTable.A_Chance = 0.2f;
+                    __instance.lootTable.B_Chance = 0.22f;
+                    __instance.lootTable.C_Chance = 0.22f;
+                    __instance.lootTable.D_Chance = 0.16f;
+                    __instance.lootTable.Common_Chance = 0f;
+                    __instance.lootTable.canDropMultipleItems = true;
+                    __instance.lootTable.multipleItemDropChances = new WeightedIntCollection();
+                    __instance.lootTable.multipleItemDropChances.elements = new WeightedInt[1];
+                    __instance.lootTable.overrideItemLootTables = new List<GenericLootTable>();
+                    __instance.lootTable.lootTable = GameManager.Instance.RewardManager.GunsLootTable;
+                    for (int i = 0; i < 12; i++)
+                    {
+                        __instance.lootTable.overrideItemLootTables.Add(GameManager.Instance.RewardManager.GunsLootTable);
+                        __instance.lootTable.overrideItemLootTables.Add(GameManager.Instance.RewardManager.ItemsLootTable);
+                    }
+                    WeightedInt weightedInt = new WeightedInt();
+                    weightedInt.value = 24;
+                    weightedInt.weight = 1f;
+                    weightedInt.additionalPrerequisites = new DungeonPrerequisite[0];
+                    __instance.lootTable.multipleItemDropChances.elements[0] = weightedInt;
+                    __instance.lootTable.onlyOneGunCanDrop = false;
+                }
+            }
+        }
 	}
 }
 

@@ -19,23 +19,34 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "bloat_isaac_reference";
-		private static tk2dSpriteCollectionData FodderColection;
-		public static GameObject shootpoint;
+		//private static tk2dSpriteCollectionData FodderColection;
+
+
 		public static void Init()
 		{
-			Bloat.BuildPrefab();
-		}
 
-		public static void BuildPrefab()
-		{
-			//
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BloatAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Bloat", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
+				prefab = EnemyBuilder.BuildPrefabBundle("Bloat", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 0, new IntVector2(0, 0), new IntVector2(8, 9), false);
+				
+				
+
+
+				
 				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 100;
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                companion.aiActor.knockbackDoer.weight = 100;
 				companion.aiActor.MovementSpeed = 0.5f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -105,7 +116,11 @@ namespace Planetside
 					}
 				};
 
-				
+                EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "idle", new Dictionary<int, string> { { 7, "Play_ENM_blobulord_reform_01" } });
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "bonkcharge", new string[] { "bonkcharge" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "bonk", new string[] { "bonk" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "bonk", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_reform_01" } });
+                /*
 				bool flag3 = FodderColection == null;
 				if (flag3)
 				{
@@ -141,7 +156,7 @@ namespace Planetside
 						companion.sprite.usesOverrideMaterial = true;
 						companion.sprite.renderer.material = mat;
 						companion.sprite.renderer.material.SetTexture("_MainTex", texture);
-						*/
+						
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
 					{
@@ -159,13 +174,7 @@ namespace Planetside
 					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 4f;
 
 
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "idle", new Dictionary<int, string> { { 7, "Play_ENM_blobulord_reform_01" } });
-
-					/*
-					 * 3,
-					4,
-					4,
-					*/
+					
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
 					{
 					0,
@@ -177,7 +186,8 @@ namespace Planetside
 					2,
 					
 					}, "bonkcharge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "bonkcharge", new string[] { "bonkcharge" }, new DirectionalAnimation.FlipType[0]);
+
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
 					{
 					3,
@@ -185,8 +195,7 @@ namespace Planetside
 					4,
 
 					}, "bonk", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-					EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "bonk", new string[] { "bonk" }, new DirectionalAnimation.FlipType[0]);
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "bonk", new Dictionary<int, string> { { 0, "Play_ENM_blobulord_reform_01" } });
+					
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, FodderColection, new List<int>
 					{
 					5,
@@ -200,15 +209,17 @@ namespace Planetside
 					//17
 					}, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps =4f;
 				}
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, string> { { 3, "Play_ENM_blobulord_intro_01" }, { 1, "Play_BOSS_dragun_charge_01" },{6, "Play_ENM_blobulord_splash_01" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, string> { { 6, "Sploosh" } });
+				*/
+
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "die", new Dictionary<int, string> { { 3, "Play_ENM_blobulord_intro_01" }, { 1, "Play_BOSS_dragun_charge_01" },{6, "Play_ENM_blobulord_splash_01" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "die", new Dictionary<int, string> { { 6, "Sploosh" } });
 				//m_ENM_blobulord_splash_01
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("fuck").gameObject;
@@ -248,8 +259,9 @@ namespace Planetside
 				Game.Enemies.Add("psog:bloat", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Bloat/bigbloat_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("bigbloat_idle_001"), SpriteBuilder.ammonomiconCollection);
+
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -261,7 +273,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Bloat/bigbloat_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "bigbloat_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetBolatTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetBolatTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_BLOAT", "Bloat");
 				PlanetsideModule.Strings.Enemies.Set("#THE_BLOAT_SHORTDESC", "Planted");

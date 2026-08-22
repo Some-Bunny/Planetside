@@ -18,24 +18,16 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "Bullet_Banker";
-		//private static tk2dSpriteCollectionData TheBulletBankClooection;
-		public static GameObject shootpoint;
-		public static GameObject shootpoint1;
-		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/bulletbanker_bosscard.png");
-		public static string TargetVFX;
-		public static Texture _gradTexture;
+
+
+
 
 		public static void Init()
 		{
 
-			BulletBankMan.BuildPrefab();
-		}
-
-		public static void BuildPrefab()
-		{
-
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BulletBankerCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mate = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("bulletbanker material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("BulletBankerAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
@@ -43,6 +35,15 @@ namespace Planetside
 				var companion = fuckyouprefab.AddComponent<BankerEnemyBehavior>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mate);
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 3f;
@@ -98,7 +99,7 @@ namespace Planetside
 				tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 				tr.receiveShadows = false;
 				var mat = new Material(Shader.Find("Sprites/Default"));
-				mat.mainTexture = _gradTexture;
+				//mat.mainTexture = _gradTexture;
 				mat.SetColor("_Color", new Color(3f, 3f, 3f, 0.9f));
 				tr.material = mat;
 				tr.time = 1f;
@@ -314,17 +315,9 @@ namespace Planetside
 
 
                 //endheal
-                //bool flag3 = TheBulletBankClooection == null;
-                //if (flag3)
+                /*
                 {
-                    /*
-					TheBulletBankClooection = SpriteBuilder.ConstructCollection(fuckyouprefab, "TheBulletBank-Clooection");
-					UnityEngine.Object.DontDestroyOnLoad(TheBulletBankClooection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], TheBulletBankClooection);
-					}
-					*/
+
                     SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
@@ -512,28 +505,31 @@ namespace Planetside
 
 
                 }
-				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "start_heal", new Dictionary<int, string>() { {1, "Play_ENM_screamer_scream_01" } });
-                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "heal", new Dictionary<int, string>() { { 0, "Play_ENM_blobulord_reform_01" } });
+
+				*/
+
+				//EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "start_heal", new Dictionary<int, string>() { {1, "Play_ENM_screamer_scream_01" } });
+                //EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "heal", new Dictionary<int, string>() { { 0, "Play_ENM_blobulord_reform_01" } });
 
                 //					AkSoundEngine.PostEvent("Play_ENM_screamer_scream_01", base.gameObject);
 
-                fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[15].eventAudio = "Play_ENV_time_shatter_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[15].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[15].eventAudio = "Play_ENV_time_shatter_01";
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[15].triggerEvent = true;
 
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[17].eventAudio = "Play_ENM_bombshee_scream_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[17].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[17].eventAudio = "Play_ENM_bombshee_scream_01";
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[17].triggerEvent = true;
 
 				var bs = fuckyouprefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
 				
-				shootpoint = new GameObject("attach");
+				var shootpoint = new GameObject("attach");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = new Vector2(1.5f, 2.5f);
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("attach").gameObject;
 
-				shootpoint1 = new GameObject("bollocks");
+				var shootpoint1 = new GameObject("bollocks");
 				shootpoint1.transform.parent = companion.transform;
 				shootpoint1.transform.position = new Vector2(1.1f, 1.1f);
 				GameObject m_CachedGunAttachPoint1 = companion.transform.Find("bollocks").gameObject;
@@ -706,8 +702,8 @@ namespace Planetside
 				Game.Enemies.Add("psog:bullet_banker", companion.aiActor);
 
 
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("bulletbanker_idle_001"), SpriteBuilder.ammonomiconCollection);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/BulletBanker/bulletbanker_idle_001", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -720,7 +716,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/BulletBanker/bulletbanker_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "bulletbanker_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("bankericon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\bankericon.png");
                 PlanetsideModule.Strings.Enemies.Set("#BULLETBANKNAME", "Bullet Banker");
 				PlanetsideModule.Strings.Enemies.Set("#BULLETBANKSHDES", "Ammunition Exception");
@@ -782,8 +778,14 @@ namespace Planetside
 				//==================
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(companion.aiActor.healthHaver);
-				//==================
-			}
+                //==================
+
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("ring"));
+            }
 
 		}
 
@@ -791,23 +793,14 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				}
 
-				Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, this.distortionIntensity, this.distortionThickness, this.distortionMaxRadius, this.distortionDuration);
+				Exploder.DoDistortionWave(base.BulletBank.sprite.WorldCenter, 0.1f, 0.2f, 30, 0.6f);
 				base.PostWwiseEvent("Play_ENM_blobulord_reform_01", null);
 				base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(0, SpeedType.Absolute), new SpawnDash.Superball());
 
 				yield break;
 			}
-			public float distortionMaxRadius = 30f;
-			public float distortionDuration = 0.6f;
-			public float distortionIntensity = 0.1f;
-			public float distortionThickness = 0.2f;
+
 			public class Superball : Bullet
 			{
 				public Superball() : base("big", false, false, false)
@@ -815,10 +808,6 @@ namespace Planetside
 				}
 				public override IEnumerator Top()
 				{
-					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-					{
-						base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-					}
 					yield return this.Wait(120);
 					base.Vanish(false);
 					yield break;
@@ -864,11 +853,7 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				}
+
 
 				base.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(3, SpeedType.Absolute), new SpawnBottle.Superball());
 				float Amount = UnityEngine.Random.Range(20, 33);
@@ -893,10 +878,7 @@ namespace Planetside
 				}
 				public override IEnumerator Top()
 				{
-					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-					{
-						base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-					}
+
 					base.PostWwiseEvent("Play_OBJ_lantern_shatter_01", null);
 					base.ChangeSpeed(new Speed(20f, SpeedType.Absolute), 80);
 					yield return this.Wait(120);
@@ -950,10 +932,6 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
-				}
 				float Aim = base.AimDirection;
 				base.PostWwiseEvent("Play_ENM_bigshroom_roar_01", null);
 
@@ -1108,10 +1086,7 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("ring"));
-				}
+
 				float Aim = base.AimDirection;
 				float radius = 0.075f;
 				float delta = 15f;
@@ -1286,7 +1261,7 @@ namespace Planetside
 						tr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 						tr.receiveShadows = false;
 						var mat = new Material(Shader.Find("Sprites/Default"));
-						mat.mainTexture = _gradTexture;
+						//mat.mainTexture = _gradTexture;
 						mat.SetColor("_Color", new Color(3f, 0f, 0f, 0.9f));
 						tr.material = mat;
 						tr.time = 1f;

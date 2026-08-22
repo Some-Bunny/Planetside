@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using UnityEngine.EventSystems;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -40,6 +41,7 @@ namespace Planetside
 
 			LDCBullets.TeleportingGunfireID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+            item.AddItemTip("Fired bullets have a chance to create a copy of itself. Beams that damage enemies have a chance to create a temporary sweeping beam.");
 		}
 		public static int TeleportingGunfireID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)

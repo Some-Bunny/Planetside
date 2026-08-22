@@ -15,6 +15,7 @@ using MonoMod;
 using GungeonAPI;
 using Pathfinding;
 using NpcApi;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -47,9 +48,9 @@ namespace Planetside
                 "psog:shop-in-a-box",
                 "ring_of_miserly_protection"
             };
-            CustomSynergies.Add("Make Your Choice.", mandatoryConsoleIDs, null, true);
+            CustomSynergies.Add("Make Your Choice.", mandatoryConsoleIDs, null, true).AddItemTip("The shop will offer 3 things for sale instead of 1.");
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
-
+            activeitem.AddItemTip("Creates a shop that sells 1 pickup / item at a reduced price.");
         }
         public static GenericLootTable shopInABoxPickupTable;
 

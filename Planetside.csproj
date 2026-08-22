@@ -128,6 +128,7 @@
     <Compile Include="DungeonPlaceables\EnemyBuffShrine.cs" />
     <Compile Include="DungeonPlaceables\Gooper.cs" />
     <Compile Include="DungeonPlaceables\Idol.cs" />
+    <Compile Include="DungeonPlaceables\Landmine.cs" />
     <Compile Include="DungeonPlaceables\MarkTileAsTrap.cs" />
     <Compile Include="DungeonPlaceables\NoTeleporterPlaceable.cs" />
     <Compile Include="DungeonPlaceables\TheHelpfulPad.cs" />
@@ -3084,7 +3085,6 @@
     <EmbeddedResource Include="Resources\GunClips\PulseCannon\pulseclipEmpty.png" />
     <EmbeddedResource Include="Resources\GunClips\PulseCannon\pulseclipFull.png" />
     <EmbeddedResource Include="Resources\GunClips\Pulse\pulseclipEmpty.png" />
-    <EmbeddedResource Include="Resources\GunClips\Pulse\pulseclipFull.png" />
     <EmbeddedResource Include="Resources\GunObjects\Clips\collasperClip.png" />
     <EmbeddedResource Include="Resources\GunObjects\Casings\collapsercasing.png" />
     <EmbeddedResource Include="Resources\GunObjects\Casings\revenantcasing.png" />

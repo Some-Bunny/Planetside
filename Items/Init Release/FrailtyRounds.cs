@@ -16,7 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
-
+using Alexandria.Integrations;
 //Garbage Code Incoming
 namespace Planetside
 {
@@ -41,9 +41,10 @@ namespace Planetside
 
             FrailtyRounds.FrailtyRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+            item.AddItemTip("Your projectiles have a chance to inflict Frailty on enemies. Frailty makes enemies take significantly more damage from debuffs, and take more damage overall.");
 
-		}
-		public static int FrailtyRoundsID;
+        }
+        public static int FrailtyRoundsID;
 
 	
 

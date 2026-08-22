@@ -15,6 +15,7 @@ using UnityEngine.UI;
 
 using static Planetside.MultiActiveReloadManager;
 using static ProjectileModule;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -34,17 +35,24 @@ namespace Planetside
                         typeof(PlanetsideBalanceChanges).GetMethod("HeartBottleBuff"));
                     GameManager.Instance.OnNewLevelFullyLoaded += NewFloor;
 
-                    BasicStatPickup HeartPurseItem = PickupObjectDatabase.GetById(425) as BasicStatPickup;
+                    BasicStatPickup HeartPurseItem = Items.Heart_Purse;
                     HeartPurseItem.AddPassiveStatModifier(PlayerStats.StatType.GlobalPriceMultiplier, 0.85f, StatModifier.ModifyMethod.MULTIPLICATIVE);
                     HeartPurseItem.CurrencyToGive = 15;
                     HeartPurseItem.GivesCurrency = true;
+                    HeartPurseItem.AddItemTip("Grants a heart container. Grants 15 Casings on pickup. Reduces shop prices by 15%.");
 
                     new Hook(typeof(Gun).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public),
                         typeof(PlanetsideBalanceChanges).GetMethod("HealOnGunPickup"));
 
-                    BasicStatPickup HeartLunchboxItem = PickupObjectDatabase.GetById(422) as BasicStatPickup;
+                    BasicStatPickup HeartLunchboxItem = Items.Heart_Lunchbox;
                     HeartLunchboxItem.AddPassiveStatModifier(PlayerStats.StatType.AdditionalItemCapacity, 1f, StatModifier.ModifyMethod.ADDITIVE);
                     HeartLunchboxItem.AddPassiveStatModifier(PlayerStats.StatType.AmmoCapacityMultiplier, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                    HeartLunchboxItem.AddItemTip("Grants a heart container. Adds 1 Active Item Slot. Increases max ammo by 10%.");
+
+
+                    Items.Heart_Holster.AddItemTip("Grants a heart container. When picking up a gun, heals the player for half a heart.");
+                    Items.Heart_Bottle.AddItemTip("Grants a heart container. Save up to 2 half-hearts between floors.");
+                    Items.Heart_Locket.AddItemTip("Grants a heart container. Has a chance to charm bullet-kin type enemies.");
 
                     ETGMod.AIActor.OnPreStart = (Action<AIActor>)Delegate.Combine(ETGMod.AIActor.OnPreStart, new Action<AIActor>(AIActorMods));        
                 }

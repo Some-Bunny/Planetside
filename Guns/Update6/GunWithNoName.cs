@@ -27,6 +27,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 using static Planetside.Inquisitor.Repel;
 using static Planetside.GunWithNoName;
 using Planetside.Controllers;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -1360,10 +1361,10 @@ namespace Planetside
                     PickupObjectDatabase.GetById(PortablePylon.PortablePylonID),
                     PickupObjectDatabase.GetById(SurgeGrenade.SurgeGrenadeID),
                     PickupObjectDatabase.GetById(StormBringer.StormBringerID),
-                });
+                }).AddItemTip("Leaves damaging energy along the path it travels, but reduces rate of fire.");
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 0.75f);
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
-
+            gun.AddItemTip("Cannot miss. Fires in consecutive order. Piercing and bounce effects make the hitscan projectiles ricochet between enemies, and homing effects increase the radius of ricochet targeting.");
         }
 
         public static Projectile EnergyProjectile;

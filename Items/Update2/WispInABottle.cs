@@ -20,6 +20,7 @@ using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
 using System.ComponentModel;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -76,7 +77,7 @@ namespace Planetside
 
             WispInABottle.WispInABottleID = testActive.PickupObjectId;
             ItemIDs.AddToList(testActive.PickupObjectId);
-
+            testActive.AddItemTip("On use, inflicts a debuff that is more potent and deals more damage the longer an enemy has been inflicted with it.");
         }
         public static int WispInABottleID;
 

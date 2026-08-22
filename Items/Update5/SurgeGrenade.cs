@@ -1,4 +1,5 @@
-﻿using ItemAPI;
+﻿using Alexandria.Integrations;
+using ItemAPI;
 using Planetside;
 using System;
 using System.Collections;
@@ -50,6 +51,7 @@ namespace Planetside
 
 
             SurgeGrenadeID = item.PickupObjectId;
+            item.AddItemTip("Toss a grenade that creates a lightning strike.");
         }
         public static int SurgeGrenadeID;
         public static ExplosionData lightningData;

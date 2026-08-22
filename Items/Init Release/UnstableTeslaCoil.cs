@@ -9,6 +9,7 @@ using SaveAPI;
 using Brave.BulletScript;
 using Gungeon;
 using GungeonAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -24,7 +25,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("plaetunstableteslacoil"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Hair-Raising Experience";
-            string longDesc = "A very volatile tesla-pack that's been hidden away in a chest to prevent harm. The arcs connect to nearby things and can erupt powerfully enough to confuse enemies.";
+            string longDesc = "A very volatile tesla coil that's been hidden away in a chest to prevent harm. The arcs connect to nearby things and can erupt powerfully enough to confuse enemies.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.B;
             List<string> mandatoryConsoleIDs = new List<string>
@@ -39,11 +40,11 @@ namespace Planetside
                 "potion_of_lead_skin",
                 "platinum_bullets"
             };
-            CustomSynergies.Add("Heavy Metals", mandatoryConsoleIDs, optionalConsoleIDs, true);
-            LinkVFXPrefab = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
+            CustomSynergies.Add("Heavy Metals", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("The stun shockwave has massively increased range and duration.");
+            LinkVFXPrefab = Items.Shock_Rounds.ChainLightningVFX;
             UnstableTeslaCoil.VolatileTeslaPackID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
-
+            item.AddItemTip("Damages enemies in your proximity. Enemies killed by the item will release a stunning shockwave.");
         }
         public static int VolatileTeslaPackID;
 

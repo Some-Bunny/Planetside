@@ -21,6 +21,7 @@ using static ETGMod;
 using Planetside;
 using System.Security.Cryptography;
 using InControl;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -28,16 +29,12 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "Ophanaim";
-		//private static tk2dSpriteCollectionData OphanaimCollectiom;
 
 		public static void Init()
 		{
-			Ophanaim.BuildPrefab();
-		}
-		public static void BuildPrefab()
-		{
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OphanaimCollection").GetComponent<tk2dSpriteCollectionData>();
             Material matEye = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("ophanaim material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OphanaimAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
@@ -46,6 +43,13 @@ namespace Planetside
 				AIAnimator aiAnimator = enemy.aiAnimator;
                 EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, matEye, false);
 
+                enemy.gameObject.layer = 22;
+                enemy.sprite.SortingOrder = 2;
+
+
+                enemy.aiActor.spriteAnimator.Library = h;
+                enemy.aiActor.spriteAnimator.library = h;
+                enemy.aiActor.aiAnimator.spriteAnimator = enemy.aiActor.spriteAnimator;
 
                 enemy.aiActor.knockbackDoer.weight = 35;
 				enemy.aiActor.MovementSpeed = 0.5f;
@@ -57,11 +61,11 @@ namespace Planetside
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
 				enemy.aiActor.PreventFallingInPitsEver = false;
-				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1350f);
+				enemy.aiActor.healthHaver.ForceSetCurrentHealth(1600f);
 				enemy.aiActor.SetIsFlying(true, "Gamemode: Creative", true, true);
 				enemy.aiActor.CollisionKnockbackStrength = 10f;
 				enemy.aiActor.CanTargetPlayers = true;
-				enemy.aiActor.healthHaver.SetHealthMaximum(1350f, null, false);
+				enemy.aiActor.healthHaver.SetHealthMaximum(1600f, null, false);
 
                 EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.massiveShadow, new Vector2(4f, 0.25f), "shadowPos");
 
@@ -87,6 +91,7 @@ namespace Planetside
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "fade_out", new string[] { "fade_out" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "fade_in", new string[] { "fade_in" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "superlaser", new string[] { "superlaser" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "superlaserend", new string[] { "superlaserend" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "begin_cast", new string[] { "begin_cast" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "cast", new string[] { "cast" }, new DirectionalAnimation.FlipType[0]);
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "un_cast", new string[] { "un_cast" }, new DirectionalAnimation.FlipType[0]);
@@ -98,520 +103,527 @@ namespace Planetside
                 EnemyToolbox.AddNewDirectionAnimation(enemy.aiAnimator, "wizardshit", new string[] { "wizardshit" }, new DirectionalAnimation.FlipType[0]);
 
 
+                EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "dash", new Dictionary<int, string> { { 2, "Play_ENM_highpriest_dash_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "dash", new Dictionary<int, string>() { { 4, "enableImage" }, { 17, "disableImage" } });
+                /*
+                                //if (OphanaimCollectiom == null)
+                                {
 
-                //if (OphanaimCollectiom == null)
-				{
-                    /*
-					OphanaimCollectiom = SpriteBuilder.ConstructCollection(prefab, "OphanaimCollection");
-					UnityEngine.Object.DontDestroyOnLoad(OphanaimCollectiom);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], OphanaimCollectiom);
-					}
-                    */
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3,
-					4,
-					5,
-					6,
-					7,
-					}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
+                                    OphanaimCollectiom = SpriteBuilder.ConstructCollection(prefab, "OphanaimCollection");
+                                    UnityEngine.Object.DontDestroyOnLoad(OphanaimCollectiom);
+                                    for (int i = 0; i < spritePaths.Length; i++)
+                                    {
+                                        SpriteBuilder.AddSpriteToCollection(spritePaths[i], OphanaimCollectiom);
+                                    }
 
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    8,
-					9,
-					10,
-					11,
-					12,
-					13,
-					13,
-					14,
-					14,
-					15,
-					15,
-					15,
-					15,
-					14,
-					14,
-					13,
-					12,
-					11,
-					10,
-					9,
-					8
-                    }, "dash", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 30f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "dash", new Dictionary<int, string> { { 2, "Play_ENM_highpriest_dash_01" } });
-                    EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "dash", new Dictionary<int, string>() { { 4, "enableImage" }, { 17, "disableImage" } });
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    16,
-					17,
-					18,
-					19,
-					20,
-					20,
-                    19,
-                    20,
-                    19,
-                    20,
-                    19,
-                    19,
-                    20,
-                    20,
-                    20,
-                    }, "blast_charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "blast_charge", new Dictionary<int, string> { { 1, "Play_BOSS_agunim_charge_03" } });
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6,
+                                    7,
+                                    }, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    21,
-                    21,
-                    22,
-                    22,
-                    23,
-				    24,
-				    25,
-				    26,
-				    27,
-				    28,
-				    29
-                    }, "blast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    47,
-					48,
-					49,
-					50,
-					50,
-					51,
-					51,
-					52,
-					52,
-					53,
-					53,
-					53
-                    }, "charge_laser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    54,
-					55,
-					56,
-					57,
-					58,
-					59
-                    }, "laser", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    53,
-					52,
-					51,
-					50,
-					49,
-					48,
-					47
-                    }, "uncharge_laser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    8,
+                                    9,
+                                    10,
+                                    11,
+                                    12,
+                                    13,
+                                    13,
+                                    14,
+                                    14,
+                                    15,
+                                    15,
+                                    15,
+                                    15,
+                                    14,
+                                    14,
+                                    13,
+                                    12,
+                                    11,
+                                    10,
+                                    9,
+                                    8
+                                    }, "dash", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 30f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    47,
-                    48,
-                    49,
-                    50,
-                    50,
-                    51,
-                    51,
-                    52,
-                    52,
-                    53,
-                    53,
-                    53
-                    }, "charge_mithrix", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    47,
-                    48,
-                    49,
-                    50,
-                    50,
-                    51,
-                    51,
-                    52,
-                    52,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    53,
-                    }, "charge_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    16,
+                                    17,
+                                    18,
+                                    19,
+                                    20,
+                                    20,
+                                    19,
+                                    20,
+                                    19,
+                                    20,
+                                    19,
+                                    19,
+                                    20,
+                                    20,
+                                    20,
+                                    }, "blast_charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59
-                    }, "mithrix", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    21,
+                                    21,
+                                    22,
+                                    22,
+                                    23,
+                                    24,
+                                    25,
+                                    26,
+                                    27,
+                                    28,
+                                    29
+                                    }, "blast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    47,
+                                    48,
+                                    49,
+                                    50,
+                                    50,
+                                    51,
+                                    51,
+                                    52,
+                                    52,
+                                    53,
+                                    53,
+                                    53
+                                    }, "charge_laser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    53,
-                    52,
-                    51,
-                    50,
-                    49,
-                    48,
-                    47
-                    }, "uncharge_mithrix", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    47,
-                    48,
-                    49,
-                    50,
-                    50,
-                    51,
-                    51,
-                    52,
-                    52,
-                    53,
-                    53,
-                    53,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    53,
-                    52,
-                    51,
-                    50,
-                    49,
-                    48,
-                    47,
-                    
-                    }, "superlaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59
+                                    }, "laser", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    53,
+                                    52,
+                                    51,
+                                    50,
+                                    49,
+                                    48,
+                                    47
+                                    }, "uncharge_laser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    60,
-					61,
-					62,
-					63,
-					64,
-					65,
-					66,
-					67,
-					68
-                    }, "fade_out", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    68,
-                    67,
-                    66,
-                    65,
-                    64,
-                    63,
-                    62,
-                    61,
-                    60
-                    }, "fade_in", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
-                    //tp1
-                    //m_BOSS_agunim_intro_01
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    47,
+                                    48,
+                                    49,
+                                    50,
+                                    50,
+                                    51,
+                                    51,
+                                    52,
+                                    52,
+                                    53,
+                                    53,
+                                    53
+                                    }, "charge_mithrix", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_out", new Dictionary<int, string> { { 3, "Play_BOSS_agunim_intro_01" } });
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_in", new Dictionary<int, string> { { 1, "Play_ENM_beholster_teleport_02" } });
-
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_out", new Dictionary<int, string> { { 3, "tp1" } });
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fade_in", new Dictionary<int, string> { { 5, "tp2" } });
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    69,
-                    70,
-                    71,
-                    72,
-                    73,
-                    74,
-                    75,
-                    76,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84
-                    }, "begin_cast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "begin_cast", new Dictionary<int, string> { { 4, "Play_BOSS_agunim_charge_02" }, { 14, "Play_BOSS_agunim_volley_01" } });
-
-                    //m_BOSS_agunim_charge_02
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    76,
-                    75,
-                    74,
-                    73,
-                    72,
-                    71,
-                    70,
-                    69
-                    }, "un_cast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84
-                    }, "cast", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 15f;
-
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    69,
-                    70,
-                    71,
-                    72,
-                    73,
-                    74,
-                    75,
-                    76,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                                        77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
-                    77,
-                    78,
-                    79,
-                    80,
-                    81,
-                    82,
-                    83,
-                    84,
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    47,
+                                    48,
+                                    49,
+                                    50,
+                                    50,
+                                    51,
+                                    51,
+                                    52,
+                                    52,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    53,
+                                    }, "charge_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
 
 
-                    76,
-                    75,
-                    74,
-                    73,
-                    72,
-                    71,
-                    70,
-                    69
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59
+                                    }, "mithrix", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
 
-                    }, "wizardshit", tk2dSpriteAnimationClip.WrapMode.Once).fps = 17f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    53,
+                                    52,
+                                    51,
+                                    50,
+                                    49,
+                                    48,
+                                    47
+                                    }, "uncharge_mithrix", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    47,
-                    48,
-                    49,
-                    50,
-                    50,
-                    51,
-                    51,
-                    52,
-                    52,
-                    53,
-                    53,
-                    53,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59
-                    }, "begin_flight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    }, "flight", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    47,
+                                    48,
+                                    49,
+                                    50,
+                                    50,
+                                    51,
+                                    51,
+                                    52,
+                                    52,
+                                    53,
+                                    53,
+                                    53,
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    53,
+                                    52,
+                                    51,
+                                    50,
+                                    49,
+                                    48,
+                                    47,
+
+                                    }, "superlaser", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
+
+
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    60,
+                                    61,
+                                    62,
+                                    63,
+                                    64,
+                                    65,
+                                    66,
+                                    67,
+                                    68
+                                    }, "fade_out", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    68,
+                                    67,
+                                    66,
+                                    65,
+                                    64,
+                                    63,
+                                    62,
+                                    61,
+                                    60
+                                    }, "fade_in", tk2dSpriteAnimationClip.WrapMode.Once).fps = 15f;
+                                    //tp1
+                                    //m_BOSS_agunim_intro_01
+
+
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    69,
+                                    70,
+                                    71,
+                                    72,
+                                    73,
+                                    74,
+                                    75,
+                                    76,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84
+                                    }, "begin_cast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+
+
+                                    //m_BOSS_agunim_charge_02
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    76,
+                                    75,
+                                    74,
+                                    73,
+                                    72,
+                                    71,
+                                    70,
+                                    69
+                                    }, "un_cast", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
+
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84
+                                    }, "cast", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 15f;
+
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    69,
+                                    70,
+                                    71,
+                                    72,
+                                    73,
+                                    74,
+                                    75,
+                                    76,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                                        77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+                                    77,
+                                    78,
+                                    79,
+                                    80,
+                                    81,
+                                    82,
+                                    83,
+                                    84,
+
+
+                                    76,
+                                    75,
+                                    74,
+                                    73,
+                                    72,
+                                    71,
+                                    70,
+                                    69
+
+                                    }, "wizardshit", tk2dSpriteAnimationClip.WrapMode.Once).fps = 17f;
+
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    47,
+                                    48,
+                                    49,
+                                    50,
+                                    50,
+                                    51,
+                                    51,
+                                    52,
+                                    52,
+                                    53,
+                                    53,
+                                    53,
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59
+                                    }, "begin_flight", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    54,
+                                    55,
+                                    56,
+                                    57,
+                                    58,
+                                    59,
+                                    }, "flight", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 10f;
 
 
 
 
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-                    68,
-                    67,
-                    66,
-                    65,
-                    64,
-                    63,
-                    62,
-                    61,
-                    60,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    68,
+                                    67,
+                                    66,
+                                    65,
+                                    64,
+                                    63,
+                                    62,
+                                    61,
+                                    60,
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6,
+                                    7,
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6,
+                                    7,
+                                    0,
+                                    1,
+                                    2,
+                                    3,
+                                    4,
+                                    5,
+                                    6,
+                                    7,
 
-                    }, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "intro", new Dictionary<int, string> { { 0, "fuck_me" } });
+                                    }, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
 
-                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-					85,
-                    85,
-                    85,
-                    86,
-                    86,
-                    86,
-                    87,
-                    87,
-                    88,
-                    88,
-                    89,
-                    89,
-                    90,
-                    91,
-                    92,
-                    93,
-                    94,
-                    95,
-                    96
 
-					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 16, "fuck_me" } });
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 1, "Play_EyeRoar" } });
+                                    SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
+                                    {
+                                    85,
+                                    85,
+                                    85,
+                                    86,
+                                    86,
+                                    86,
+                                    87,
+                                    87,
+                                    88,
+                                    88,
+                                    89,
+                                    89,
+                                    90,
+                                    91,
+                                    92,
+                                    93,
+                                    94,
+                                    95,
+                                    96
 
-                }
+                                    }, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
 
+
+                                }
+                                */
+
+                EnemyToolbox.AddSoundsToAnimationFrame(enemy.spriteAnimator, "blast_charge", new Dictionary<int, string> { { 1, "Play_BOSS_agunim_charge_03" } });
+
+                EnemyToolbox.AddSoundsToAnimationFrame(enemy.spriteAnimator, "fade_out", new Dictionary<int, string> { { 3, "Play_BOSS_agunim_intro_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(enemy.spriteAnimator, "fade_in", new Dictionary<int, string> { { 1, "Play_ENM_beholster_teleport_02" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "fade_out", new Dictionary<int, string> { { 3, "tp1" } });
+                EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "fade_in", new Dictionary<int, string> { { 5, "tp2" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(enemy.spriteAnimator, "begin_cast", new Dictionary<int, string> { { 4, "Play_BOSS_agunim_charge_02" }, { 14, "Play_BOSS_agunim_volley_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "intro", new Dictionary<int, string> { { 0, "fuck_me" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(enemy.spriteAnimator, "death", new Dictionary<int, string> { { 9, "fuck_me" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(enemy.spriteAnimator, "death", new Dictionary<int, string> { { 1, "Play_EyeRoar" } });
 
 
                 enemy.aiActor.specRigidbody.PixelColliders.Clear();
@@ -1269,6 +1281,7 @@ namespace Planetside
                         UsesBeamProjectileWithoutModule = true,
                         EnemyChargeSound = "Play_BOSS_omegaBeam_charge_01",
                         FireAnimation = "superlaser",
+                        PostFireAnimation = "superlaserend",
                         beamSelection = ShootBeamBehavior.BeamSelection.Specify,
                         specificBeamShooters = new List<AIBeamShooter2>() { A },
                         trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
@@ -1354,6 +1367,7 @@ namespace Planetside
                         AdditionalHeightOffset = 11,
                         EnemyChargeSound = "Play_BOSS_omegaBeam_charge_01",
                         FireAnimation = "superlaser",
+                        PostFireAnimation = "superlaserend",
                         beamSelection = ShootBeamBehavior.BeamSelection.Specify,
                         specificBeamShooters = new List<AIBeamShooter2>() { A },
                         trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
@@ -1399,8 +1413,7 @@ namespace Planetside
                         MinDistanceFromPlayer = 9f,
                         MaxDistanceFromPlayer = 15f,
                         teleportInAnim = "fade_in",
-                                                teleportOutAnim = "fade_out",
-
+                        teleportOutAnim = "fade_out",
                         AttackCooldown = 0f,
                         InitialCooldown = 0.5f,
                         RequiresLineOfSight = false,
@@ -1439,6 +1452,7 @@ namespace Planetside
                         AdditionalHeightOffset = 11,
                         EnemyChargeSound = "Play_BOSS_omegaBeam_charge_01",
                         FireAnimation = "superlaser",
+                        PostFireAnimation = "superlaserend",
                         UsesBeamProjectileWithoutModule = true,
                         beamSelection = ShootBeamBehavior.BeamSelection.Specify,
                         specificBeamShooters = new List<AIBeamShooter2>() { A },
@@ -1656,8 +1670,8 @@ namespace Planetside
 					miniBossIntroDoer.SkipBossCard = true;
 					enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
 				}
-				
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/ophanaimbossiconpng", SpriteBuilder.ammonomiconCollection);
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.VFX_Sheet_Data.GetSpriteDefinition("ophanaimbossiconpng"), SpriteBuilder.ammonomiconCollection);
+
 				if (enemy.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(enemy.GetComponent<EncounterTrackable>());
@@ -1673,7 +1687,7 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.IsEnemy = true;
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
-				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/ophanaimbossiconpng";
+				enemy.encounterTrackable.journalData.AmmonomiconSprite = "ophanaimbossiconpng";
 				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ophanaimsheetrt");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\ophanaimsheetrt.png");
                 PlanetsideModule.Strings.Enemies.Set("#OPHANAIMAMMONOMICON", "Ophanaim");
 				PlanetsideModule.Strings.Enemies.Set("#OPHANAIMAMMONOMICONSHORT", "Observant Aimgel");
@@ -1793,32 +1807,22 @@ namespace Planetside
                     PlanetsideModule.Strings.Enemies.Set("#LENSHOT", "Lenshot");
 
 
-                    var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Ophanaim/solarblast_idle_001", null, false);
+                    var blessingObj = PrefabBuilder.BuildObject("SolarBlastEffect");
                     FakePrefab.MarkAsFakePrefab(blessingObj);
                     UnityEngine.Object.DontDestroyOnLoad(blessingObj);
-                    tk2dSpriteAnimator animator = blessingObj.GetOrAddComponent<tk2dSpriteAnimator>();
-                    tk2dSpriteAnimation animation = blessingObj.AddComponent<tk2dSpriteAnimation>();
 
-                    tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(blessingObj, ("SolarBlast_Collection"));
+                    var spr = blessingObj.AddComponent<tk2dSprite>();
+                    spr.collection = Collection;
 
-                    tk2dSpriteAnimationClip idleClip = new tk2dSpriteAnimationClip() { name = "idle", frames = new tk2dSpriteAnimationFrame[0], fps = 10 };
-                    List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
+                    tk2dSpriteAnimator animator = blessingObj.AddComponent<tk2dSpriteAnimator>();
 
-                    for (int i = 1; i < 8; i++)
-                    {
-                        tk2dSpriteCollectionData collection = DeathMarkcollection;
-                        int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/Ophanaim/solarblast_idle_00{i}", collection);
-                        tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-                        frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.MiddleCenter);
-                        frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-                    }
-                    idleClip.frames = frames.ToArray();
-                    idleClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.Once;
-                    animator.Library = animation;
-                    animator.Library.clips = new tk2dSpriteAnimationClip[] { idleClip };
-                    animator.DefaultClipId = animator.GetClipIdByName("idle");
+                    animator.Library = h;
+                    animator.library = h;
+
+                    animator.DefaultClipId = animator.GetClipIdByName("SOLARBLAST");
                     animator.playAutomatically = true;
-                    
+                    var kill = animator.AddComponent<SpriteAnimatorKiller>();
+                    kill.animator = animator;
 
                     animator.sprite.usesOverrideMaterial = true;
                     Material spriteMat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -1833,8 +1837,21 @@ namespace Planetside
                 }
                 {
                     //string eyeDefString = "Planetside/Resources/VFX/Ophanaim/Minion/";
-                    GameObject vfxObj = ItemBuilder.SpriteFromBundle("EyeballMinion", Collection.GetSpriteIdByName("babyeye_idle_front_001"), Collection);//ItemBuilder.AddSpriteToObject("EyeballMinion", eyeDefString + "babyeye_idle_front_001", null);
-                    tk2dSpriteAnimator eyeAnimator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+                    //GameObject vfxObj = ItemBuilder.SpriteFromBundle("EyeballMinion", Collection.GetSpriteIdByName("babyeye_idle_front_001"), Collection);//ItemBuilder.AddSpriteToObject("EyeballMinion", eyeDefString + "babyeye_idle_front_001", null);
+                    //tk2dSpriteAnimator eyeAnimator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+                    var vfxObj = PrefabBuilder.BuildObject("Lenshot");
+                    FakePrefab.MarkAsFakePrefab(vfxObj);
+                    UnityEngine.Object.DontDestroyOnLoad(vfxObj);
+
+                    var spr = vfxObj.AddComponent<tk2dSprite>();
+                    spr.collection = Collection;
+
+                    tk2dSpriteAnimator eyeAnimator = vfxObj.AddComponent<tk2dSpriteAnimator>();
+
+                    eyeAnimator.Library = h;
+                    eyeAnimator.library = h;
+
+
                     AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
 
                     eyeAnimator.sprite.usesOverrideMaterial = true;
@@ -1860,19 +1877,21 @@ namespace Planetside
                         Flipped = new DirectionalAnimation.FlipType[6],
                         AnimNames = new string[]
                         {
-                        "idle_right",
-                        "idle_right",
-                        "idle_right",
-                        "idle_front",
-                        "idle_left",
-                        "idle_left"
+                        "babyeye_right",
+                        "babyeye_right",
+                        "babyeye_right",
+                        "babyeye_front",
+                        "babyeye_left",
+                        "babyeye_left"
                         }
                     };
-                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "babyeye_die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
                     vfxObj.AddComponent<MeshFilter>();
                     vfxObj.AddComponent<MeshRenderer>();
 
+
+                    /*
                     SpriteBuilder.AddAnimation(eyeAnimator, Collection, new List<int>()
                     {
                         Collection.GetSpriteIdByName("babyeye_idle_front_001"),
@@ -1909,7 +1928,8 @@ namespace Planetside
                         Collection.GetSpriteIdByName("babyeye_idle_spawn_005"),
                         Collection.GetSpriteIdByName("babyeye_idle_spawn_006"),
                     }, "spawn", tk2dSpriteAnimationClip.WrapMode.Once, 7);
-                    
+                    */
+
 
                     AdvancedBodyPartController bodyPart = vfxObj.AddComponent<AdvancedBodyPartController>();
                     bodyPart.Name = "eye";
@@ -1976,6 +1996,7 @@ namespace Planetside
                     };
                     EyeBallMinion = vfxObj;
                 }
+                /*
                 {
                     var blessingObj = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Ophanaim/ophanaim_wing_left", null, false);
                     FakePrefab.MarkAsFakePrefab(blessingObj);
@@ -2017,10 +2038,11 @@ namespace Planetside
                     WingRight = blessingObj;
 
                 }
+                */
             }
         }
-        public static GameObject WingLeft;
-        public static GameObject WingRight;
+        //public static GameObject WingLeft;
+        //public static GameObject WingRight;
         public static AIBulletBank.Entry suckLessEntry;
 
 

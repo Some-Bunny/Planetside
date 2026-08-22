@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.PrefabAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -50,7 +51,7 @@ namespace Planetside
                 "roll_bomb",
                 "portable_table_device"
             };
-            CustomSynergies.Add("Flip-Side", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Flip-Side", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Fires 2 additional bolts of electricity.");
 
             List<string> optionalConsoleIsDs = new List<string>
             {
@@ -59,9 +60,10 @@ namespace Planetside
                 "shock_rounds"
             };
             SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.BATTERY_POWERED);
-            CustomSynergies.Add("Shocker", mandatoryConsoleIDs, optionalConsoleIsDs, true);
+            CustomSynergies.Add("Shocker", mandatoryConsoleIDs, optionalConsoleIsDs, true).AddItemTip("Electric bolt damage and range is increased.");
             ElectrostaticGuonStone.ElectrostaticGuonStoneID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
+            item.AddItemTip("Grants a guon stone that creates a damaging tether between it and the player. When the guon stone is struck by a bullet it discharges short range bolts of electricity.");
 
         }
         public static int ElectrostaticGuonStoneID;

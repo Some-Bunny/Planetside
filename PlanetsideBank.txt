@@ -72,6 +72,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3168919820	Play_HornofWar			\Default Work Unit\Play_HornofWar	
 	3188899243	Play_CentaurAlarm			\Default Work Unit\Play_CentaurAlarm	
 	3191772219	Play_CryoClose_01			\Default Work Unit\Play_CryoClose_01	
+	3278484415	Play_SquishStep			\Default Work Unit\Play_SquishStep	
 	3313095580	Play_Snipeilodon_Launch			\Default Work Unit\Play_Snipeilodon_Launch	
 	3338421947	Play_Dodge			\Default Work Unit\Play_Dodge	
 	3422393786	Play_Tear			\Default Work Unit\Play_Tear	
@@ -175,6 +176,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	654684102	HornofWar	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\HornofWar_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\HornofWar		48249
 	657969940	Vertebreak_01	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Vertebreak_01_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\Vertebreak_Shot\Vertebreak_01		6519
 	660714469	CentaurHurt	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\CentaurHurt_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\CentaurHurt		52765
+	678717720	SquishyStep	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\SND_FS_barefoot_stone_01_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\SquishStep\SquishyStep		2309
 	691449262	Snipeilodon_Chain	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\Snipeilodon_Chain_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\Snipeilodon_Chain		68939
 	694271253	DoubleBarrel	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\DoubleBarrel_F7D0E330.wem		\Actor-Mixer Hierarchy\Default Work Unit\DoubleBarrel		16442
 	694888182	PSOG_MUS_DEEP_01_Intro_Secret	C:\Users\maxvo\Documents\WwiseProjects\PlanetsideBank\.cache\Windows\SFX\PSOG_MUS_DEEP_01_Intro_Secret_AD29F36A.wem		\Actor-Mixer Hierarchy\Default Work Unit\PSOG_MUS_DEEP_01_Intro_Secret		1156236

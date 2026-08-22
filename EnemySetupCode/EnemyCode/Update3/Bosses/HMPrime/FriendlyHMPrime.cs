@@ -293,6 +293,7 @@ namespace Planetside
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("HMPrimeCollection").GetComponent<tk2dSpriteCollectionData>();
             Material matRobot = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("hmprime material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("HMPrimeAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (robotShopkeeperprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
@@ -326,9 +327,15 @@ namespace Planetside
 
 				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.largeShadow, new Vector2(1.5f, 0.25f), "shadowPos");
 
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
 
 
-				companion.aiActor.specRigidbody.PixelColliders.Clear();
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 
 				{
@@ -407,7 +414,7 @@ namespace Planetside
 
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[1], new DirectionalAnimation.FlipType[1]);
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "broken", new string[] { "broken_right", "broken_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "broken", new string[] { "broken", "broken" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "move", new string[1], new DirectionalAnimation.FlipType[1]);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death_right", "death_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "deathproper", new string[] { "death"}, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
@@ -462,15 +469,9 @@ namespace Planetside
 
 				//bool flag3 = RobotShopkeeperCollection == null;
 				//if (flag3)
+				/*
 				{
-					/*
-					RobotShopkeeperCollection = SpriteBuilder.ConstructCollection(robotShopkeeperprefab, "RobotShopkeeperCollection");
-					UnityEngine.Object.DontDestroyOnLoad(RobotShopkeeperCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], RobotShopkeeperCollection);
-					}
-					*/
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
@@ -1086,7 +1087,9 @@ namespace Planetside
 
 				}
 
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> {
+				*/
+
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> {
 					{ 2, "Play_ENM_hammer_target_01" },
 					{ 4, "Play_ENM_hammer_target_01" },
 					{ 6, "Play_ENM_hammer_target_01" },
@@ -1106,12 +1109,12 @@ namespace Planetside
 					{ 43, "Play_OBJ_nuke_blast_01" },
 					{ 44, "Play_BOSS_RatMech_Stomp_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string> {
 					{ 10, "CryingAboutIt" },
 					{ 42, "KaBoom" },
 					{ 43, "Lights" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death_left", new Dictionary<int, string> {
 					{ 0, "Play_ENM_hammer_target_01" },
 					{ 2, "Play_ENM_hammer_target_01" },
 					{ 4, "Play_ENM_hammer_target_01" },
@@ -1120,7 +1123,7 @@ namespace Planetside
 					{ 10, "Play_BOSS_RatMech_Squat_01" },
 					{ 15, "Play_BOSS_doormimic_land_01" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_right", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death_right", new Dictionary<int, string> {
 					{ 0, "Play_ENM_hammer_target_01" },
 					{ 2, "Play_ENM_hammer_target_01" },
 					{ 4, "Play_ENM_hammer_target_01" },
@@ -1129,18 +1132,18 @@ namespace Planetside
 					{ 10, "Play_BOSS_RatMech_Squat_01" },
 					{ 15, "Play_BOSS_doormimic_land_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_left", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death_left", new Dictionary<int, string> {
 					{ 0, "SetToNotDieKinda" },
 					{ 1, "Wimper" },
 					{ 15, "Fartd" },
 
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "death_right", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "death_right", new Dictionary<int, string> {
 					{ 0, "SetToNotDieKinda" },
 					{ 1, "Wimper" },
 					{ 15, "Fartd" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "cooldownlaser", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "cooldownlaser", new Dictionary<int, string> {
 					{ 16, "ReleaseSparks" },
 					{ 17, "ReleaseSparks" },
 					{ 18, "ReleaseSparks" },
@@ -1157,7 +1160,7 @@ namespace Planetside
 					{ 29, "ReleaseSparks" },
 				});
 
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "cooldownlaser", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "cooldownlaser", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_omegaBeam_fade_01" },
 					{ 17, "Play_BOSS_RatMech_Squat_01" },
 					{ 30, "Play_BOSS_RatMech_Target_01" },
@@ -1165,7 +1168,7 @@ namespace Planetside
 
 				});
 
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "primelaser", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "primelaser", new Dictionary<int, string> {
 					{ 2, "Play_BOSS_RatMech_Squat_01" },
 					{ 5, "Play_BOSS_RatMech_Lights_01" },
 					{ 22, "Play_ENM_hammer_target_01" },
@@ -1178,88 +1181,91 @@ namespace Planetside
 					{ 29, "Play_BOSS_omegaBeam_charge_01" },
 				});
 
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "primelaser", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "primelaser", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 30, "PrimeLasers" },
 				});
 
 				//"fireball_up_right", "fireball_down_right", "fireball_down_left", "fireball_up_left"
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "talk", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "talk", new Dictionary<int, string> {
 					{ 1, "Play_DistressSiren" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "broken", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "broken", new Dictionary<int, string> {
 					{ 1, "Play_DistressSiren" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "broken_left", new Dictionary<int, string> {
+				/*
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "broken_left", new Dictionary<int, string> {
 					{ 1, "Play_DistressSiren" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "broken_right", new Dictionary<int, string> {
+				
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "broken_right", new Dictionary<int, string> {
 					{ 1, "Play_DistressSiren" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_up_right", new Dictionary<int, string> {
+				*/
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "fireball_up_right", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 3, "Play_WPN_planetgun_reload_01" },
 				});
 
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_down_right", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "fireball_down_right", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 3, "Play_WPN_planetgun_reload_01" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_down_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "fireball_down_left", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 3, "Play_WPN_planetgun_reload_01" },
 				});
 
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "fireball_up_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "fireball_up_left", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 3, "Play_WPN_planetgun_reload_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_right", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "chargeball_up_right", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 7, "CreateChargeEffect(UR)" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_right", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "chargeball_up_right", new Dictionary<int, string> {
 					{ 0, "Play_BOSS_RatMech_Eye_01" },
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 7, "Play_BOSS_RatMech_Shutter_01" },
 					{ 11, "Play_BOSS_RatMech_Hop_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_left", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "chargeball_down_left", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 7, "CreateChargeEffect(DL)" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "chargeball_down_left", new Dictionary<int, string> {
 					{ 0, "Play_BOSS_RatMech_Eye_01" },
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 7, "Play_BOSS_RatMech_Shutter_01" },
 					{ 11, "Play_BOSS_RatMech_Hop_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_left", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "chargeball_up_left", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 7, "CreateChargeEffect(UL)" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_up_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "chargeball_up_left", new Dictionary<int, string> {
 					{ 0, "Play_BOSS_RatMech_Eye_01" },
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 7, "Play_BOSS_RatMech_Shutter_01" },
 					{ 11, "Play_BOSS_RatMech_Hop_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_right", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "chargeball_down_right", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 7, "CreateChargeEffect(DR)" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "chargeball_down_right", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "chargeball_down_right", new Dictionary<int, string> {
 					{ 0, "Play_BOSS_RatMech_Eye_01" },
 					{ 1, "Play_BOSS_RatMech_Squat_01" },
 					{ 7, "Play_BOSS_RatMech_Shutter_01" },
 					{ 11, "Play_BOSS_RatMech_Hop_01" },
 				});
 
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "ubercharge", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "ubercharge", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 22, "BAM" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "overcharged", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "overcharged", new Dictionary<int, string> {
 					{ 0, "Stop" },
 					{ 1, "ReleaseSparks" },
 					{ 2, "ReleaseSparks" },
@@ -1270,7 +1276,7 @@ namespace Planetside
 					{ 7, "ReleaseSparks" },
 					{ 8, "ReleaseSparks" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "ubercharge", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "ubercharge", new Dictionary<int, string> {
 					{ 0, "Play_BOSS_RatMech_Target_01" },
 					{ 2, "Play_BOSS_RatMech_Barrel_01" },
 					{ 5, "Play_BOSS_RatMech_Barrel_01" },
@@ -1278,12 +1284,12 @@ namespace Planetside
 					{ 11, "Play_BOSS_RatMech_Barrel_01" },
 					{ 17, "Play_BOSS_RatMech_Shutter_01" }
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "overcharged", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "overcharged", new Dictionary<int, string> {
 					{ 0, "Play_BOSS_RatMech_Stomp_01" },
 					{ 17, "Play_BOSS_RatMech_Target_01" },
 					{ 32, "Play_BOSS_RatMech_Squat_01" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "awaken", new Dictionary<int, string> {
 					{ 1, "Play_BOSS_RatMech_Target_01" },
 					{ 20, "Play_BOSS_RatMech_Bomb_01" },
 					{ 22, "Play_BOSS_RatMech_Squat_01" },
@@ -1293,7 +1299,7 @@ namespace Planetside
 					{ 57, "Play_BOSS_RatMech_Eye_01" } ,
 					{ 62, "Play_BOSS_RatMech_Target_01" } ,
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "awaken", new Dictionary<int, string> {
 					{ 1, "IntroSpeak1" },
 					{ 22, "IntroSpeak2" },
 					{ 57, "IntroSpeak3" },
@@ -1303,7 +1309,7 @@ namespace Planetside
 					{ 51, "DoublePoof" },
 					{ 39, "GunPositionPoofs" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_bottom_left", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "move_bottom_left", new Dictionary<int, string> {
 					{ 0, "StopVFX(RBDL)" },
 					{ 1, "Stop" },
 					{ 2, "Stop" },
@@ -1318,11 +1324,11 @@ namespace Planetside
 					{ 8, "Start" },
 					{ 9, "Start" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_bottom_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "move_bottom_left", new Dictionary<int, string> {
 					{ 2, "Play_CHR_robot_roll_01" },
 					{ 7, "Play_CHR_robot_roll_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_bottom_right", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "move_bottom_right", new Dictionary<int, string> {
 					{ 0, "StopVFX(LBDR)" },
 					{ 1, "Stop" },
 					{ 2, "Stop" },
@@ -1337,11 +1343,11 @@ namespace Planetside
 					{ 8, "Start" },
 					{ 9, "Start" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_bottom_right", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "move_bottom_right", new Dictionary<int, string> {
 					{ 2, "Play_CHR_robot_roll_01" },
 					{ 7, "Play_CHR_robot_roll_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_top_left", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "move_top_left", new Dictionary<int, string> {
 					{ 0, "StopVFX(LTDR)" },
 					{ 1, "Stop" },
 					{ 2, "Stop" },
@@ -1356,11 +1362,11 @@ namespace Planetside
 					{ 8, "Start" },
 					{ 9, "Start" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_top_left", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "move_top_left", new Dictionary<int, string> {
 					{ 2, "Play_CHR_robot_roll_01" },
 					{ 7, "Play_CHR_robot_roll_01" },
 				});
-				EnemyToolbox.AddEventTriggersToAnimation(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_top_right", new Dictionary<int, string> {
+				EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "move_top_right", new Dictionary<int, string> {
 					{ 0, "StopVFX(LTDL)" },
 					{ 1, "Stop" },
 					{ 2, "Stop" },
@@ -1375,7 +1381,7 @@ namespace Planetside
 					{ 8, "Start" },
 					{ 9, "Start" },
 				});
-				EnemyToolbox.AddSoundsToAnimationFrame(robotShopkeeperprefab.GetComponent<tk2dSpriteAnimator>(), "move_top_right", new Dictionary<int, string> {
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "move_top_right", new Dictionary<int, string> {
 					{ 2, "Play_CHR_robot_roll_01" },
 					{ 7, "Play_CHR_robot_roll_01" },
 				});
@@ -2290,7 +2296,7 @@ namespace Planetside
 				}
 				if (clip.GetFrame(frameIdx).eventInfo.Contains("ReleaseSparks"))
                 {
-					GameObject breakVFX = UnityEngine.Object.Instantiate<GameObject>((PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect, base.aiActor.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(1.25f, -1.25f), UnityEngine.Random.Range(0.625f, -0.625f)), Quaternion.identity);
+					GameObject breakVFX = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.ElectricParticle, base.aiActor.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(1.25f, -1.25f), UnityEngine.Random.Range(0.625f, -0.625f)), Quaternion.identity);
 					tk2dBaseSprite component = breakVFX.GetComponent<tk2dBaseSprite>();
 					component.PlaceAtPositionByAnchor(base.aiActor.sprite.WorldCenter + new Vector2(UnityEngine.Random.Range(1.25f, -1.25f), UnityEngine.Random.Range(0.625f, -1.25f)), tk2dBaseSprite.Anchor.MiddleCenter);
 					component.HeightOffGround = 35f;
@@ -2314,6 +2320,28 @@ namespace Planetside
 					{
 						foreach (var KeysAndValues in positions)
 						{
+                            var P1 = base.aiActor.transform.position + KeysAndValues.Key.ToVector3ZisY();
+                            var P2 = base.aiActor.transform.position + KeysAndValues.Value.ToVector3ZisY();
+
+                            float t = 22.5f;
+                            for (float i = 0; i < 16; i++)
+                            {
+                                var _ = MathToolbox.GetUnitOnCircle(t * i, 0.2f);
+                                ParticleBase.EmitParticles("CeramicParticle", 1, new ParticleSystem.EmitParams()
+                                {
+                                    position = P1,
+                                    startColor = Color.gray,
+                                    velocity = _
+                                });
+                                ParticleBase.EmitParticles("CeramicParticle", 1, new ParticleSystem.EmitParams()
+                                {
+                                    position = P2,
+                                    startColor = Color.gray,
+                                    velocity = _
+                                });
+                            }
+
+                            /*
                             {
 								GameObject gameObject = SpawnManager.SpawnVFX(BraveResources.Load<GameObject>("Global VFX/VFX_DBZ_Charge", ".prefab"), false);
 								gameObject.transform.position = base.aiActor.transform.position + KeysAndValues.Key.ToVector3ZisY();
@@ -2349,8 +2377,8 @@ namespace Planetside
 									component2.playAutomatically = true;
 								}
 							}
-
-						}
+							*/
+                        }
 					}
 				}
 			}

@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -129,7 +130,7 @@ namespace Planetside
 				"psog:oscillator",
 				"psog:oscillating_bullets",
 			};
-			CustomSynergies.Add("Reverberation", AAA, null, false);
+			CustomSynergies.Add("Reverberation", AAA, null, false).AddItemTip("Fires double the projectiles with reduced damage.");
 			GameObject lightObj = new GameObject("LightObj");
 			FakePrefab.MarkAsFakePrefab(lightObj);
 			lightObj.transform.parent = gun.transform;
@@ -146,6 +147,7 @@ namespace Planetside
 
 			Oscillato.AAID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Fires bursts of projectiles with oscillating speed.");
 		}
 		public static int AAID;
 		public override void PostProcessProjectile(Projectile projectile)

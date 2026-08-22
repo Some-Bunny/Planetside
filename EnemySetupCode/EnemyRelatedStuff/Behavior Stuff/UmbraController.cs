@@ -335,6 +335,15 @@ public class UmbraController : BraveBehaviour
         public void FixedUpdate()
         {
             E += 360 * Time.fixedDeltaTime;
+
+            if (Owner == null)
+                return;
+            if (Owner.sprite == null)
+                return;
+
+            if (InnerEye.sprite == null)
+                return;
+
             var m = Owner.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle3(E, radius);
             var m_2 = Owner.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle3(E + 120, radius);
             var m_3 = Owner.sprite.WorldCenter.ToVector3ZisY() + MathToolbox.GetUnitOnCircle3(E + 240, radius);
@@ -342,7 +351,6 @@ public class UmbraController : BraveBehaviour
             GlobalSparksDoer.DoSingleParticle(m.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f), 0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
             GlobalSparksDoer.DoSingleParticle(m_2.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f), 0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
             GlobalSparksDoer.DoSingleParticle(m_3.WithZ(0), Vector3.up * UnityEngine.Random.Range(0.025f, 0.075f), 0.25f, 0.5f, Color.red, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
-
 
 
             Vector2 vector = InnerEye.transform.position + new Vector3(1.5f, 0.75f);

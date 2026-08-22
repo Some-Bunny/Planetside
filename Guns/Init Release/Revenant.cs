@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
 using Alexandria.PrefabAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -80,7 +81,7 @@ namespace Planetside
             gun.gunClass = GunClass.NONE;
 
 			gun.gameObject.transform.Find("Casing").transform.position = new Vector3(0.375f, 1f);
-			gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/revenantcasing.png", true, 0.333f, 2, 1080, 360, null, 1.2f).gameObject;
+			gun.shellCasing = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("revenantcasing", StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 0.333f, 2, 1080, 360, null, 1.2f).gameObject;
 			gun.shellsToLaunchOnFire = 0;
 			gun.shellsToLaunchOnReload = 5;
 			gun.reloadShellLaunchFrame = 6;	
@@ -110,11 +111,11 @@ namespace Planetside
 				"skull_spitter",
 				"vertebraek47"
 			};
-			CustomSynergies.Add("Boring Eternity", mandatoryConsoleIDs, optionalConsoleIDs, false);
+			CustomSynergies.Add("Banality Of Eternity", mandatoryConsoleIDs, optionalConsoleIDs, false).AddItemTip("Guns part of this synergy create temporary protective orbitals on kill.");
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 			BuildSoulGuon();
-
+			gun.AddItemTip("High damage, pierces walls, tables and enemies, deals massively increased damage exiting stealth, deals triple damage to Jammed enemies and ignores boss damage caps.");
         }
 		public static int RevenantID;
 		
@@ -134,8 +135,6 @@ namespace Planetside
 
         public static void BuildSoulGuon()
         {
-            //GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/SoulGuon/guoner.png");
-            //gameObject.name = $"Soul Guon";
             GameObject gameObject = PrefabBuilder.BuildObject("SoulGuon");
             var spriteGem = gameObject.AddComponent<tk2dSprite>();
             spriteGem.SetSprite(StaticSpriteDefinitions.Guon_Sheet_Data, "guoner");

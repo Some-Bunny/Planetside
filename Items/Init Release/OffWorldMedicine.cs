@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using static UnityEngine.UI.GridLayoutGroup;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -43,7 +44,7 @@ namespace Planetside
             ItemIDs.AddToList(activeitem.PickupObjectId);
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.AdditionalItemCapacity, 1, StatModifier.ModifyMethod.ADDITIVE);
-
+            activeitem.AddItemTip("Heals the player to full and cleases Spice Addiction. If the player takes fatal damage while holding the item, the item is automatically used, also granting a massive damage and speed boost that lasts until the player takes damage.");
         }
         public static int OffWorldMedicineID;
         public override void Pickup(PlayerController player)

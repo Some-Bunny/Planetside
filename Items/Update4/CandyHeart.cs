@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Planetside.Toolboxes;
+using Alexandria.Integrations;
 
 namespace Planetside
 {   
@@ -61,7 +62,8 @@ namespace Planetside
                 Items.Antibody,
                 Items.Pink_Guon_Stone,
                 Actives.Medkit,
-            });
+            }).AddItemTip("Increases discount to 75%.");
+            item.AddItemTip("All heart pickups and armor have a 50% discount.");
             //Magic Sweet Synergy
         }
         public static int CandyHeartID;

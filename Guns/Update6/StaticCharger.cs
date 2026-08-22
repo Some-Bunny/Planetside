@@ -19,6 +19,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Alexandria.Assetbundle;
 using Planetside.Toolboxes;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -280,7 +281,7 @@ namespace Planetside
             ,new List<PickupObject>() {
                 Items.Battery_Bullets,
                 Items.Shock_Rounds,
-            }, true);
+            }, true).AddItemTip("Weakens by 2 levels instead of fully resetting to the lowest level when reloading.");
 
             ImprovedSynergySetup.Add("AA", new List<PickupObject> { gun, Guns.Shock_Rifle }, null, true);
 
@@ -291,6 +292,7 @@ namespace Planetside
             advancedDualWieldSynergyProcessor1.PartnerGunID = gun.PickupObjectId;
             advancedDualWieldSynergyProcessor1.SynergyNameToCheck = "AA";
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
+            gun.AddItemTip("Grows in power for every room cleared without firing this gun, up to 5 room clears. Upon firing this gun, the gun resets to its weakest state after reloading.");
         }
         public static int ItemID;
 

@@ -12,6 +12,7 @@ using FullSerializer;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 namespace Planetside
 {
     public class EcholocationAmmolet : BlankModificationItem
@@ -38,6 +39,7 @@ namespace Planetside
 
             EcholocationAmmolet.EcholocationAmmoletID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
+            item.AddItemTip("Grants +1 Blank per floor. Using blanks reveals the whole map.");
 
         }
         public static int EcholocationAmmoletID;

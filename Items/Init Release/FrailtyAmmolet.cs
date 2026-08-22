@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -41,6 +42,7 @@ namespace Planetside
             ammolet.sprite.SortingOrder = 3;
 
             ammolet.SetupUnlockOnCustomFlag(CustomDungeonFlags.HIGHER_CURSE_DRAGUN_KILLED, true);
+			ammolet.AddItemTip("Grants +1 Blank per floor. Blanks inflict Frailty on all enemies. Frailty makes enemies take significantly more damage from debuffs, and take more damage overall.");
 		}
 
 		public static int FrailtyAmmoletID;

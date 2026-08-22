@@ -76,7 +76,7 @@ MonoBehaviour:
   atlasWidth: 256
   atlasHeight: 256
   forceSquareAtlas: 0
-  atlasWastage: 37.634277
+  atlasWastage: 41.441345
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -116,7 +116,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -296,7 +296,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -476,7 +476,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -536,7 +536,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -656,7 +656,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -716,7 +716,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -776,7 +776,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -836,7 +836,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -956,7 +956,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1016,7 +1016,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1076,7 +1076,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1136,7 +1136,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1196,7 +1196,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1256,7 +1256,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1316,7 +1316,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1376,7 +1376,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1436,7 +1436,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1496,7 +1496,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1556,7 +1556,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1616,7 +1616,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1676,7 +1676,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1736,7 +1736,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1796,7 +1796,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1856,7 +1856,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1916,7 +1916,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -1976,7 +1976,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2036,7 +2036,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2096,7 +2096,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2156,7 +2156,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2216,7 +2216,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2276,7 +2276,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2336,7 +2336,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2396,7 +2396,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2456,7 +2456,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2516,7 +2516,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2576,7 +2576,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2636,7 +2636,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2696,7 +2696,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2756,7 +2756,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2816,7 +2816,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2876,7 +2876,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2936,7 +2936,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -2996,7 +2996,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3056,7 +3056,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3116,7 +3116,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3176,7 +3176,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3236,7 +3236,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3296,7 +3296,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3356,7 +3356,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3416,7 +3416,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3476,7 +3476,7 @@ MonoBehaviour:
       tileVFXDelayVariance: 0
       tileVFXAnimFrame: 0
     weight: 1
-    pad: 0
+    pad: 1
     extraPadding: 0
     source: 0
     fromSpriteSheet: 0
@@ -3491,6 +3491,606 @@ MonoBehaviour:
     regionH: 0
     regionId: 0
     colliderType: 1
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_right_004
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 3fca78b7dc1bdf146972a8a54e589438, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_right_005
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: ada5e9ace0e2c464d86a68b88662bd76, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_left_005
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: b6c028314c51d094a8d36fe672409d35, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_left_002
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: b360137644b91164c869ff669edc5c3c, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_right_003
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 910af0d1cb6fccd4b97bc2958f8042c9, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_right_002
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 4e950d2c666396b4db4744eaebcdfe17, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_right_001
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 81133e5914b73814c9d0e5226fded5dd, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_left_004
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 817f1eecb8a11d948830979241fc1ec7, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_left_003
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: ef4cbf0ebe2fabf48b6120031c4c2037, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
+    colliderData: []
+    boxColliderMin: {x: 0, y: 0}
+    boxColliderMax: {x: 0, y: 0}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: bullet_pitfall_left_001
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 30f09328139436e44b6549f6e39c478b, type: 3}
+    materialId: 0
+    anchor: 6
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    type: 0
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    weight: 1
+    pad: 1
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 0
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 0, y: 0}
@@ -3523,7 +4123,7 @@ MonoBehaviour:
   globalTextureRescale: 1
   attachPointTestSprites: []
   pixelPerfectPointSampled: 0
-  filterMode: 1
+  filterMode: 0
   wrapMode: 1
   userDefinedTextureSettings: 0
   mipmapEnabled: 0
@@ -3533,9 +4133,9 @@ MonoBehaviour:
   disableTrimming: 1
   disableRotation: 0
   normalGenerationMode: 0
-  padAmount: 4
+  padAmount: 3
   autoUpdate: 1
-  editorDisplayScale: 1.3600001
+  editorDisplayScale: 2.2600002
   version: 4
   metadata:
     type: 0

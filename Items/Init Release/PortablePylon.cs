@@ -19,6 +19,7 @@ using MonoMod.Utils;
 using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -52,7 +53,7 @@ namespace Planetside
                 "grappling_hook",
                 "bionic_leg"
             };
-            CustomSynergies.Add("Loader Chassis", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Loader Chassis", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Creates a massively buffed pylon that also deals damage in a radius.");
 
 
             List<string> mandatoryConsoleIDs2 = new List<string>
@@ -60,7 +61,7 @@ namespace Planetside
                 "psog:portable_pylon",
                 "gungeon_blueprint"
             };
-            CustomSynergies.Add("Sentry Goin' Up!", mandatoryConsoleIDs2, null, true);
+            CustomSynergies.Add("Sentry Goin' Up!", mandatoryConsoleIDs2, null, true).AddItemTip("Lets you hold an additional pylon per charge. Slightly increases pylon damage.");
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BATTERY_POWERED);
 
             activeitem.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
@@ -95,6 +96,7 @@ namespace Planetside
 
             pylonObject = pylon;
 
+            activeitem.AddItemTip("Lets the player place pylons that create damaging electric tethers between each other and the player.");
         }
 
         public static GameObject pylonObject;

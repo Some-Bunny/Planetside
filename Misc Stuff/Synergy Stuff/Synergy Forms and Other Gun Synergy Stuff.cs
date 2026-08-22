@@ -66,25 +66,26 @@ namespace Planetside
 			eae.SynergyGunId = OscillatoSynergyForme.AeID;
 			eae.SynergyToCheck = "Reverberation";
 
-			
+			/*
 			AdvancedTransformGunSynergyProcessor eaejhaek = (PickupObjectDatabase.GetById(DivineLight.DivineLightID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
 			eaejhaek.NonSynergyGunId = DivineLight.DivineLightID;
 			eaejhaek.SynergyGunId = HellLight.HellLightID;
 			eaejhaek.SynergyToCheck = "BLASPHEMY AGAINST THE SPIRIT";
-			
+			*/
+
 			AdvancedTransformGunSynergyProcessor foosh = (PickupObjectDatabase.GetById(404) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();
 			foosh.NonSynergyGunId = 404;
 			foosh.SynergyGunId = SirenSynergyForme.smileid;
 			foosh.SynergyToCheck = "Ultra";
 
 			RevenantSynergyPlus plus = (PickupObjectDatabase.GetById(45)).gameObject.AddComponent<RevenantSynergyPlus>();
-			plus.SynergyNameToCheck = "Boring Eternity";
+			plus.SynergyNameToCheck = "Banality Of Eternity";
 
 			RevenantSynergyPlus a = (PickupObjectDatabase.GetById(29)).gameObject.AddComponent<RevenantSynergyPlus>();
-			a.SynergyNameToCheck = "Boring Eternity";
+			a.SynergyNameToCheck = "Banality Of Eternity";
 
 			RevenantSynergyPlus fart = (PickupObjectDatabase.GetById(Revenant.RevenantID) as Gun).gameObject.AddComponent<RevenantSynergyPlus>();
-			fart.SynergyNameToCheck = "Boring Eternity";
+			fart.SynergyNameToCheck = "Banality Of Eternity";
 
 
 			AdvancedTransformGunSynergyProcessor hexaSyn = (PickupObjectDatabase.GetById(PulseCannon.PulseCannonID) as Gun).gameObject.AddComponent<AdvancedTransformGunSynergyProcessor>();

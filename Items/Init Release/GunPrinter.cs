@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -39,6 +40,7 @@ namespace Planetside
 
             GunPrinter.GunPrinterID = activeitem.PickupObjectId;
 			ItemIDs.AddToList(activeitem.PickupObjectId);
+			activeitem.AddItemTip("Fires a burst from your currently held gun without using ammo.");
 		}
 
 		public static int GunPrinterID;

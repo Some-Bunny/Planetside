@@ -23,16 +23,14 @@ namespace Planetside
 		public static readonly string guid = "Fungannon";
 		public static List<int> spriteIds2 = new List<int>();
 
+
+
+
 		public static void Init()
-		{
-			Fungannon.BuildPrefab();
-		}
-
-
-		public static void BuildPrefab()
 		{
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FungannonCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("fungannon material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("FungannonAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
@@ -40,6 +38,15 @@ namespace Planetside
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 				FungannonController pain = prefab.AddComponent<FungannonController>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat, false);
+
+
+                enemy.gameObject.layer = 22;
+                enemy.sprite.SortingOrder = 2;
+
+
+                enemy.aiActor.spriteAnimator.Library = h;
+                enemy.aiActor.spriteAnimator.library = h;
+                enemy.aiActor.aiAnimator.spriteAnimator = enemy.aiActor.spriteAnimator;
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(enemy.aiActor, "mushroom");
 
@@ -90,8 +97,8 @@ namespace Planetside
 					AnimNames = new string[]
 					{
 						"roar",
-
-					},
+                        "roar",
+                    },
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
@@ -102,53 +109,50 @@ namespace Planetside
 						anim = anim
 					}
 				};
-				//=====================================================================================
-				DirectionalAnimation ctahge = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-					AnimNames = new string[]
-	{
-						"charge",
+                DirectionalAnimation aaanim = new DirectionalAnimation
+                {
+                    Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
+                    AnimNames = new string[]
+                    {
+                        "unroar",
+                        "unroar",
+                    },
+                    Flipped = new DirectionalAnimation.FlipType[2]
+                };
+                aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
+                {
+                    new AIAnimator.NamedDirectionalAnimation
+                    {
+                        name = "unroar",
+                        anim = aaanim
+                    }
+                };
+                //=====================================================================================
 
-	},
-					Flipped = new DirectionalAnimation.FlipType[2]
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-						name = "charge",
-						anim = ctahge
-					}
-				};
-				//=====================================================================================
-				DirectionalAnimation BirdUp = new DirectionalAnimation
-				{
-					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
-					AnimNames = new string[]
-					{
-						"chargecannon",
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                aiAnimator, "charge",
+                new string[] { "charge", "charge" },
+                new DirectionalAnimation.FlipType[2], DirectionType.TwoWayHorizontal);
 
-					},
-					Flipped = new DirectionalAnimation.FlipType[2]
-				};
-				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
-				{
-					new AIAnimator.NamedDirectionalAnimation
-					{
-						name = "chargecannon",
-						anim = ctahge
-					}
-				};
-				//=====================================================================================
-				DirectionalAnimation eee = new DirectionalAnimation
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+                aiAnimator, "chargecannon",
+                new string[] { "chargecannon" },
+                new DirectionalAnimation.FlipType[1]);
+
+                Alexandria.EnemyAPI.EnemyBuildingTools.AddNewDirectionAnimation(
+				aiAnimator, "chargestop",
+				new string[] { "chargestop" },
+				new DirectionalAnimation.FlipType[1]);
+
+                //=====================================================================================
+                DirectionalAnimation eee = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					AnimNames = new string[]
 	                {
 						"jump",
-
-	                },
+                        "jump",
+                    },
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
@@ -159,16 +163,14 @@ namespace Planetside
 						anim = eee
 					}
 				};
-				//=====================================================================================
 
-				//=====================================================================================
 				DirectionalAnimation anim3 = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					AnimNames = new string[]
 					{
+                        "jumpland",
 						"jumpland",
-
 					},
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
@@ -180,7 +182,6 @@ namespace Planetside
 						anim = anim3
 					}
 				};
-				//=====================================================================================
 
 				DirectionalAnimation almostdone = new DirectionalAnimation
 				{
@@ -214,326 +215,29 @@ namespace Planetside
 				};
 
 
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
+                enemy.spriteAnimator.GetClipByName("chargecannon").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
+                enemy.spriteAnimator.GetClipByName("chargecannon").frames[1].triggerEvent = true;
 
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6
+				enemy.spriteAnimator.GetClipByName("jump").frames[4].eventAudio = "Play_ENM_bigshroom_jump_01";
+				enemy.spriteAnimator.GetClipByName("jump").frames[4].triggerEvent = true;
+				enemy.spriteAnimator.GetClipByName("jump").frames[3].eventAudio = "Play_ENM_statue_jump_01";
+				enemy.spriteAnimator.GetClipByName("jump").frames[3].triggerEvent = true;
+				enemy.spriteAnimator.GetClipByName("jumpland").frames[1].eventAudio = "Play_ENM_cannonball_blast_01";
+				enemy.spriteAnimator.GetClipByName("jumpland").frames[1].triggerEvent = true;
 
-                    }, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
+				enemy.spriteAnimator.GetClipByName("roar").frames[5].eventAudio = "Play_VO_lichB_death_01";
+				enemy.spriteAnimator.GetClipByName("roar").frames[5].triggerEvent = true;
 
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
+				enemy.spriteAnimator.GetClipByName("intro").frames[26].eventAudio = "Play_VO_lichB_death_01";
+				enemy.spriteAnimator.GetClipByName("intro").frames[26].triggerEvent = true;
 
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15
-
-                    }, "moveleft", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
-                    21,
-                    22,
-                    23,
-                    24
-
-                    }, "moveright", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
-                    31,
-                    32,
-                    33,
-                    34,
-                    35,//
-					36,
-                    37,
-
-                    35,//
-					36,
-                    37,
-
-                    35,//
-					36,
-                    37,
-                    35,//
-					36,
-                    37,
-                    38,
-                    39,
-                    40
-
-                    }, "roar", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-
-                    41,
-                    42,
-                    43,
-                    44,
-                    45,
-                    46,
-                    47,
-                    48,
-                    49,
-                    50,
-                    51,
-                    51,
-                    52,
-                    53,
-
-                    }, "jump", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-
-
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-
-                    53,
-                    53,
-                    54,
-                    55
-
-                    }, "jumpland", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
+				enemy.spriteAnimator.GetClipByName("death").frames[8].eventAudio = "Play_VO_lichB_death_01";
+				enemy.spriteAnimator.GetClipByName("death").frames[8].triggerEvent = true;
 
 
 
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    25,
-                    26,
-                    27,
-                    28,
-                    29,
-                    30,
-                    31,
-                    32,
-                    33,
-                    34,
-                    35,//
-					36,
-                    37,
-
-
-                    }, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                66,
-                67,
-                68,
-                69,
-                70,
-                71,
-                72,
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                76,
-                77,
-                78,
-                76,
-                77,
-                78,
-                76,
-                77,
-                78,
-                76,
-                77,
-                78,
-                76,
-                77,
-                78
-                    }, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    25,
-                    26,
-                    27,
-                    28,
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-
-                    27,
-                    26,
-                    25
-                    }, "charge", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
-
-                SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-                    {
-                    25,
-                    26,
-                    27,
-                    28,
-                    27,
-                    26,
-                    27,
-                    28,
-                    29,
-                    28,
-                    29,
-
-                    }, "chargecannon", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-
-                prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("chargecannon").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("chargecannon").frames[1].triggerEvent = true;
-
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jump").frames[4].eventAudio = "Play_ENM_bigshroom_jump_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jump").frames[4].triggerEvent = true;
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jump").frames[3].eventAudio = "Play_ENM_statue_jump_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jump").frames[3].triggerEvent = true;
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jumpland").frames[1].eventAudio = "Play_ENM_cannonball_blast_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("jumpland").frames[1].triggerEvent = true;
-
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("roar").frames[5].eventAudio = "Play_VO_lichB_death_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("roar").frames[5].triggerEvent = true;
-
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[26].eventAudio = "Play_VO_lichB_death_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[26].triggerEvent = true;
-
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("death").frames[8].eventAudio = "Play_VO_lichB_death_01";
-				prefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("death").frames[8].triggerEvent = true;
-
-
-
-				enemy.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[3].eventInfo = "spawnSizeUp";
-				enemy.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("death").frames[10].eventInfo = "deathOno";
+				enemy.spriteAnimator.GetClipByName("intro").frames[3].eventInfo = "spawnSizeUp";
+				enemy.spriteAnimator.GetClipByName("death").frames[10].eventInfo = "deathOno";
 
 
 
@@ -777,6 +481,7 @@ namespace Planetside
 							resetCooldownOnDamage = null,
 							MaxUsages = 0,
 							FireAnimation = "roar",
+							PostFireAnimation = "unroar",
 
 						},
 						NickName = "raor"
@@ -945,8 +650,8 @@ namespace Planetside
 					miniBossIntroDoer.SkipBossCard = true;
 					enemy.aiActor.healthHaver.bossHealthBar = HealthHaver.BossBarType.MainBar;
 				}
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.VFX_Sheet_Data.GetSpriteDefinition("ammonimiconasdsadsa"), SpriteBuilder.ammonomiconCollection);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Ammocom/ammonimiconasdsadsa", SpriteBuilder.ammonomiconCollection);
 				if (enemy.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(enemy.GetComponent<EncounterTrackable>());
@@ -959,7 +664,7 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.IsEnemy = true;
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
-				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Ammocom/ammonimiconasdsadsa";
+				enemy.encounterTrackable.journalData.AmmonomiconSprite = "ammonimiconasdsadsa";
 				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("ammoentryshrrom");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\ammoentryshrrom.png");
                 PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICON", Name);
 				PlanetsideModule.Strings.Enemies.Set("#FUNGANNONAMMONOMICONSHORT", "Sporangio-War");
@@ -968,9 +673,10 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.NotificationPanelDescription = "#FUNGANNONAMMONOMICONSHORT";
 				enemy.encounterTrackable.journalData.AmmonomiconFullEntry = "#FUNGANNONAMMONOMICONLONG";
 				EnemyBuilder.AddEnemyToDatabase(enemy.gameObject, "psog:fungannon");
-				EnemyDatabase.GetEntry("psog:fungannon").ForcedPositionInAmmonomicon = 4;
-				EnemyDatabase.GetEntry("psog:fungannon").isInBossTab = true;
-				EnemyDatabase.GetEntry("psog:fungannon").isNormalEnemy = true;
+				var pp = EnemyDatabase.GetEntry("psog:fungannon");
+                pp.ForcedPositionInAmmonomicon = 4;
+                pp.isInBossTab = true;
+                pp.isNormalEnemy = true;
 
 				miniBossIntroDoer.SkipFinalizeAnimation = true;
 				miniBossIntroDoer.RegenerateCache();
@@ -978,9 +684,16 @@ namespace Planetside
 				//==================
 				//Important for not breaking basegame stuff!
 				StaticReferenceManager.AllHealthHavers.Remove(enemy.aiActor.healthHaver);
-				//==================
+                //==================
 
-			}
+                enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
+                enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
+                enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("383175a55879441d90933b5c4e60cf6f").bulletBank.GetBullet("bigBullet"));
+                enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
+
+
+
+            }
 		}
 
 
@@ -1077,45 +790,11 @@ namespace Planetside
 		};
 		public class EnemyBehavior : BraveBehaviour
 		{
-			private RoomHandler m_StartRoom;
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged) 
-				{ 
-					CheckPlayerRoom(); 
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom && GameManager.Instance.PrimaryPlayer.IsInCombat == true)
-				{
-					
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 
 			public void Start()
 			{
 				this.aiActor.knockbackDoer.SetImmobile(true, "nope.");
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("383175a55879441d90933b5c4e60cf6f").bulletBank.GetBullet("bigBullet"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.aiActor.HasBeenEngaged = false;
 				//Important for not breaking basegame stuff!
 
 
@@ -1154,7 +833,7 @@ namespace Planetside
 
 					};
 					FungannonController vfx = base.BulletBank.GetComponent<FungannonController>();
-					vfx.LaserShit = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
+					vfx.LaserShit = StaticVFXStorage.ResourcefulRatReticle;
 					vfx.name = "LaserTell"+j.ToString();
 
 					base.PostWwiseEvent("Play_BOSS_RatMech_Barrel_01", null);
@@ -1170,7 +849,7 @@ namespace Planetside
 						}
 						if (vfx == null)
 						{
-							vfx.LaserShit = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
+							vfx.LaserShit = StaticVFXStorage.ResourcefulRatReticle;
 						}
 						GameObject gameObject = SpawnManager.SpawnVFX(vfx.LaserShit, false);
 						tk2dSlicedSprite component2 = gameObject.GetComponent<tk2dSlicedSprite>();
@@ -1207,12 +886,10 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
 					for (int i = 0; i < 600; i++)
 					{
 						string bankName = (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1";
-						base.Fire(new Direction(UnityEngine.Random.Range(140, 200), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(3f, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(2, 20)));
+						base.Fire(new Direction(UnityEngine.Random.Range(-20, 21), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(3f, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(2, 20)));
 						yield return this.Wait(2f);
 
 					}
@@ -1285,7 +962,7 @@ namespace Planetside
 					};
 					FungannonController vfx = base.BulletBank.GetComponent<FungannonController>();
 
-					vfx.LaserShit = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
+					vfx.LaserShit = StaticVFXStorage.ResourcefulRatReticle;
 					vfx.name = "LaserTell" + j.ToString();
 					base.PostWwiseEvent("Play_BOSS_RatMech_Barrel_01", null);
 					int Amount = 12+j;
@@ -1306,7 +983,7 @@ namespace Planetside
 						}
 						if (vfx == null)
 						{
-							vfx.LaserShit = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
+							vfx.LaserShit = StaticVFXStorage.ResourcefulRatReticle;
 						}
 						GameObject gameObject = SpawnManager.SpawnVFX(vfx.LaserShit, false);
 						tk2dSlicedSprite component2 = gameObject.GetComponent<tk2dSlicedSprite>();
@@ -1344,12 +1021,10 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
 					for (int i = 0; i < 600; i++)
 					{
 						string bankName = (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1";
-						base.Fire(new Direction(UnityEngine.Random.Range(150, 210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(15, 40)));
+						base.Fire(new Direction(UnityEngine.Random.Range(-20, 21), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(1f, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(15, 40)));
 						yield return this.Wait(1f);
 
 					}
@@ -1471,11 +1146,6 @@ namespace Planetside
 				}
 				public override IEnumerator Top()
 				{
-					if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody)
-					{
-						base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-						base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
-					}
 					for (int i = 0; i < 90; i++)
 					{
 						float Speed = base.Speed;
@@ -1745,12 +1415,10 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
 					for (int i = 0; i < 600; i++)
 					{
 						string bankName = (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1";
-						base.Fire(new Direction(UnityEngine.Random.Range(150, 210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(4, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(120, 300)));
+						base.Fire(new Direction(UnityEngine.Random.Range(-20, 21), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(4, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(120, 300)));
 						yield return this.Wait(2f);
 
 					}
@@ -1825,13 +1493,11 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
 					base.ChangeSpeed(new Speed(18f, SpeedType.Absolute), 60);
 					for (int i = 0; i < 600; i++)
 					{
 						string bankName = (UnityEngine.Random.value > 0.33f) ? "spore2" : "spore1";
-						base.Fire(new Direction(UnityEngine.Random.Range(150 ,210), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(1.5f, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(150, 600)));
+						base.Fire(new Direction(UnityEngine.Random.Range(-20, 21), Brave.BulletScript.DirectionType.Relative, -1f), new Speed(1.5f, SpeedType.Absolute), new PrimaryCannonScript.Spore(bankName, UnityEngine.Random.Range(150, 600)));
 						yield return this.Wait(2f);
 
 					}
@@ -1870,9 +1536,7 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
+
 				float ANim = base.AimDirection;
 				base.PostWwiseEvent("Play_ENM_hammer_target_01", null);
 				yield return this.Wait(20f);
@@ -1927,8 +1591,6 @@ namespace Planetside
 
 				public override IEnumerator Top()
 				{
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore2"));
-					base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("f905765488874846b7ff257ff81d6d0c").bulletBank.GetBullet("spore1"));
 					yield return this.Wait(180f);
 					for (int i = 0; i < 7; i++)
 					{

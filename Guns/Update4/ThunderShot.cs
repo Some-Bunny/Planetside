@@ -10,6 +10,7 @@ using UnityEngine;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -80,7 +81,7 @@ namespace Planetside
 
 
             gun.gameObject.transform.Find("Clip").transform.position = new Vector3(1.1875f, 0.4375f);
-            gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/bulldogclip.png").gameObject;
+            gun.clipObject = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("bulldogclip", StaticSpriteDefinitions.Gun_2_Sheet_Data).gameObject;
             gun.reloadClipLaunchFrame = 4;
             gun.clipsToLaunchOnReload = 1;
 
@@ -101,14 +102,14 @@ namespace Planetside
                 "cluster_mine",
                 "air_strike"
             };
-            CustomSynergies.Add("KA-BLEWY!", AAA, aee, false);
+            CustomSynergies.Add("KA-BLEWY!", AAA, aee, false).AddItemTip("Quadruples Thunder-Shots explosion damage.");
             
             List<string> eee = new List<string>
             {
                 "psog:thundershot",
                 "double_vision"
             };
-            CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, false);
+            CustomSynergies.Add("ROCK, AAAAND, STOOOOONE!", eee, null, false).AddItemTip("Minelets become passively charmed. Animal-like enemies take 40% more damage and are permanently feared.");
             
             ThunderShot.ThunderShotID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
@@ -116,6 +117,7 @@ namespace Planetside
             ThunderShot.fleeData.StartDistance = 100f;
             gun.gunClass = GunClass.EXPLOSIVE;
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1.5f);
+            gun.AddItemTip("Enemies shot with this gun will explode on kill. The more they've been shot, the higher the damage.");
         }
         public static int ThunderShotID;
 
@@ -150,7 +152,7 @@ namespace Planetside
                         {
                             if (bugCreatures.Contains(enemyGuid) && player.PlayerHasActiveSynergy("ROCK, AAAAND, STOOOOONE!"))
                             {
-                                target.healthHaver.SetHealthMaximum(target.healthHaver.GetMaxHealth() * 0.6f);
+                                target.healthHaver.AllDamageMultiplier *= 1.4f;
                                 FleePlayerData data = ThunderShot.fleeData;
                                 data.Player = player;
                                 target.behaviorSpeculator.FleePlayerData = data;

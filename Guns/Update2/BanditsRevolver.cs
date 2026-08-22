@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -115,7 +116,7 @@ namespace Planetside
 			gun.DefaultModule.ammoCost = 1;
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.SemiAutomatic;
 			gun.damageModifier = 1;
-			gun.reloadTime = 3f;
+			gun.reloadTime = 3.75f;
 			gun.DefaultModule.cooldownTime = 0.166f;
 			gun.DefaultModule.numberOfShotsInClip = 6;
 			gun.DefaultModule.angleVariance = 2f;
@@ -209,6 +210,8 @@ namespace Planetside
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
 
+
+            gun.AddItemTip("Has a very slow reload. Enemies killed with the last shot of the clip will instantly reload the gun. Enemies that will be killed with the last shot of the clip are marked.");
         }
         public static int BanditsRevolverID;
 		public static GameObject CanKillRevolverEffect;

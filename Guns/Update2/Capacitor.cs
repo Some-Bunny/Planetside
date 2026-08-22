@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -136,10 +137,11 @@ namespace Planetside
 				"meatbun",
 				"weird_egg"
 			};
-			CustomSynergies.Add("Back For Seconds", AAA, aee, false);
+            CustomSynergies.Add("Back For Seconds", AAA, aee, false).AddItemTip("Increases charge speed and ammo efficiency of charging active items.");
 
 			Capactior.CapacitorID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+            gun.AddItemTip("Holding the fire button draws ammo from the gun, charging your currently held active item. Charges faster the longer you hold the fire button.");
 		}
 		public static int CapacitorID;
 

@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -90,7 +91,7 @@ namespace Planetside
 				"psog:resault",
 				"ancient_heros_bandana"
 			};
-			CustomSynergies.Add("Infinite Ammo?", yah, null, false);
+			CustomSynergies.Add("Infinite Ammo?", yah, null, false).AddItemTip("Massively boosts ammo usage for a massive power boost with significant returns on kills.");
 			List<string> aaa = new List<string>
 			{
 				"psog:resault",
@@ -102,12 +103,12 @@ namespace Planetside
 				"turkey",
 				"utility_belt"
 			};
-			CustomSynergies.Add("Recycling", aaa, aw, false);
+			CustomSynergies.Add("Recycling", aaa, aw, false).AddItemTip("Resault restores double the ammo on kill.");
 
 			ItemIDs.AddToList(gun.PickupObjectId);
 
 			new Hook(typeof(AmmoPickup).GetMethod("Pickup", BindingFlags.Instance | BindingFlags.Public), typeof(Resault).GetMethod("ammoPickupHookMethod"));
-
+			gun.AddItemTip("Loses max ammo when firing. Kills restore 10 max ammo and 5 ammo back to the gun.");
         }
 
 		public static int ResaultID;

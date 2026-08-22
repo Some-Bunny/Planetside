@@ -8,6 +8,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 
 
@@ -129,12 +130,15 @@ namespace Planetside
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(597) as Gun).gunSwitchGroup;
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HeatSink", "Planetside/Resources/GunClips/HeatSink/heatsinkfull", "Planetside/Resources/GunClips/HeatSink/heatsinkempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HeatSink", "Planetside/Resources/GunClips/HeatSink/heatsinkfull", "Planetside/Resources/GunClips/HeatSink/heatsinkempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("HeatSink", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "heatsinkfull", "heatsinkempty");
+
             gun.quality = PickupObject.ItemQuality.S;
             ETGMod.Databases.Items.Add(gun, false, "ANY");
 
             HeatSink.HeatSinkID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
+            gun.AddItemTip("Firing the gun creates a supercharged bubble that grows over time, release the fire button to cause the bubble to explode.");
         }
         public static int HeatSinkID;
 

@@ -10,6 +10,7 @@ using System.Text;
 
 using Gungeon;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -44,8 +45,9 @@ namespace Planetside
             PrayerDeep = Alexandria.DungeonAPI.RoomFactory.BuildNewRoomFromResource("Planetside/Resources/ShrineRooms/PrayerRooms/Amulet_Deep.newroom").room;
             warVase.SetupUnlockOnCustomStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 4, DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN);
             PrayerAmulet.InitRooms();
+            warVase.AddItemTip("Spawns an extra room with a shrine on every floor.");
 
-		}
+        }
 		public static int PrayerAmuletID;
         public static SharedInjectionData CastleInjectionData;
 

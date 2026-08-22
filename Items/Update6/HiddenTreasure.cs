@@ -25,6 +25,7 @@ using Planetside.DungeonPlaceables;
 using static Planetside.DungeonPlaceables.BuriedObject;
 using Planetside.Toolboxes;
 using SynergyAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -39,7 +40,7 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemAPI.ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("hiddengem"), data, gameObject); 
 			string shortDesc = "Discover Something New";
-			string longDesc = "All Brown Chests come unlocked. Find a buried chest on every floor with free loot.\n\nBrass Gemstones, while commonly overlooked, hold great potential if given a chance.";
+			string longDesc = "All Brown Chests come unlocked. Find a buried chest on every floor containing free loot.\n\nBrass Gemstones, while commonly overlooked, hold great potential if given a chance.";
             ItemAPI.ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.C;
             ID = item.PickupObjectId;
@@ -47,8 +48,9 @@ namespace Planetside
 
 
             GenerateLockboxAndBuriedTreasure();
-            item.AddSynergy("Loot Crate", new List<PickupObject> { Items.Ring_Of_Chest_Friendship });
+            item.AddSynergy("Loot Crate", new List<PickupObject> { Items.Ring_Of_Chest_Friendship }).AddItemTip("Spawns an additional buried treasure every floor.");
             item.AddItemToSynergy(CustomSynergyType.ALTERNATIVE_ROCK);
+            item.AddItemTip("Brown chests always come unlocked. Spawns buried teasure in a random room on every floor, with suspicious patches of dirt.");
         }
 
         public static void GenerateLockboxAndBuriedTreasure()
@@ -63,8 +65,9 @@ namespace Planetside
             lockboxController.MinimapIcon = GameManager.Instance.RewardManager.D_Chest.MinimapIconPrefab;
             DontDestroyOnLoad(lockbox);
 
-            lockbox.layer = Layers.BG_Critical;
+            lockbox.layer = Layers.FG_Nonsense;
             sprite.SortingOrder = 0;
+            sprite.renderer.material = new Material(StaticShaders.Default_Shader);
 
             LockBoxPrefab = lockboxController;
 
@@ -77,7 +80,7 @@ namespace Planetside
             animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("lockbox_dirt_random");
             lockboxDirt.layer = Layers.BG_Critical;
             sprite.SortingOrder = 0;
-
+            sprite.renderer.material = new Material(StaticShaders.Default_Shader);
             LockboxDirt = lockboxDirt;
 
             var amorPickup = PrefabBuilder.BuildObject("BuriedLockbox").AddComponent<BuriedLockbox>();
@@ -320,7 +323,7 @@ namespace Planetside
 
             public void OnExitRange(PlayerController interactor)
             {
-                SpriteOutlineManager.RemoveOutlineFromSprite(base.sprite);
+                SpriteOutlineManager.AddOutlineToSprite(base.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
             }
 
 
@@ -392,6 +395,8 @@ namespace Planetside
                 LockboxInst.sprite.renderLayer = oldLayer;
                 LockboxInst.gameObject.layer = oldGameObjectLayer;
                 LockboxInst.sprite.renderer.material = BuriedMaterial;
+                LootEngine.DoDefaultItemPoof(LockboxInst.sprite.WorldCenter);
+                SpriteOutlineManager.AddOutlineToSprite(LockboxInst.sprite, Color.black, 1f, 0f, SpriteOutlineManager.OutlineType.NORMAL);
             }
 
             public override void OnHintObjectRoll(int num)

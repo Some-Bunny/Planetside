@@ -117,7 +117,7 @@ namespace Planetside
 			{
 				if (ChosenCurse == "Darkness")
 				{
-					OtherTools.Notify("Curse Of Darkness chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
+					OtherTools.Notify("Hex Of Darkness chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
 					CursesController.DarknessCurseState = CursesController.DarknessCurseStates.UPGRADED_AND_ONEROOMLEFT;
 					//ShrineOfDarkness.DarknessTime comp = player.GetComponent<ShrineOfDarkness.DarknessTime>();
 					//comp.RemoveSelf();
@@ -126,7 +126,7 @@ namespace Planetside
 				}
 				if (ChosenCurse == "Jam")
 				{
-					OtherTools.Notify("Curse Of Jamnation chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
+					OtherTools.Notify("Hex Of Jamnation chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
 					CursesController.JamnationCurseState = CursesController.JamnationCurseStates.UPGRADED_AND_ONEROOMLEFT;
 
 					//ShrineOfCurses.JamTime comp = player.GetComponent<ShrineOfCurses.JamTime>();
@@ -136,7 +136,7 @@ namespace Planetside
 				}
 				if (ChosenCurse == "Petrify")
 				{
-					OtherTools.Notify("Curse Of Petrification chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
+					OtherTools.Notify("Hex Of Petrification chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
 					CursesController.PetrifyCurseState = CursesController.PetrifyCurseStates.UPGRADED_AND_ONEROOMLEFT;
 
 					//ShrineOfPetrification.PetrifyTime comp = player.GetComponent<ShrineOfPetrification.PetrifyTime>();
@@ -146,7 +146,7 @@ namespace Planetside
 				}
 				if (ChosenCurse == "Bolster")
 				{
-					OtherTools.Notify("Curse Of Bolstering chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
+					OtherTools.Notify("Hex Of Bolstering chosen", "Prove your worth.", "Planetside/Resources/ShrineIcons/PurityIcon");
 					CursesController.BolsterCurseState = CursesController.BolsterCurseStates.UPGRADED_AND_ONEROOMLEFT;
 
 					//ShrineOfSomething.SomethingTime comp = player.GetComponent<ShrineOfSomething.SomethingTime>();
@@ -272,7 +272,7 @@ namespace Planetside
             {
                 if (b)
                 {
-                    GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Give up a random curse.", "Leave.");
+                    GameUIRoot.Instance.DisplayPlayerConversationOptions(interactor, null, "Offer a random Hex.", "Leave.");
                 }
                 else
                 {

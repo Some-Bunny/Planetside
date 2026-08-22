@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -25,14 +26,14 @@ namespace Planetside
 			"psog:hardlight_nailgun",
 			"nail_gun"
 			};
-			CustomSynergies.Add("Stop!", mandatoryConsoleIDs2, null, true);
+			CustomSynergies.Add("Stop!", mandatoryConsoleIDs2, null, true).AddItemTip("Nail Gun and Hardlight Nail Gun are dual wielded.");
 			List<string> ee = new List<string>
 			{
 			"psog:shockchain",
 			"thunderclap"
 			};
 
-			CustomSynergies.Add("UNLIMITED POWER!!!", ee, null, true);
+			CustomSynergies.Add("UNLIMITED POWER!!!", ee, null, true).AddItemTip("Shock-Chain and Thunderclap are dual wielded.");
 
 			List<string> SwanOff = new List<string>
 			{
@@ -46,7 +47,7 @@ namespace Planetside
 			"sponge"
 			};
 
-			CustomSynergies.Add("Ugly Duckling", SwanOff, SwanOff1, true);
+			CustomSynergies.Add("Ugly Duckling", SwanOff, SwanOff1, true).AddItemTip("Creates an orbiting duckling with the Swan-Off that fires alongside you.");
 
 
 		}

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Alexandria.Integrations;
 using BreakAbleAPI;
 using Dungeonator;
 using ItemAPI;
@@ -70,6 +71,7 @@ namespace Planetside
             shardObject3.name = "Spore_Debris_Small";
 
             cluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shardObject, shardObject , shardObject, shardObject2, shardObject3 }, 0.35f, 1.2f, 8, 12, 0.8f);
+            warVase.AddItemTip("Blanks used in combat are refunded when combat ends. When taking damage, resets the amount of blanks refunded at the end of combat to 0. Consecutive blanks have their chance to be refunded halved per blank used.");
         }
 
         public static ShardCluster cluster;
@@ -118,7 +120,7 @@ namespace Planetside
 		{
 
             BlanksUsed = 0;
-            for (int i = 0; i < StaticReferenceManager.AllDebris.Count; i++)
+            for (int i = StaticReferenceManager.AllDebris.Count - 1; i > -1; i--)
             {
                 DebrisObject debrisObject = StaticReferenceManager.AllDebris[i];
                 //ETGModConsole.Log(debrisObject.name);

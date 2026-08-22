@@ -528,7 +528,7 @@ namespace ItemAPI
         }
 
 
-        public static void AddEnemyToDatabase(GameObject EnemyPrefab, string EnemyGUID, bool isBoss = false)
+        public static EnemyDatabaseEntry AddEnemyToDatabase(GameObject EnemyPrefab, string EnemyGUID, bool isBoss = false)
         {
             EnemyDatabaseEntry item = new EnemyDatabaseEntry
             {
@@ -547,6 +547,7 @@ namespace ItemAPI
                 myGuid = EnemyPrefab.GetComponent<AIActor>().encounterTrackable.EncounterGuid
             };
             EncounterDatabase.Instance.Entries.Add(encounterDatabaseEntry);
+            return item;
         }
 
         public enum AnimationType { Move, Idle, Fidget, Flight, Hit, Talk, Other }

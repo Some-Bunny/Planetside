@@ -32,7 +32,7 @@ namespace Planetside
             SpeedMultiplier = 1;
             IsPreDeath = false;
             elapsed = 0;
-            GunSwitchTimer = UnityEngine.Random.Range(8, 10);
+            GunSwitchTimer = UnityEngine.Random.Range(8f, 11f);
             AIShooterSelf = base.aiShooter;
             GunInventorySelf = AIShooterSelf.Inventory;
             if (GunInventorySelf != null)
@@ -48,6 +48,11 @@ namespace Planetside
 
             base.aiActor.healthHaver.OnPreDeath += OnPreDeathCleanup;
             PostProcessMovementOverride();
+
+            
+
+
+            //Debug.Log($"nem: {PreferredWeapon}");
         }
 
         public bool HasBeenEngaged = false;
@@ -58,7 +63,7 @@ namespace Planetside
             HasBeenEngaged = true;
             switch (HeldSecondaryPassive)
             {
-                case "bloodied_scarf":
+                case 436: // Bloodied Scarf
                   
                     CustomScarfDoer scorf = UnityEngine.Object.Instantiate<GameObject>(StaticVFXStorage.ScarfObject.gameObject).AddComponent<CustomScarfDoer>();
                     scorf.AttachTarget = base.aiActor;
@@ -78,7 +83,7 @@ namespace Planetside
 
 
                     return;
-                case "guon":
+                case 565: //Glass Guon Stone
 
                     GameObject transPos = base.aiActor.gameObject.transform.Find("SpecialGuonPos").gameObject;
                     if (transPos != null)
@@ -116,7 +121,7 @@ namespace Planetside
         {
             switch (HeldPrimaryPassive)
             {
-                case "cloranthy":
+                case 309: //Cloranthy Ring
                     foreach (OverrideBehaviorBase overrideBehavior in base.aiActor.behaviorSpeculator.OverrideBehaviors)
                     {
                         if (overrideBehavior is CustomDodgeRollBehavior dodge)
@@ -129,14 +134,16 @@ namespace Planetside
                         }
                     }
                     return;
-                case "bionic_leg":
+                case 114: //bionic Leg
                     base.aiActor.MovementSpeed *= 1.2f;
                     SpeedMultiplier *= 1.2f;
                     return;
-                case "trigger_finger":
-                    base.aiActor.behaviorSpeculator.CooldownScale *= 0.75f;
+                case 213: //Lichy Trigger Finger
+                    base.aiActor.behaviorSpeculator.CooldownScale *= 0.8f;
+                    base.aiActor.LocalTimeScale *= 1.125f;
+                    base.aiActor.MovementSpeed *= 0.9f;
                     return;
-                case "ice_cube":
+                case 170: //Ice Cube
                     return;
             }            
         }
@@ -171,7 +178,7 @@ namespace Planetside
         {
             switch (HeldSecondaryPassive)
             {
-                case "bloodied_scarf":
+                case 436: //Bloodied Scarf
                     var l = base.aiActor.behaviorSpeculator.OverrideBehaviors;
                     foreach (var b in l)
                     {
@@ -183,13 +190,13 @@ namespace Planetside
 
 
                     return;
-                case "guon":
+                case 565: //Glass Guon Stone
 
                     base.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.NemesisGuon);
                     EnemyToolbox.GenerateShootPoint(base.aiActor.gameObject, base.aiActor.sprite.WorldCenter, "SpecialGuonPos");
                   
                     return;
-                case "sweet":
+                case 110: // Magic Sweet
                     base.aiActor.behaviorSpeculator.CooldownScale *= 0.85f;
                     base.aiActor.MovementSpeed *= 1.10f;
                     SpeedMultiplier *= 1.10f;
@@ -298,7 +305,7 @@ namespace Planetside
             elapsed = 0;
             CurrentWeapon = Name;
             GunSwitchTimer = UnityEngine.Random.Range(5, 8);
-            if (Name == PreferredWeapon) { elapsed -= 6; }
+            if (Name == PreferredWeapon) { elapsed -= 4.5f; }
             for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
             {
                 if (base.behaviorSpeculator.AttackBehaviors[j] is AttackBehaviorGroup && base.behaviorSpeculator.AttackBehaviors[j] != null)
@@ -308,7 +315,45 @@ namespace Planetside
                         AttackBehaviorGroup.AttackGroupItem attackGroupItem = (base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup).AttackBehaviors[i];
                         if ((base.behaviorSpeculator.AttackBehaviors[j] as AttackBehaviorGroup) != null && attackGroupItem.NickName.Contains(Name))
                         {
+
+
                             attackGroupItem.Probability = 1f;
+
+                            if (attackGroupItem.NickName.ToLower().Contains("three"))
+                            {
+                                if (Name != PreferredWeapon)
+                                {
+                                    attackGroupItem.Probability = 0f;
+
+                                }
+                                else
+                                {
+                                    attackGroupItem.Probability = 2f;
+                                }
+                            }
+
+                            /*
+                            if (Name == PreferredWeapon)
+                            {
+                                if (attackGroupItem.NickName.ToLower().Contains("three"))
+                                {
+                                    attackGroupItem.Probability = 1f;
+                                }
+                                else
+                                {
+
+                                }
+                            }
+
+                            if (PreferredWeapon == Name)
+                            {
+                                
+                            }
+                            else
+                            {
+                                attackGroupItem.Probability = 1f;
+                            }
+                            */
                         }
                         else
                         {
@@ -356,9 +401,10 @@ namespace Planetside
 
         public List<GameObject> activeLines = new List<GameObject>();
 
-        public string HeldPrimaryPassive;
-        public string HeldSecondaryPassive;
-        public string HeldActive;
+        public int HeldPrimaryPassive;
+        public int HeldSecondaryPassive;
+
+        public int HeldActive;
         public string PreferredWeapon;
         public string CurrentWeapon = "Revolver";
 
@@ -369,27 +415,28 @@ namespace Planetside
             "Revolver",
         };
 
-        public List<string> PrimaryPassivesList = new List<string>()
+        public List<int> PrimaryPassivesList = new List<int>()
         {
-            "cloranthy",
-            "bionic_leg",
-            "trigger_finger",
-            "ice_cube"
+            Items.Cloranthy_Ring.PickupObjectId,
+            Items.Bionic_Leg.PickupObjectId,
+            Items.Lichy_Trigger_Finger.PickupObjectId,
+            Items.Ice_Cube.PickupObjectId,//"cloranthy",
         };
 
-        public List<string> SecondaryPassivesList = new List<string>()
+        public List<int> SecondaryPassivesList = new List<int>()
         {
-            "bloodied_scarf",
-            "guon",
-            "sweet",
+            Items.Bloodied_Scarf.PickupObjectId,
+            Pickups.Glass_Guon_Stone.PickupObjectId,
+            Items.Magic_Sweet.PickupObjectId,
+
         };
 
-        public List<string> ActiveList = new List<string>()
+        public List<int> ActiveList = new List<int>()
         {
-            "gun_friendship",
-            "fortunes_favor",
-            "cluster",
-            "blast_shower"
+            Actives.Potion_Of_Gun_Friendship.PickupObjectId,//"gun_friendship",
+            Actives.Fortunes_Favor.PickupObjectId,//"fortunes_favor",
+            Actives.Cluster_Mine.PickupObjectId,//"cluster",
+            BlastShower.BlastShowerID,//"blast_shower"
            
         };
     }

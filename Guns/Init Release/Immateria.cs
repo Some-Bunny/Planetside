@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -53,7 +54,10 @@ namespace Planetside
                 gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(88) as Gun, true, true);
             }
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Immateria", "Planetside/Resources/GunClips/Immateria/immateriafull", "Planetside/Resources/GunClips/Immateria/immateriaempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Immateria", "Planetside/Resources/GunClips/Immateria/immateriafull", "Planetside/Resources/GunClips/Immateria/immateriaempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Immateria", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "immateriafull", "immateriaempty");
+
+
             gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>();
 			gun.gunHandedness = GunHandedness.OneHanded;
 			gun.gunSwitchGroup = (PickupObjectDatabase.GetById(228) as Gun).gunSwitchGroup;
@@ -186,6 +190,7 @@ namespace Planetside
                 overrideRangeIndicatorEffect = null,
 				
             };
+            gun.AddItemTip("Fires projectiles that wrap around the room and explode when they hit a wall.");
         }
         public static ExplosionData ExplosionData;
         public static int ImmateriaID;		

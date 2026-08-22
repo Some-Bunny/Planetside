@@ -58,7 +58,7 @@ namespace Planetside
             projectile.gameObject.SetActive(false);
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
-            projectile.baseData.damage = 9f;
+            projectile.baseData.damage = 8f;
             projectile.shouldRotate = true;
             projectile.pierceMinorBreakables = true;
             projectile.baseData.range = 60f;
@@ -67,11 +67,11 @@ namespace Planetside
             OtherTools.EasyTrailComponent trail = projectile.gameObject.AddComponent<OtherTools.EasyTrailComponent>();
 
             trail.TrailPos = projectile.transform.position;
-            trail.StartWidth = 0.125f;
+            trail.StartWidth = 0.1875f;
             trail.EndWidth = 0;
-            trail.LifeTime = 0.2f;
-            trail.BaseColor = new Color(1f, 0f, 0f, 0.6f);
-            trail.StartColor = new Color(1f, 1f, 0f, 0.6f);
+            trail.LifeTime = 0.25f;
+            trail.BaseColor = new Color(1f, 0f, 0f, 1f);
+            trail.StartColor = new Color(1f, 1f, 0f, 1f);
             trail.EndColor = new Color(0.1f, 0f, 0f, 0f);
 
 
@@ -151,12 +151,12 @@ namespace Planetside
 
         public override void OnInitialPickup(PlayerController playerController)
         {
-            this.Cap = 12;
-            this.MinToSpawn = 3;
+            this.Cap = 8;
+            this.MinToSpawn = 1;
         }
         public override void OnStack(PlayerController playerController)
         {
-            Cap += 4;
+            Cap += 2;
             MinToSpawn++;
         }
     }

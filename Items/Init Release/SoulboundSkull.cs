@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -76,8 +77,10 @@ namespace Planetside
             tr.endWidth = 0f;
             tr.startColor = Color.white;
             tr.endColor = new Color(0f, 1f, 3f, 0f);
-
+            tr.gameObject.layer = Layers.FG_Nonsense;
             wispProjectile = projectile;
+
+            item.AddItemTip("Hurting or killing enemies create wisps, which home in on enemies and slightly restore active item charge.");
         }
         public static Projectile wispProjectile;
 

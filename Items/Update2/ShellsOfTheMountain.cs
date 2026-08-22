@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Brave.BulletScript;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -44,6 +45,7 @@ namespace Planetside
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.35f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
             Alexandria.RoomRewardAPI.OnRoomRewardDetermineContents += ORDC;
+            item.AddItemTip("Grants a large damage up, bonus scaling damage with the current floor and greatly increased room reward chance. Enemies have a chance to become Elites, and all bosses have a guaranteed Elite effect.");
         }
 
         public static void ORDC(RoomHandler room, Alexandria.RoomRewardAPI.ValidRoomRewardContents validRoomRewardContents, float chance)

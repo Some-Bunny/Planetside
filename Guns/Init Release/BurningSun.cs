@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -75,7 +76,8 @@ namespace Planetside
 			gun.gunClass = GunClass.FIRE;
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Big Flame", "Planetside/Resources/GunClips/BurningSun/burningsunfull", "Planetside/Resources/GunClips/BurningSun/burningsunempty");
+			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Big Flame", "Planetside/Resources/GunClips/BurningSun/burningsunfull", "Planetside/Resources/GunClips/BurningSun/burningsunempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Big Flame", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "burningsunfull", "burningsunempty");
 
             gun.encounterTrackable.EncounterGuid = "Here comes the sun, dudududu";
 			Projectile projectile2 = UnityEngine.Object.Instantiate<Projectile>((PickupObjectDatabase.GetById(146) as Gun).DefaultModule.projectiles[0]);
@@ -169,7 +171,7 @@ namespace Planetside
 				"old_knights_flask",
 				"gun_soul"
 			};
-            CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false);
+            CustomSynergies.Add("Praise The Gun!", mandatoryConsoleIDs, optionalConsoleIDs, false).AddItemTip("Burning Sun also inflicts Heat Stroke, a debuff that becomes more potent and deals more damage the longer an enemy has had it applied to them.");
 
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects;
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(169) as Gun).gunSwitchGroup;
@@ -206,6 +208,7 @@ namespace Planetside
             material.SetTexture("_MainTex", sharedMaterials[0].GetTexture("_MainTex"));
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
+			gun.AddItemTip("Fires large, slow suns that burn and damage enemies near them. Bursts into pools of fire.");
         }
 		public static int BurningSunId;
 

@@ -19,33 +19,40 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "coallet_psog";
-		public static GameObject shootpoint;
-		//private static tk2dSpriteCollectionData CoalletCollection;
+
 
 		public static void Init()
-		{
-			Coallet.BuildPrefab();
-		}
-		public static void BuildPrefab()
 		{
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CoalletCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("coallet material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CoalletAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (prefab == null ||!EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				prefab = EnemyBuilder.BuildPrefabBundle("Coallet", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(0, 0),false, true);;
-				var enemy = prefab.AddComponent<EnemyBehavior>();
+				var enemy = prefab.GetComponent<AIActor>();
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, mat, false);
+
+
+                enemy.gameObject.layer = 22;
+                enemy.sprite.SortingOrder = 2;
+
+
+                enemy.aiActor.spriteAnimator.Library = h;
+                enemy.aiActor.spriteAnimator.library = h;
+                enemy.aiActor.aiAnimator.spriteAnimator = enemy.aiActor.spriteAnimator;
 
                 CoalletController pain = prefab.AddComponent<CoalletController>();
 				enemy.aiActor.knockbackDoer.weight = 35;
 				enemy.aiActor.MovementSpeed = 2f;
 				enemy.aiActor.healthHaver.PreventAllDamage = false;
 				enemy.aiActor.CollisionDamage = 1f;
-				enemy.aiActor.HasShadow = false;
-				enemy.aiActor.IgnoreForRoomClear = false;
+				enemy.aiActor.HasShadow = true;
+                EnemyToolbox.AddShadowToAIActor(enemy.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.375f, 0f), "shadowPos");
+
+                enemy.aiActor.IgnoreForRoomClear = false;
 				enemy.aiActor.aiAnimator.HitReactChance = 0f;
 				enemy.aiActor.specRigidbody.CollideWithOthers = true;
 				enemy.aiActor.specRigidbody.CollideWithTileMap = true;
@@ -61,19 +68,15 @@ namespace Planetside
 				{
 					new AIAnimator.NamedDirectionalAnimation
 					{
-					name = "die",
-					anim = new DirectionalAnimation
+						name = "die",
+						anim = new DirectionalAnimation
 						{
-							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
+							Type = DirectionalAnimation.DirectionType.None,
 							Flipped = new DirectionalAnimation.FlipType[2],
 							AnimNames = new string[]
 							{
-
-						   "die_left",
-						   "die_right"
-
+								"die"
 							}
-
 						}
 					}
 				};
@@ -81,19 +84,17 @@ namespace Planetside
                 {
                     new AIAnimator.NamedDirectionalAnimation
                     {
-                    name = "pitfall",
-                    anim = new DirectionalAnimation
-                        {
+						name = "pitfall",
+						anim = new DirectionalAnimation
+						{
                             Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
                             Flipped = new DirectionalAnimation.FlipType[2],
                             AnimNames = new string[]
                             {
 
-                           "die_left",
-                           "die_right"
-
+                                "pitfall",
+								"pitfall"
                             }
-
                         }
                     }
                 };
@@ -103,8 +104,8 @@ namespace Planetside
 					Flipped = new DirectionalAnimation.FlipType[2],
 					AnimNames = new string[]
 					{
-						"idle_left",
-						"idle_right"
+                        "idle",
+						"idle"
 					}
 				};
 				aiAnimator.MoveAnimation = new DirectionalAnimation
@@ -112,10 +113,10 @@ namespace Planetside
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					Flipped = new DirectionalAnimation.FlipType[2],
 					AnimNames = new string[]
-						{
-						"run_left",
-						"run_right"
-						}
+					{
+                        "run",
+						"run"
+					}
 				};
 
 				aiAnimator.OtherAnimations = new List<AIAnimator.NamedDirectionalAnimation>
@@ -129,141 +130,18 @@ namespace Planetside
 							Flipped = new DirectionalAnimation.FlipType[2],
 							AnimNames = new string[]
 							{
-					   "runfire_left",
-					   "runfire_right",
-
+                                "runfire",
+								"runfire",
 							}
 						}
 					}
 				};
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				enemy.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
-				//bool flag3 = CoalletCollection == null;
-				//if (flag3)
-				{
-					/*
-					CoalletCollection = SpriteBuilder.ConstructCollection(prefab, "CoalletCollection");
-					UnityEngine.Object.DontDestroyOnLoad(CoalletCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], CoalletCollection);
-					}
-					*/
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5
-
-					}, "idle_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-					0,
-					1,
-					2,
-					3,
-					4,
-					5
-
-					}, "idle_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-					6,
-					7,
-					8,
-					9,
-					10,
-					11
-
-
-					}, "run_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-
-					6,
-					7,
-					8,
-					9,
-					10,
-					11
-
-
-					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-				 12,
-				 13,
-				 14,
-				 15,
-				 16,
-				 17
-
-					}, "runfire_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-				 12,
-				 13,
-				 14,
-				 15,
-				 16,
-				 17
-
-					}, "runfire_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-				 18,
-				 19,
-				 20,
-				 21,
-				 22,
-				 23,
-				 24,
-				 25
-
-
-
-
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-				 18,
-				 19,
-				 20,
-				 21,
-				 22,
-				 23,
-				 24,
-				 25
-
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(enemy.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1,
-					2,
-					3,
-					4,
-					5
-
-					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 9f;
-
-				}
-
-				//enemy.aiAnimator.AssignDirectionalAnimation("runfireidle", firewalkidle, AnimationType.Other);
+				
 
 				pain.overrideMoveSpeed = 4f;
 				pain.overridePauseTime = 1f;
-				//pain.overrideAnimation = "runfireidle";
 
 
 				enemy.aiActor.specRigidbody.PixelColliders.Clear();
@@ -309,10 +187,9 @@ namespace Planetside
 				enemy.aiActor.PreventBlackPhantom = false;
 
 				//AIAnimator aiAnimator = enemy.aiAnimator;
-				shootpoint = new GameObject("fuck");
+				var shootpoint = new GameObject("fuck");
 				shootpoint.transform.parent = enemy.transform;
-				shootpoint.transform.position = new Vector3(0,0);
-				GameObject shootpoint1 = enemy.transform.Find("fuck").gameObject;
+				shootpoint.transform.position = enemy.sprite.WorldCenter;
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
@@ -346,7 +223,7 @@ namespace Planetside
 							LeadAmount = 0,
 							AttackCooldown = 1f,
 							RequiresLineOfSight = true,
-							ShootPoint = shootpoint1,
+							ShootPoint = shootpoint,
 							CooldownVariance = 0f,
 							GlobalCooldown = 0,
 							InitialCooldownVariance = 0,
@@ -391,8 +268,8 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:coallet", enemy.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Coallet/Idle/coallet_idle_006", SpriteBuilder.ammonomiconCollection);
-				if (enemy.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("coallet_idle_001"), SpriteBuilder.ammonomiconCollection);
+                if (enemy.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(enemy.GetComponent<EncounterTrackable>());
 				}
@@ -404,7 +281,7 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.IsEnemy = true;
 				enemy.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				enemy.encounterTrackable.ProxyEncounterGuid = "";
-				enemy.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Coallet/Idle/coallet_idle_006";
+				enemy.encounterTrackable.journalData.AmmonomiconSprite = "coallet_idle_001";
 				enemy.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("coalleticon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\coalleticon.png");
                 PlanetsideModule.Strings.Enemies.Set("#COALLET", "Coallet");
 				PlanetsideModule.Strings.Enemies.Set("#COALLET_SHORTDESC", "Just For Me");
@@ -416,7 +293,11 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:coallet").ForcedPositionInAmmonomicon = 70;
 				EnemyDatabase.GetEntry("psog:coallet").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:coallet").isNormalEnemy = true;
-			}
+
+                enemy.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
+				enemy.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("5729c8b5ffa7415bb3d01205663a33ef").bulletBank.GetBullet("homingRing"), "coalletSmall", null, null, false));
+
+            }
 
 		}
 
@@ -455,10 +336,7 @@ namespace Planetside
 		};
 
 
-		public class EnemyBehavior : BraveBehaviour
-		{
-			//RIP
-		}
+
 
 
 
@@ -468,21 +346,22 @@ namespace Planetside
 		{
 			public override IEnumerator Top()
 			{
-				if (this.BulletBank && this.BulletBank.aiActor && this.BulletBank.aiActor.TargetRigidbody) { base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("05891b158cd542b1a5f3df30fb67a7ff").bulletBank.GetBullet("default")); }
-				base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
-				int i = 0;
+				int i = 1;
+
 				for (; ; )
 				{
-					base.PostWwiseEvent("Play_BOSS_doormimic_flame_01", null);
-					base.Fire(new Direction(UnityEngine.Random.Range(-180, 180)), new Speed(UnityEngine.Random.Range(6f, 8f), SpeedType.Absolute), new Flames());
-					yield return this.Wait(16f);
-					i++;
+					bool _ = UnityEngine.Random.value < 0.33f;
+					float s = _ ? UnityEngine.Random.Range(6f, 9f) : UnityEngine.Random.Range(2f, 3f);
+                    base.PostWwiseEvent("Play_BOSS_doormimic_flame_01", null);
+					base.Fire(new Direction(UnityEngine.Random.Range(-180, 180)), new Speed(s, SpeedType.Absolute), new Flames(_? "frogger" : "coalletSmall"));
+					yield return this.Wait(i);
+					i = Mathf.Min(i + 1, 30);
 				}
 			}
 		}
 		public class Flames : Bullet
 		{
-			public Flames() : base("frogger", false, false, false)
+			public Flames(string t) : base(t, false, false, false)
 			{
 
 			}
@@ -490,7 +369,7 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				float speed = base.Speed;
-				base.ChangeSpeed(new Speed(speed * 1.5f, SpeedType.Absolute), 60);
+				base.ChangeSpeed(new Speed(speed * 0.5f, SpeedType.Absolute), 30);
 				yield break;
 			}
 		}

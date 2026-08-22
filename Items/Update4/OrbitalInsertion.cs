@@ -16,6 +16,7 @@ using GungeonAPI;
 using Pathfinding;
 using NpcApi;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -41,8 +42,9 @@ namespace Planetside
 
             OrbitalInsertion.OrbitalInsertionID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
+			activeitem.AddItemTip("Call down an allied H.M Prime unit to assist you for the current floor. Use in open space.");
 
-			activeitem.SetupUnlockOnCustomFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);
+            activeitem.SetupUnlockOnCustomFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);
 		}
 		public static GenericLootTable shopInABoxPickupTable;
 

@@ -10,6 +10,7 @@ using Dungeonator;
 using System.Linq;
 using GungeonAPI;
 using System.Reflection;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -33,6 +34,7 @@ namespace Planetside
 			item.quality = PickupObject.ItemQuality.B;
 			BabyGoodCandleKin.BuildPrefab();
             item.sprite.SortingOrder = 3;
+            item.AddItemTip("Spawns a companion that shoots high damage burning projectiles, and ignites enemies in proximity to it.");
 
             item.CompanionGuid = BabyGoodCandleKin.guid;//new List<string>() { BabyGoodCandleKin.guid, BabyGoodCandleKin.guid };
 			//item.CompanionComponentsToTransfer = new List<Component> { new PetInteractable(), new PetInteractable() };

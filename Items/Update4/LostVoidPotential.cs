@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alexandria.Integrations;
 using Dungeonator;
 using ItemAPI;
 using UnityEngine;
@@ -32,7 +33,9 @@ namespace Planetside
 			warVase.CustomCost = 75;
 			LostVoidPotential.LostVoidPotentialID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
-		}
+			warVase.AddItemTip("Grants coolness, +1 blank per floor, +1 active item slot and 20% ammo capacity. Can be sold for 75 casings.");
+
+        }
 		public static int LostVoidPotentialID;
 	}
 }

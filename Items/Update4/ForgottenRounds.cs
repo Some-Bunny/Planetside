@@ -10,6 +10,7 @@ using Alexandria.Misc;
 using HarmonyLib;
 using MonoMod.Cil;
 using System.Reflection;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -40,6 +41,7 @@ namespace Planetside
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
             warVase.RemovePickupFromLootTables();
+            warVase.AddItemTip("+10% damage. Counts as a Master Round.");
         }
 
         public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
@@ -81,6 +83,7 @@ namespace Planetside
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
             warVase.RemovePickupFromLootTables();
+            warVase.AddItemTip("+10% damage. Counts as a Master Round.");
         }
 
         public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)
@@ -128,6 +131,7 @@ namespace Planetside
             warVase.RemovePickupFromLootTables();
 
             EncounterDatabase.Instance.Entries.Add(en);
+            warVase.AddItemTip("+10% damage. Counts as a Master Round.");
         }
         public static string NoPunch;
         public static string Punch;
@@ -178,6 +182,7 @@ namespace Planetside
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
             CustomActions.OnRewardPedestalDetermineContents += OnMasteryDetermineContents;
             warVase.RemovePickupFromLootTables();
+            warVase.AddItemTip("+10% damage. Counts as a Master Round.");
         }
 
         public static void OnMasteryDetermineContents(RewardPedestal pedestal, PlayerController determiner, CustomActions.ValidPedestalContents valids)

@@ -45,8 +45,7 @@ namespace Planetside
                     {
                         for (int i = 0; i < this.NumToTrigger; i++)
                         {
-                            bool flag4 = !this.IsInitialized(i);
-                            if (flag4)
+                            if (!this.IsInitialized(i))
                             {
                                 this.Enable(i);
                             }
@@ -59,16 +58,13 @@ namespace Planetside
                 }
                 else
                 {
-                    bool flag5 = this.m_item;
-                    if (flag5)
+                    if (this.m_item)
                     {
-                        bool flag6 = this.m_item && this.m_item.Owner && Activate;
-                        if (flag6)
+                        if (this.m_item.Owner && Activate)
                         {
                             for (int j = 0; j < this.NumToTrigger; j++)
                             {
-                                bool flag7 = !this.IsInitialized(j);
-                                if (flag7)
+                                if (!this.IsInitialized(j))
                                 {
                                     this.Enable(j);
                                 }
@@ -260,17 +256,26 @@ namespace Planetside
 
         private void Enable(int index)
         {
-            bool flag = this.m_initialized.Count > index && this.m_initialized[index];
-            if (!flag)
+            bool _ = this.m_initialized.Count <= index;
+
+            if (!_)
+            {
+                _ = this.m_initialized[index] == false;
+            }
+
+            if (_)
             {
                 PlayerController owner = this.GetOwner();
                 GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(ResourceCache.Acquire("Global Prefabs/HoveringGun") as GameObject, owner.CenterPosition.ToVector3ZisY(0f), Quaternion.identity);
                 gameObject.transform.parent = owner.transform;
-                while (this.m_hovers.Count < index + 1)
+
+
+                if (this.m_hovers.Count <= index)
                 {
                     this.m_hovers.Add(null);
                     this.m_initialized.Add(false);
                 }
+
                 Destroy(gameObject.GetComponent<HoveringGunController>());
 
                 this.m_hovers[index] = gameObject.GetOrAddComponent<CustomHoveringGunController>();
@@ -289,24 +294,23 @@ namespace Planetside
                 this.m_hovers[index].Radius = this.Radius;
                 this.m_hovers[index].material = this.Material_To_Use;
 
+                //Debug.Log($"idn: {index}");
+
                 //Material_To_Use
                 Gun gun = null;
                 int num = this.TargetGunID;
-                bool usesMultipleGuns = this.UsesMultipleGuns;
-                if (usesMultipleGuns)
+                if (this.UsesMultipleGuns)
                 {
                     num = this.TargetGunIDs[index];
                 }
                 for (int i = 0; i < owner.inventory.AllGuns.Count; i++)
                 {
-                    bool flag2 = owner.inventory.AllGuns[i].PickupObjectId == num;
-                    if (flag2)
+                    if (owner.inventory.AllGuns[i].PickupObjectId == num)
                     {
                         gun = owner.inventory.AllGuns[i];
                     }
                 }
-                bool flag3 = !gun;
-                if (flag3)
+                if (!gun)
                 {
                     gun = (PickupObjectDatabase.Instance.InternalGetById(num) as Gun);
                 }

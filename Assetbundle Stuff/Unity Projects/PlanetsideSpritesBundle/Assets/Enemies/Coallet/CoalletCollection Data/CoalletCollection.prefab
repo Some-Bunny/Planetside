@@ -1353,32 +1353,32 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_001
     boundsData:
-    - {x: 0.40625, y: 0.5, z: 0}
+    - {x: 0.40625, y: 0.375, z: 0}
     - {x: 0.8125, y: 0.75, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.40625, y: 0.5, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.375, z: 0}
     boundsDataExtents: {x: 0.8125, y: 0.75, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0.125, z: 0}
-    - {x: 0.8125, y: 0.125, z: 0}
-    - {x: 0, y: 0.875, z: 0}
-    - {x: 0.8125, y: 0.875, z: 0}
-    position0: {x: 0, y: 0.125, z: 0}
-    position1: {x: 0.8125, y: 0.125, z: 0}
-    position2: {x: 0, y: 0.875, z: 0}
-    position3: {x: 0.8125, y: 0.875, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.75, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.75, z: 0}
+    position3: {x: 0.8125, y: 0.75, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.3125078, y: 0.4531328}
-    - {x: 0.3125078, y: 0.5546797}
-    - {x: 0.4062422, y: 0.4531328}
-    - {x: 0.4062422, y: 0.5546797}
+    - {x: 0.3125078, y: 0.6015703}
+    - {x: 0.3125078, y: 0.7031172}
+    - {x: 0.4062422, y: 0.6015703}
+    - {x: 0.4062422, y: 0.7031172}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -1425,25 +1425,25 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_002
     boundsData:
-    - {x: 0.40625, y: 0.46875, z: 0}
+    - {x: 0.40625, y: 0.40625, z: 0}
     - {x: 0.8125, y: 0.6875, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.40625, y: 0.46875, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.40625, z: 0}
     boundsDataExtents: {x: 0.8125, y: 0.6875, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0, y: 0.125, z: 0}
-    - {x: 0.8125, y: 0.125, z: 0}
-    - {x: 0, y: 0.8125, z: 0}
-    - {x: 0.8125, y: 0.8125, z: 0}
-    position0: {x: 0, y: 0.125, z: 0}
-    position1: {x: 0.8125, y: 0.125, z: 0}
-    position2: {x: 0, y: 0.8125, z: 0}
-    position3: {x: 0.8125, y: 0.8125, z: 0}
+    - {x: 0, y: 0.0625, z: 0}
+    - {x: 0.8125, y: 0.0625, z: 0}
+    - {x: 0, y: 0.75, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    position0: {x: 0, y: 0.0625, z: 0}
+    position1: {x: 0.8125, y: 0.0625, z: 0}
+    position2: {x: 0, y: 0.75, z: 0}
+    position3: {x: 0.8125, y: 0.75, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -1497,32 +1497,32 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_003
     boundsData:
-    - {x: 0.4375, y: 0.53125, z: 0}
+    - {x: 0.4375, y: 0.34375, z: 0}
     - {x: 0.75, y: 0.5625, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.4375, y: 0.53125, z: 0}
+    boundsDataCenter: {x: 0.4375, y: 0.34375, z: 0}
     boundsDataExtents: {x: 0.75, y: 0.5625, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0.0625, y: 0.25, z: 0}
-    - {x: 0.8125, y: 0.25, z: 0}
-    - {x: 0.0625, y: 0.8125, z: 0}
-    - {x: 0.8125, y: 0.8125, z: 0}
-    position0: {x: 0.0625, y: 0.25, z: 0}
-    position1: {x: 0.8125, y: 0.25, z: 0}
-    position2: {x: 0.0625, y: 0.8125, z: 0}
-    position3: {x: 0.8125, y: 0.8125, z: 0}
+    - {x: 0.0625, y: 0.0625, z: 0}
+    - {x: 0.8125, y: 0.0625, z: 0}
+    - {x: 0.0625, y: 0.625, z: 0}
+    - {x: 0.8125, y: 0.625, z: 0}
+    position0: {x: 0.0625, y: 0.0625, z: 0}
+    position1: {x: 0.8125, y: 0.0625, z: 0}
+    position2: {x: 0.0625, y: 0.625, z: 0}
+    position3: {x: 0.8125, y: 0.625, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.8984453, y: 0.023445312}
-    - {x: 0.8984453, y: 0.117179684}
-    - {x: 0.9687422, y: 0.023445312}
-    - {x: 0.9687422, y: 0.117179684}
+    - {x: 0.17188281, y: 0.17188281}
+    - {x: 0.17188281, y: 0.2656172}
+    - {x: 0.24217969, y: 0.17188281}
+    - {x: 0.24217969, y: 0.2656172}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -1569,36 +1569,36 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_004
     boundsData:
-    - {x: 0.4375, y: 0.4375, z: 0}
-    - {x: 0.75, y: 0.5, z: 0}
+    - {x: 0.4375, y: 0.3125, z: 0}
+    - {x: 0.75, y: 0.625, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.4375, y: 0.4375, z: 0}
-    boundsDataExtents: {x: 0.75, y: 0.5, z: 0}
+    boundsDataCenter: {x: 0.4375, y: 0.3125, z: 0}
+    boundsDataExtents: {x: 0.75, y: 0.625, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0.0625, y: 0.1875, z: 0}
-    - {x: 0.8125, y: 0.1875, z: 0}
-    - {x: 0.0625, y: 0.6875, z: 0}
-    - {x: 0.8125, y: 0.6875, z: 0}
-    position0: {x: 0.0625, y: 0.1875, z: 0}
-    position1: {x: 0.8125, y: 0.1875, z: 0}
-    position2: {x: 0.0625, y: 0.6875, z: 0}
-    position3: {x: 0.8125, y: 0.6875, z: 0}
+    - {x: 0.0625, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0.0625, y: 0.625, z: 0}
+    - {x: 0.8125, y: 0.625, z: 0}
+    position0: {x: 0.0625, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0.0625, y: 0.625, z: 0}
+    position3: {x: 0.8125, y: 0.625, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.023445312, y: 0.9140703}
-    - {x: 0.117179684, y: 0.9140703}
-    - {x: 0.023445312, y: 0.9765547}
-    - {x: 0.117179684, y: 0.9765547}
+    - {x: 0.8984453, y: 0.023445312}
+    - {x: 0.8984453, y: 0.117179684}
+    - {x: 0.9765547, y: 0.023445312}
+    - {x: 0.9765547, y: 0.117179684}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
@@ -1609,7 +1609,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1641,32 +1641,32 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_005
     boundsData:
-    - {x: 0.4375, y: 0.40625, z: 0}
+    - {x: 0.4375, y: 0.28125, z: 0}
     - {x: 0.75, y: 0.5625, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.4375, y: 0.40625, z: 0}
+    boundsDataCenter: {x: 0.4375, y: 0.28125, z: 0}
     boundsDataExtents: {x: 0.75, y: 0.5625, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0.0625, y: 0.125, z: 0}
-    - {x: 0.8125, y: 0.125, z: 0}
-    - {x: 0.0625, y: 0.6875, z: 0}
-    - {x: 0.8125, y: 0.6875, z: 0}
-    position0: {x: 0.0625, y: 0.125, z: 0}
-    position1: {x: 0.8125, y: 0.125, z: 0}
-    position2: {x: 0.0625, y: 0.6875, z: 0}
-    position3: {x: 0.8125, y: 0.6875, z: 0}
+    - {x: 0.0625, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0.0625, y: 0.5625, z: 0}
+    - {x: 0.8125, y: 0.5625, z: 0}
+    position0: {x: 0.0625, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0.0625, y: 0.5625, z: 0}
+    position3: {x: 0.8125, y: 0.5625, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.17188281, y: 0.17188281}
-    - {x: 0.17188281, y: 0.2656172}
-    - {x: 0.24217969, y: 0.17188281}
-    - {x: 0.24217969, y: 0.2656172}
+    - {x: 0.17188281, y: 0.3125078}
+    - {x: 0.17188281, y: 0.4062422}
+    - {x: 0.24217969, y: 0.3125078}
+    - {x: 0.24217969, y: 0.4062422}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -1713,32 +1713,32 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_006
     boundsData:
-    - {x: 0.4375, y: 0.34375, z: 0}
-    - {x: 0.75, y: 0.4375, z: 0}
+    - {x: 0.4375, y: 0.28125, z: 0}
+    - {x: 0.75, y: 0.5625, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.4375, y: 0.34375, z: 0}
-    boundsDataExtents: {x: 0.75, y: 0.4375, z: 0}
+    boundsDataCenter: {x: 0.4375, y: 0.28125, z: 0}
+    boundsDataExtents: {x: 0.75, y: 0.5625, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0.0625, y: 0.125, z: 0}
-    - {x: 0.8125, y: 0.125, z: 0}
+    - {x: 0.0625, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
     - {x: 0.0625, y: 0.5625, z: 0}
     - {x: 0.8125, y: 0.5625, z: 0}
-    position0: {x: 0.0625, y: 0.125, z: 0}
-    position1: {x: 0.8125, y: 0.125, z: 0}
+    position0: {x: 0.0625, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
     position2: {x: 0.0625, y: 0.5625, z: 0}
     position3: {x: 0.8125, y: 0.5625, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.16407031, y: 0.9140703}
-    - {x: 0.2578047, y: 0.9140703}
-    - {x: 0.16407031, y: 0.9687422}
-    - {x: 0.2578047, y: 0.9687422}
+    - {x: 0.3046953, y: 0.8984453}
+    - {x: 0.3984297, y: 0.8984453}
+    - {x: 0.3046953, y: 0.9687422}
+    - {x: 0.3984297, y: 0.9687422}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1785,36 +1785,36 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_007
     boundsData:
-    - {x: 0.4375, y: 0.28125, z: 0}
-    - {x: 0.75, y: 0.4375, z: 0}
+    - {x: 0.4375, y: 0.25, z: 0}
+    - {x: 0.75, y: 0.5, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.4375, y: 0.28125, z: 0}
-    boundsDataExtents: {x: 0.75, y: 0.4375, z: 0}
+    boundsDataCenter: {x: 0.4375, y: 0.25, z: 0}
+    boundsDataExtents: {x: 0.75, y: 0.5, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
-    - {x: 0.0625, y: 0.0625, z: 0}
-    - {x: 0.8125, y: 0.0625, z: 0}
+    - {x: 0.0625, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
     - {x: 0.0625, y: 0.5, z: 0}
     - {x: 0.8125, y: 0.5, z: 0}
-    position0: {x: 0.0625, y: 0.0625, z: 0}
-    position1: {x: 0.8125, y: 0.0625, z: 0}
+    position0: {x: 0.0625, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
     position2: {x: 0.0625, y: 0.5, z: 0}
     position3: {x: 0.8125, y: 0.5, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.17188281, y: 0.3125078}
-    - {x: 0.17188281, y: 0.4062422}
-    - {x: 0.22655469, y: 0.3125078}
-    - {x: 0.22655469, y: 0.4062422}
+    - {x: 0.023445312, y: 0.9140703}
+    - {x: 0.117179684, y: 0.9140703}
+    - {x: 0.023445312, y: 0.9765547}
+    - {x: 0.117179684, y: 0.9765547}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
@@ -1825,7 +1825,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -1857,32 +1857,32 @@ MonoBehaviour:
     attachPoints: []
   - name: coallet_die_008
     boundsData:
-    - {x: 0.4375, y: 0.1875, z: 0}
-    - {x: 0.75, y: 0.375, z: 0}
+    - {x: 0.4375, y: 0.25, z: 0}
+    - {x: 0.75, y: 0.5, z: 0}
     untrimmedBoundsData:
     - {x: 0.40625, y: 0.4375, z: 0}
     - {x: 0.8125, y: 0.875, z: 0}
-    boundsDataCenter: {x: 0.4375, y: 0.1875, z: 0}
-    boundsDataExtents: {x: 0.75, y: 0.375, z: 0}
+    boundsDataCenter: {x: 0.4375, y: 0.25, z: 0}
+    boundsDataExtents: {x: 0.75, y: 0.5, z: 0}
     untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
     untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
     texelSize: {x: 0.0625, y: 0.0625}
     positions:
     - {x: 0.0625, y: 0, z: 0}
     - {x: 0.8125, y: 0, z: 0}
-    - {x: 0.0625, y: 0.375, z: 0}
-    - {x: 0.8125, y: 0.375, z: 0}
+    - {x: 0.0625, y: 0.5, z: 0}
+    - {x: 0.8125, y: 0.5, z: 0}
     position0: {x: 0.0625, y: 0, z: 0}
     position1: {x: 0.8125, y: 0, z: 0}
-    position2: {x: 0.0625, y: 0.375, z: 0}
-    position3: {x: 0.8125, y: 0.375, z: 0}
+    position2: {x: 0.0625, y: 0.5, z: 0}
+    position3: {x: 0.8125, y: 0.5, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.3046953, y: 0.8984453}
-    - {x: 0.3984297, y: 0.8984453}
-    - {x: 0.3046953, y: 0.9453047}
-    - {x: 0.3984297, y: 0.9453047}
+    - {x: 0.16407031, y: 0.9140703}
+    - {x: 0.2578047, y: 0.9140703}
+    - {x: 0.16407031, y: 0.9765547}
+    - {x: 0.2578047, y: 0.9765547}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -1927,7 +1927,512 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  - name: coallet_awaken_003
+    boundsData:
+    - {x: 0.40625, y: 0.375, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.375, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.75, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.75, z: 0}
+    position3: {x: 0.8125, y: 0.75, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6015703, y: 0.023445312}
+    - {x: 0.7031172, y: 0.023445312}
+    - {x: 0.6015703, y: 0.117179684}
+    - {x: 0.7031172, y: 0.117179684}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: f86f4d9f367f23c45b0c0f6b617c4df6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: coallet_awaken_001
+    boundsData:
+    - {x: 0.40625, y: 0.375, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.375, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.75, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.75, z: 0}
+    position3: {x: 0.8125, y: 0.75, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.3125078, y: 0.7500078}
+    - {x: 0.3125078, y: 0.8515547}
+    - {x: 0.4062422, y: 0.7500078}
+    - {x: 0.4062422, y: 0.8515547}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1ae26074b1f134848a0888aad949274e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: coallet_awaken_002
+    boundsData:
+    - {x: 0.40625, y: 0.375, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.375, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.8125, y: 0, z: 0}
+    - {x: 0, y: 0.75, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 0.8125, y: 0, z: 0}
+    position2: {x: 0, y: 0.75, z: 0}
+    position3: {x: 0.8125, y: 0.75, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.4531328, y: 0.4531328}
+    - {x: 0.4531328, y: 0.5546797}
+    - {x: 0.5468672, y: 0.4531328}
+    - {x: 0.5468672, y: 0.5546797}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: 8b311a2b01bba4e4496dac69ae495e1e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: coallet_pitfall_001
+    boundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    boundsDataExtents: {x: 0.8125, y: 0.75, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0.0625, z: 0}
+    - {x: 0.8125, y: 0.0625, z: 0}
+    - {x: 0, y: 0.8125, z: 0}
+    - {x: 0.8125, y: 0.8125, z: 0}
+    position0: {x: 0, y: 0.0625, z: 0}
+    position1: {x: 0.8125, y: 0.0625, z: 0}
+    position2: {x: 0, y: 0.8125, z: 0}
+    position3: {x: 0.8125, y: 0.8125, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5703203, y: 0.3046953}
+    - {x: 0.5703203, y: 0.4062422}
+    - {x: 0.6640547, y: 0.3046953}
+    - {x: 0.6640547, y: 0.4062422}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: 30e0a5cc5adefe5468ea8cfe9a06cb6b
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: coallet_pitfall_003
+    boundsData:
+    - {x: 0.375, y: 0.5, z: 0}
+    - {x: 0.375, y: 0.375, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.375, y: 0.5, z: 0}
+    boundsDataExtents: {x: 0.375, y: 0.375, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0.1875, y: 0.3125, z: 0}
+    - {x: 0.5625, y: 0.3125, z: 0}
+    - {x: 0.1875, y: 0.6875, z: 0}
+    - {x: 0.5625, y: 0.6875, z: 0}
+    position0: {x: 0.1875, y: 0.3125, z: 0}
+    position1: {x: 0.5625, y: 0.3125, z: 0}
+    position2: {x: 0.1875, y: 0.6875, z: 0}
+    position3: {x: 0.5625, y: 0.6875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6015703, y: 0.16407031}
+    - {x: 0.6484297, y: 0.16407031}
+    - {x: 0.6015703, y: 0.21092969}
+    - {x: 0.6484297, y: 0.21092969}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: 64337fd858ca4b9418138de32a1f6329
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: coallet_pitfall_002
+    boundsData:
+    - {x: 0.40625, y: 0.46875, z: 0}
+    - {x: 0.5625, y: 0.5625, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.40625, y: 0.46875, z: 0}
+    boundsDataExtents: {x: 0.5625, y: 0.5625, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0.125, y: 0.1875, z: 0}
+    - {x: 0.6875, y: 0.1875, z: 0}
+    - {x: 0.125, y: 0.75, z: 0}
+    - {x: 0.6875, y: 0.75, z: 0}
+    position0: {x: 0.125, y: 0.1875, z: 0}
+    position1: {x: 0.6875, y: 0.1875, z: 0}
+    position2: {x: 0.125, y: 0.75, z: 0}
+    position3: {x: 0.6875, y: 0.75, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.4453203, y: 0.8984453}
+    - {x: 0.5156172, y: 0.8984453}
+    - {x: 0.4453203, y: 0.9687422}
+    - {x: 0.5156172, y: 0.9687422}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: 742233c6762e1a349b94981ac03260dd
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: coallet_pitfall_004
+    boundsData:
+    - {x: 0.375, y: 0.5, z: 0}
+    - {x: 0.25, y: 0.25, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.40625, y: 0.4375, z: 0}
+    - {x: 0.8125, y: 0.875, z: 0}
+    boundsDataCenter: {x: 0.375, y: 0.5, z: 0}
+    boundsDataExtents: {x: 0.25, y: 0.25, z: 0}
+    untrimmedBoundsDataCenter: {x: 0.40625, y: 0.4375, z: 0}
+    untrimmedBoundsDataExtents: {x: 0.8125, y: 0.875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0.25, y: 0.375, z: 0}
+    - {x: 0.5, y: 0.375, z: 0}
+    - {x: 0.25, y: 0.625, z: 0}
+    - {x: 0.5, y: 0.625, z: 0}
+    position0: {x: 0.25, y: 0.375, z: 0}
+    position1: {x: 0.5, y: 0.375, z: 0}
+    position2: {x: 0.25, y: 0.625, z: 0}
+    position3: {x: 0.5, y: 0.625, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6953203, y: 0.16407031}
+    - {x: 0.7265547, y: 0.16407031}
+    - {x: 0.6953203, y: 0.19530469}
+    - {x: 0.7265547, y: 0.19530469}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 7a705befef364b543b83436385cbff52, type: 2}
+    materialId: 0
+    sourceTextureGUID: b2f2efdc9ea2e5e4a8bac8e8b2ddcc41
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
   SpriteIDsWithAttachPoints: 
+  SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
   material: {fileID: 0}
   materials:
@@ -1936,7 +2441,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: e56f53fa4e01c9a4f863b0d4963d1dda, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
-  textureFilterMode: 1
+  textureFilterMode: 0
   textureMipMaps: 0
   allowMultipleAtlases: 0
   spriteCollectionGUID: 8809c1eb4d1275446ad6fd41e2e8ed3b
@@ -1945,7 +2450,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 220979638
+  buildKey: 767065089
   dataGuid: eafbeb234a0a20649af0e1ed7ac9427e
   managedSpriteCollection: 0
   hasPlatformData: 0

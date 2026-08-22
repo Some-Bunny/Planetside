@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -110,7 +111,7 @@ namespace Planetside
             sharedMaterials[sharedMaterials.Length - 1] = material;
             component.sharedMaterials = sharedMaterials;
 
-
+			gun.AddItemTip("Fires projectiles that tether electricity to nearby enemies, and fire out bolts of electricity to nearby enemies on destruction.");
         }
         public static int StatiBlastID;
 		public static GameObject LinkVFXPrefab;

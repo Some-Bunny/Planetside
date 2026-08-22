@@ -523,13 +523,16 @@ namespace Planetside
             orig(self);
             if (self.PickupObjectId == 224)
             {
-                foreach (PlayerController player in GameManager.Instance.AllPlayers)
+                if (GameManager.Instance.AllPlayers != null)
                 {
-                    var perl = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
-                    if (perl != null)
+                    foreach (PlayerController player in GameManager.Instance.AllPlayers)
                     {
-                        CorruptedPickupController corruptedPickup = self.GetOrAddComponent<CorruptedPickupController>();
-                        corruptedPickup.pickup = CorruptedPickupController.PickupType.BLANK;
+                        var perl = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
+                        if (perl != null)
+                        {
+                            CorruptedPickupController corruptedPickup = self.GetOrAddComponent<CorruptedPickupController>();
+                            corruptedPickup.pickup = CorruptedPickupController.PickupType.BLANK;
+                        }
                     }
                 }
             }

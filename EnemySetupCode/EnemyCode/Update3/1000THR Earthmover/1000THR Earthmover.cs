@@ -46,7 +46,7 @@ namespace Planetside
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				prefab = BossBuilder.BuildPrefabBundle("1000THR Earthmover", guid, Collection, 48 ,new IntVector2(0, 0), new IntVector2(0, 0), false, true);
-				var enemy = prefab.AddComponent<EnemyBehavior>();
+                var enemy = prefab.GetComponent<AIActor>();
                 THRMEHAVB pain = prefab.AddComponent<THRMEHAVB>();
                 //EnemyToolbox.QuickAssetBundleSpriteSetup(enemy.aiActor, Collection, null, false);
 

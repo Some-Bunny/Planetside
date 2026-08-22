@@ -233,5 +233,73 @@ namespace Planetside.Hooks_And_Actions
             }
         }
         #endregion
+
+
+        /*
+        [HarmonyPatch(typeof(PickupObject), nameof(PickupObject.HandlePickupCurseParticles), new Type[] {})]
+        public class Patch_PickupObject_HandlePickupCurseParticles
+        {
+            [HarmonyPrefix]
+            private static bool Awake(PickupObject __instance)
+            {
+                Debug.Log($"{__instance.gameObject.name} | 1");
+                if (!__instance || !__instance.sprite)
+                {
+                    return false;
+                }
+                Debug.Log($"{__instance.gameObject.name} | 2");
+                bool flag = false;
+                if (__instance is Gun)
+                {
+                    Debug.Log($"{__instance.gameObject.name} | 3");
+                    Gun gun = __instance as Gun;
+                    for (int i = 0; i < gun.passiveStatModifiers.Length; i++)
+                    {
+                        if (gun.passiveStatModifiers[i].statToBoost == PlayerStats.StatType.Curse && gun.passiveStatModifiers[i].amount > 0f)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                else if (__instance is PlayerItem)
+                {
+                    Debug.Log($"{__instance.gameObject.name} | 4");
+                    PlayerItem playerItem = __instance as PlayerItem;
+                    for (int j = 0; j < playerItem.passiveStatModifiers.Length; j++)
+                    {
+                        if (playerItem.passiveStatModifiers[j].statToBoost == PlayerStats.StatType.Curse && playerItem.passiveStatModifiers[j].amount > 0f)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                else if (__instance is PassiveItem)
+                {
+                    Debug.Log($"{__instance.gameObject.name} | 5");
+                    PassiveItem passiveItem = __instance as PassiveItem;
+                    for (int k = 0; k < passiveItem.passiveStatModifiers.Length; k++)
+                    {
+                        if (passiveItem.passiveStatModifiers[k].statToBoost == PlayerStats.StatType.Curse && passiveItem.passiveStatModifiers[k].amount > 0f)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                Debug.Log($"{__instance.gameObject.name} | 6");
+
+                if (flag)
+                {
+                    Debug.Log($"{__instance.gameObject.name} | 7");
+
+                    PickupObject.HandlePickupCurseParticles(__instance.sprite, 0f);
+                }
+                return false;
+            }
+        }
+
+        */
     }
 }

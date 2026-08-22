@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -181,7 +182,7 @@ namespace Planetside
 
 
 			gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.1875f, 0.4375f);
-			gun.shellCasing = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Casings/collapsercasing.png").gameObject;
+			gun.shellCasing = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("collapsercasing", StaticSpriteDefinitions.Gun_2_Sheet_Data).gameObject;
 			gun.shellsToLaunchOnFire = 1;
 			gun.shellsToLaunchOnReload = 0;
 			gun.reloadShellLaunchFrame = 1;
@@ -189,7 +190,7 @@ namespace Planetside
 
 
 			gun.gameObject.transform.Find("Clip").transform.position = new Vector3(0.875f, 0.3125f);
-			gun.clipObject = BreakAbleAPI.BreakableAPIToolbox.GenerateDebrisObject("Planetside/Resources/GunObjects/Clips/collasperClip.png").gameObject;
+			gun.clipObject = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("collasperClip", StaticSpriteDefinitions.Gun_2_Sheet_Data).gameObject;
 			gun.reloadClipLaunchFrame = 1;
 			gun.clipsToLaunchOnReload = 1;
 
@@ -210,7 +211,8 @@ namespace Planetside
 
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			ParticleCollapser.ParticleCollapserID = gun.PickupObjectId;
-			ItemIDs.AddToList(gun.PickupObjectId);			
+			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("First shot in the clip fires a rift. The projectiles from the remainder of the clip are pulled towards the rift.");
 		}
 		public static int ParticleCollapserID;
 

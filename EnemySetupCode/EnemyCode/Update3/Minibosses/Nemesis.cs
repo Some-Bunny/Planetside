@@ -25,38 +25,41 @@ namespace Planetside
 
 		public static GameObject prefab;
 		public static readonly string guid = "nemesis";
-		public static GameObject DummySpriteObject;
+		//public static GameObject DummySpriteObject;
 
 		public static void Init()
 		{
 			Nemesis.BuildPrefab();
 		}
 
+		public static readonly string[] DeathMessages = new string[]
+		{
+            "Attempting to Teabag",
+             "Intentional Sabotage?",
+             "Poor Spacing Discipline",
+             "Body Blocking",
+			 "Auto-Saboteurism"
+        };
 
 
 		public static void BuildPrefab()
 		{
-            tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("NemesisCollection").GetComponent<tk2dSpriteCollectionData>();
-            Material matNem = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("nemesis material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("NemesisAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            //tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("NemesisCollection").GetComponent<tk2dSpriteCollectionData>();
+            //Material matNem = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("nemesis material");
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 
+				for (int i = 0; i < DeathMessages.Length; i++)
+				{
+                    ETGMod.Databases.Strings.Core.Set($"#CLOCKHAIR_SPECIAL_DEATH_{i}", DeathMessages[i]);
+                }
 
-				ETGMod.Databases.Strings.Core.Set("#CLOCKHAIR_SPECIAL_DEATH_1", "Attempting to Teabag");
-				ETGMod.Databases.Strings.Core.Set("#CLOCKHAIR_SPECIAL_DEATH_2", "Intentional Sabotage?");
-				ETGMod.Databases.Strings.Core.Set("#CLOCKHAIR_SPECIAL_DEATH_3", "Poor Spacing Discipline");
-				ETGMod.Databases.Strings.Core.Set("#CLOCKHAIR_SPECIAL_DEATH_4", "Body Blocking");
 
-				GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/Guons/EnergyPlatedGuon/energyshiledguon.png");
-				gameObject.name = $"Bullet orbital";
-				UnityEngine.Object.DontDestroyOnLoad(gameObject);
-				FakePrefab.MarkAsFakePrefab(gameObject);
-				gameObject.SetActive(false);
-				DummySpriteObject = gameObject;
-
-				prefab = EnemyBuilder.BuildPrefabBundle("nemesis", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), true, true);
+                prefab = EnemyBuilder.BuildPrefabBundle("nemesis", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 230, new IntVector2(0, 0), new IntVector2(8, 9), true, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
-                EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matNem, false);
+                //EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, matNem, false);
 
                 prefab.AddComponent<NemesisController>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
@@ -72,8 +75,16 @@ namespace Planetside
 				companion.aiActor.PreventFallingInPitsEver = true;
 
 
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
 
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(425f);
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+
+                companion.aiActor.healthHaver.ForceSetCurrentHealth(500f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
@@ -81,7 +92,7 @@ namespace Planetside
 
 
 
-                companion.aiActor.healthHaver.SetHealthMaximum(425f, null, false);
+                companion.aiActor.healthHaver.SetHealthMaximum(500f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -120,7 +131,8 @@ namespace Planetside
 					ManualRightY = 0,
 					Enabled = true,
 				});
-				companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
+
+                companion.aiActor.CorpseObject = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").CorpseObject;
 				companion.aiActor.PreventBlackPhantom = false;
 				AIAnimator aiAnimator = companion.aiAnimator;
                 EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, -0.0625f), "shadowPos");
@@ -146,14 +158,14 @@ namespace Planetside
 				};
 
 
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "intro", new string[] { "intro" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
 				//EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
 
 				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "dodgeroll", new string[] { "dodge_top_left", "dodge_bottom_right", "dodge_bottom_left", "dodge_top_right" }, new DirectionalAnimation.FlipType[4], DirectionalAnimation.DirectionType.FourWay);
-			
 
+                /*
 				{
 
 
@@ -228,10 +240,7 @@ namespace Planetside
 					}, "run_top_right", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 6f;
 					//=======================================================================================================================
 
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_bottom_left", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_bottom_right", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_top_left", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_top_right", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
+					
 
 					//=======================================================================================================================
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
@@ -286,25 +295,7 @@ namespace Planetside
 					}, "dodge_top_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
 					//=======================================================================================================================
 
-
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_top_right", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_top_left", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_bottom_right", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_bottom_left", new Dictionary<int, string>() { {0, "Play_Dodge" } });
-
-					EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_top_right", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } } );
-					EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_top_left", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
-					EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_bottom_right", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
-					EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_bottom_left", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
-
-					
-					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_top_right", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
-					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_top_left", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
-					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_bottom_right", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
-					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_bottom_left", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
-					
-
-
+				
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
@@ -318,8 +309,8 @@ namespace Planetside
 					83,
 					}, "death", tk2dSpriteAnimationClip.WrapMode.LoopSection).fps = 10f;
 					companion.spriteAnimator.GetClipByName("death").loopStart = 7;
-					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "death", new Dictionary<int, string>() { { 6, "StartExecute" } });
 
+				
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 					84,
@@ -329,8 +320,9 @@ namespace Planetside
 					88,
 					88
 					}, "thanosSnap", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "thanosSnap", new Dictionary<int, string>() { { 5, "DestroySelf" } });
 
+
+				
 					
 				
 					
@@ -386,11 +378,37 @@ namespace Planetside
 					}, "intro", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
 				}
+				*/
+                //EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" } });
 
-				//EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_bottom_left", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_bottom_right", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_top_left", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "run_top_right", new Dictionary<int, string>() { { 2, "Play_NemesisStep" }, { 5, "Play_NemesisStep" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_top_right", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_top_left", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_bottom_right", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "dodge_bottom_left", new Dictionary<int, string>() { { 0, "Play_Dodge" } });
 
-				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 0, "v_s" }, { 37, "EquipSelf" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 1, "Play_EnergySwirl" }, { 17, "Play_CHR_forever_fall_01" }, { 27, "Play_BOSS_dragun_stomp_01" } });
+                EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_top_right", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
+                EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_top_left", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
+                EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_bottom_right", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
+                EnemyToolbox.AddInvulnverabilityFramesToAnimation(companion.spriteAnimator, "dodge_bottom_left", new Dictionary<int, bool>() { { 0, true }, { 1, true }, { 2, true }, { 3, true }, { 4, true }, { 5, false }, { 6, false }, { 7, false }, { 8, false } });
+
+
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_top_right", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_top_left", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_bottom_right", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "dodge_bottom_left", new Dictionary<int, string>() { { 8, "StunTheIdiot" } });
+
+
+
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "death", new Dictionary<int, string>() { { 6, "StartExecute" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "thanosSnap", new Dictionary<int, string>() { { 4, "DestroySelf" } });
+
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 7, "v_s" }, { 25, "EquipSelf" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "intro", new Dictionary<int, string>() { { 8, "Play_EnergySwirl" }, { 9, "Play_CHR_forever_fall_01" }, { 7, "Play_BOSS_dragun_stomp_01" } });
                 //v_s
                 //NemesisEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<NemesisEngageDoer>();
 
@@ -556,6 +574,58 @@ namespace Planetside
 						}
 					},
 
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						NickName = "RevolverThree",
+						Behavior = new ShootGunBehavior() {
+						GroupCooldownVariance = 1f,
+						LineOfSight = true,
+						WeaponType = WeaponType.BulletScript,
+						BulletScript = new CustomBulletScriptSelector(typeof(RevolverThreeScript)),
+						FixTargetDuringAttack = false,
+						StopDuringAttack = true,
+						LeadAmount = 0.2f,
+						LeadChance = 1,
+						RespectReload = true,
+						MagazineCapacity = 8,
+						ReloadSpeed = 3f,
+						EmptiesClip = true,
+						SuppressReloadAnim = false,
+						TimeBetweenShots = 0.125f,
+						PreventTargetSwitching = true,
+						OverrideBulletName = StaticBulletEntries.undodgeableSniper.Name,
+						OverrideAnimation = null,
+						OverrideDirectionalAnimation = null,
+						HideGun = false,
+						UseLaserSight = false,
+						UseGreenLaser = false,
+						PreFireLaserTime = -1,
+						AimAtFacingDirectionWhenSafe = false,
+						Cooldown = 4f,
+						CooldownVariance = 0,
+						AttackCooldown = 1,
+						GlobalCooldown = 0,
+						InitialCooldown = 0,
+						InitialCooldownVariance = 0,
+						GroupName = null,
+						GroupCooldown = 0,
+						MinRange = 0,
+						Range = 16,
+						MinWallDistance = 0,
+						MaxEnemiesInRoom = 0,
+						MinHealthThreshold = 0,
+						MaxHealthThreshold = 1,
+						HealthThresholds = new float[0],
+						AccumulateHealthThresholds = true,
+						targetAreaStyle = null,
+						IsBlackPhantom = false,
+						resetCooldownOnDamage = null,
+						RequiresLineOfSight = true,
+						MaxUsages = 0,
+						}
+					},
+
 					//===============================================
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
@@ -627,6 +697,26 @@ namespace Planetside
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
 						Probability = 0f,
+						NickName = "ShotgunThree",
+						Behavior = new ShootBehavior(){
+						ShootPoint = shootpoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(ShotgunThreeScript)),
+						LeadAmount = 0f,
+						AttackCooldown = 1f,
+						InitialCooldown = 3f,
+						RequiresLineOfSight = true,
+						Cooldown = 4,
+						//StopDuring = ShootBehavior.StopType.Attack,
+						Uninterruptible = true,
+						HideGun =false,
+						}
+					},
+
+
+					//=========================================
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
 						NickName = "RailgunOne",
 						Behavior = new ShootBehavior(){
 						ShootPoint = shootpoint,
@@ -652,6 +742,23 @@ namespace Planetside
 						AttackCooldown = 2f,
 						InitialCooldown = 1f,
 						Cooldown = 4,
+						RequiresLineOfSight = true,
+						//StopDuring = ShootBehavior.StopType.Attack,
+						Uninterruptible = true,
+						HideGun =false,
+						}
+					},
+					new AttackBehaviorGroup.AttackGroupItem()
+					{
+						Probability = 0f,
+						NickName = "RailgunThree",
+						Behavior = new ShootBehavior(){
+						ShootPoint = shootpoint,
+						BulletScript = new CustomBulletScriptSelector(typeof(RailgunThreeScript)),
+						LeadAmount = 0f,
+						AttackCooldown = 2f,
+						InitialCooldown = 2f,
+						Cooldown = 5,
 						RequiresLineOfSight = true,
 						//StopDuring = ShootBehavior.StopType.Attack,
 						Uninterruptible = true,
@@ -693,9 +800,9 @@ namespace Planetside
 
                     new CustomDodgeRollBehavior
 					{
-						Cooldown = 2,
-						dodgeChance = 1f,
-						timeToHitThreshold = 0.5f,
+						Cooldown = 3,
+						dodgeChance = 1,
+						timeToHitThreshold = 1f,
 						dodgeAnim = "dodgeroll",
 						rollDistance = 5,
 						Enabled = true,
@@ -733,8 +840,8 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Nemesis/nemesis_awaken_018.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("nemesis_idle_bottom_right_001"), SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -746,7 +853,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Nemesis/nemesis_awaken_018";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "nemesis_idle_bottom_right_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("nemesissheetTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\nemesissheetTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#NEMESIS", "Nemesis");
 				PlanetsideModule.Strings.Enemies.Set("#NEMESIS_SHORTDESC", "Versus");
@@ -1165,7 +1272,157 @@ namespace Planetside
 			}
 		}
 
-		public class ShotgunOneScript : Script
+        public class RailgunThreeScript : Script
+        {
+            public Vector2 CurrentBarrelPosition()
+            { return base.BulletBank.aiShooter.CurrentGun.barrelOffset.transform.PositionVector2(); }
+
+            public void AddObjectToList(GameObject obj)
+            {
+                base.BulletBank.aiActor.gameObject.GetComponent<NemesisController>().activeLines.Add(obj);
+            }
+            public override IEnumerator Top()
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    base.StartTask(SwipeLaser(30, 0, this, 0.75f, true, 40));
+                    base.StartTask(SwipeLaser(30, 45, this, 0.75f, false, 40));
+                    base.StartTask(SwipeLaser(30, 90, this, 0.75f, false, 40));
+                    base.StartTask(SwipeLaser(30, -45, this, 0.75f, false, 40));
+                    base.StartTask(SwipeLaser(30, -90, this, 0.75f, false, 40));
+
+                    base.StartTask(SwipeLaser(-30, 0, this, 0.75f, true, 40));
+                    base.StartTask(SwipeLaser(-30, 45, this, 0.75f, false, 40));
+                    base.StartTask(SwipeLaser(-30, 90, this, 0.75f, false, 40));
+                    base.StartTask(SwipeLaser(-30, -45, this, 0.75f, false, 40));
+                    base.StartTask(SwipeLaser(-30, -90, this, 0.75f, false, 40));
+                    yield return this.Wait(75f);
+
+                }
+
+                yield return this.Wait(15 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+                for (int i = 0; i < 12; i++)
+				{
+                    AkSoundEngine.PostEvent("Play_WPN_magnum_shot_01", this.BulletBank.aiActor.gameObject);
+                    this.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(UnityEngine.Random.Range(-30, 31) + ReturnSpecialAngle(1000), DirectionType.Absolute, -1f), new Speed((1f + (float)i) * 0.4f, SpeedType.Absolute), new RevolverOneScript.RevolverBulletOne(12));
+                    yield return this.Wait(5);
+
+                }
+                yield return this.Wait(15 * PlayerStats.GetTotalEnemyProjectileSpeedMultiplier());
+
+
+                yield break;
+            }
+
+            public float ReturnSpecialAngle(float Speed)
+            {
+                Vector2 PredictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), CurrentBarrelPosition(), Speed);
+                return (PredictedPosition - CurrentBarrelPosition()).ToAngle();
+            }
+
+            private IEnumerator SwipeLaser(float _Offset, float AddOrSubtract, RailgunThreeScript parent, float Time, bool Fires = false, float Speed = 30)
+            {
+                Vector2 PredictedPosition = BraveMathCollege.GetPredictedPosition(this.BulletManager.PlayerPosition(), this.BulletManager.PlayerVelocity(), CurrentBarrelPosition(), Speed);
+                base.PostWwiseEvent("Play_BOSS_omegaBeam_charge_01");
+                GameObject reticle = SpawnManager.SpawnVFX(RandomPiecesOfStuffToInitialise.LaserReticle, false);
+                tk2dTiledSprite component2 = reticle.GetComponent<tk2dTiledSprite>();
+                component2.transform.position = new Vector3(this.Position.x, this.Position.y, 99999);
+                component2.transform.localRotation = Quaternion.Euler(0f, 0f, (PredictedPosition - CurrentBarrelPosition()).ToAngle());
+                component2.dimensions = new Vector2(1f, 1000f);
+                component2.UpdateZDepth();
+                component2.HeightOffGround = -2;
+                Color red = new Color(0f, 1f, 1f, 1f);
+                component2.sprite.usesOverrideMaterial = true;
+                component2.sprite.renderer.material.shader = ShaderCache.Acquire("Brave/LitTk2dCustomFalloffTintableTiltedCutoutEmissive");
+                component2.sprite.renderer.material.EnableKeyword("BRIGHTNESS_CLAMP_ON");
+                component2.sprite.renderer.material.SetFloat("_EmissivePower", 10);
+                component2.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f);
+                component2.sprite.renderer.material.SetColor("_OverrideColor", red);
+                component2.sprite.renderer.material.SetColor("_EmissiveColor", red);
+                AddObjectToList(component2.gameObject);
+                float Ang = 0;
+                float elapsed = 0;
+                while (elapsed < Time)
+                {
+                    float t = (float)elapsed / (float)Time;
+
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        UnityEngine.Object.Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    if (component2.gameObject != null)
+                    {
+                        Ang = ReturnSpecialAngle(Speed) + _Offset;
+                        component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
+                        component2.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(Ang - AddOrSubtract, Ang, t));
+                        component2.HeightOffGround = -2;
+                        component2.renderer.gameObject.layer = 22;
+                        component2.dimensions = new Vector2(1000f, 1f);
+                        component2.UpdateZDepth();
+                    }
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
+                }
+                elapsed = 0;
+                Time = 0.5f;
+                base.BulletBank.aiActor.aiAnimator.LockFacingDirection = true;
+                while (elapsed < Time)
+                {
+                    if (parent.IsEnded || parent.Destroyed)
+                    {
+                        UnityEngine.Object.Destroy(component2.gameObject);
+                        yield break;
+                    }
+                    component2.transform.position = new Vector3(CurrentBarrelPosition().x, CurrentBarrelPosition().y, 0);
+                    elapsed += UnityEngine.Time.fixedDeltaTime;
+                    yield return null;
+                }
+                UnityEngine.Object.Destroy(component2.gameObject);
+                if (Fires == true)
+                {
+                    base.PostWwiseEvent("Play_Railgun");
+                    base.PostWwiseEvent("Play_Railgun");
+
+                    base.Fire(Offset.OverridePosition(CurrentBarrelPosition()), new Direction(Ang, DirectionType.Absolute, -1f), new Speed(Speed, SpeedType.Absolute), new UndodgeableBullshit());
+                }
+                base.BulletBank.aiActor.aiAnimator.LockFacingDirection = false;
+                yield break;
+            }
+            public class UndodgeableBullshit : Bullet
+            {
+                public UndodgeableBullshit() : base("sniperUndodgeable", false, false, false)
+                {
+
+                }
+                public override IEnumerator Top()
+                {
+                    for (int i = 0; i < 300; i++)
+                    {
+                        base.Fire(new Direction(BraveUtility.RandomAngle(), Brave.BulletScript.DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(0.1f, 0.5f), SpeedType.Absolute), new UndodgeableSpore());
+                        yield return this.Wait(1f);
+                    }
+                    yield break;
+                }
+            }
+            public class UndodgeableSpore : Bullet
+            {
+                public UndodgeableSpore() : base("undodgeableSpore", true, false, false)
+                {
+
+                }
+                public override IEnumerator Top()
+                {
+                    yield return this.Wait(210f);
+                    base.Vanish(false);
+                    yield break;
+                }
+            }
+        }
+
+
+
+        public class ShotgunOneScript : Script
 		{
 			public override IEnumerator Top()
 			{
@@ -1230,7 +1487,7 @@ namespace Planetside
 				{
 					yield return this.Wait(30);
 					base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 100);
-					yield return this.Wait(UnityEngine.Random.Range(300, 600));
+					yield return this.Wait(UnityEngine.Random.Range(375, 750));
 					base.Vanish(false);
 					yield break;
 				}
@@ -1238,8 +1495,60 @@ namespace Planetside
 		}
 
 
+        public class ShotgunThreeScript : Script
+        {
+            public Vector2 CurrentBarrelPosition()
+            { return base.BulletBank.aiShooter.CurrentGun.barrelOffset.transform.PositionVector2(); }
+            public override IEnumerator Top()
+            {
+                AkSoundEngine.PostEvent("Play_WPN_deck4rd_shot_01", this.BulletBank.aiActor.gameObject);
+                var b = Offset.OverridePosition(CurrentBarrelPosition());
+				var ang = (CurrentBarrelPosition() - PredictedPosition);
+                for (int e = 0; e < 9; e++)
+				{
+                    this.Fire(b, new Direction(ang.ToAngle() + (40 * e), DirectionType.Absolute, -1f), new Speed(3, SpeedType.Absolute), new ShotgunBulletOne());
+                }
 
-		public class RevolverOneScript : Script
+                for (int e = 0; e < 12; e++)
+                {
+                    this.Fire(b, new Direction(ang.ToAngle() + (30 * e) + (15f), DirectionType.Absolute, -1f), new Speed(5, SpeedType.Absolute), new ShotgunBulletOne());
+                }
+                yield return this.Wait(60);
+                AkSoundEngine.PostEvent("Play_WPN_deck4rd_shot_01", this.BulletBank.aiActor.gameObject);
+
+                b = Offset.OverridePosition(CurrentBarrelPosition());
+                for (int e = -3; e < 4; e++)
+                {
+                    this.Fire(b, new Direction((15f * e) + 90, DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new SpeedChangingBullet(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name,12, 90));
+                }
+                yield return this.Wait(30);
+                AkSoundEngine.PostEvent("Play_WPN_deck4rd_shot_01", this.BulletBank.aiActor.gameObject);
+                b = Offset.OverridePosition(CurrentBarrelPosition());
+                for (int e = -4; e < 5; e++)
+                {
+                    this.Fire(b, new Direction((11f * e) + 90, DirectionType.Aim, -1f), new Speed(2, SpeedType.Absolute), new SpeedChangingBullet(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name,12, 90));
+                }
+                yield break;
+            }
+            public class ShotgunBulletOne : Bullet
+            {
+                public ShotgunBulletOne() : base(UnityEngine.Random.value > 0.33f ? StaticBulletEntries.undodgeableLargeSpore.Name : StaticBulletEntries.undodgeableSmallSpore.Name, false, false, false)
+                {
+
+                }
+                public override IEnumerator Top()
+                {
+                    yield return this.Wait(30);
+                    base.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 100);
+                    yield return this.Wait(UnityEngine.Random.Range(375, 750));
+                    base.Vanish(false);
+                    yield break;
+                }
+            }
+        }
+
+
+        public class RevolverOneScript : Script
 		{
 			public override IEnumerator Top()
 			{
@@ -1379,10 +1688,23 @@ namespace Planetside
 		}
 
 
+        public class RevolverThreeScript : Script
+        {
+            public override IEnumerator Top()
+            {
+                AkSoundEngine.PostEvent("Play_WPN_magnum_shot_01", this.BulletBank.aiActor.gameObject);
+                this.Fire(new Direction(0, DirectionType.Aim, -1f), new Speed(10f, SpeedType.Absolute), new RevolverOneScript.RevolverBulletOne(25));
+                this.Fire(new Direction(UnityEngine.Random.Range(-40, 41), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new RevolverOneScript.RevolverBulletOne(10));
+                this.Fire(new Direction(UnityEngine.Random.Range(-15, 16), DirectionType.Aim, -1f), new Speed(2f, SpeedType.Absolute), new RevolverOneScript.RevolverBulletOne(14));
+                this.Fire(new Direction(UnityEngine.Random.Range(-70, 71), DirectionType.Aim, -1f), new Speed(1f, SpeedType.Absolute), new RevolverOneScript.RevolverBulletOne(7));
+
+                yield break;
+            }
+  
+        }
 
 
-
-		public class EnemyBehavior : BraveBehaviour
+        public class EnemyBehavior : BraveBehaviour
 		{
 			private RoomHandler m_StartRoom;
 
@@ -1534,16 +1856,7 @@ namespace Planetside
 					{
 						//CLOCKHAIR_SPECIAL_DEATH
 
-						WeightedIntCollection attackWeights = new WeightedIntCollection();
-						attackWeights.elements = new WeightedInt[]
-						{
-							new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "1", value = 1, weight = 1},
-							new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "2", value = 2, weight = 1f},
-							new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "3", value = 3, weight = 1f},
-							new WeightedInt(){additionalPrerequisites = new DungeonPrerequisite[0], annotation = "4", value = 4, weight = 1f},
-						};
-
-						player.healthHaver.ApplyDamage(1000000, Vector2.zero, StringTableManager.GetString("#CLOCKHAIR_SPECIAL_DEATH_" + attackWeights.SelectByWeight().ToString()), CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
+						player.healthHaver.ApplyDamage(1000000, Vector2.zero, StringTableManager.GetString($"#CLOCKHAIR_SPECIAL_DEATH_{Mathf.RoundToInt(UnityEngine.Random.Range(0, DeathMessages.Length))}"), CoreDamageTypes.Void, DamageCategory.Normal, false, null, false);
 						player.healthHaver.Armor = 0;
 						player.healthHaver.ForceSetCurrentHealth(0);
 						player.healthHaver.Die(Vector2.zero);
@@ -1566,6 +1879,20 @@ namespace Planetside
                     chest2.RegisterChestOnMinimap(chest2.GetAbsoluteParentRoom());
                 }
                 aiActor.aiAnimator.PlayUntilFinished("thanosSnap", false, null, -1f, false);
+
+				NemesisController nemesisController = this.aiActor.GetComponent<NemesisController>();
+				if (UnityEngine.Random.value < 0.1)
+				{
+					if (UnityEngine.Random.value < 0.3)
+					{
+                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(nemesisController.HeldSecondaryPassive).gameObject, aiActor.sprite.WorldCenter, Vector2.zero, 2.2f, false, true, false);
+                    }
+                    else
+					{
+                        LootEngine.SpawnItem(PickupObjectDatabase.GetById(nemesisController.HeldPrimaryPassive).gameObject, aiActor.sprite.WorldCenter, Vector2.zero, 2.2f, false, true, false);
+                    }
+                }
+
 
                 elapsed = 0f;
 				duration = 1f;

@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using Brave.BulletScript;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -38,7 +39,9 @@ namespace Planetside
             ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.AdditionalClipCapacityMultiplier, 1.2f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             GunClassTokenID = item.PickupObjectId;
 			new Hook(typeof(LootDataGlobalSettings).GetMethod("GetModifierForClass", BindingFlags.Instance | BindingFlags.Public), typeof(GunClassToken).GetMethod("GetModifierForClassHook", BindingFlags.Static | BindingFlags.Public));
-		}
+			item.AddItemTip("Grants fire rate and clip capacity. Guns that appear will have a greatly increased chance to being a similar type to weapons you already have.");
+
+        }
 		public static int GunClassTokenID;
 		public static float GetModifierForClassHook(Func<LootDataGlobalSettings, GunClass, float> orig, LootDataGlobalSettings self, GunClass gunClass)
         {

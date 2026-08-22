@@ -16,6 +16,7 @@ using GungeonAPI;
 using Pathfinding;
 using static tk2dSpriteCollectionDefinition;
 using SynergyAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -46,11 +47,11 @@ namespace Planetside
             {
                 "psog:immolation_powder",
                 "psog:revenant"
-            };   
-            CustomSynergies.Add("Ashes To Ashes, To Ashes", mandatoryConsoleIDs, null, false);
+            };
+            CustomSynergies.Add("Ashes To Ashes, To Ashes", mandatoryConsoleIDs, null, false).AddItemTip("Revenant deals 33% more damage while on fire. Burning enemies killed with Revenant create pools of fire");
 
             activeitem.AddItemToSynergy(CustomSynergyType.PITCHPERFECT);
-
+            activeitem.AddItemTip("Passively reduces player burning speed by 80%, and grants large stat boosts while on fire. On use, sets the player on fire.");
         }
 
         public static void IncreaseFireHook(Action<PlayerController, float> orig, PlayerController self, float amount)

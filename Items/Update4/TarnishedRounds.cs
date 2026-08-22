@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -38,13 +39,14 @@ namespace Planetside
 
 			TarnishedRounds.TarnishedRoundsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-		}
-		public static int TarnishedRoundsID;
+            item.AddItemTip("Player projectiles have a chance to inflict Tarnish on enemies. Tarnished enemies have slower movement speed, and player projectiles always pierce enemies affected with Tarnish.");
+        }
+        public static int TarnishedRoundsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
 			try
 			{
-				float procChance = 0.25f;
+				float procChance = 0.2f;
 				procChance *= effectChanceScalar;
 				if (UnityEngine.Random.value <= procChance)
 				{

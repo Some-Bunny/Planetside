@@ -12,6 +12,7 @@ using Planetside;
 using static DirectionalAnimation;
 using System.Reflection;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -85,7 +86,7 @@ namespace Planetside
 
             ItemIDs.AddToList(gun.PickupObjectId);
 
-
+            gun.AddItemTip("Fires large amounts of eye bolts. On reloading with an empty clip, a ghost of the Annihi-Chamber charges at enemies.");
             var ChamberObject = new GameObject("Chamber Soul");
             FakePrefab.MarkAsFakePrefab(ChamberObject);
             DontDestroyOnLoad(ChamberObject);
@@ -250,7 +251,7 @@ namespace Planetside
             {
                 if (otherRigidbody.aiActor.parentRoom == room)
                 {
-                    otherRigidbody.aiActor.healthHaver.ApplyDamage(2.25f, Vector2.zero, "CHAMBER", CoreDamageTypes.None, DamageCategory.Normal, true, null, false);
+                    otherRigidbody.aiActor.healthHaver.ApplyDamage(40 * BraveTime.DeltaTime, Vector2.zero, "CHAMBER", CoreDamageTypes.None, DamageCategory.Normal, true, null, false);
                 }
             }
         }

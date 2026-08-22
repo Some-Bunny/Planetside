@@ -237,22 +237,29 @@ namespace Planetside
 			private bool m_isFinished;
 		}
 
+
+
 		public static void Init()
 		{
-			Creationist.BuildPrefab();
-		}
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CreationistAnimation").GetComponent<tk2dSpriteAnimation>();
 
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Creationist", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				prefab = EnemyBuilder.BuildPrefabBundle("Creationist", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 79, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 				var companion = prefab.AddComponent<EnemyBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
-				companion.aiActor.knockbackDoer.weight = 120;
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+
+                companion.aiActor.knockbackDoer.weight = 120;
 				companion.aiActor.MovementSpeed = 2.4f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -328,7 +335,7 @@ namespace Planetside
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					Prefix = "run",
-					AnimNames = new string[] { "run_right", "run_left" },
+					AnimNames = new string[] { "idle_right", "idle_left" },
 					Flipped = new DirectionalAnimation.FlipType[2]
 				};
 
@@ -343,7 +350,7 @@ namespace Planetside
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 				TrespassEnemyEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<TrespassEnemyEngageDoer>();
 
-
+				/*
 				bool flag3 = CreationistCollection == null;
 				if (flag3)
 				{
@@ -353,6 +360,7 @@ namespace Planetside
 					{
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], CreationistCollection);
 					}
+					
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, CreationistCollection, new List<int>
 					{
 					0,
@@ -397,6 +405,7 @@ namespace Planetside
 					14,
 					15
 					}, "run_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+					
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, CreationistCollection, new List<int>
 					{
 					16,
@@ -471,12 +480,14 @@ namespace Planetside
 					
 
 				}
+				*/
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "attack", new Dictionary<int, string> { { 0, "Blast" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 5, "deathBurst" }});
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "chargeattack", new Dictionary<int, string> { { 0, "Play_EnergySwirl" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack", new Dictionary<int, string> { { 0, "Play_Stomp" } });
+
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "attack", new Dictionary<int, string> { { 0, "Blast" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "death", new Dictionary<int, string> { { 5, "deathBurst" }});
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "chargeattack", new Dictionary<int, string> { { 0, "Play_EnergySwirl" } });
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "attack", new Dictionary<int, string> { { 0, "Play_Stomp" } });
 
 
 				GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(0.5f, 0.5f), "CreationistShootpoint");
@@ -585,9 +596,11 @@ namespace Planetside
 					PostFireAnimation = "attackspec",
 				}};
 				*/
-				string basepath = "Planetside/Resources/Enemies/Creationist/";
-				DebrisObject shoulder1 = BreakableAPIToolbox.GenerateDebrisObject(basepath + "creationistDebris1.png", true, 0.5f, 3, 540, 120, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
-				DebrisObject shoulder2 = BreakableAPIToolbox.GenerateDebrisObject(basepath + "creationistDebris2.png", true, 0.5f, 3, 360, 120, null, 0.7f, "Play_BOSS_lichA_crack_01", null, 1);
+				//string basepath = "Planetside/Resources/Enemies/Creationist/";
+
+
+				DebrisObject shoulder1 = BreakableAPI_Bundled.GenerateDebrisObject("creationistDebris1", StaticSpriteDefinitions.Forgotten_Enemmy_Data , true, 0.5f, 3, 540, 120, null, 0.9f, "Play_BOSS_lichA_crack_01", null, 0);
+				DebrisObject shoulder2 = BreakableAPI_Bundled.GenerateDebrisObject("creationistDebris2", StaticSpriteDefinitions.Forgotten_Enemmy_Data, true, 0.5f, 3, 360, 120, null, 0.7f, "Play_BOSS_lichA_crack_01", null, 1);
 				ShardCluster BONES = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { shoulder1, shoulder2}, 0.9f, 2f, 1, 2, 1f);
 				SpawnShardsOnDeath BodyAndStuff = companion.aiActor.gameObject.AddComponent<SpawnShardsOnDeath>();
 				BodyAndStuff.deathType = OnDeathBehavior.DeathType.Death;
@@ -608,9 +621,10 @@ namespace Planetside
 
 
 
-
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Creationist/creationist_charge_attack_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("creationist_awaken_006"),
+                SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Creationist/creationist_charge_attack_001.png", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -622,7 +636,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Creationist/creationist_charge_attack_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "creationist_awaken_006";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("creationistTemplateTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\creationistTemplateTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#CREATIONIST", "Creationist");
 				PlanetsideModule.Strings.Enemies.Set("#CREATIONIST_SHORTDESC", "Power Crept");
@@ -874,7 +888,7 @@ namespace Planetside
 						tiledsprite.sprite.renderer.material.SetFloat("_EmissiveColorPower", 0.5f + (10 * t));
 						tiledsprite.transform.localRotation = Quaternion.Euler(0f, 0f, base.AimDirection + Mathf.SmoothStep(0, Offset, t));
 						tiledsprite.HeightOffGround = -2;
-						tiledsprite.renderer.gameObject.layer = 23;
+						tiledsprite.renderer.gameObject.layer = 22;
 						tiledsprite.dimensions = new Vector2(1000f, 1f);
 						tiledsprite.UpdateZDepth();
 

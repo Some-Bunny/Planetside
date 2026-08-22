@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
+using Alexandria.Integrations;
 
 //Garbage Code Incoming
 namespace Planetside
@@ -48,7 +49,8 @@ namespace Planetside
             {
                 "psog:immateria"
             };
-            CustomSynergies.Add("Continuum", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			CustomSynergies.Add("Continuum", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Immateria projectiles create damaging rifts after wrapping around the room.");
+			item.AddItemTip("Projectiles that hit walls will wrap around the room.");
         }
 
 

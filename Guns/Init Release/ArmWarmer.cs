@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 using SaveAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -23,19 +24,17 @@ namespace Planetside
 	{ 
 		public void Start()
         {
-			currentObject = this.GetComponent<Projectile>();
-			if (currentObject) 
-			{
-				currentObject.OnHitEnemy += HandleHit;
-			}
-		}
-		private void HandleHit(Projectile projectile, SpeculativeRigidbody otherBody, bool fatal)
+            currentObject.OnHitEnemy += HandleHit;
+        }
+        private void HandleHit(Projectile projectile, SpeculativeRigidbody otherBody, bool fatal)
 		{
 			if (otherBody.aiActor != null && !otherBody.healthHaver.IsDead && otherBody.aiActor.behaviorSpeculator && !otherBody.aiActor.IsHarmlessEnemy)
 			{
-				if (base.GetComponent<PierceProjModifier>() != null)
+				var pierce = currentObject.GetComponent<PierceProjModifier>();
+
+                if (pierce != null)
                 {
-					if (base.GetComponent<PierceProjModifier>().penetration == 0)
+					if (pierce.penetration == 0)
                     {TransformToSticky(projectile, otherBody);}
 				}
 				else
@@ -61,7 +60,7 @@ namespace Planetside
 			if (objectToLookOutFor == null) { yield break; }
 			Vector3 currentscale = objectToLookOutFor.transform.localScale;
 			float elapsed = 0f;
-			float duration = 5f;
+			float duration = 3f;
 			AkSoundEngine.PostEvent("Play_ENM_blobulord_charge_01", base.gameObject);
 			while (elapsed < duration)
 			{
@@ -74,14 +73,16 @@ namespace Planetside
 			}
             if (objectToLookOutFor == null) { yield break; }
             ExplosionData data = StaticExplosionDatas.CopyFields(StaticExplosionDatas.genericSmallExplosion);//StaticExplosionDatas.genericSmallExplosion;
-            data.effect = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+            data.effect = StaticVFXStorage.BloodSplatVFX;
             data.damage = 11f * (player != null ? player.stats.GetStatValue(PlayerStats.StatType.Damage) : 1);
 			data.damageRadius = 3;
 			data.doScreenShake = false;
 			data.playDefaultSFX = false;
 			data.force = 2.5f;
             Exploder.Explode(objectToLookOutFor.transform.position, data, Vector2.zero);
-            AkSoundEngine.PostEvent("Play_BOSS_blobulord_burst_01", base.gameObject);
+            AkSoundEngine.PostEvent("Play_BOSS_Rat_Cheese_Burst_01", base.gameObject);
+            DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(Alexandria.Misc.GoopUtility.BloodDef).TimedAddGoopCircle(objectToLookOutFor.transform.position, 1.25f);
+
             Destroy(objectToLookOutFor);
 
             yield break;
@@ -131,13 +132,13 @@ namespace Planetside
 			gun.DefaultModule.shootStyle = ProjectileModule.ShootStyle.Burst;
 			gun.DefaultModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 			gun.reloadTime = 2f;
-			gun.DefaultModule.cooldownTime = .5f;
+			gun.DefaultModule.cooldownTime = .6f;
 			gun.DefaultModule.numberOfShotsInClip = 33;
 			gun.SetBaseMaxAmmo(333);
 			gun.quality = PickupObject.ItemQuality.D;
 			gun.DefaultModule.angleVariance = 18f;
 			gun.DefaultModule.burstShotCount = 3;
-			gun.DefaultModule.burstCooldownTime = 0.05f;
+			gun.DefaultModule.burstCooldownTime = 0.025f;
 			gun.Volley.projectiles[0].ammoCost = 1;
 			gun.InfiniteAmmo = false;
 
@@ -168,25 +169,12 @@ namespace Planetside
             AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(0, 0), Length),
             AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
-            /*
-			projectile.AnimateProjectile(new List<string> {
-				"meatorb_001",
-				"meatorb_002",
-				"meatorb_003",
-				"meatorb_004",
-				"meatorb_005",
-			}, 2, true, new List<IntVector2> {
-				new IntVector2(8, 8),
-				new IntVector2(8, 8),
-				new IntVector2(8, 8),
-				new IntVector2(8, 8),
-				new IntVector2(8, 8),
-			}, AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues(tk2dBaseSprite.Anchor.MiddleCenter, 8), AnimateBullet.ConstructListOfSameValues(true, 8), AnimateBullet.ConstructListOfSameValues(false, 8), AnimateBullet.ConstructListOfSameValues<Vector3?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, 8), AnimateBullet.ConstructListOfSameValues<Projectile>(null, 8));
-			*/
+
 
             projectile.hitEffects.alwaysUseMidair = true;
 			projectile.hitEffects.overrideMidairDeathVFX = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
-			projectile.gameObject.AddComponent<StickyArmWarmerProjectile>();
+			var pp = projectile.gameObject.AddComponent<StickyArmWarmerProjectile>();
+			pp.currentObject = projectile;
 			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(404) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(404) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 			gun.DefaultModule.projectiles[0] = projectile;
@@ -206,12 +194,18 @@ namespace Planetside
 			gun.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
 
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("ArmWarmer", "Planetside/Resources/GunClips/ArmWarmer/flesfull", "Planetside/Resources/GunClips/ArmWarmer/flesempty");
+			//gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("ArmWarmer", "Planetside/Resources/GunClips/ArmWarmer/flesfull", "Planetside/Resources/GunClips/ArmWarmer/flesempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Meat Deck", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "flesfull", "flesempty");
 
-			gun.muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
+
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("PointNull", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "pointnullclip_001", "pointnullclip_002");
+
+
+            gun.muzzleFlashEffects = new VFXPool { type = VFXPoolType.None, effects = new VFXComplex[0] };
 
 			ArmWarmer.ArmWarmerID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Shoots globs of sticky meat that expand and burst over time.");
 		}
 		public static int ArmWarmerID;
 

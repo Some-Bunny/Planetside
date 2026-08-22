@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alexandria.Integrations;
 using Dungeonator;
 using ItemAPI;
 using UnityEngine;
@@ -27,8 +28,9 @@ namespace Planetside
 			OrbOfPower.PrisonItemID = warVase.PickupObjectId;
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Health, 1, StatModifier.ModifyMethod.ADDITIVE);
+			warVase.AddItemTip("No walls hold forever.");
 
-		}
+        }
 		public static int PrisonItemID;	
 	}
 }

@@ -131,7 +131,7 @@ namespace Planetside
 
 
 
-            FriendlyElectricLinkVFX = FakePrefab.Clone(Game.Items["shock_rounds"].GetComponent<ComplexProjectileModifier>().ChainLightningVFX);
+            FriendlyElectricLinkVFX = Items.Shock_Rounds.ChainLightningVFX;
 
             /*
             VFXPool aaa = null;
@@ -540,6 +540,7 @@ namespace Planetside
 
         public static GameObject RelodestoneContinuousSuckVFX;
 
+        public static GameObject ResourcefulRatReticle = EnemyDatabase.GetOrLoadByGuid("6868795625bd46f3ae3e4377adce288b").GetComponent<ResourcefulRatController>().ReticleQuad;
 
         //public static GameObject KnifeShieldKnifeTileImpactVFX;
 
@@ -575,6 +576,8 @@ namespace Planetside
 
         public static GameObject BloodiedScarfPoofVFX;
 
+
+        public static GameObject ElectricParticle = (PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect;
 
         public static GameObject GorgunEyesVFX;
         public static GameObject EnemyElectricLinkVFX;
@@ -618,5 +621,8 @@ namespace Planetside
 
         public static GameObject BigShotgunExplosion = Guns.Big_Shotgun.Volley.projectiles[0].projectiles[0].GetComponent<ExplosiveModifier>().explosionData.effect;
         public static GameObject MildElectricImpactVFX = (PickupObjectDatabase.GetById(156) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects[0].effects[0].effect;
+
+        public static GameObject BloodSplatVFX = (PickupObjectDatabase.GetById(368) as Gun).DefaultModule.projectiles[0].hitEffects.overrideMidairDeathVFX;
+
     }
 }

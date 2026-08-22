@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using System.ComponentModel;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -95,7 +96,7 @@ namespace Planetside
                 "cog_of_battle",
                 "robots_left_hand"
             };
-            CustomSynergies.Add("You Call Punching A Coin An Art?", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("You Call Punching A Coin An Art?", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Coin projectiles have reduced speed, have additional bouncing and piercing.");
             List<string> optionalConsoleIDs2 = new List<string>
             {
                 "old_goldie",
@@ -104,7 +105,7 @@ namespace Planetside
                 "void_shotgun",
                 "the_membrane"
             };
-            CustomSynergies.Add("HYPERDEATH", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            CustomSynergies.Add("HYPERDEATH", mandatoryConsoleIDs, optionalConsoleIDs2, true).AddItemTip("Damage bonuses on ricochets are increased.");
             List<string> optionalConsoleIDs3 = new List<string>
             {
                 "coin_crown",
@@ -113,7 +114,7 @@ namespace Planetside
                 "gilded_hydra",
 
             };
-            CustomSynergies.Add("C-C-C-C-C-C-C-Combo!", mandatoryConsoleIDs, optionalConsoleIDs3, true);
+            CustomSynergies.Add("C-C-C-C-C-C-C-Combo!", mandatoryConsoleIDs, optionalConsoleIDs3, true).AddItemTip("Ricochet softcap is massively increased.");
             List<string> optionalConsoleIDs4 = new List<string>
             {
                 "railgun",
@@ -132,9 +133,10 @@ namespace Planetside
                 "shock_rifle"
             };
 
-            CustomSynergies.Add("Malicious", mandatoryConsoleIDs, optionalConsoleIDs4, true);
+            CustomSynergies.Add("Malicious", mandatoryConsoleIDs, optionalConsoleIDs4, true).AddItemTip("Weapons part of this synergy cause coins to explode when ricocheted.");
             CoinTosser.CoinTosserID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
+            activeitem.AddItemTip("On use, toss one of your casings as a coin projectile. Coins can be shot, blanked, punched & shot with beams to massively increase the damage potential of any player projectile ricocheting off the coin, or the coin itself.");
         }
         private static Hook BlankHook = new Hook(typeof(SilencerInstance).GetMethod("TriggerSilencer", BindingFlags.Instance | BindingFlags.Public), typeof(CoinTosser).GetMethod("DoCoinBlankBoost", BindingFlags.Instance | BindingFlags.Public), typeof(SilencerInstance));
 

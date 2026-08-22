@@ -277,7 +277,7 @@ public class ShamberController : BraveBehaviour
                                         float s = proj.baseData.speed;
                                         proj.baseData.speed = 0;
                                         proj.UpdateSpeed();
-                                        proj.baseData.speed = s;
+                                        proj.baseData.speed = Mathf.Max(25, s);
                                         proj.specRigidbody.CollideWithTileMap = false;
                                         proj.ResetDistance();
                                         proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
@@ -319,7 +319,7 @@ public class ShamberController : BraveBehaviour
 
                     if (first != null)
                     {
-                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Min(30, (10 * this.m_bulletPositions[i].speed));
+                        float num = this.m_bulletPositions[i].s + BraveTime.DeltaTime * Mathf.Min(22.5f, (7.5f * this.m_bulletPositions[i].speed));
                         this.m_bulletPositions[i].s = num;
 
                         Vector2 bulletPosition = this.GetBulletPosition(num, first, this.m_bulletPositions[i].Radius);

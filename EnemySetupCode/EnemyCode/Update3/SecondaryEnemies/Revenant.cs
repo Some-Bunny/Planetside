@@ -86,7 +86,9 @@ namespace Planetside
                 companion.isaHider = isFaker;
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
 
-                prefab.AddComponent<TeleportationImmunity>();
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
+
+                //prefab.AddComponent<TeleportationImmunity>();
 
                 var animator = companion.gameObject.GetOrAddComponent<tk2dSpriteAnimator>();
                 animator.library = StaticSpriteDefinitions.EnemySpecific_Animation_Data;
@@ -414,7 +416,7 @@ namespace Planetside
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("ec6b674e0acd4553b47ee94493d66422").bulletBank.GetBullet("bigBullet"));
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("poundSmall"));
-                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+                //companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 
                 if (companion.GetComponent<EncounterTrackable>() != null)
                 {

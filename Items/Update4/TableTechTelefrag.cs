@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using System.Collections.ObjectModel;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -40,12 +41,12 @@ namespace Planetside
             {
                 "teleporter_prototype"
             };
-            CustomSynergies.Add("Thinking With Portals?", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Thinking With Portals?", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Using Teleporter Prototype spawns an additional table if an enemy is telefragged.");
             List<string> optionalConsoleIDs2 = new List<string>
             {
                 "chest_teleporter"
             };
-            CustomSynergies.Add("Collapsing Potential Vectors", mandatoryConsoleIDs, optionalConsoleIDs2, true);
+            CustomSynergies.Add("Collapsing Potential Vectors", mandatoryConsoleIDs, optionalConsoleIDs2, true).AddItemTip("Enemies killed by table telefrags have a chance to spawn pickups.");
             SynergyAPI.SynergyBuilder.AddItemToSynergy(minigunrounds, CustomSynergyType.PAPERWORK);
 
             new Hook(typeof(TeleporterPrototypeItem).GetMethod("TelefragRandomEnemy", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TableTechTelefrag).GetMethod("TelefragRandomEnemyHook"));
@@ -53,6 +54,7 @@ namespace Planetside
             GenericLootTable Telefragtable = LootTableTools.CreateLootTable();
             Telefragtable.AddItemsToPool(new Dictionary<int, float>() { { 73, 0.7f }, { 120, 0.6f }, { 85, 0.6f }, { 565, 0.5f }, { 224, 0.5f }, { 65, 0.33f }, { LeSackPickup.SaccID, 0.02f }, { NullPickupInteractable.NollahID, 0.02f }, });
             TelefragTable = Telefragtable;
+            minigunrounds.AddItemTip("Flipped tables will telefrag enemies in their flipped direction.");
         }
         private static GenericLootTable TelefragTable;
         public static int TableTechTelefragID;

@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -75,7 +76,7 @@ namespace Planetside
 			gun.encounterTrackable.EncounterGuid = "Cheer up Bunny ^ᴗ^ (i dont want to change this, at the very least not remove it)ae";
 			ETGMod.Databases.Items.Add(gun, false, "ANY");
 			SwanOff.SwanOffID = gun.PickupObjectId;
-
+			gun.AddItemTip("Is cute. Spits out fish that can stun.");
 			ItemIDs.AddToList(gun.PickupObjectId);
 		}
 		public static int SwanOffID;

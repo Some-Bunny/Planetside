@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using static Planetside.Bloat;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -42,7 +43,7 @@ namespace Planetside
 
             PsychicBlank.PsychicBlankID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
-
+            activeitem.AddItemTip("On use, pushes enemies, nearby objects, launch decorative objects and reflect projectiles.");
         }
         public static int PsychicBlankID;
         public override void Pickup(PlayerController player)

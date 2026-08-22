@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using SaveAPI;
+using Alexandria.Integrations;
 
 
 namespace Planetside
@@ -36,8 +37,9 @@ namespace Planetside
 			counterChamber.ArmorToGainOnInitialPickup = 1;
 			Shellheart.ShellHeartID = counterChamber.PickupObjectId;
 			ItemIDs.AddToList(counterChamber.PickupObjectId);
+			counterChamber.AddItemTip("Armor Damage prevents losing Mastery Rewards. Taking damage restores some ammo back to your gun.");
 
-		}
+        }
 		public static int ShellHeartID;
 
 		private void ModifyIncomingDamage(HealthHaver source, HealthHaver.ModifyDamageEventArgs args)

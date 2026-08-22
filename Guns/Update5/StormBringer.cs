@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -198,6 +199,7 @@ namespace Planetside
 
             StormBringer.StormBringerID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+            gun.AddItemTip("Fires supercharged energy that creates lightning bolts on contact.");
 		}
 
         public static ExplosionData defaultLightningExplosion;

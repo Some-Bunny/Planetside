@@ -45,7 +45,8 @@ namespace Planetside
 				var trapper = prefab.AddComponent<TrapperCubeBehaviour>();
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "sliding_cube");
 
-                companion.AddComponent<TeleportationImmunity>();
+                //companion.AddComponent<TeleportationImmunity>();
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
 
                 if (!isDupe)
                 {
@@ -229,11 +230,11 @@ namespace Planetside
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
 				companion.aiActor.PreventFallingInPitsEver = true;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(20f);
+				companion.aiActor.healthHaver.ForceSetCurrentHealth(45f);
 				companion.aiActor.CollisionKnockbackStrength = 0f;
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
-				companion.aiActor.healthHaver.SetHealthMaximum(20f, null, false);
+				companion.aiActor.healthHaver.SetHealthMaximum(45f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{

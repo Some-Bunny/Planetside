@@ -19,21 +19,17 @@ namespace Planetside
 	{
 		public static GameObject prefab;
 		public static readonly string guid = "the_tower_psog";
-		private static tk2dSpriteCollectionData TowerCollection;
-		public static GameObject shootpoint;
+		//private static tk2dSpriteCollectionData TowerCollection;
+		
+
 		public static void Init()
 		{
-            Tower.BuildPrefab();
-		}
-
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			if (!flag)
+            //TowerAnimation
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("TowerAnimation").GetComponent<tk2dSpriteAnimation>();
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Tower", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab = EnemyBuilder.BuildPrefabBundle("Tower", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 514, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				var companion = prefab.AddComponent<TowerBehavior>();
 				companion.aiActor.knockbackDoer.weight = 10000000;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -49,8 +45,16 @@ namespace Planetside
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.IgnoreForRoomClear = false;
 
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
 
-                companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, 0f), "shadowPos");
 
@@ -180,119 +184,126 @@ namespace Planetside
 				}, new DirectionalAnimation.FlipType[8], DirectionalAnimation.DirectionType.EightWay);
 
 
-                if (TowerCollection == null)
-				{
-                    TowerCollection = SpriteBuilder.ConstructCollection(prefab, "BlockadeColection");
-					UnityEngine.Object.DontDestroyOnLoad(TowerCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], TowerCollection);
-					}
-					
-
-				
-
-
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int>{0}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
-
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("idle").frames)
-					{
-						frame.invulnerableFrame = true;
-					}
-
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> {0,0}, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 30f;
-                    EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, string> { { 0, "Play_RockBreaking" } });
-                    EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, string> { { 0, "Blast" } });
-
-
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 1,2,3,4,5,6 }, "lift_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 7,8,9,10,11,12 }, "lift_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 13,14,15,16,17,18 }, "lift_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 19,20,21,22,23,24 }, "lift_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 25,26,27,28,29,30 }, "lift_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 31,32,33,34,35,36 }, "lift_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 37,38,39,40,41,42 }, "lift_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 43,44,45,46,47,48 }, "lift_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 }, "slowlift_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 7, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7 }, "slowlift_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 13, 14, 15, 16, 17, 18, 17, 16, 15, 14, 13 }, "slowlift_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 19, 20, 21, 22, 23, 24, 23, 22, 21, 20, 19 }, "slowlift_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 25, 26, 27, 28, 29, 30, 29, 28, 27, 26, 25 }, "slowlift_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 31, 32, 33, 34, 35, 36, 35, 34, 33, 32, 31 }, "slowlift_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 37, 38, 39, 40, 41, 42, 41, 40, 39, 38, 37 }, "slowlift_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 43, 44, 45, 46, 47, 48, 47, 46, 45, 44, 43 }, "slowlift_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
-
-
-
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_s").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_sl").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_sr").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_l").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_r").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_nl").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_nr").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-                    foreach (var frame in companion.spriteAnimator.GetClipByName("lift_n").frames)
-                    {
-                        frame.invulnerableFrame = true;
-                    }
-
-
-                    for (int h = 0; h < 3; h++)
-                    {
-                        companion.spriteAnimator.GetClipByName("slowlift_s").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_sl").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_sr").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_l").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_r").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_nl").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_nr").frames[h].invulnerableFrame = true;
-                        companion.spriteAnimator.GetClipByName("slowlift_n").frames[h].invulnerableFrame = true;
-                    }
-
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 49, 49, 50, 51}, "fire_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 52, 52, 53, 54 }, "fire_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 55, 55, 56, 57 }, "fire_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 55, 55, 59, 60 }, "fire_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 61, 61, 62, 63 }, "fire_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 64, 64, 65, 66 }, "fire_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 67, 67, 68, 69 }, "fire_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 70, 70, 71, 72 }, "fire_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 6, 5, 4, 3, 2, 1 }, "unlift_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 12, 11, 10, 9, 8, 7 }, "unlift_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 18, 17, 16, 15, 14, 13 }, "unlift_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 24, 23, 22, 21, 20, 19 }, "unlift_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 30, 29, 28, 27, 26, 25 }, "unlift_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 36, 35, 34, 33, 32, 31 }, "unlift_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 42, 41, 40, 39, 38, 37 }, "unlift_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 48, 47, 46, 45, 44, 43 }, "unlift_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
-
-                    SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 73, 74,75,76,77,78,79,80,81 }, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-
+                //if (TowerCollection == null)
+                //{
+                /*
+                TowerCollection = SpriteBuilder.ConstructCollection(prefab, "BlockadeColection");
+                UnityEngine.Object.DontDestroyOnLoad(TowerCollection);
+                for (int i = 0; i < spritePaths.Length; i++)
+                {
+                    SpriteBuilder.AddSpriteToCollection(spritePaths[i], TowerCollection);
                 }
+                */
+
+
+
+
+                //SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int>{0}, "idle", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 7f;
+
+
+                /*
+
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> {0,0}, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 30f;
+
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 1,2,3,4,5,6 }, "lift_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 7,8,9,10,11,12 }, "lift_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 13,14,15,16,17,18 }, "lift_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 19,20,21,22,23,24 }, "lift_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 25,26,27,28,29,30 }, "lift_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 31,32,33,34,35,36 }, "lift_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 37,38,39,40,41,42 }, "lift_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 43,44,45,46,47,48 }, "lift_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 }, "slowlift_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 7, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7 }, "slowlift_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 13, 14, 15, 16, 17, 18, 17, 16, 15, 14, 13 }, "slowlift_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 4f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 19, 20, 21, 22, 23, 24, 23, 22, 21, 20, 19 }, "slowlift_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 25, 26, 27, 28, 29, 30, 29, 28, 27, 26, 25 }, "slowlift_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 31, 32, 33, 34, 35, 36, 35, 34, 33, 32, 31 }, "slowlift_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 37, 38, 39, 40, 41, 42, 41, 40, 39, 38, 37 }, "slowlift_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 43, 44, 45, 46, 47, 48, 47, 46, 45, 44, 43 }, "slowlift_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 5f;
+                */
+
+
+                /*
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 49, 49, 50, 51}, "fire_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 52, 52, 53, 54 }, "fire_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 55, 55, 56, 57 }, "fire_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 55, 55, 59, 60 }, "fire_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 61, 61, 62, 63 }, "fire_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 64, 64, 65, 66 }, "fire_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 67, 67, 68, 69 }, "fire_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 70, 70, 71, 72 }, "fire_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+
+
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 6, 5, 4, 3, 2, 1 }, "unlift_s", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 12, 11, 10, 9, 8, 7 }, "unlift_sl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 18, 17, 16, 15, 14, 13 }, "unlift_sr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 24, 23, 22, 21, 20, 19 }, "unlift_l", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 30, 29, 28, 27, 26, 25 }, "unlift_r", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 36, 35, 34, 33, 32, 31 }, "unlift_nl", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 42, 41, 40, 39, 38, 37 }, "unlift_nr", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 48, 47, 46, 45, 44, 43 }, "unlift_n", tk2dSpriteAnimationClip.WrapMode.Once).fps = 7f;
+
+                SpriteBuilder.AddAnimation(companion.spriteAnimator, TowerCollection, new List<int> { 73, 74,75,76,77,78,79,80,81 }, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
+                */
+                //}
+
+
+                foreach (var frame in companion.spriteAnimator.GetClipByName("idle").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "die", new Dictionary<int, string> { { 0, "Play_RockBreaking" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "die", new Dictionary<int, string> { { 0, "Blast" } });
+
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_s").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_sl").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_sr").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_l").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_r").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_nl").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_nr").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+                foreach (var frame in companion.spriteAnimator.GetClipByName("lift_n").frames)
+                {
+                    frame.invulnerableFrame = true;
+                }
+
+
+                for (int ha = 0; ha < 3; ha++)
+                {
+                    companion.spriteAnimator.GetClipByName("slowlift_s").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_sl").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_sr").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_l").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_r").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_nl").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_nr").frames[ha].invulnerableFrame = true;
+                    companion.spriteAnimator.GetClipByName("slowlift_n").frames[ha].invulnerableFrame = true;
+                }
+
                 var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
@@ -375,8 +386,9 @@ namespace Planetside
 				Game.Enemies.Add("psog:tower", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection(Defpath + "turretthing_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("turretthing_fire_south_left_002"),
+                SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -388,7 +400,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = Defpath + "turretthing_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "turretthing_fire_south_left_002";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("blockadesheetTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\blockadesheetTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#TOWER", "Blockade");
 				PlanetsideModule.Strings.Enemies.Set("#TOWER_SHORTDESC", "Iron Wall");
@@ -397,9 +409,11 @@ namespace Planetside
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#TOWER_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#TOWER_LONGDESC";
 				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:tower");
-				EnemyDatabase.GetEntry("psog:tower").ForcedPositionInAmmonomicon = 80;
-				EnemyDatabase.GetEntry("psog:tower").isInBossTab = false;
-				EnemyDatabase.GetEntry("psog:tower").isNormalEnemy = true;
+
+                var entry = EnemyDatabase.GetEntry("psog:tower");
+                entry.ForcedPositionInAmmonomicon = 80;
+                entry.isInBossTab = false;
+                entry.isNormalEnemy = true;
 
                 companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableHitscan);
                 companion.aiActor.bulletBank.Bullets.Add(StaticBulletEntries.UndodgeableOldKingSlamBullet);
@@ -654,43 +668,13 @@ namespace Planetside
 
         }
 
-        public class EnemyBehavior : BraveBehaviour
+        public class TowerBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			private void Start()
 			{
                 base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-                m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 
 				  

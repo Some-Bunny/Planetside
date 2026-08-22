@@ -17,6 +17,7 @@ using Planetside.Toolboxes;
 using HarmonyLib;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -37,21 +38,22 @@ namespace Planetside
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Timed, 1f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.D;
-            ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Damage, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+            ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Damage, 0.9f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.MovementSpeed, 0.95f, StatModifier.ModifyMethod.MULTIPLICATIVE);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.Curse, 1, StatModifier.ModifyMethod.ADDITIVE);
             ItemBuilder.AddPassiveStatModifier(activeitem, PlayerStats.StatType.AdditionalItemCapacity, 1, StatModifier.ModifyMethod.ADDITIVE);
-            activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
-            activeitem.gameObject.AddComponent<RustyItemPool>();
+            activeitem.AddToSubShop(ItemBuilder.ShopType.Cursula, 1.5f);
+           
             BloodIdol.BloodIdolID = activeitem.PickupObjectId;
             SynergyAPI.SynergyBuilder.AddItemToSynergy(activeitem, CustomSynergyType.BLOOD_LOCKET);
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(activeitem.PickupObjectId);
             activeitem.AddSynergy("Sacrifices Must Be Made", new List<PickupObject>()
             {
                 Items.Bullet_Idol
-            }, false);
+            }, false).AddItemTip("Taking damage adds 2 kiils to the counter for each eenmy damaged by Blood Idol.");
 
             ItemIDs.AddToList(activeitem.PickupObjectId);
+            activeitem.AddItemTip("Slightly reduces stats while held. Enemy kills while this item is held are stored in the item permanently, use the item to remove 250 kills from the counter and spawn a random item. ");
         }
         public static int BloodIdolID;
 

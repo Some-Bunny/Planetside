@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -39,9 +40,10 @@ namespace Planetside
 			ConnoisseursRobes.ConnoisseursRobesID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
 			item.SetupUnlockOnCustomStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 14, DungeonPrerequisite.PrerequisiteOperation.GREATER_THAN);
+			item.AddItemTip("Player projectiles have a chance to hold their own guns and shoot at enemies.");
 
 
-		}
+        }
 		public static int ConnoisseursRobesID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{

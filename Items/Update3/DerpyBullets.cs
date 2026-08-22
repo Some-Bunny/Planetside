@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -32,15 +33,16 @@ namespace Planetside
             string shortDesc = "Zig Zaggy";
 			string longDesc = "Damage up. These unusual bullets had an excess amount of rubber added to them to create incredibly bouncy bullets, however the end result ended up with the poor things unable to stand up straight and end up just flopping from left to right.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.RangeMultiplier, 3f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 
 			item.quality = PickupObject.ItemQuality.C;
 
 			DerpyBullets.DerpyBulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+			item.AddItemTip("Grants a damage up. Projectiles will turn left and right at sharp angles.");
 
-		}
+        }
 		public static int DerpyBulletsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{

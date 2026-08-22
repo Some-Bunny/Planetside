@@ -1,4 +1,5 @@
-﻿using Alexandria.PrefabAPI;
+﻿using Alexandria.Integrations;
+using Alexandria.PrefabAPI;
 using HutongGames.PlayMaker.Actions;
 using ItemAPI;
 using Planetside;
@@ -138,7 +139,7 @@ namespace Planetside
             var refraction = RefractionObject.AddComponent<RefractionEffect>();
             refraction.sprite = sprite;
             refraction.spriteAnimator = spriteAnimator;
-
+            item.AddItemTip("On use, attaches 2 random guns to your currently held gun. Reduces damage while holding the affected gun by 33%.");
         }
         public static int ItemID;
         public static GameObject RefractionObject;

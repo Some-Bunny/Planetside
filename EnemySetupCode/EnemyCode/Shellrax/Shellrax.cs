@@ -14,6 +14,7 @@ using SaveAPI;
 using Pathfinding;
 using Alexandria.NPCAPI;
 using NpcApi;
+using static Planetside.Fungannon.RainingPoot;
 
 namespace Planetside
 {
@@ -21,34 +22,35 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "Shellrax";
-		public static GameObject shootpoint;
-		public static GameObject shootpoint1;
-
-		public static GameObject EyeScript;
-
 
 		public static string TargetVFX;
-		public static Texture2D ShellraxEyeTexture;
+		//public static Texture2D ShellraxEyeTexture;
+
+
 
 		public static void Init()
-		{
-			ShellraxEyeTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources2/ParticleTextures/shellraxeye.png");
-			Shellrax.BuildPrefab();
-		}
-
-		public static void BuildPrefab()
 		{
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ShellraxCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("shellrax material.mat");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ShellraxAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
 				fuckyouprefab = BossBuilder.BuildPrefabBundle("Shellrax", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9) ,false, true);
-				var companion = fuckyouprefab.AddComponent<EnemyBehavior>();
+				var companion = fuckyouprefab.AddComponent<ShellraxController>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
 
                 companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0f;
@@ -61,6 +63,7 @@ namespace Planetside
 				companion.aiActor.PreventFallingInPitsEver = true;
 				companion.aiActor.healthHaver.ForceSetCurrentHealth(600f);
 				companion.aiActor.healthHaver.SetHealthMaximum(600f);
+				
 				companion.aiActor.CollisionKnockbackStrength = 2f;
 				companion.aiActor.procedurallyOutlined = false;
 				companion.aiActor.CanTargetPlayers = true;
@@ -308,17 +311,9 @@ namespace Planetside
 						anim = ribbys
 					}
 				};
-				//bool flag3 = ShellraxClooection == null;
-				//if (flag3)
+				/*
 				{
-					/*
-					ShellraxClooection = SpriteBuilder.ConstructCollection(fuckyouprefab, "Shellrax-Clooection");
-					UnityEngine.Object.DontDestroyOnLoad(ShellraxClooection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], ShellraxClooection);
-					}
-					*/
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
@@ -521,50 +516,50 @@ namespace Planetside
 					}, "fireeye", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
 				}
-
-				var death = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("death");
+				*/
+				var death = companion.aiActor.spriteAnimator.GetClipByName("death");
 				death.frames[1].eventInfo = "disableparticles";
 				death.frames[1].triggerEvent = true;
 
-				var teleportin = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportIn");
+				var teleportin = companion.aiActor.spriteAnimator.GetClipByName("TeleportIn");
 				teleportin.frames[8].eventInfo = "enableparticles";
 				teleportin.frames[8].triggerEvent = true;
 
-				var teleportout = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportOut");
+				var teleportout = companion.aiActor.spriteAnimator.GetClipByName("TeleportOut");
 				teleportout.frames[1].eventInfo = "disableparticles";
 				teleportout.frames[1].triggerEvent = true;
 
-				var idle = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("idle");
+				var idle = companion.aiActor.spriteAnimator.GetClipByName("idle");
 				idle.frames[0].eventInfo = "enableparticlesspecial";
 				idle.frames[0].triggerEvent = true;
 
-				var eaee = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro");
+				var eaee = companion.aiActor.spriteAnimator.GetClipByName("intro");
 				eaee.frames[0].eventInfo = "disableparticlesspecial";
 				eaee.frames[0].triggerEvent = true;
 
-				var tpout = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportOut");
+				var tpout = companion.aiActor.spriteAnimator.GetClipByName("TeleportOut");
 				tpout.frames[8].eventInfo = "Disablerender";
 				tpout.frames[8].triggerEvent = true;
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportOut").frames[1].eventAudio = "Play_ENM_shells_gather_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportOut").frames[1].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("TeleportOut").frames[1].eventAudio = "Play_ENM_shells_gather_01";
+                companion.aiActor.spriteAnimator.GetClipByName("TeleportOut").frames[1].triggerEvent = true;
 
-				var tpin = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportIn");
+				var tpin = companion.aiActor.spriteAnimator.GetClipByName("TeleportIn");
 				tpin.frames[0].eventInfo = "EnableRender";
 				tpin.frames[0].triggerEvent = true;
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportIn").frames[1].eventAudio = "Play_ENM_shells_gather_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportIn").frames[1].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("TeleportIn").frames[1].eventAudio = "Play_ENM_shells_gather_01";
+                companion.aiActor.spriteAnimator.GetClipByName("TeleportIn").frames[1].triggerEvent = true;
 
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[1].eventAudio = "Play_ENM_shells_gather_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[1].triggerEvent = true;
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[2].eventAudio = "Play_BOSS_lichC_intro_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[2].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[1].eventAudio = "Play_ENM_shells_gather_01";
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[1].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[2].eventAudio = "Play_BOSS_lichC_intro_01";
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[2].triggerEvent = true;
 
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[19].eventAudio = "Play_BOSS_lichA_crack_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[19].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[19].eventAudio = "Play_BOSS_lichA_crack_01";
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[19].triggerEvent = true;
 
 
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[21].eventAudio = "Play_BOSS_doormimic_blast_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[21].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[21].eventAudio = "Play_BOSS_doormimic_blast_01";
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[21].triggerEvent = true;
 
 				var bs = fuckyouprefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
@@ -576,21 +571,18 @@ namespace Planetside
 
 
 
-				EyeScript = ItemBuilder.AddSpriteToObject("EyeScript", "Planetside/Resources/suncolor.png", null);
+				var EyeScript = new GameObject("EyeScript");//ItemBuilder.AddSpriteToObject("EyeScript", "Planetside/Resources/suncolor.png", null);
 				EyeScript.transform.parent = companion.transform;
 				EyeScript.transform.position = companion.sprite.WorldBottomLeft + new Vector2(1.25f, 2.375f);
 				GameObject eyeScript = companion.transform.Find("EyeScript").gameObject;
 
-				shootpoint = ItemBuilder.AddSpriteToObject("attach", "Planetside/Resources/suncolor.png", null);
-				shootpoint.GetComponent<tk2dSprite>().sprite.renderer.enabled = false;
+				var shootpoint = new GameObject("attach");//ItemBuilder.AddSpriteToObject("attach", "Planetside/Resources/suncolor.png", null);
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
-				GameObject m_CachedGunAttachPoint = companion.transform.Find("attach").gameObject;
 				
-				shootpoint1 = new GameObject("fuck");
+				var shootpoint1 = new GameObject("fuck");
 				shootpoint1.transform.parent = companion.transform;
 				shootpoint1.transform.position = companion.sprite.WorldBottomLeft;
-				GameObject m_CachedGunAttachPoint1 = companion.transform.Find("fuck").gameObject;
 
 				AIActor actor = EnemyDatabase.GetOrLoadByGuid("4b992de5b4274168a8878ef9bf7ea36b");
 				BeholsterController beholsterbeam = actor.GetComponent<BeholsterController>();
@@ -637,7 +629,7 @@ namespace Planetside
 
 					Probability = 0f,
                     Behavior = new ShootBehavior{
-                    ShootPoint = m_CachedGunAttachPoint,
+                    ShootPoint = shootpoint,
                     BulletScript = new CustomBulletScriptSelector(typeof(OMEGADEATHSCRIPTOFDOOM)),
                     LeadAmount = 0f,
                     AttackCooldown = 1f,
@@ -698,7 +690,7 @@ namespace Planetside
 
 					Probability = 0.8f,
 					Behavior = new ShootBehavior{
-					ShootPoint = m_CachedGunAttachPoint,
+					ShootPoint = shootpoint,
 					BulletScript = new CustomBulletScriptSelector(typeof(SemiCirclesOfDoom)),
 					LeadAmount = 0f,
 					AttackCooldown = 1f,
@@ -742,7 +734,7 @@ namespace Planetside
 
 					Probability = 0.8f,
 					Behavior = new ShootBehavior{
-					ShootPoint = m_CachedGunAttachPoint1,
+					ShootPoint = shootpoint1,
 					BulletScript = new CustomBulletScriptSelector(typeof(Slammo)),
 					LeadAmount = 0f,
 					AttackCooldown = 1f,
@@ -764,7 +756,7 @@ namespace Planetside
 
 					Probability = 0.6f,
 					Behavior = new ShootBehavior{
-					ShootPoint = m_CachedGunAttachPoint,
+					ShootPoint = shootpoint1,
 					BulletScript = new CustomBulletScriptSelector(typeof(CirclesWithOpenings)),
 					LeadAmount = 0f,
 					AttackCooldown = 1f,
@@ -865,9 +857,11 @@ namespace Planetside
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("frogger"));
 
 
-                
 
-                SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Shellrax/shellrax_idle_001", SpriteBuilder.ammonomiconCollection);
+
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("shellrax_idle_001"), SpriteBuilder.ammonomiconCollection);
+
+
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -880,7 +874,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Shellrax/shellrax_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "shellrax_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("shellraxicon");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\shellraxicon.png");
                 PlanetsideModule.Strings.Enemies.Set("#SHELLAD", "Shellrax");
 				PlanetsideModule.Strings.Enemies.Set("#SHELLAD_SHORTDESC", "Failed Demi-lich");
@@ -1778,7 +1772,7 @@ namespace Planetside
 
 
 
-	public class EnemyBehavior : BraveBehaviour
+	public class ShellraxController: BraveBehaviour
 	{
 
 		private bool HasTriggeredDesparation;
@@ -1844,10 +1838,9 @@ namespace Planetside
 			GameObject thing = base.aiActor.transform.Find("attach").gameObject;
 			thing.gameObject.layer = 23;
 			base.aiActor.sprite.HeightOffGround = 0;
-			tk2dSprite spriter = thing.GetComponent<tk2dSprite>();//.renderer.enabled = false;
-			spriter.sprite.HeightOffGround = -100;
-			spriter.sprite.renderer.sortingLayerName = "Foregound";
-			spriter.renderer.enabled = false;
+
+
+            /*
 			ParticleSystem yes = thing.AddComponent<ParticleSystem>();
 			yes.Play();
 			yes.name = "death glow";
@@ -1924,12 +1917,44 @@ namespace Planetside
 			material.SetFloat("_EmissivePower", 25f);
 			particleRenderer.material = material;
 
-			particleRenderer.sortingLayerName = "Foregound";
-			particleRenderer.maskInteraction = SpriteMaskInteraction.None;
-			yes.gameObject.layer = 23;
-			SuperGlowParticle = yes;
+			*/
 
-			base.healthHaver.minimumHealth = 0;
+
+            //particleRenderer.sortingLayerName = "Foregound";
+            //particleRenderer.maskInteraction = SpriteMaskInteraction.None;
+            //yes.gameObject.layer = 23;
+            //SuperGlowParticle = yes;
+
+            SuperGlowParticle = Instantiate(ParticleBase.ReturnParticleSystem("ShamberParticle").gameObject).GetComponent<ParticleSystem>();
+			var main = SuperGlowParticle.main;
+            main.loop = true;
+
+            var colorOverLifetime = SuperGlowParticle.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            var brightness = UnityEngine.Random.Range(0.2f, 1);
+            var gradient = new Gradient();
+            gradient.SetKeys(new[] { new GradientColorKey(Color.yellow, 0f), new GradientColorKey(Color.yellow, 0.9f) }, new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) });
+            colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
+            SuperGlowParticle.transform.position = thing.transform.position;
+
+            main.startLifetime = new ParticleSystem.MinMaxCurve(0.1f, 1f);
+            main.startSpeed = new ParticleSystem.MinMaxCurve(3f, 10f);
+            main.startSize = new ParticleSystem.MinMaxCurve(0.075f, 0.25f);
+            main.startColor = new ParticleSystem.MinMaxGradient(new Color32(255, 141, 0, 255), new Color32(255, 141, 0, 255));
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            main.startRotation = new ParticleSystem.MinMaxCurve(-180, 180);
+            main.randomizeRotationDirection = 2;
+            main.gravityModifier = -4f;
+
+
+            SuperGlowParticle.Play();
+            var sc = SuperGlowParticle.shape;
+            sc.shapeType = ParticleSystemShapeType.Circle;
+            sc.radius = 0.1f;
+            SuperGlowParticle.gameObject.layer = 23;
+			SuperGlowParticle.gameObject.SetActive(true);
+			var emm = SuperGlowParticle.emission;
+            base.healthHaver.minimumHealth = 0;
 			base.aiActor.healthHaver.SetHealthMaximum(base.aiActor.healthHaver.GetMaxHealth() * 3);
 			base.healthHaver.FullHeal();
 			for (int j = 0; j < base.aiActor.behaviorSpeculator.AttackBehaviors.Count; j++)
@@ -1957,8 +1982,9 @@ namespace Planetside
 			Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
             base.aiActor.sprite.renderer.material = mat;
+            SuperGlowParticle.transform.position = thing.transform.position;
 
-			yield return new WaitForSeconds(6);
+            yield return new WaitForSeconds(6);
 			base.aiActor.healthHaver.IsVulnerable = true;
 
 			for (int i = 0; i < 20; i++)
@@ -1970,6 +1996,7 @@ namespace Planetside
 						TextBoxManager.ShowTextBox(base.aiActor.sprite.WorldTopCenter, base.aiActor.transform, 1.5f, BraveUtility.RandomElement<string>(Pain), ItsDaFuckinShopApi.ReturnVoiceBox(ItsDaFuckinShopApi.VoiceBoxes.OX), false, TextBoxManager.BoxSlideOrientation.NO_ADJUSTMENT, false, false);
 					}
 					emm.rateOverTime = 15 * i;
+					
 					yield return new WaitForSeconds(1f);
                     base.aiActor.sprite.renderer.material.SetColor("_EmissiveColor", new Color32(255, 141, 0, 255));
                     base.aiActor.sprite.renderer.material.SetFloat("_EmissiveColorPower", 1.55f);
@@ -2166,7 +2193,7 @@ namespace Planetside
                 {
                     position = this.sprite.WorldBottomCenter + new Vector2(x, y)
                 }, 1);
-
+				Destroy(SuperGlowParticle.gameObject, 15);
                 yield return null;
 			}
 			yield break;

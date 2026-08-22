@@ -943,10 +943,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.88769627, y: 0.55810595}
-    - {x: 0.88769627, y: 0.620605}
-    - {x: 0.98144436, y: 0.55810595}
-    - {x: 0.98144436, y: 0.620605}
+    - {x: 0.88769627, y: 0.56103563}
+    - {x: 0.88769627, y: 0.6235347}
+    - {x: 0.98144436, y: 0.56103563}
+    - {x: 0.98144436, y: 0.6235347}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -3823,10 +3823,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.88769627, y: 0.62353563}
-    - {x: 0.88769627, y: 0.6860347}
-    - {x: 0.98144436, y: 0.62353563}
-    - {x: 0.98144436, y: 0.6860347}
+    - {x: 0.88769627, y: 0.6264653}
+    - {x: 0.88769627, y: 0.68896437}
+    - {x: 0.98144436, y: 0.6264653}
+    - {x: 0.98144436, y: 0.68896437}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -4471,10 +4471,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.88769627, y: 0.6889653}
-    - {x: 0.88769627, y: 0.75146437}
-    - {x: 0.98144436, y: 0.6889653}
-    - {x: 0.98144436, y: 0.75146437}
+    - {x: 0.88769627, y: 0.691895}
+    - {x: 0.88769627, y: 0.75439405}
+    - {x: 0.98144436, y: 0.691895}
+    - {x: 0.98144436, y: 0.75439405}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -4687,14 +4687,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.88769627, y: 0.754395}
-    - {x: 0.88769627, y: 0.81689405}
-    - {x: 0.98144436, y: 0.754395}
-    - {x: 0.98144436, y: 0.81689405}
+    - {x: 0.002930664, y: 0.6352544}
+    - {x: 0.1279287, y: 0.6352544}
+    - {x: 0.002930664, y: 0.6821284}
+    - {x: 0.1279287, y: 0.6821284}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -4705,7 +4705,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -4759,14 +4759,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.002930664, y: 0.8198247}
-    - {x: 0.002930664, y: 0.88232374}
-    - {x: 0.09667871, y: 0.8198247}
-    - {x: 0.09667871, y: 0.88232374}
+    - {x: 0.13379005, y: 0.6352544}
+    - {x: 0.25878808, y: 0.6352544}
+    - {x: 0.13379005, y: 0.6821284}
+    - {x: 0.25878808, y: 0.6821284}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -4777,7 +4777,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -4831,10 +4831,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.002930664, y: 0.7573247}
-    - {x: 0.1279287, y: 0.7573247}
-    - {x: 0.002930664, y: 0.80419874}
-    - {x: 0.1279287, y: 0.80419874}
+    - {x: 0.26464942, y: 0.6352544}
+    - {x: 0.38964745, y: 0.6352544}
+    - {x: 0.26464942, y: 0.6821284}
+    - {x: 0.38964745, y: 0.6821284}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -4903,14 +4903,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.002930664, y: 0.6821294}
-    - {x: 0.002930664, y: 0.7446284}
-    - {x: 0.09667871, y: 0.6821294}
-    - {x: 0.09667871, y: 0.7446284}
+    - {x: 0.3955088, y: 0.6352544}
+    - {x: 0.52050686, y: 0.6352544}
+    - {x: 0.3955088, y: 0.6821284}
+    - {x: 0.52050686, y: 0.6821284}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -4921,7 +4921,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -4975,10 +4975,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.10254004, y: 0.6821294}
-    - {x: 0.10254004, y: 0.7446284}
-    - {x: 0.19628808, y: 0.6821294}
-    - {x: 0.19628808, y: 0.7446284}
+    - {x: 0.52636814, y: 0.6821294}
+    - {x: 0.52636814, y: 0.7446284}
+    - {x: 0.62011623, y: 0.6821294}
+    - {x: 0.62011623, y: 0.7446284}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -6271,14 +6271,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.002930664, y: 0.8852544}
-    - {x: 0.002930664, y: 0.9477534}
-    - {x: 0.09667871, y: 0.8852544}
-    - {x: 0.09667871, y: 0.9477534}
+    - {x: 0.6259775, y: 0.7241216}
+    - {x: 0.7509756, y: 0.7241216}
+    - {x: 0.6259775, y: 0.7709956}
+    - {x: 0.7509756, y: 0.7709956}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -6289,7 +6289,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -6343,10 +6343,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.002930664, y: 0.9506841}
-    - {x: 0.1279287, y: 0.9506841}
-    - {x: 0.002930664, y: 0.9975581}
-    - {x: 0.1279287, y: 0.9975581}
+    - {x: 0.7568369, y: 0.7573247}
+    - {x: 0.881835, y: 0.7573247}
+    - {x: 0.7568369, y: 0.80419874}
+    - {x: 0.881835, y: 0.80419874}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -6415,10 +6415,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.10254004, y: 0.8071294}
-    - {x: 0.10254004, y: 0.8696284}
-    - {x: 0.19628808, y: 0.8071294}
-    - {x: 0.19628808, y: 0.8696284}
+    - {x: 0.88769627, y: 0.7573247}
+    - {x: 0.88769627, y: 0.81982374}
+    - {x: 0.98144436, y: 0.7573247}
+    - {x: 0.98144436, y: 0.81982374}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 0, y: 1}
@@ -6487,14 +6487,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.13379005, y: 0.7475591}
-    - {x: 0.25878808, y: 0.7475591}
-    - {x: 0.13379005, y: 0.7944331}
-    - {x: 0.25878808, y: 0.7944331}
+    - {x: 0.002930664, y: 0.7475591}
+    - {x: 0.002930664, y: 0.8100581}
+    - {x: 0.09667871, y: 0.7475591}
+    - {x: 0.09667871, y: 0.8100581}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -6505,7 +6505,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -6559,14 +6559,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.20214942, y: 0.6821294}
-    - {x: 0.20214942, y: 0.7446284}
-    - {x: 0.29589745, y: 0.6821294}
-    - {x: 0.29589745, y: 0.7446284}
+    - {x: 0.002930664, y: 0.6850591}
+    - {x: 0.1279287, y: 0.6850591}
+    - {x: 0.002930664, y: 0.7319331}
+    - {x: 0.1279287, y: 0.7319331}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -6577,7 +6577,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -6631,14 +6631,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.10254004, y: 0.8725591}
-    - {x: 0.10254004, y: 0.9350581}
-    - {x: 0.19628808, y: 0.8725591}
-    - {x: 0.19628808, y: 0.9350581}
+    - {x: 0.10254004, y: 0.73486376}
+    - {x: 0.22753808, y: 0.73486376}
+    - {x: 0.10254004, y: 0.7817378}
+    - {x: 0.22753808, y: 0.7817378}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
@@ -6649,7 +6649,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 1
@@ -6703,10 +6703,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.13379005, y: 0.93798876}
-    - {x: 0.25878808, y: 0.93798876}
-    - {x: 0.13379005, y: 0.9848628}
-    - {x: 0.25878808, y: 0.9848628}
+    - {x: 0.13379005, y: 0.6850591}
+    - {x: 0.25878808, y: 0.6850591}
+    - {x: 0.13379005, y: 0.7319331}
+    - {x: 0.25878808, y: 0.7319331}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -6775,10 +6775,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.3017588, y: 0.6352544}
-    - {x: 0.42675683, y: 0.6352544}
-    - {x: 0.3017588, y: 0.6821284}
-    - {x: 0.42675683, y: 0.6821284}
+    - {x: 0.23339942, y: 0.73486376}
+    - {x: 0.35839745, y: 0.73486376}
+    - {x: 0.23339942, y: 0.7817378}
+    - {x: 0.35839745, y: 0.7817378}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -6847,10 +6847,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.43261817, y: 0.6821294}
-    - {x: 0.55761623, y: 0.6821294}
-    - {x: 0.43261817, y: 0.7290034}
-    - {x: 0.55761623, y: 0.7290034}
+    - {x: 0.26464942, y: 0.6850591}
+    - {x: 0.38964745, y: 0.6850591}
+    - {x: 0.26464942, y: 0.7319331}
+    - {x: 0.38964745, y: 0.7319331}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -6919,10 +6919,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.3017588, y: 0.6850591}
-    - {x: 0.42675683, y: 0.6850591}
-    - {x: 0.3017588, y: 0.7319331}
-    - {x: 0.42675683, y: 0.7319331}
+    - {x: 0.3955088, y: 0.6850591}
+    - {x: 0.52050686, y: 0.6850591}
+    - {x: 0.3955088, y: 0.7319331}
+    - {x: 0.52050686, y: 0.7319331}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -6991,10 +6991,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.5634775, y: 0.7241216}
-    - {x: 0.6884756, y: 0.7241216}
-    - {x: 0.5634775, y: 0.7709956}
-    - {x: 0.6884756, y: 0.7709956}
+    - {x: 0.3642588, y: 0.73486376}
+    - {x: 0.48925683, y: 0.73486376}
+    - {x: 0.3642588, y: 0.7817378}
+    - {x: 0.48925683, y: 0.7817378}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -8335,7 +8335,512 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  - name: solarblast_idle_003
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9130869, y: 0.45849657}
+    - {x: 0.9130869, y: 0.48974562}
+    - {x: 0.9785147, y: 0.45849657}
+    - {x: 0.9785147, y: 0.48974562}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7ac3fc3cebed96745a4ca1bf09e024dd
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: solarblast_idle_001
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9130869, y: 0.49267626}
+    - {x: 0.9130869, y: 0.5239253}
+    - {x: 0.9785147, y: 0.49267626}
+    - {x: 0.9785147, y: 0.5239253}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: d2aa046fa2449714199c8ac73740eb0a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: solarblast_idle_002
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.9130869, y: 0.52685595}
+    - {x: 0.9130869, y: 0.558105}
+    - {x: 0.9785147, y: 0.52685595}
+    - {x: 0.9785147, y: 0.558105}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: 4ac1850d91130e84e83c5eb7222734b2
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: solarblast_idle_004
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.49511817, y: 0.7475591}
+    - {x: 0.49511817, y: 0.7788081}
+    - {x: 0.5605459, y: 0.7475591}
+    - {x: 0.5605459, y: 0.7788081}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: 37286fe23ac563b4ba1f32d501ac3700
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: solarblast_idle_005
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.5664072, y: 0.77392626}
+    - {x: 0.5664072, y: 0.8051753}
+    - {x: 0.631835, y: 0.77392626}
+    - {x: 0.631835, y: 0.8051753}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: ea5b282e98b769a43a6e8f918575708a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: solarblast_idle_006
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.49511817, y: 0.78173876}
+    - {x: 0.49511817, y: 0.8129878}
+    - {x: 0.5605459, y: 0.78173876}
+    - {x: 0.5605459, y: 0.8129878}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: a3ada1c822b096a408d765b5c07e5ad6
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: solarblast_idle_007
+    boundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsData:
+    - {x: 2, y: 2.09375, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    boundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    boundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    untrimmedBoundsDataCenter: {x: 2, y: 2.09375, z: 0}
+    untrimmedBoundsDataExtents: {x: 4, y: 4.1875, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0, z: 0}
+    - {x: 4, y: 0, z: 0}
+    - {x: 0, y: 4.1875, z: 0}
+    - {x: 4, y: 4.1875, z: 0}
+    position0: {x: 0, y: 0, z: 0}
+    position1: {x: 4, y: 0, z: 0}
+    position2: {x: 0, y: 4.1875, z: 0}
+    position3: {x: 4, y: 4.1875, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.63769627, y: 0.77392626}
+    - {x: 0.63769627, y: 0.8051753}
+    - {x: 0.70312405, y: 0.77392626}
+    - {x: 0.70312405, y: 0.8051753}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: dd426af5288990545bad0228b16b73f1, type: 2}
+    materialId: 0
+    sourceTextureGUID: 412c724f5815e174ebccf7616d1dd02f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 1
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
   SpriteIDsWithAttachPoints: 
+  SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
   material: {fileID: 0}
   materials:
@@ -8344,7 +8849,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: d63a6dc04656903439ea0bdf52f7cc17, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
-  textureFilterMode: 1
+  textureFilterMode: 0
   textureMipMaps: 0
   allowMultipleAtlases: 0
   spriteCollectionGUID: 9db9a82518f4cc546a1aad4eb7b685ca
@@ -8353,7 +8858,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 425033899
+  buildKey: 599255043
   dataGuid: 0645f5ccdf4ab6043ad2e2836e34f4f7
   managedSpriteCollection: 0
   hasPlatformData: 0

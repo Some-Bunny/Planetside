@@ -5,6 +5,7 @@ using Dungeonator;
 using ItemAPI;
 using UnityEngine;
 using System.Collections;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -27,7 +28,9 @@ namespace Planetside
 			EncounterDatabase.GetEntry(warVase.encounterTrackable.EncounterGuid).usesPurpleNotifications = true;
 			ItemBuilder.AddPassiveStatModifier(warVase, PlayerStats.StatType.Health, 1, StatModifier.ModifyMethod.ADDITIVE);
 			warVase.RolledCount = 0;
-		}
+			warVase.AddItemTip("+1 HP. Dodge rolling over enemy projectiles builds charge. Once enough charge is built up, unleash a high damage void blast.");
+
+        }
 		public static int PrisonItemID;
 
 		public override void Pickup(PlayerController player)

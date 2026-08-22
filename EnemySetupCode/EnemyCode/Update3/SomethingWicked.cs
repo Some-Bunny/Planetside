@@ -133,8 +133,8 @@ namespace Planetside
 			if (!flag2)
 			{
 				prefab = EnemyBuilder.BuildPrefab("Something Wicked", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false);
-				var companion = prefab.AddComponent<EnemyBehavior>();
-				companion.aiActor.knockbackDoer.weight = 800;
+                var companion = prefab.GetComponent<AIActor>();
+                companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 0f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;

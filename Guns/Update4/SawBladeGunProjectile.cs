@@ -934,18 +934,10 @@ namespace Planetside
                 {
                     for (int i = 0; i < 12; i++)
                     {
-                        bool isGlaive = player.CurrentGun.PickupObjectId == 656;
-
                         GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(Guns.Super_Meat_Gun.DefaultModule.projectiles[0].gameObject, this.transform.position, Quaternion.Euler(0f, 0f, 30 * i), true);
                         Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
                         if (component != null)
                         {
-                            if (isGlaive)
-                            {
-                                component.baseData.damage *= 0.5f;
-                                component.baseData.speed *= 1.5f;
-                                component.UpdateSpeed();
-                            }
                             component.Owner = player;
                             component.Shooter = player.specRigidbody;
                             player.DoPostProcessProjectile(component);
@@ -956,18 +948,11 @@ namespace Planetside
                 {
                     for (int i = 0; i < 12; i++)
                     {
-                        bool isGlaive = player.CurrentGun.PickupObjectId == 656;
-
                         GameObject spawnedBulletOBJ = SpawnManager.SpawnProjectile(Guns.Super_Meat_Gun.DefaultModule.projectiles[0].gameObject, this.transform.position, Quaternion.Euler(0f, 0f, 30 * i), true);
                         Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
                         if (component != null)
                         {
-                            if (isGlaive)
-                            {
-                                component.baseData.damage *= 0.5f;
-                                component.baseData.speed *= 1.5f;
-                                component.UpdateSpeed();
-                            }
+
                             component.Owner = player;
                             component.Shooter = player.specRigidbody;
                             player.DoPostProcessProjectile(component);

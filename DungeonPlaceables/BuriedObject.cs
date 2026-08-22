@@ -58,7 +58,7 @@ namespace Planetside.DungeonPlaceables
             var amorPickup = PrefabBuilder.BuildObject("Test_Buried_Object").AddComponent<BuriedPickup>();
             amorPickup.Tiles = new IntVector2(2, 2);
             amorPickup.gameObject.layer = objSpr.gameObject.layer;
-            amorPickup.RevealednessBeforeFullReveal = 0.6f;
+            amorPickup.RevealednessBeforeFullReveal = 0.4f;
 
             var place2 = BreakableAPI_Bundled.GenerateDungeonPlaceable(new Dictionary<GameObject, float>()
             {
@@ -147,6 +147,7 @@ namespace Planetside.DungeonPlaceables
             public BuriedObjectTile[] TileInstances;
             public float RevealednessBeforeFullReveal = 0.33f;
 
+            //public bool InstantUncover = false;
             public void LateUpdate()
             {
                 if (isFullyRevealed)
@@ -202,6 +203,13 @@ namespace Planetside.DungeonPlaceables
                 bool b = false;
                 while (!b)
                 {
+
+
+                    if (GetAverageRevealedness() >= 1)
+                    {
+                        break;
+                    }
+
                     int am = 0;
                     UpdatePlayerDustups();
                     t += Mathf.Max(Tiles.x, Tiles.y) * 12 * Time.deltaTime;

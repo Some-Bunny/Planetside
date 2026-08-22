@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2006186467
+CRC: 2250103784
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 56e32f63bcb7cfb38a5f478f5d41ddfe
+    Hash: 575a8e5b7adf92569ff31b8f54e5545f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 71e1c6464f3f49e3166f25e1b5360a04
@@ -28,33 +28,72 @@ ClassTypes:
 Assets:
 - Assets/UI/UIElements/Clips/SawGun_002.png
 - Assets/UI/UIElements/Clips/Whistler_001.png
+- Assets/UI/UIElements/Clips/lilpew_clipempty.png
 - Assets/UI/Generic/ouroborosMedal2Left.png
 - Assets/UI/UIElements/Clips/EndOfEverythingClip_001.png
+- Assets/UI/UIElements/Clips/rebarempty.png
 - Assets/UI/Ammonomicon/bookmark_psog_004.png
+- Assets/UI/UIElements/Clips/soullaternfull.png
 - Assets/UI/Ammonomicon/bookmark_psog_001.png
+- Assets/UI/UIElements/Clips/flesfull.png
 - Assets/UI/UIElements/Clips/pointnullclip_001.png
 - Assets/UI/UIElements/Clips/gunknownclipfull.png
 - Assets/UI/Generic/GenericAtlas.png
 - Assets/UI/ClipAtlas.png
 - Assets/UI/UIElements/Clips/RiftakerOut_001.png
+- Assets/UI/UIElements/Clips/colossusempty.png
 - Assets/UI/UIElements/Clips/EndOfEverythingClip_002.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_001.png
+- Assets/UI/UIElements/Clips/flesempty.png
+- Assets/UI/UIElements/Clips/tractorempty.png
 - Assets/UI/Generic/logo.png
+- Assets/UI/UIElements/Clips/funcannonfull.png
 - Assets/UI/Generic/logofunmode.png
+- Assets/UI/UIElements/Clips/gunknownclipfull 1.png
 - Assets/UI/UIElements/Clips/pointnullclip_002.png
 - Assets/UI/UIElements/Clips/gunknownclipemptyl.png
 - Assets/UI/Generic/ouroborosmedal.png
 - Assets/UI/UIElements/Clips/RiftakerIn_001.png
+- Assets/UI/UIElements/Clips/immateriafull.png
+- Assets/UI/UIElements/Clips/immateriaempty.png
+- Assets/UI/UIElements/Clips/gunknownclipemptyl 1.png
+- Assets/UI/UIElements/Clips/heatsinkempty.png
+- Assets/UI/UIElements/Clips/funcannonempty.png
 - Assets/UI/Ammonomicon/bookmark_psog_hover_001.png
 - Assets/UI/UIElements/Clips/SawGun_001.png
+- Assets/UI/UIElements/Clips/canister_empty.png
+- Assets/UI/UIElements/Clips/tractorfull.png
+- Assets/UI/UIElements/Clips/burningsunempty.png
+- Assets/UI/UIElements/Clips/lilpew_clipfull.png
+- Assets/UI/UIElements/Clips/pulseclipEmpty.png
 - Assets/UI/PlanetsideDFAtlas.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_002.png
+- Assets/UI/UIElements/Clips/pulseclipFull.png
 - Assets/UI/UIElements/Clips/RiftakerIn_002.png
+- Assets/UI/UIElements/Clips/colossusfull.png
+- Assets/UI/UIElements/Clips/pulseclipYellowFull.png
 - Assets/SpecialVFX/SpecialVFXCollection Data/SpecialVFXCollection.prefab
 - Assets/UI/Ammonomicon/bookmark_psog_002.png
+- Assets/UI/UIElements/Clips/shocklaserempty.png
+- Assets/UI/UIElements/Clips/measurungTapeempty.png
+- Assets/UI/UIElements/Clips/lanceempty.png
+- Assets/UI/UIElements/Clips/lancefull.png
 - Assets/UI/UIElements/Clips/Whistler_002.png
+- Assets/UI/UIElements/Clips/rebarfull.png
 - Assets/UI/UIElements/Clips/RiftakerOut_002.png
+- Assets/UI/UIElements/Clips/shocklaserfull.png
+- Assets/UI/UIElements/Clips/canister_full.png
 - Assets/UI/Ammonomicon/bookmark_psog_003.png
+- Assets/UI/UIElements/Clips/sawfull.png
+- Assets/UI/UIElements/Clips/autocannonempty.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_003.png
+- Assets/UI/UIElements/Clips/burningsunfull.png
+- Assets/UI/UIElements/Clips/heatsinkfull.png
 - Assets/UI/Ammonomicon/bookmark_psog_select_hover_001.png
+- Assets/UI/UIElements/Clips/soullaternempty.png
+- Assets/UI/UIElements/Clips/sawemptyl.png
+- Assets/UI/UIElements/Clips/autocannonfull.png
+- Assets/UI/UIElements/Clips/measurungTapefull.png
+- Assets/UI/UIElements/Clips/punctureFull.png
+- Assets/UI/UIElements/Clips/punctureEmpty.png
 Dependencies: []

@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -42,7 +43,9 @@ namespace Planetside
 
 			TinyPlanetBullets.CorruptBulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-		}
+			item.AddItemTip("Increases damage and fire rate. Projectiles will orbit their initial firing position.");
+
+        }
 		public static int CorruptBulletsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{

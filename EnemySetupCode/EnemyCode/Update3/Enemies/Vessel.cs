@@ -215,24 +215,31 @@ namespace Planetside
 		public static readonly string guid = "vessel";
 		private static tk2dSpriteCollectionData VesselCollection;
 
-		public static void Init()
-		{
-			Vessel.BuildPrefab();		
-		}
+		
 
 	
 
-		public static void BuildPrefab()
+		public static void Init()
 		{
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("VesselAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Vessel", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab = EnemyBuilder.BuildPrefabBundle("Vessel", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 590, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				var companion = prefab.AddComponent<VesselBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
 				prefab.AddComponent<VesselController>();
-				companion.aiActor.knockbackDoer.weight = 100;
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+                companion.aiActor.knockbackDoer.weight = 100;
 				companion.aiActor.MovementSpeed = 1f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -314,8 +321,16 @@ namespace Planetside
 					}
 				};
 
-				
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "beat", new Dictionary<int, string> { { 10, "Play_ENM_blobulord_reform_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "teleportOut", new Dictionary<int, string> { { 3, "Warp" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "teleportOut", new Dictionary<int, string> { { 1, "Play_BOSS_doormimic_jump_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "teleportIn", new Dictionary<int, string> { { 0, "InverseWarp" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "teleportIn", new Dictionary<int, string> { { 1, "Play_BOSS_doormimic_land_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "die", new Dictionary<int, string> { { 0, "Play_VesselDeath" }, { 9, "Play_ENM_Tarnisher_Bite_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "die", new Dictionary<int, string> { { 9, "Sploosh" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "awaken", new Dictionary<int, string> { { 0, "Play_ENM_beholster_teleport_01" }, { 11, "Play_ENM_blobulord_reform_01" } });
 
+                /*
 				bool flag3 = VesselCollection == null;
 				if (flag3)
 				{
@@ -355,8 +370,9 @@ namespace Planetside
 					4,
 					4,
 					}, "beat", tk2dSpriteAnimationClip.WrapMode.Once).fps = 18f;
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "beat", new Dictionary<int, string> { { 10, "Play_ENM_blobulord_reform_01" } });
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
+
+
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
 					{
 					5,
 					5,
@@ -374,10 +390,8 @@ namespace Planetside
 					13,
 					14
 					}, "teleportOut", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportOut", new Dictionary<int, string> { { 3, "Warp" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportOut", new Dictionary<int, string> { { 1, "Play_BOSS_doormimic_jump_01" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
 					{
 					14,
 					14,
@@ -391,10 +405,8 @@ namespace Planetside
 					8,
 					7
 					}, "teleportIn", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportIn", new Dictionary<int, string> { { 0, "InverseWarp" } });
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "teleportIn", new Dictionary<int, string> { { 1, "Play_BOSS_doormimic_land_01" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
 					{
 					15,
 					16,
@@ -412,10 +424,8 @@ namespace Planetside
 					24,
 					25
 					}, "die", tk2dSpriteAnimationClip.WrapMode.Once).fps = 13f;
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, string> { { 0, "Play_VesselDeath" }, { 9, "Play_ENM_Tarnisher_Bite_01" } });
-					EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, string> { { 9, "Sploosh" } });
 
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
+                    SpriteBuilder.AddAnimation(companion.spriteAnimator, VesselCollection, new List<int>
 					{
 					26,
 					26,
@@ -443,11 +453,14 @@ namespace Planetside
 					5,
 					6,
 					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> { { 0, "Play_ENM_beholster_teleport_01" }, { 11, "Play_ENM_blobulord_reform_01" } });
 
 
 				}
-				var bs = prefab.GetComponent<BehaviorSpeculator>();
+
+
+				*/
+
+                var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("43426a2e39584871b287ac31df04b544").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
@@ -562,8 +575,9 @@ namespace Planetside
 				Game.Enemies.Add("psog:vessel", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Vessel/host_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("host_die_001"),
+                SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -575,7 +589,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = ""; 
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Vessel/host_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "host_die_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetvesselTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetvesselTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#VESSEL", "Vessel");
 				PlanetsideModule.Strings.Enemies.Set("#VESSEL_SHORTDESC", "Carrier");
@@ -584,9 +598,10 @@ namespace Planetside
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#VESSEL_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#VESSEL_LONGDESC";
 				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:vessel");
-				EnemyDatabase.GetEntry("psog:vessel").ForcedPositionInAmmonomicon = 80;
-				EnemyDatabase.GetEntry("psog:vessel").isInBossTab = false;
-				EnemyDatabase.GetEntry("psog:vessel").isNormalEnemy = true;
+				var entry = EnemyDatabase.GetEntry("psog:vessel");
+                entry.ForcedPositionInAmmonomicon = 80;
+                entry.isInBossTab = false;
+                entry.isNormalEnemy = true;
 
 				companion.aiActor.sprite.usesOverrideMaterial = true;
 				Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -682,42 +697,12 @@ namespace Planetside
 
 		};
 
-		public class EnemyBehavior : BraveBehaviour
+		public class VesselBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			private void Start()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>{ };
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
 

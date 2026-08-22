@@ -1,4 +1,5 @@
-﻿using Brave.BulletScript;
+﻿using Alexandria.PrefabAPI;
+using Brave.BulletScript;
 using Dungeonator;
 using Gungeon;
 using HutongGames.PlayMaker.Actions;
@@ -19,8 +20,8 @@ namespace Planetside
 	{
 		public static GameObject fuckyouprefab;
 		public static readonly string guid = "annihichamber";
-		public static GameObject shootpoint;
-		public static GameObject shootpoint1;
+		//public static GameObject shootpoint;
+		//public static GameObject shootpoint1;
 
 		/*
 		public static GameObject Laser1;
@@ -32,32 +33,42 @@ namespace Planetside
 		*/
 
 		//private static Texture2D BossCardTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources/BossCards/annihichamber_bosscard.png");
-		public static string TargetVFX;
+		//public static string TargetVFX;
 
-		public static Texture2D BloodParticleTexture;
-		public static Texture2D CastTexture;
+		//public static Texture2D BloodParticleTexture;
+		//public static Texture2D CastTexture;
 
-
+		/*
 		public static void Init()
 		{
-			BloodParticleTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources2/ParticleTextures/bloodster.png");
-			CastTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources2/ParticleTextures/breakcasts.png");
+			//BloodParticleTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources2/ParticleTextures/bloodster.png");
+			//CastTexture = ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside/Resources2/ParticleTextures/breakcasts.png");
 
 			AnnihiChamber.BuildPrefab();
 		}
-
-		public static void BuildPrefab()
+		*/
+		public static void Init()
 		{
 			tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("AnnihiChamberCollection").GetComponent<tk2dSpriteCollectionData>();
 			Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("annihichamber material");
-			if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("AnnihiChamberAnimation").GetComponent<tk2dSpriteAnimation>();
+            if (fuckyouprefab == null || !BossBuilder.Dictionary.ContainsKey(guid))
 			{
 				fuckyouprefab = BossBuilder.BuildPrefabBundle("Annihi-Chamber", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
 
 				var companion = fuckyouprefab.AddComponent<AnnihiChamberBehavior>();
 				EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat, false);
 
-				companion.aiActor.knockbackDoer.weight = 200;
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 0.7f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -163,15 +174,16 @@ namespace Planetside
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "charge1", new string[] { "charge1" }, new DirectionalAnimation.FlipType[0]);
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "attack1", new string[] { "attack1_right", "attack1_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "uncharge1", new string[] { "uncharge1_right", "uncharge1_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
-				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "cloak", new string[] { "cloak_right", "cloak_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
-				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "cloakidle", new string[] { "cloakidle_right", "cloakidle_left" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "cloak", new string[] { "cloak", "cloak" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "cloakidle", new string[] { "cloakidle", "cloakidle" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "TeleportOut", new string[] { "TeleportOut" }, new DirectionalAnimation.FlipType[0]);
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "TeleportIn", new string[] { "TeleportIn" }, new DirectionalAnimation.FlipType[0]);
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "intro", new string[] { "intro" }, new DirectionalAnimation.FlipType[0]);
 				EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "death", new string[] { "death" }, new DirectionalAnimation.FlipType[0]);
 
+                EnemyToolbox.AddNewDirectionAnimation(companion.aiAnimator, "hit1", new string[] { "hit1", "hit1" }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
 
-
+                /*
 				{
 
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
@@ -226,11 +238,11 @@ namespace Planetside
 					{
 					7,
 					8,
-										7,
+					7,
 					8,
-										7,
+					7,
 					8,
-										7,
+					7,
 					8,
 					9,
 					10,
@@ -295,6 +307,7 @@ namespace Planetside
 					20
 
 					}, "attack1_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 8f;
+
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
@@ -530,69 +543,76 @@ namespace Planetside
 					}, "death", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
 
 				}
-
-				//m_BOSS_doormimic_lick_01
-
-				EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "tonguestart", new Dictionary<int, string>() { { 1, "Play_BOSS_doormimic_lick_01" } });
-
-                fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[0].eventAudio = "Play_BOSS_doormimic_vanish_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[0].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[20].eventAudio = "Play_BOSS_doormimic_lick_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro").frames[20].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("dashprime").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("dashprime").frames[1].triggerEvent = true;
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("dashdash").frames[0].eventAudio = "Play_ENM_beholster_intro_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("dashdash").frames[0].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("cloakdash_prime").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("cloakdash_prime").frames[1].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("cloakdash_charge").frames[0].eventAudio = "Play_ENM_beholster_intro_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("cloakdash_charge").frames[0].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportOut").frames[1].eventAudio = "Play_BOSS_lichA_turn_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportOut").frames[1].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportIn").frames[1].eventAudio = "Play_BOSS_lichA_turn_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("TeleportIn").frames[1].triggerEvent = true;
-
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("vomit").frames[0].eventAudio = "Play_BOSS_doormimic_vomit_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("vomit").frames[0].triggerEvent = true;
+				*/
+                //m_BOSS_doormimic_lick_01
 
 
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "tonguestart", new Dictionary<int, string>() { { 1, "Play_BOSS_doormimic_lick_01" } });
 
-				EnemyToolbox.AddSoundsToAnimationFrame(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string>() { { 4, "Play_CHR_shadow_curse_01" }, { 5, "Play_CHR_shadow_curse_01" }, { 6, "Play_CHR_shadow_curse_01" }, { 7, "Play_CHR_shadow_curse_01" }, { 8, "Play_CHR_shadow_curse_01" }, { 9, "Play_CHR_shadow_curse_01" } });
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[0].eventAudio = "Play_BOSS_doormimic_vanish_01";
+				companion.aiActor.spriteAnimator.GetClipByName("intro").frames[0].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("intro").frames[20].eventAudio = "Play_BOSS_doormimic_lick_01";
+				companion.aiActor.spriteAnimator.GetClipByName("intro").frames[20].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("dashprime").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
+				companion.aiActor.spriteAnimator.GetClipByName("dashprime").frames[1].triggerEvent = true;
+                companion.aiActor.spriteAnimator.GetClipByName("dashdash").frames[0].eventAudio = "Play_ENM_beholster_intro_01";
+				companion.aiActor.spriteAnimator.GetClipByName("dashdash").frames[0].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("cloakdash_prime").frames[1].eventAudio = "Play_BOSS_dragun_charge_01";
+				companion.aiActor.spriteAnimator.GetClipByName("cloakdash_prime").frames[1].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("cloakdash_charge").frames[0].eventAudio = "Play_ENM_beholster_intro_01";
+				companion.aiActor.spriteAnimator.GetClipByName("cloakdash_charge").frames[0].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("TeleportOut").frames[1].eventAudio = "Play_BOSS_lichA_turn_01";
+				companion.aiActor.spriteAnimator.GetClipByName("TeleportOut").frames[1].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("TeleportIn").frames[1].eventAudio = "Play_BOSS_lichA_turn_01";
+				companion.aiActor.spriteAnimator.GetClipByName("TeleportIn").frames[1].triggerEvent = true;
+
+                companion.aiActor.spriteAnimator.GetClipByName("vomit").frames[0].eventAudio = "Play_BOSS_doormimic_vomit_01";
+				companion.aiActor.spriteAnimator.GetClipByName("vomit").frames[0].triggerEvent = true;
 
 
-				EnemyToolbox.AddEventTriggersToAnimation(fuckyouprefab.GetComponent<tk2dSpriteAnimator>(), "charge1", new Dictionary<int, string> { { 0, "qlaser" } });//, { 2, "spawnChargelaser" } });
 
-				var intro = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("intro");
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "death", new Dictionary<int, string>() { { 4, "Play_CHR_shadow_curse_01" }, { 5, "Play_CHR_shadow_curse_01" }, { 6, "Play_CHR_shadow_curse_01" }, { 7, "Play_CHR_shadow_curse_01" }, { 8, "Play_CHR_shadow_curse_01" }, { 9, "Play_CHR_shadow_curse_01" } });
+
+
+
+                //Play_RockBreaking
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "charge1", new Dictionary<int, string> { { 0, "qlaser" } });//, { 2, "spawnChargelaser" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "hit1", new Dictionary<int, string> { { 0, "Play_BOSS_wall_slam_01" } });//, { 2, "spawnChargelaser" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.aiActor.spriteAnimator, "hit1", new Dictionary<int, string> { { 0, "wallimpact" } });//, { 2, "spawnChargelaser" } });
+
+                var intro = companion.aiActor.spriteAnimator.GetClipByName("intro");
 				intro.frames[17].eventInfo = "lolwhat";
 				intro.frames[17].triggerEvent = true;
 
-				var clip1 = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("dashdash");
+                var clip1 = companion.aiActor.spriteAnimator.GetClipByName("dashdash");
 				clip1.frames[0].eventInfo = "tempgaintrail";
 				clip1.frames[0].triggerEvent = true;
 
-				var clip2 = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("cloakdash_charge");
+                var clip2 = companion.aiActor.spriteAnimator.GetClipByName("cloakdash_charge");
 				clip2.frames[0].eventInfo = "tempgaintrail2";
 				clip2.frames[0].triggerEvent = true;
 
-				var cumt1 = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("dashprime");
+                var cumt1 = companion.aiActor.spriteAnimator.GetClipByName("dashprime");
 				cumt1.frames[0].eventInfo = "spawnTell";
 				cumt1.frames[0].triggerEvent = true;
 
-				var cumt2 = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("cloakdash_prime");
+                var cumt2 = companion.aiActor.spriteAnimator.GetClipByName("cloakdash_prime");
 				cumt2.frames[0].eventInfo = "spawnTell2";
 				cumt2.frames[0].triggerEvent = true;
 
 
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("death").frames[28].eventAudio = "Play_BOSS_DragunGold_Baby_Death_01";
-				fuckyouprefab.GetComponent<tk2dSpriteAnimator>().GetClipByName("death").frames[28].triggerEvent = true;
 
-				var clip3 = companion.aiActor.GetComponent<tk2dSpriteAnimator>().GetClipByName("death");
+
+                companion.aiActor.spriteAnimator.GetClipByName("death").frames[28].eventAudio = "Play_BOSS_DragunGold_Baby_Death_01";
+                companion.aiActor.spriteAnimator.GetClipByName("death").frames[28].triggerEvent = true;
+
+                var clip3 = companion.aiActor.spriteAnimator.GetClipByName("death");
 
 				clip3.frames[13].eventInfo = "crecj1";
 				clip3.frames[13].triggerEvent = true;
@@ -612,30 +632,26 @@ namespace Planetside
 				clip3.frames[23].eventInfo = "crecj6";
 				clip3.frames[23].triggerEvent = true;
 
-				clip3.frames[33].eventInfo = "eat dicks";
-				clip3.frames[33].triggerEvent = true;
+				clip3.frames[32].eventInfo = "eat dicks";
+				clip3.frames[32].triggerEvent = true;
 
 
 
 
-				var bs = fuckyouprefab.GetComponent<BehaviorSpeculator>();
+                var bs = fuckyouprefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
 				bs.OtherBehaviors = behaviorSpeculator.OtherBehaviors;
-				shootpoint = new GameObject("attach");
+				var shootpoint = new GameObject("attach");
 				shootpoint.transform.parent = companion.transform;
 				shootpoint.transform.position = companion.sprite.WorldCenter;
 				GameObject m_CachedGunAttachPoint = companion.transform.Find("attach").gameObject;
 
 
-				shootpoint1 = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.0625f, 2.375f), "Centre");// = new GameObject("Centre");
+				var shootpoint1 = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(2.0625f, 2.375f), "Centre");// = new GameObject("Centre");
 
 				//======================
 				var enemy = EnemyDatabase.GetOrLoadByGuid("b98b10fca77d469e80fb45f3c5badec5");
-				if (!enemy)
-				{
-					ETGModConsole.Log("enemy null");
-				}
 				Projectile beam = null;
 				foreach (Component item in enemy.GetComponentsInChildren(typeof(Component)))
 				{
@@ -792,9 +808,11 @@ namespace Planetside
 						primeAnim = "dashprime",
 						primeTime = 1f,
 						chargeAnim = "dashdash",
-						stopDuringPrime = true,
+						hitAnim = "hit1",
+
+                        stopDuringPrime = true,
 						stoppedByProjectiles = false,
-						wallRecoilForce = 100,
+						wallRecoilForce = 600,
 						AttackCooldown = 0f,
 						Cooldown = 0,
 						endOnWallCollision = true
@@ -814,9 +832,10 @@ namespace Planetside
 						primeAnim = "dashprime",
 						primeTime = 1f,
 						chargeAnim = "dashdash",
-						stopDuringPrime = true,
+                        hitAnim = "hit1",
+                        stopDuringPrime = true,
 						stoppedByProjectiles = false,
-						wallRecoilForce = 100,
+                        wallRecoilForce = 600,
 						AttackCooldown = 0.5f,
 						Cooldown = 9,
 						endOnWallCollision = true
@@ -851,9 +870,11 @@ namespace Planetside
                         primeAnim = "dashprime",
                         primeTime = 1f,
                         chargeAnim = "dashdash",
+                        hitAnim = "hit1",
+
                         stopDuringPrime = true,
                         stoppedByProjectiles = false,
-                        wallRecoilForce = 100,
+                        wallRecoilForce = 600,
                         AttackCooldown = 0f,
                         Cooldown = 0,
 						endOnWallCollision = true
@@ -874,9 +895,11 @@ namespace Planetside
                         primeAnim = "dashprime",
                         primeTime = 1f,
                         chargeAnim = "dashdash",
+                        hitAnim = "hit1",
+
                         stopDuringPrime = true,
                         stoppedByProjectiles = false,
-                        wallRecoilForce = 100,
+                        wallRecoilForce = 600,
                         AttackCooldown = 0.5f,
                         Cooldown = 0,
 						endOnWallCollision = true
@@ -896,9 +919,11 @@ namespace Planetside
                         primeAnim = "dashprime",
                         primeTime = 1f,
                         chargeAnim = "dashdash",
+                        hitAnim = "hit1",
+
                         stopDuringPrime = true,
                         stoppedByProjectiles = false,
-                        wallRecoilForce = 100,
+                        wallRecoilForce = 600,
                         AttackCooldown = 0.5f,
                         Cooldown = 10,
 						endOnWallCollision = true
@@ -911,29 +936,26 @@ namespace Planetside
 
                     new AttackBehaviorGroup.AttackGroupItem()
 					{
+						Probability = 1f,
+						Behavior = new CustomDashBehavior{
+						ShootPoint = shootpoint1,
+						dashDistance = 19f,
+						dashTime = 0.8f,
+						AmountOfDashes = 2,
+						WaitTimeBetweenDashes = 0f,
+						enableShadowTrail = false,
+						Cooldown = 4,
+						dashDirection = DashBehavior.DashDirection.PerpendicularToTarget,
+						warpDashAnimLength = true,
+						hideShadow = true,
+						fireAtDashStart = true,
+						InitialCooldown = 2f,
+						AttackCooldown = 0f,
+						bulletScript = new CustomBulletScriptSelector(typeof(DashAttack)),
+						RequiresLineOfSight = false,
 
-					Probability = 1f,
-					Behavior = new CustomDashBehavior{
-					//dashAnim = "wail",
-					ShootPoint = shootpoint1,
-					dashDistance = 19f,
-					dashTime = 0.8f,
-					AmountOfDashes = 2,
-					WaitTimeBetweenDashes = 0f,
-					enableShadowTrail = false,
-					Cooldown = 4,
-					dashDirection = DashBehavior.DashDirection.PerpendicularToTarget,
-					warpDashAnimLength = true,
-					hideShadow = true,
-					fireAtDashStart = true,
-					InitialCooldown = 2f,
-					AttackCooldown = 0f,
-					bulletScript = new CustomBulletScriptSelector(typeof(DashAttack)),
-					RequiresLineOfSight = false,
-
-					},
+						},
 						NickName = "Phase 1 Dash"
-
 					},
 					new AttackBehaviorGroup.AttackGroupItem()
 					{
@@ -956,7 +978,8 @@ namespace Planetside
 					StopLaserFiringSound = "Stop_ENM_deathray_loop_01",
 					ChargeAnimation = "charge1",
 					FireAnimation = "fire1",
-					PostFireAnimation = "uncharge1",
+					PostFireAnimation = "unvomit",
+					
 					beamSelection = ShootBeamBehavior.BeamSelection.All,
 					trackingType = CustomBeholsterLaserBehavior.TrackingType.ConstantTurn,
 
@@ -1020,10 +1043,12 @@ namespace Planetside
 						primeAnim = "dashprime",
 						primeTime = 1.25f,
 						chargeAnim = "dashdash",
-						stopDuringPrime = false,
+                                                hitAnim = "hit1",
+
+                        stopDuringPrime = false,
 						stoppedByProjectiles = false,
-						wallRecoilForce = 50,
-						AttackCooldown = 1.5f,
+                        wallRecoilForce = 300,
+                        AttackCooldown = 1.5f,
 						Cooldown = 3,
 						endOnWallCollision = true
 					},
@@ -1125,12 +1150,13 @@ namespace Planetside
 						primeAnim = "cloakdash_prime",
 						primeTime = 1f,
 						chargeAnim = "cloakdash_charge",
-						stopDuringPrime = true,
+                        hitAnim = string.Empty,
+                        stopDuringPrime = true,
 						stoppedByProjectiles = false,
 						Cooldown = 11f,
 						AttackCooldown = 0.25f,
-						wallRecoilForce = 50,
-						Range = 100,
+                        wallRecoilForce = 300,
+                        Range = 100,
 						endOnWallCollision = true
 
 						},
@@ -1206,12 +1232,13 @@ namespace Planetside
 						primeAnim = "cloakdash_prime",
 						primeTime = 1f,
 						chargeAnim = "cloakdash_charge",
+						hitAnim = string.Empty,
 						stopDuringPrime = true,
 						stoppedByProjectiles = false,
 						Cooldown = 1f,
 						AttackCooldown = 0.25f,
-						wallRecoilForce = 50,
-						Range = 10,
+                        wallRecoilForce = 300,
+                        Range = 10,
 						endOnWallCollision = true
 					},
 					NickName = "Phase 2 CHrge"
@@ -1266,38 +1293,21 @@ namespace Planetside
 				Game.Enemies.Add("psog:annihi-chamber", companion.aiActor);
 
 
-				GameObject deathmark = ItemBuilder.AddSpriteToObject("deathmark_vfx", "Planetside/Resources/VFX/ConfusedChamber/confusedchamber1", null);
-				FakePrefab.MarkAsFakePrefab(deathmark);
-				UnityEngine.Object.DontDestroyOnLoad(deathmark);
+				GameObject deathmark = PrefabBuilder.BuildObject("ConfusewdChamber");// ItemBuilder.AddSpriteToObject("deathmark_vfx", "Planetside/Resources/VFX/ConfusedChamber/confusedchamber1", null);
+				var spr = deathmark.AddComponent<tk2dSprite>();
+				spr.collection = StaticSpriteDefinitions.VFX_Sheet_Data;
 				tk2dSpriteAnimator animator = deathmark.GetOrAddComponent<tk2dSpriteAnimator>();
 				tk2dSpriteAnimation animation = deathmark.AddComponent<tk2dSpriteAnimation>();
 
-				tk2dSpriteCollectionData DeathMarkcollection = SpriteBuilder.ConstructCollection(deathmark, ("Confused_Collection"));
 
-				tk2dSpriteAnimationClip SpawnClip = new tk2dSpriteAnimationClip() { name = "spawn", frames = new tk2dSpriteAnimationFrame[0], fps = 7 };
-				List<tk2dSpriteAnimationFrame> frames = new List<tk2dSpriteAnimationFrame>();
-				for (int i = 1; i < 10; i++)
-				{
-					tk2dSpriteCollectionData collection = DeathMarkcollection;
-					int frameSpriteId = SpriteBuilder.AddSpriteToCollection($"Planetside/Resources/VFX/ConfusedChamber/confusedchamber{i}", collection);
-					tk2dSpriteDefinition frameDef = collection.spriteDefinitions[frameSpriteId];
-					frameDef.ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerLeft);
-					frames.Add(new tk2dSpriteAnimationFrame { spriteId = frameSpriteId, spriteCollection = collection });
-				}
-				SpawnClip.frames = frames.ToArray();
-				SpawnClip.wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-				SpawnClip.loopStart = 11;
-
-				animator.Library = animation;
-				animator.Library.clips = new tk2dSpriteAnimationClip[] { SpawnClip };
-				animator.DefaultClipId = animator.GetClipIdByName("spawn");
-				animator.playAutomatically = true;
+				animator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+				animator.DefaultClipId = animator.GetClipIdByName("confusedChamber");
 				animator.playAutomatically = true;
 				animator.ignoreTimeScale = true;
 				animator.AlwaysIgnoreTimeScale = true;
 				animator.AnimateDuringBossIntros = true;
 				ConfusedPrefab = deathmark;
-				/*
+                /*
 				GameObject wat = ItemBuilder.AddSpriteToObject("confused", "Planetside/Resources/VFX/ConfusedChamber/confusedchamber1", null);
 				FakePrefab.MarkAsFakePrefab(wat);
 				UnityEngine.Object.DontDestroyOnLoad(wat);
@@ -1336,8 +1346,8 @@ namespace Planetside
 				ConfusedPrefab = wat;
 				*/
 
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("annihichamber_idle_001"), SpriteBuilder.ammonomiconCollection);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/AnnihiChamber/annihichamber_idle_001.png", SpriteBuilder.ammonomiconCollection);
 				if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
@@ -1350,7 +1360,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/AnnihiChamber/annihichamber_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "annihichamber_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("annihichamberSheet");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\annihichamberSheet.png");
 				PlanetsideModule.Strings.Enemies.Set("#ANNIHICHAMBER", "Annihi-Chamber");
 				PlanetsideModule.Strings.Enemies.Set("#ANNIHICHAMBER_SHORTDESC", "Six Circles Of Hell");
@@ -1363,7 +1373,7 @@ namespace Planetside
 					"Corroded, waste casts thrown into the depths of Bullet Hell, and taken over by a parasitic will fueled by six souls. Each eye is a separate voice, with a separate story, yearning for something they now hold dear.\n\n...\n\n...\n\n...\n\nMY_MACHINE_SPIRIT_CALLS_FOR_THE_COMFORT_OF_MY_OLD_METAL,_EVEN_IF_MY_PURPOSE_WAS_SELF_SACRIFICE._IN_DEATH,_DO_I_VALUE_MY_OLD_LIFE.\n\n...\n\n...",
 					"Corroded, waste casts thrown into the depths of Bullet Hell, and taken over by a parasitic will fueled by six souls. Each eye is a separate voice, with a separate story, yearning for something they now hold dear.\n\n...\n\n...\n\n...\n\n...\n\nTo see the Keep once more, oh how much I'd sacrifice... I hope this damned vessel drags itself there one day... May my old guard comrades slay this vessel so my soul is released to chance a ghostly form...\n\n...",
 					"Corroded, waste casts thrown into the depths of Bullet Hell, and taken over by a parasitic will fueled by six souls. Each eye is a separate voice, with a separate story, yearning for something they now hold dear.\n\n...\n\n...\n\n...\n\n...\n\n...\n\nI shouldn't have stepped in...I wanted to help the Master, and paid with my life... Would He have spared his own greatest student... even with his insanity?",
-					"THEIR SOULS AS MY EYES. I WILL NOT LET THEM DIE"
+					"THEIR SOULS AS MY EYES. I WON'T LET THEM DIE"
 				};
 				System.Random r = new System.Random();
 				int index = r.Next(PotentialEntries.Count);
@@ -1516,9 +1526,9 @@ namespace Planetside
 				Phase2AnnihiChamberCheck = true;
 
 				base.aiActor.behaviorSpeculator.InterruptAndDisable();
-				base.aiActor.aiAnimator.PlayUntilFinished("cloakidle", true, null, -1f, false);
-				base.aiActor.aiAnimator.OverrideIdleAnimation = "cloak";
-				base.aiActor.aiAnimator.OverrideMoveAnimation = "cloak";
+				base.aiActor.aiAnimator.PlayUntilFinished("cloak", true, null, -1f, false);
+				base.aiActor.aiAnimator.OverrideIdleAnimation = "cloakidle";
+				base.aiActor.aiAnimator.OverrideMoveAnimation = "cloakidle";
 				//base.aiAnimator.PlayUntilFinished("cloakidle_left", true, null, 1, false);
 				base.aiActor.healthHaver.IsVulnerable = false;
 				foreach (OtherTools.EasyTrailOnEnemy c in base.aiActor.gameObject.GetComponents(typeof(OtherTools.EasyTrailOnEnemy)))
@@ -1669,7 +1679,12 @@ namespace Planetside
 						}
 					}
 				}
-				if (clip.GetFrame(frameIdx).eventInfo == "lolwhat")
+				if (clip.GetFrame(frameIdx).eventInfo == "wallimpact")
+				{
+                    Exploder.DoDistortionWave(base.aiActor.sprite.WorldCenter, 0.125f, 0.25f, 50, 0.5f);
+                }
+
+                if (clip.GetFrame(frameIdx).eventInfo == "lolwhat")
 				{
 					PlayerController player = GameManager.Instance.PrimaryPlayer;
 
@@ -2084,7 +2099,7 @@ namespace Planetside
 
                 base.EndOnBlank = true;
                 AnnihiChamberTongue.HandBullet handBullet = null;
-                handBullet = this.FireVolley((float)(42.5f));
+                handBullet = this.FireVolley((float)(52.5f));
 
                 while (!handBullet.HasTrulyStopped)
                 {
@@ -2212,6 +2227,8 @@ namespace Planetside
                     AkSoundEngine.PostEvent("Play_BOSS_lichA_stop_01", this.BulletBank.gameObject);
 
                     bool flag = collision.collisionType == CollisionData.CollisionType.TileMap;
+                    bool flag2 = collision.collisionType == CollisionData.CollisionType.Rigidbody;
+
                     SpeculativeRigidbody otherRigidbody = collision.OtherRigidbody;
                     if (otherRigidbody)
                     {
@@ -2232,7 +2249,7 @@ namespace Planetside
 						}
 						
                     }
-                    if (flag)
+                    if (flag || flag2)
                     {
                         this.StartTask(DoPull());
 
@@ -2294,7 +2311,7 @@ namespace Planetside
 					while (Vector2.Distance(this.Position, m_parentScript.Position) > 4)
 					{
 						h++;
-                        this.BulletBank.aiActor.specRigidbody.Velocity += MathToolbox.GetUnitOnCircle(direction, (9 + h) / 1.4f);
+                        this.BulletBank.aiActor.specRigidbody.Velocity += MathToolbox.GetUnitOnCircle(direction, (9 + h * 3));
 						yield return null;
                     }
                     AkSoundEngine.PostEvent("Play_RockBreaking", base.BulletBank.aiActor.gameObject);
@@ -2303,8 +2320,8 @@ namespace Planetside
                     for (int i = 0; i < 20; i++)
                     {
                         base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction(18 * i, DirectionType.Aim, -1f), new Speed(4f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 16, 120));
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((18 * i)+10f, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 24, 90));
-                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((18 * i) + 20f, DirectionType.Aim, -1f), new Speed(12f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 5, 180));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((18 * i)+10f, DirectionType.Aim, -1f), new Speed(6f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 24, 60));
+                        base.Fire(Offset.OverridePosition(this.m_parentScript.Position), new Direction((18 * i) + 20f, DirectionType.Aim, -1f), new Speed(15f, SpeedType.Absolute), new SpeedChangingBullet("teeth_wave", 3, 180));
                     }
 
 

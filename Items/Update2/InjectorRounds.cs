@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -45,7 +46,7 @@ namespace Planetside
 				"plunger",
 				"antibody"
 			};
-			CustomSynergies.Add("Thats How I Lost My Medical License", mandatoryConsoleIDs, optionalConsoleIDs, true);
+			CustomSynergies.Add("Thats How I Lost My Medical License", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Doubles the radius of goop spawned by the item.");
 			item.SetupUnlockOnFlag(GungeonFlags.BOSSKILLED_BLOBULORD, true);
 
 
@@ -56,7 +57,9 @@ namespace Planetside
 			templateDef.baseColor32 = new Color32(120, 30, 10, 255);
 			templateDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
 			templateDef.lifespan = 7;
-		}
+			item.AddItemTip("Grants a small damage up and projectile speed up. Slain enemies create a pool of goop of whatever debuff they currently have. If the enemy has multiple debuffs, one is chosen at random.");
+
+        }
 
 		public static GoopDefinition templateDef;
 		public static int InjectorRoundsID;

@@ -41,7 +41,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.202";
+        public const string VERSION = "1.3.203";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -419,6 +419,9 @@ namespace Planetside
 
             InitialiseSynergies.DoInitialisation();
             SynergyFormInitialiser.AddSynergyForms();
+
+
+
             InitialiseGTEE.DoInitialisation();
             HoveringGunsAdder.AddHovers();
             HotSwapper.Init();
@@ -465,8 +468,9 @@ namespace Planetside
                 TrespassTrollRock.Init();
 
 
-                DeTurretRight.Init();
-                DeTurretLeft.Init();
+                //DeTurretRight.Init();
+                //DeTurretLeft.Init();
+                
                 Barretina.Init();
                 Glockulus.Init();
                 Cursebulon.Init();
@@ -753,7 +757,7 @@ namespace Planetside
             string h = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_FUNGANNON) ? " Done!\n" : " -Defeat The Fungal Beast Of The Sewers.\n";
             string i = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_OPHANAIM) ? " Done!\n" : " -Defeat The Observant Aimgel Of The Abbey.\n";
             string j = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DEFEAT_ANNIHICHAMBER) ? " Done!\n" : " -Defeat A Ravenous, Violent Chamber.\n";
-            string k = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK) ? " Done!\n" : " -Remove Each Hell-Bound Curse At Least Once.\n";
+            string k = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.DECURSE_HELL_SHRINE_UNLOCK) ? " Done!\n" : " -Remove Each Hex At Least Once.\n";
             string l = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.HAS_COMPLETED_SOMETHING_WICKED) ? " Done!\n" : " -Survive An Encounter With Something Wicked.\n";
             string m = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.TRESPASS_INTO_OTHER_PLACE) ? " Done!\n" : " -Trespass Into Somewhere Else.\n";
 

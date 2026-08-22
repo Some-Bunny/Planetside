@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -36,8 +37,9 @@ namespace Planetside
 			ItemIDs.AddToList(ammolet.PickupObjectId);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(ammolet, CustomSynergyType.MINOR_BLANKABLES);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(ammolet, CustomSynergyType.RELODESTAR);
+			ammolet.AddItemTip("+1 Blank per floor. Blanks inflict enemies with Tarnish. Tarnished enemies have slower movement speed, and player projectiles always pierce enemies affected with Tarnish.");
 
-		}
+        }
 
 		public static int TarnishedAmmoletID;
 		private static Hook BlankHook = new Hook(typeof(SilencerInstance).GetMethod("ProcessBlankModificationItemAdditionalEffects", BindingFlags.Instance | BindingFlags.NonPublic), typeof(TarnishedAmmolet).GetMethod("BlankModHook", BindingFlags.Instance | BindingFlags.Public), typeof(SilencerInstance));

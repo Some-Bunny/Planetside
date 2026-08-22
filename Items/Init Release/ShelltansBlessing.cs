@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using SaveAPI;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -53,7 +54,7 @@ namespace Planetside
                 "sixth_chamber",
                 "yellow_chamber"
             };
-            CustomSynergies.Add("Invigorated", mandatoryConsoleIDs, optionalConsoleIDs, true);
+            CustomSynergies.Add("Invigorated", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("Ammo regeneration effect applies to every held gun, but reduces ammo returned.");
             item.SetupUnlockOnCustomFlag(CustomDungeonFlags.JAMMED_GUARD_DEFEATED, true);
             item.AddToSubShop(ItemBuilder.ShopType.Cursula, 1f);
             ShelltansBlessing.ShelltainsBlessingID = item.PickupObjectId;
@@ -74,7 +75,7 @@ namespace Planetside
 
             new Hook(typeof(AdvancedShrineController).GetMethod("DoShrineEffect", BindingFlags.Instance | BindingFlags.NonPublic), typeof(ShelltansBlessing).GetMethod("DoShrineEffectHook"));
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(item.PickupObjectId);
-
+            item.AddItemTip("Greatly increases fire rate, but slightly reduces damage. Killing enemies has a chance to restore some ammo back into your gun. Using a Shell-tan shrine while holding this item grants a powerful bonus...");
         }
 
         public static void DoShrineEffectHook(Action<AdvancedShrineController, PlayerController>orig, AdvancedShrineController self, PlayerController player)

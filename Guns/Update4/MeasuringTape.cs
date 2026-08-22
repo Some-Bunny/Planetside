@@ -8,6 +8,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 
 
@@ -114,7 +115,8 @@ namespace Planetside
             gun.gunClass = GunClass.BEAM;
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("MeasuringTape", "Planetside/Resources/GunClips/MeasuringTape/measurungTapefull", "Planetside/Resources/GunClips/MeasuringTape/measurungTapeempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("MeasuringTape", "Planetside/Resources/GunClips/MeasuringTape/measurungTapefull", "Planetside/Resources/GunClips/MeasuringTape/measurungTapeempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("MeasuringTape", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "measurungTapefull", "measurungTapeempty");
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 0;
@@ -128,10 +130,10 @@ namespace Planetside
                 "psog:measuring_tape",
                 "psog:rebar_puncher"
             };
-            CustomSynergies.Add("Workplace Accident", yes, null, false);
+            CustomSynergies.Add("Workplace Accident", yes, null, false).AddItemTip("Rebar Puncher and the Measuring Tape are dual wielded.");
             ItemIDs.AddToList(gun.PickupObjectId);
             Alexandria.ItemAPI.ItemBuilder.AddToGunslingKingTable(gun, 1);
-
+            gun.AddItemTip("Deals more damage based on the current velocity of the tape.");
         }
         public static int MeasuringTapeID;
 

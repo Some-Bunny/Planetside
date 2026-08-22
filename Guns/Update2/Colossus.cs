@@ -8,6 +8,7 @@ using MonoMod;
 using UnityEngine;
 using ItemAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 
 
@@ -137,8 +138,8 @@ namespace Planetside
                 perfProjectile.AdditionalScaleMultiplier *= 1f;
                 perfProjectile.shouldRotate = true;
                 perfProjectile.pierceMinorBreakables = true;
-                perfProjectile.gameObject.AddComponent<PerfectedProjectileComponent>();
-
+                var pp = perfProjectile.gameObject.AddComponent<PerfectedProjectileComponent>();
+                pp.projectile = perfProjectile;
 
                 int Length = 4;
                 Alexandria.Assetbundle.ProjectileBuilders.AnimateProjectileBundle(perfProjectile, "PerfectedProjectile", StaticSpriteDefinitions.Projectile_Sheet_Data, StaticSpriteDefinitions.Projectile_Animation_Data, "PerfectedProjectile",
@@ -151,6 +152,14 @@ namespace Planetside
                 AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(13, 13), Length),
                 AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
                 AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
+
+                Material mat1 = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat1.mainTexture = perfProjectile.projectile.sprite.renderer.material.mainTexture;
+                mat1.SetColor("_EmissiveColor", new Color32(55, 181, 222, 255));
+                mat1.SetFloat("_EmissiveColorPower", 1.55f);
+                mat1.SetFloat("_EmissivePower", 100);
+                mat1.SetFloat("_EmissiveThresholdSensitivity", 0.05f);
+                perfProjectile.sprite.renderer.material = mat1;
 
                 /*
                 perfProjectile.AnimateProjectile(new List<string> {
@@ -185,7 +194,8 @@ namespace Planetside
             gun.gunSwitchGroup = (PickupObjectDatabase.GetById(121) as Gun).gunSwitchGroup;
 
             gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Colossus Red", "Planetside/Resources/GunClips/Colossus/colossusfull", "Planetside/Resources/GunClips/Colossus/colossusempty");
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Colossus Red", "Planetside/Resources/GunClips/Colossus/colossusfull", "Planetside/Resources/GunClips/Colossus/colossusempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Colossus Red", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "colossusfull", "colossusempty");
 
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
             gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).loopStart = 1;
@@ -205,7 +215,7 @@ namespace Planetside
                 "heart_bottle",
                 "psog:dead_kings_desparation"
             };
-            CustomSynergies.Add("Perfected", mandatoryConsoleIDs, optionalConsoleIDs, false);
+            CustomSynergies.Add("Perfected", mandatoryConsoleIDs, optionalConsoleIDs, false).AddItemTip("Increases damage. Fires a set of 5 projectiles where the player is aiming is the gun is reloaded if the clip is half empty or more.");
             Colossus.ColossusID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
 
@@ -213,7 +223,7 @@ namespace Planetside
             colos.NonSynergyGunId = gun.PickupObjectId;
             colos.SynergyGunId = PerfectedColossus.PerfectedColossusID;
             colos.SynergyToCheck = "Perfected";
-
+            
         }
         public static int ColossusID;
         public static Projectile PerfectedProjectile;

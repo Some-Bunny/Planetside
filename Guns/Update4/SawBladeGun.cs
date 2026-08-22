@@ -15,6 +15,7 @@ using MonoMod;
 using Alexandria.Assetbundle;
 using Planetside.Static_Storage;
 using Planetside.Toolboxes;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -157,17 +158,17 @@ namespace Planetside
             });
 
 
-            gun.AddSynergy("Blades Of Wrath", new List<PickupObject>() 
+            gun.AddSynergy("Blades Of Wrath", new List<PickupObject>()
             {
                 Guns.Buzzkill,
                 Guns.Super_Meat_Gun,
-            });
+            }).AddItemTip("Super Mat Gun and Buzzkills projectiles gain damage and speed upon hitting an enemy. Box Of Surprizes projectiles split into 12 projectiles of each weapon currently part of the synergy.");
 
             Guns.Buzzkill.DefaultModule.projectiles[0].gameObject.AddComponent<FunSurprise>();
             Guns.Super_Meat_Gun.DefaultModule.projectiles[0].gameObject.AddComponent<FunSurprise>();
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Cursula, 1);
             gun.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
-
+            gun.AddItemTip("Fires projectiles that travel along walls like saws.");
         }
         public static int ID;
 

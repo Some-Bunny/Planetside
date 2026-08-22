@@ -1352,6 +1352,7 @@ MonoBehaviour:
     edgeCollider2D: []
     attachPoints: []
   SpriteIDsWithAttachPoints: 
+  SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
   material: {fileID: 0}
   materials:
@@ -1360,7 +1361,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: ddf0f6d0770e157419f1f5ef67ff6eba, type: 3}
   pngTextures: []
   materialPngTextureId: 00000000
-  textureFilterMode: 1
+  textureFilterMode: 0
   textureMipMaps: 0
   allowMultipleAtlases: 0
   spriteCollectionGUID: 8c0a72160bd5462439e129e3744e1a07
@@ -1369,7 +1370,7 @@ MonoBehaviour:
   loadable: 1
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 470566826
+  buildKey: 930495069
   dataGuid: d26d1c7644b4bc1468b46a183415c142
   managedSpriteCollection: 0
   hasPlatformData: 0

@@ -553,7 +553,9 @@ namespace Planetside.DungeonPlaceables
             EnemyBlessed.CollisionDamage = 0;
             EnemyBlessed.healthHaver.IsVulnerable = false;
             //EnemyBlessed.healthHaver.AllDamageMultiplier = 0;
-            EnemyBlessed.gameObject.AddComponent<TeleportationImmunity>();
+            
+            
+            //EnemyBlessed.gameObject.AddComponent<TeleportationImmunity>();
             //EnemyBlessed.knockbackDoer?.SetImmobile(true);
 
             EnemyBlessed.SetIsFlying(true, "spookyghost", true, true);

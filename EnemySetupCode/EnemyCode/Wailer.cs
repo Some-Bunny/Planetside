@@ -30,8 +30,9 @@ namespace Planetside
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("WailerCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("wailer material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("WailerAnimation").GetComponent<tk2dSpriteAnimation>();
 
-			if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
 				AIActor aIActor = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5");
 				prefab = EnemyBuilder.BuildPrefabBundle("wailer", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9), true);
@@ -39,8 +40,38 @@ namespace Planetside
 
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
-                //prefab.AddComponent<AIBeamShooter>(); ;
-                companion.aiActor.knockbackDoer.weight = 800;
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "run_back_left", new Dictionary<int, string>()
+                {
+                    { 1, "Play_SquishStep" },
+                    { 4, "Play_SquishStep" },
+                });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "run_back_right", new Dictionary<int, string>()
+                {
+                    { 1, "Play_SquishStep" },
+                    { 4, "Play_SquishStep" },
+                });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "run_front_left", new Dictionary<int, string>()
+                {
+                    { 1, "Play_SquishStep" },
+                    { 4, "Play_SquishStep" },
+                });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.spriteAnimator, "run_front_right", new Dictionary<int, string>()
+                {
+                    { 1, "Play_SquishStep" },
+                    { 4, "Play_SquishStep" },
+                });
+
+
+                companion.aiActor.knockbackDoer.weight = 200;
 				companion.aiActor.MovementSpeed = 2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
 				companion.aiActor.CollisionDamage = 1f;
@@ -48,14 +79,18 @@ namespace Planetside
 				companion.aiActor.aiAnimator.HitReactChance = 0f;
 				companion.aiActor.specRigidbody.CollideWithOthers = true;
 				companion.aiActor.specRigidbody.CollideWithTileMap = true;
+				
 				companion.aiActor.PreventFallingInPitsEver = false;
-				companion.aiActor.healthHaver.ForceSetCurrentHealth(30f);
+
+
+
+                companion.aiActor.healthHaver.ForceSetCurrentHealth(30f);
 				companion.aiActor.CollisionKnockbackStrength = 5f;
 				companion.aiActor.CanTargetPlayers = true;
 				companion.aiActor.healthHaver.SetHealthMaximum(30f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 
-                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, -0.25f), "shadowPos");
+                EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.375f, 0f), "shadowPos");
 
                 companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 
@@ -176,155 +211,12 @@ namespace Planetside
 						}
 					}
 				};
-				EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "pitfall", new string[] { "pitfall_right", "pitfall_left", }, new DirectionalAnimation.FlipType[2], DirectionalAnimation.DirectionType.TwoWayHorizontal);
+                EnemyToolbox.AddNewDirectionAnimation(aiAnimator, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[0]);
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 
 
-				//bool flag3 = WailerCollection == null;
-				//if (flag3)
-				{
-					/*
-					WailerCollection = SpriteBuilder.ConstructCollection(prefab, "Wailer_Collection");
-					UnityEngine.Object.DontDestroyOnLoad(WailerCollection);
-					for (int i = 0; i < spritePaths.Length; i++)
-					{
-						SpriteBuilder.AddSpriteToCollection(spritePaths[i], WailerCollection);
-					}
-					*/
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					2,
-					3
-
-					}, "idle_front_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 3f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					4,
-					5
-
-
-					}, "idle_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1
-
-					}, "idle_back_left", tk2dSpriteAnimationClip.WrapMode.Loop).fps = 3f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					0,
-					1
-
-
-					}, "idle_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 3f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					6,
-					7,
-					8,
-					9,
-					10,
-					11,
-
-					}, "run_back_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					12,
-					13,
-					14,
-					15,
-					16,
-					17
-					}, "run_front_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					18,
-					19,
-					20,
-					21,
-					22,
-					23
-
-
-					}, "run_front_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-					24,
-					25,
-					26,
-					27,
-					28,
-					29
-
-
-					}, "run_back_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 11f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-				 30,
-				 31,
-				 32,
-				 33,
-				 34,
-
-
-
-					}, "die_right", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-				35,
-				36,
-				37,
-				38,
-				39
-
-					}, "die_left", tk2dSpriteAnimationClip.WrapMode.Once).fps = 9f;
-					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-					{
-
-				40,
-				41,
-				42,
-				43,
-				44,
-				45,
-				46,
-				47,
-				48,
-				49,
-				50,
-				51,
-				52,
-				53,
-				54,
-				55,
-				56
-
-
-					}, "wail", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
-				SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
-				{
-
 				
-				52,
-				53,
-				54,
-				55,
-				56
-
-
-				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 10f;
-				}
-
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				BehaviorSpeculator behaviorSpeculator = EnemyDatabase.GetOrLoadByGuid("01972dee89fc4404a5c408d50007dad5").behaviorSpeculator;
 				bs.OverrideBehaviors = behaviorSpeculator.OverrideBehaviors;
@@ -347,7 +239,7 @@ namespace Planetside
 				}
 				*/
 				bs.TargetBehaviors = new List<TargetBehaviorBase>
-			{
+				{
 				new TargetPlayerBehavior
 				{
 					Radius = 35f,
@@ -568,8 +460,8 @@ namespace Planetside
 
 				Game.Enemies.Add("psog:wailer", companion.aiActor);
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Wailer/warped_scream_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("warped_scream_006"), SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -581,7 +473,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Wailer/warped_scream_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "warped_scream_006";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("wailericonammo");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\wailericonammo.png");
                 PlanetsideModule.Strings.Enemies.Set("#THE_WAILER", "Wailer");
 				PlanetsideModule.Strings.Enemies.Set("#THE_WAILER_SHORTDESC", "Scream The Pain Away");
@@ -594,6 +486,7 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:wailer").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:wailer").isNormalEnemy = true;
                 companion.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("1bc2a07ef87741be90c37096910843ab").bulletBank.GetBullet("reversible"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
 
             }
         }
@@ -804,12 +697,16 @@ namespace Planetside
 			public override IEnumerator Top()
 			{
 				AkSoundEngine.PostEvent("Play_ENM_screamer_scream_01", this.BulletBank.aiActor.gameObject);
-				for (int k = 0; k < 24; k++)
+				for (int k = 1; k < 25; k++)
 				{
 					yield return this.Wait(4f);
-					this.Fire(new Direction(UnityEngine.Random.Range(0f, 360f), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(3f, 6f), SpeedType.Absolute), new ReverseBullet());
-				}
-				yield break;
+					this.Fire(new Direction(UnityEngine.Random.Range(0f, 360f), DirectionType.Aim, -1f), new Speed(UnityEngine.Random.Range(2.5f, 5f), SpeedType.Absolute), new ReverseBullet());
+					if (k % 12 == 0)
+					{
+                        this.Fire(new Direction(UnityEngine.Random.Range(150f, 210f), DirectionType.Aim, -1f), new Speed(4, SpeedType.Absolute), new RedirectBullet());
+                    }
+                }
+                yield break;
 			}
 		}
 		public class ReverseBullet : Bullet
@@ -834,8 +731,28 @@ namespace Planetside
 				yield break;
 			}
 		}
+        public class RedirectBullet : Bullet
+        {
+            public RedirectBullet() : base("sniper", false, false, false)
+            {
+                base.SuppressVfx = true;
+            }
 
-		private static string[] spritePaths = new string[]
+            public override IEnumerator Top()
+            {
+                float speed = this.Speed;
+                yield return this.Wait(20);
+                this.ChangeSpeed(new Speed(0f, SpeedType.Absolute), 20);
+                yield return this.Wait(20);
+				this.ChangeDirection(new Brave.BulletScript.Direction(0, DirectionType.Aim), 15);
+                this.ChangeSpeed(new Brave.BulletScript.Speed(18), 45);
+                yield return this.Wait(130);
+                //this.Vanish(true);
+                yield break;
+            }
+        }
+
+        private static string[] spritePaths = new string[]
 		{
 			
 			//idles

@@ -14,6 +14,7 @@ using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.PrefabAPI;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -188,10 +189,11 @@ namespace Planetside
             {
                 "bracket_key"
             };
-            CustomSynergies.Add(".null", mandatoryConsoleIDs, optionalConsoleIDs, false);
+            CustomSynergies.Add(".null", mandatoryConsoleIDs, optionalConsoleIDs, false).AddItemTip("[-==--=-==-=]");
 
             UnknownGun.GunknownID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Must be recharged like an active item. Firing creates a 12 protective orbitals that fire out projectiles, and dissipate into lasers after 15 seconds or taking enough damage.");
 		}
 		public static int GunknownID;
 		public static GameObject GunknownGuon;

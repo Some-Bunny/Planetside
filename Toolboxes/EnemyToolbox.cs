@@ -321,25 +321,42 @@ namespace Planetside
 
 		public static void AddSoundsToAnimationFrame(tk2dSpriteAnimator animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
 		{
-			foreach (var value in frameAndSoundName)
+			var clip = animator.GetClipByName(animationName);
+            if (clip == null)
+            {
+                ETGModConsole.Log($"(AddSoundsToAnimationFrame 1) Animation [{animationName}] does not exist in animator!");
+                return;
+            }
+            foreach (var value in frameAndSoundName)
 			{
-				animator.GetClipByName(animationName).frames[value.Key].eventAudio = value.Value;
-				animator.GetClipByName(animationName).frames[value.Key].triggerEvent = true;
+                clip.frames[value.Key].eventAudio = value.Value;
+                clip.frames[value.Key].triggerEvent = true;
 			}
 		}
         public static void AddSoundsToAnimationFrame(tk2dSpriteAnimation animator, string animationName, Dictionary<int, string> frameAndSoundName)//int frame, string soundName)
         {
+            var clip = animator.GetClipByName(animationName);
+            if (clip == null)
+            {
+                ETGModConsole.Log($"(AddSoundsToAnimationFrame 2) Animation [{animationName}] does not exist in animator!");
+                return;
+            }
             foreach (var value in frameAndSoundName)
             {
-                animator.GetClipByName(animationName).frames[value.Key].eventAudio = value.Value;
-                animator.GetClipByName(animationName).frames[value.Key].triggerEvent = true;
+                clip.frames[value.Key].eventAudio = value.Value;
+                clip.frames[value.Key].triggerEvent = true;
             }
         }
         public static void AddEventTriggersToAnimation(tk2dSpriteAnimation animator, string animationName, Dictionary<int, string> frameAndEventName)
         {
+            var clip = animator.GetClipByName(animationName);
+            if (clip == null)
+            {
+                ETGModConsole.Log($"(AddEventTriggersToAnimation) Animation [{animationName}] does not exist in animator!");
+                return;
+            }
             foreach (var value in frameAndEventName)
             {
-                var clip = animator.GetClipByName(animationName);
                 clip.frames[value.Key].eventInfo = value.Value;
                 clip.frames[value.Key].triggerEvent = true;
             }
@@ -348,7 +365,13 @@ namespace Planetside
 
         public static void MarkAnimationAsSpawn(tk2dSpriteAnimator animator, string animationName)//int frame, string soundName)
         {
-            foreach (var value in animator.GetClipByName(animationName).frames)
+			var clip = animator.GetClipByName(animationName);
+            if (clip == null)
+            {
+                ETGModConsole.Log($"(MarkAnimationAsSpawn) Animation [{animationName}] does not exist in animator!");
+                return;
+            }
+            foreach (var value in clip.frames)
             {
 				value.finishedSpawning = false;
 			}

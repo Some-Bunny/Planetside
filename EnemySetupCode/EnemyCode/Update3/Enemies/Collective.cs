@@ -22,21 +22,28 @@ namespace Planetside
 		public static readonly string guid = "collective";
 		private static tk2dSpriteCollectionData CollectiveCollection;
 
+
 		public static void Init()
 		{
-			Collective.BuildPrefab();
-		}
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CollectiveAnimation").GetComponent<tk2dSpriteAnimation>();
 
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("collective", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
-				prefab.AddComponent<ForgottenEnemyComponent>();
+				prefab = EnemyBuilder.BuildPrefabBundle("collective", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 15, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				var companion = prefab.AddComponent<CollectiveBehavior>();
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
+				Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+
+                prefab.AddComponent<ForgottenEnemyComponent>();
 				companion.aiActor.knockbackDoer.weight = 300;
 				companion.aiActor.MovementSpeed = 1.2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;
@@ -129,6 +136,7 @@ namespace Planetside
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 
+				/*
 				bool flag3 = CollectiveCollection == null;
 				if (flag3)
 				{
@@ -255,26 +263,26 @@ namespace Planetside
 					41
 					}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 6f;
 				}
-
+				*/
 				Creationist.TrespassEnemyEngageDoerPortalless trespassEngager = companion.aiActor.gameObject.AddComponent<Creationist.TrespassEnemyEngageDoerPortalless>();
 
 
 				//m_ENM_PhaseSpider_Weave_01
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_large", new Dictionary<int, string> { { 0, "PepsiRage" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_large", new Dictionary<int, string> { { 0, "Play_ENM_PhaseSpider_Weave_01" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "fire", new Dictionary<int, string> { { 0, "ORDER" } });
+				EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_large", new Dictionary<int, string> { { 0, "PepsiRage" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "charge_large", new Dictionary<int, string> { { 0, "Play_ENM_PhaseSpider_Weave_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "fire", new Dictionary<int, string> { { 0, "ORDER" } });
 
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "precharge_small", new Dictionary<int, string> { { 2, "Play_BOSS_dragun_charge_01" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "precharge_small", new Dictionary<int, string> { { 2, "Play_BOSS_dragun_charge_01" } });
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Surprise" }, { 6, "PepsiRage" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Surprise" }, { 6, "PepsiRage" } });
 
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "charge_small", new Dictionary<int, string> { { 0, "PaPew" } });
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_VesselDeath" }, { 6, "Play_ENM_Tarnisher_Bite_01" } });
-				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Surprise" }, {6, "PepsiRage" } });
-				//m_ENM_blobulord_reform_01
-				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "awaken", new Dictionary<int, string> { { 5, "Play_ENM_blobulord_reform_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "charge_small", new Dictionary<int, string> { { 0, "PaPew" } });
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Play_VesselDeath" }, { 6, "Play_ENM_Tarnisher_Bite_01" } });
+                EnemyToolbox.AddEventTriggersToAnimation(companion.spriteAnimator, "death", new Dictionary<int, string> { { 0, "Surprise" }, {6, "PepsiRage" } });
+                //m_ENM_blobulord_reform_01
+                EnemyToolbox.AddSoundsToAnimationFrame(companion.spriteAnimator, "awaken", new Dictionary<int, string> { { 5, "Play_ENM_blobulord_reform_01" } });
 
-				GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.5f, 2f), "CollectiveShootpoint");
+                GameObject shootpoint = EnemyToolbox.GenerateShootPoint(companion.gameObject, new Vector2(1.5f, 2f), "CollectiveShootpoint");
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
@@ -364,10 +372,11 @@ namespace Planetside
 				Game.Enemies.Add("psog:collective", companion.aiActor);
 
 
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("collective_idle_001"),
+				SpriteBuilder.ammonomiconCollection);
 
-
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Collective/collective_idle_001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Collective/collective_idle_001.png", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -379,7 +388,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Collective/collective_idle_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "collective_idle_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetcollectiveTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetcollectiveTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#COLLCTIVE", "Collective");
 				PlanetsideModule.Strings.Enemies.Set("#COLLCTIVE_SHORTDESC", "Consciousness");
@@ -609,43 +618,13 @@ namespace Planetside
 
 		};
 
-		public class EnemyBehavior : BraveBehaviour
+		public class CollectiveBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			private void Start()
 			{
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>{};
 			}
 			private void AnimationEventTriggered(tk2dSpriteAnimator animator, tk2dSpriteAnimationClip clip, int frameIdx)

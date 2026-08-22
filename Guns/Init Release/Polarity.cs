@@ -17,6 +17,7 @@ using BreakAbleAPI;
 
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -121,36 +122,37 @@ namespace Planetside
 				"ice_bomb",
 				"glacier"
 			};
-			CustomSynergies.Add("Refridgeration", mandatoryConsoleIDs1, optionalConsoleIDs, false);
+			CustomSynergies.Add("Refridgeration", mandatoryConsoleIDs1, optionalConsoleIDs, false).AddItemTip("Fires both types of projectiles at once in a tight helix pattern.");
 			ItemIDs.AddToList(gun.PickupObjectId);
 
 			string[] clipPaths = new string[]
 			{
-				"Planetside/Resources/GunClips/Polarity/polBlueClip.png",
-				"Planetside/Resources/GunClips/Polarity/polRedClip.png",
-				"Planetside/Resources/GunClips/Polarity/polSynClip.png",
+                "polBlueClip",
+                "polRedClip",
+                "polSynClip",
 			};
-			DebrisObject ClipBlue = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[0], true, 3f, 3, 150, 60, null, 4f, null, null, 1, false);
-			DebrisObject ClipRed = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[1], true, 2f, 4, 150, 60, null, 6f, null, null, 1, false);
+			DebrisObject ClipBlue = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[0], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 3f, 3, 150, 60, null, 4f, null, null, 1, false);
+			DebrisObject ClipRed = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[1], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 2f, 4, 150, 60, null, 6f, null, null, 1, false);
 			
-			DebrisObject ClipBlue1 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[0], true, 3f, 3, 120, 60, null, 2f, null, null, 0, false);
-			DebrisObject ClipRed1 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[1], true, 2f, 4, 120, 60, null, 3f, null, null, 1, false);
+			DebrisObject ClipBlue1 = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[0], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 3f, 3, 120, 60, null, 2f, null, null, 0, false);
+			DebrisObject ClipRed1 = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[1], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 2f, 4, 120, 60, null, 3f, null, null, 1, false);
 			
-			DebrisObject ClipBlue2 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[0], true, 3f, 3, 200, 100, null, 3f, null, null, 1, false);
-			DebrisObject ClipRed2 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[1], true, 2f, 4, 200, 100, null, 4f, null, null, 0, false);
+			DebrisObject ClipBlue2 = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[0], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 3f, 3, 200, 100, null, 3f, null, null, 1, false);
+			DebrisObject ClipRed2 = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[1], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 2f, 4, 200, 100, null, 4f, null, null, 0, false);
 			
-			ShardCluster ClipsBlueCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipBlue, ClipBlue1, ClipBlue2 }, 0.5f, 2f, 1, 1, 1f);
-			ShardCluster ClipsRedCluster = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipRed, ClipRed1, ClipRed2 }, 0.6f, 1.5f, 1, 1, 1f);
+			ShardCluster ClipsBlueCluster = BreakableAPI_Bundled.GenerateShardCluster(new DebrisObject[] { ClipBlue, ClipBlue1, ClipBlue2 }, 0.5f, 2f, 1, 1, 1f);
+			ShardCluster ClipsRedCluster = BreakableAPI_Bundled.GenerateShardCluster(new DebrisObject[] { ClipRed, ClipRed1, ClipRed2 }, 0.6f, 1.5f, 1, 1, 1f);
 
-			DebrisObject ClipSyn1 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[2], true, 3f, 3, 90, 50, null, 4f, null, null, 1, false);
-			DebrisObject ClipSyn2 = BreakableAPIToolbox.GenerateDebrisObject(clipPaths[2], true, 2f, 4, 180, 90, null, 6f, null, null, 1, false);
+			DebrisObject ClipSyn1 = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[2], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 3f, 3, 90, 50, null, 4f, null, null, 1, false);
+			DebrisObject ClipSyn2 = BreakableAPI_Bundled.GenerateDebrisObject(clipPaths[2], StaticSpriteDefinitions.Gun_2_Sheet_Data, true, 2f, 4, 180, 90, null, 6f, null, null, 1, false);
+			
 			ShardCluster ClipsSynergyCluster1 = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipSyn1, ClipSyn2 }, 0.45f, 1.4f, 1, 1, 1f);
 			ShardCluster ClipsSynergyCluster2 = BreakableAPIToolbox.GenerateShardCluster(new DebrisObject[] { ClipSyn1, ClipSyn2 }, 0.6f, 1.7f, 1, 1, 1f);
 
 
 			ClipCluster = new ShardCluster[] { ClipsBlueCluster, ClipsRedCluster };
 			ClipClusterSynergy = new ShardCluster[] { ClipsSynergyCluster1, ClipsSynergyCluster2 };
-
+			gun.AddItemTip("The first half of the clip fires freezing projectiles, the 2nd half fires burning projectiles.");
 		}
 		public static int PolarityID;
 

@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -35,6 +36,7 @@ namespace Planetside
 			item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			Preigniter.PreigniterID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+			item.AddItemTip("Lets you reload instantly 3 times per combat encounter.");
 		}
 		public static int PreigniterID;
 

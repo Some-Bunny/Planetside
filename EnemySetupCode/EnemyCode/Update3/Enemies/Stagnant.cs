@@ -23,22 +23,31 @@ namespace Planetside
 		private static tk2dSpriteCollectionData StagnantCollection;
 
 
+		
+
 		public static void Init()
 		{
-			Stagnant.BuildPrefab();
-		}
 
-		public static void BuildPrefab()
-		{
-			
-			bool flag = prefab != null || EnemyBuilder.Dictionary.ContainsKey(guid);
-			bool flag2 = flag;
-			if (!flag2)
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("StagnantAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
-				prefab = EnemyBuilder.BuildPrefab("Stagnant", guid, spritePaths[0], new IntVector2(0, 0), new IntVector2(8, 9), false, true);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+				prefab = EnemyBuilder.BuildPrefabBundle("Stagnant", guid, StaticSpriteDefinitions.Forgotten_Enemmy_Data, 418, new IntVector2(0, 0), new IntVector2(8, 9), false, true);
+				var companion = prefab.AddComponent<StagnantBehavior>();
 				prefab.AddComponent<ForgottenEnemyComponent>();
-                companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
+                //companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
+                //companion.aiActor.SetTag("RelocationImmunity");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 companion.aiActor.knockbackDoer.weight = 100000;
 				companion.aiActor.MovementSpeed = 0f;
@@ -129,7 +138,7 @@ namespace Planetside
 				companion.aiActor.reinforceType = ReinforceType.SkipVfx;
 				Creationist.TrespassEnemyEngageDoer trespassEngager = companion.aiActor.gameObject.AddComponent<Creationist.TrespassEnemyEngageDoer>();
 
-
+				/*
 				bool flag3 = StagnantCollection == null;
 				if (flag3)
 				{
@@ -214,7 +223,7 @@ namespace Planetside
 					
 
 				}
-
+				*/
 				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "death", new Dictionary<int, string> { { 0, "Play_Squeal" } });
 				EnemyToolbox.AddSoundsToAnimationFrame(prefab.GetComponent<tk2dSpriteAnimator>(), "attack", new Dictionary<int, string> { { 0, "Play_ENM_rubber_blast_01" } });
 				EnemyToolbox.AddEventTriggersToAnimation(prefab.GetComponent<tk2dSpriteAnimator>(), "attack", new Dictionary<int, string> { { 0, "Blast" } });
@@ -299,8 +308,9 @@ namespace Planetside
 
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Stagnant/lilthing_die_001", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("lilthing_charge_001"),
+                SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -312,7 +322,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Stagnant/lilthing_die_001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "lilthing_charge_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("stagnantTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\stagnantTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#STAGNANT", "Stagnant");
 				PlanetsideModule.Strings.Enemies.Set("#STAGNANT_SHORTDESC", "Regressive Defensive");
@@ -321,12 +331,13 @@ namespace Planetside
 				companion.encounterTrackable.journalData.NotificationPanelDescription = "#STAGNANT_SHORTDESC";
 				companion.encounterTrackable.journalData.AmmonomiconFullEntry = "#STAGNANT_LONGDESC";
 				EnemyBuilder.AddEnemyToDatabase(companion.gameObject, "psog:stagnant");
-				EnemyDatabase.GetEntry("psog:stagnant").ForcedPositionInAmmonomicon = 80;
-				EnemyDatabase.GetEntry("psog:stagnant").isInBossTab = false;
-				EnemyDatabase.GetEntry("psog:stagnant").isNormalEnemy = true;
 
+                var entry = EnemyDatabase.GetEntry("psog:stagnant");
+                entry.ForcedPositionInAmmonomicon = 80;
+                entry.isInBossTab = false;
+                entry.isNormalEnemy = true;
 
-				companion.healthHaver.spawnBulletScript = true;
+                companion.healthHaver.spawnBulletScript = true;
 				companion.healthHaver.chanceToSpawnBulletScript = 1f;
 				companion.healthHaver.bulletScriptType = HealthHaver.BulletScriptType.OnPreDeath;
 				companion.healthHaver.bulletScript = new CustomBulletScriptSelector(typeof(DeathSpore));
@@ -394,43 +405,13 @@ namespace Planetside
 
 		};
 
-		public class EnemyBehavior : BraveBehaviour
+		public class StagnantBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			private void Start()
 			{
 				base.aiActor.spriteAnimator.AnimationEventTriggered += this.AnimationEventTriggered;
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
 				//this.aiActor.knockbackDoer.SetImmobile(true, "hehe.");
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{

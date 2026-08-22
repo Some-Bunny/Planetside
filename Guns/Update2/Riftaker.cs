@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -276,12 +277,12 @@ namespace Planetside
                 "singularity",
                 "psog:immateria"
             };
-            CustomSynergies.Add("Event Horizon", mandatoryConsoleIDs, optionalConsoleIDs, false);
+            CustomSynergies.Add("Event Horizon", mandatoryConsoleIDs, optionalConsoleIDs, false).AddItemTip("When an 'Exit' portal warps a projectile, fires out an energy bolt in a random direction.");
             Riftaker.RiftakerID = gun.PickupObjectId;
             ItemIDs.AddToList(gun.PickupObjectId);
 
 
-
+            gun.AddItemTip("Fires 'Entry' and 'Exit' portals. 'Entry' portals create projectiles that travel to 'Exit' portals, and then get warped back to a random 'Entry' portal. Other player projectiles that enter 'Exit' portals inherit the portal travelling behavior.");
 
         }
         public static int RiftakerID;

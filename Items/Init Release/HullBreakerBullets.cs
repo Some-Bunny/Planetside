@@ -12,6 +12,7 @@ using System.Collections;
 using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -48,15 +49,15 @@ namespace Planetside
 				"cobalt_hammer",
 				"h4mmer"
 			};
-			CustomSynergies.Add("Shattering Justice", mandatoryConsoleIDs, optionalConsoleIDs, true);
-			SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MASSIVE_EFFECT);
+			CustomSynergies.Add("Shattering Justice", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("The first hit also inflicts Broken Armor on enemies. Broken armor temporarily increases damage taken by 35%, and adds +1 damage to any damage dealt.");
+            SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MASSIVE_EFFECT);
 			SynergyAPI.SynergyBuilder.AddItemToSynergy(item, CustomSynergyType.MISSILE_BOW);
 
 			item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 
 			HullBreakerBullets.HullBreakerBulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
-
+			item.AddItemTip("The first hit dealt to any enemy deals 2.5x damage.");
 		}
 		public static int HullBreakerBulletsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)

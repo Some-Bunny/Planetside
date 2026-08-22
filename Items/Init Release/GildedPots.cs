@@ -8,6 +8,7 @@ using System.Reflection;
 using MonoMod.RuntimeDetour;
 using GungeonAPI;
 using Planetside.Controllers;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -42,16 +43,17 @@ namespace Planetside
 			};
 
 
-            CustomSynergies.Add("Expert Demolitionist", mandatoryConsoleIDs, optionalConsoleIDs, true);
-			GildedPots.GildedPotsID = warVase.PickupObjectId;
+            CustomSynergies.Add("Expert Demolitionist", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("All decorative objects have a chance to explode when broken. All money pots will explode when broken.");
+            GildedPots.GildedPotsID = warVase.PickupObjectId;
 			ItemIDs.AddToList(warVase.PickupObjectId);
 			warVase.gameObject.AddComponent<RustyItemPool>();
 			new Hook(typeof(MinorBreakable).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
             //new Hook(typeof(MinorBreakable).GetMethod("Break", BindingFlags.Instance | BindingFlags.Public), typeof(GildedPots).GetMethod("BoomChance"));
 
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(warVase.PickupObjectId);
+			warVase.AddItemTip("Decorative objects have a chance to be replaced with special pots that drop money when broken.");
 
-		}
+        }
 		public static int GildedPotsID;
 
      

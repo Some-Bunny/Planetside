@@ -85245,7 +85245,7 @@ MonoBehaviour:
       position: {x: 0.875, y: 0.3125, z: 0}
       angle: 0
   premultipliedAlpha: 0
-  material: {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
+  material: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: 20f1983dd9966874c942de7cabca81bb, type: 2}
   textures:
@@ -85261,7 +85261,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 1141599741
+  buildKey: 400291662
   dataGuid: c333b89a3d37c564abe3ed7a43354520
   managedSpriteCollection: 0
   hasPlatformData: 0

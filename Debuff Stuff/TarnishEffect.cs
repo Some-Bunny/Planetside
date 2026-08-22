@@ -114,7 +114,7 @@ namespace Planetside
 				bool flag2 = otherRigidbody.projectile.Owner is PlayerController;
 				if (flag2)
 				{
-					otherRigidbody.projectile.baseData.damage *= 1.15f;
+					otherRigidbody.projectile.baseData.damage *= 1.33f;
 					PierceProjModifier pierce = otherRigidbody.projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
 					pierce.penetration++;
 					MaintainDamageOnPierce maintain = otherRigidbody.projectile.gameObject.GetComponent<MaintainDamageOnPierce>();

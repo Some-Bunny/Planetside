@@ -17,6 +17,7 @@ using static ETGMod;
 using Planetside.DungeonPlaceables;
 using SynergyAPI;
 using static Planetside.Wailer;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -43,7 +44,7 @@ namespace Planetside
                 "psog:hot_swapper",
                 "phoenix"
             };
-            Alexandria.ItemAPI.CustomSynergies.Add("Rebirth", mandatoryConsoleIDs, null, true);
+            Alexandria.ItemAPI.CustomSynergies.Add("Rebirth", mandatoryConsoleIDs, null, true).AddItemTip("Swapping to the Phoenix makes its next shot fire a high damage phoenix. Recharges over time.");
             var phoenix = (PickupObjectDatabase.GetById(384) as Gun);
             var syn = phoenix.gameObject.AddComponent<PhoenixSynergy>();
             syn.GunSelf = phoenix;
@@ -190,7 +191,7 @@ namespace Planetside
 				if (GraceTime > 0) { GraceTime -= Time.deltaTime; }
                 if (GunsUsedForKill.Contains(Owner.CurrentGun))
                 {
-                    if (UnityEngine.Random.value < 12 * Time.deltaTime)
+                    if (UnityEngine.Random.value < (3 * CurrentKillStreak * Time.deltaTime))
                     {
                         GlobalSparksDoer.DoRadialParticleBurst(1,
                             Owner.CurrentGun.sprite.WorldBottomLeft,

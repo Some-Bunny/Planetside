@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 
 
@@ -395,7 +396,9 @@ namespace Planetside
 
 			largeKillsTable = LootTableTools.CreateLootTable();
 			largeKillsTable.AddItemsToPool(new Dictionary<int, float>() { { 70, 1f }, { 73, 0.7f }, { 120, 0.8f }, { 85, 0.5f }, { 67, 0.5f }, { 224, 0.5f } });
-		}
+			item.AddItemTip("Enemies in combat will be Marked. Killing marked enemies passes the mark onto other enemies. upon clearing a room, the player will be granted a reward scaling with the amount of marked enemies killed.");
+
+        }
         public static GenericLootTable poopKillsTable;
 
         public static GenericLootTable smallKillsTable;

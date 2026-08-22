@@ -1,4 +1,5 @@
-﻿using Alexandria.PrefabAPI;
+﻿using Alexandria.Integrations;
+using Alexandria.PrefabAPI;
 using ItemAPI;
 using MonoMod.RuntimeDetour;
 using System;
@@ -32,7 +33,7 @@ namespace Planetside
 
             EnergyShield.EnergyPlatedShieldID = item.PickupObjectId;
             ItemIDs.AddToList(item.PickupObjectId);
-
+            item.AddItemTip("Grants 4 static protective orbitals. Orbitals that take enough damage are temporarily disabled.");
         }
         public static int EnergyPlatedShieldID;
 

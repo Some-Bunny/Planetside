@@ -30,7 +30,7 @@ namespace Planetside
             animator.playAutomatically = true;
             animator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("emberpot_idle");
             sprite.usesOverrideMaterial = true;
-            Material mat = new Material(StaticShaders.Default_Object_Shader);
+            Material mat = new Material(StaticShaders.Default_Shader);
             sprite.renderer.material = mat;
             EmberPot.CreateFastBody(new IntVector2(13, 15), new IntVector2(1, 1), CollisionLayer.PlayerBlocker);
             EmberPot.CreateFastBody(new IntVector2(13, 15), new IntVector2(1, 1), CollisionLayer.EnemyBlocker);

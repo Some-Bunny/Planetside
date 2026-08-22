@@ -13,6 +13,7 @@ using Gungeon;
 using MonoMod.RuntimeDetour;
 using MonoMod;
 using Alexandria.Assetbundle;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -66,8 +67,10 @@ namespace Planetside
 				}
 			}
 			gun.DefaultModule.ammoType = GameUIAmmoType.AmmoType.CUSTOM;
-			gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Lilpew", "Planetside/Resources/GunClips/Lilpew/lilpew_clipfull", "Planetside/Resources/GunClips/Lilpew/lilpew_clipempty");
-			gun.gunClass = GunClass.PISTOL;
+            //gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Lilpew", "Planetside/Resources/GunClips/Lilpew/lilpew_clipfull", "Planetside/Resources/GunClips/Lilpew/lilpew_clipempty");
+            gun.DefaultModule.customAmmoType = CustomClipAmmoTypeToolbox.AddCustomAmmoType("Lilpew", StaticSpriteDefinitions.PlanetsideClipUIAtlas, "lilpew_clipfull", "lilpew_clipempty");
+
+            gun.gunClass = GunClass.PISTOL;
 			gun.barrelOffset.transform.localPosition = new Vector3(0.8125f, 0.4375f, 0f);
 			gun.reloadTime = 1.4f;
 			gun.SetBaseMaxAmmo(320);
@@ -96,6 +99,7 @@ namespace Planetside
 			*/
 			LilPew.LilPewID = gun.PickupObjectId;
 			ItemIDs.AddToList(gun.PickupObjectId);
+			gun.AddItemTip("Deals knockback in an area on reload. The more full the clip was, the higher the knockback. Projectile velocity scales with ccurrent clip capacity.");
 		}
 		public static int LilPewID;
 

@@ -15,6 +15,7 @@ using MonoMod;
 using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -33,16 +34,17 @@ namespace Planetside
 			string longDesc = "These bullets were forged with lead from beyond the Curtain." +
 				"\n\nThey seem to shift their positions fairly unpredictably.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
-			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			item.quality = PickupObject.ItemQuality.B;
 			item.AddToSubShop(ItemBuilder.ShopType.Trorc, 1f);
 			item.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
 
 			Unstabullets.UnstabulletsID = item.PickupObjectId;
 			ItemIDs.AddToList(item.PickupObjectId);
+            item.AddItemTip("Grants 10% damage. Your projectiles have a chance to either telefrag enemies or split into two.");
 
-		}
-		public static int UnstabulletsID;
+        }
+        public static int UnstabulletsID;
 		private void PostProcessProjectile(Projectile sourceProjectile, float effectChanceScalar)
 		{
 			PlayerController owner = base.Owner;
@@ -224,6 +226,6 @@ namespace Planetside
 		}
 		private float m_currentAngle;
 		private float m_currentDistance;
-		private Vector2 aimpoint;
+		//private Vector2 aimpoint;
 	}
 }

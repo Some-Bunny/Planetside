@@ -32,6 +32,7 @@ namespace Planetside
 
             tk2dSpriteCollectionData Collection = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("DetscavatorCollection").GetComponent<tk2dSpriteCollectionData>();
             Material mat = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Material>("detscavator material");
+            var h = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("DetscavatorAnimation").GetComponent<tk2dSpriteAnimation>();
 
             if (prefab == null || !EnemyBuilder.Dictionary.ContainsKey(guid))
 			{
@@ -41,6 +42,16 @@ namespace Planetside
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "robotic_mechanical");
+
+
+                companion.gameObject.layer = 22;
+                companion.sprite.SortingOrder = 2;
+
+
+                companion.aiActor.spriteAnimator.Library = h;
+                companion.aiActor.spriteAnimator.library = h;
+                companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
+
 
                 companion.aiActor.knockbackDoer.weight = 800;
 				companion.aiActor.MovementSpeed = 0f;
@@ -107,19 +118,16 @@ namespace Planetside
 				{
 					new AIAnimator.NamedDirectionalAnimation
 					{
-					name = "die",
-					anim = new DirectionalAnimation
+						name = "die",
+						anim = new DirectionalAnimation
 						{
 							Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 							Flipped = new DirectionalAnimation.FlipType[2],
 							AnimNames = new string[]
 							{
-
-						   "die_left",
-						   "die_right"
-
-							}
-
+								"die",
+								"die"
+                            }
 						}
 					}
 				};
@@ -129,19 +137,19 @@ namespace Planetside
 					Flipped = new DirectionalAnimation.FlipType[2],
 					AnimNames = new string[]
 					{
-						"idle_left",
-						"idle_right"
-					}
+						"idle",
+                        "idle"
+                    }
 				};
 				aiAnimator.MoveAnimation = new DirectionalAnimation
 				{
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					Flipped = new DirectionalAnimation.FlipType[2],
 					AnimNames = new string[]
-						{
-						"run_left",
-						"run_right"
-						}
+					{
+                        "idle",
+                        "idle"
+                    }
 				};
 
 				DirectionalAnimation charge = new DirectionalAnimation
@@ -169,8 +177,8 @@ namespace Planetside
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					AnimNames = new string[]
 					{
-						"shootlaser_right",
-						"shootlaser_left",
+						"shootlaser",
+						"shootlaser",
 
 					},
 					Flipped = new DirectionalAnimation.FlipType[2]
@@ -190,8 +198,8 @@ namespace Planetside
 					Type = DirectionalAnimation.DirectionType.TwoWayHorizontal,
 					AnimNames = new string[]
 					{
-						"finishlaser_right",
-						"finishlaser_left",
+						"finishlaser",
+						"finishlaser",
 
 					},
 					Flipped = new DirectionalAnimation.FlipType[2]
@@ -208,7 +216,7 @@ namespace Planetside
 				companion.aiActor.AwakenAnimType = AwakenAnimationType.Awaken;
 				//bool flag3 = DescavatorCollection == null;
 				//if (flag3)
-				{
+				//{
 					/*
 					DescavatorCollection = SpriteBuilder.ConstructCollection(prefab, "Detscavator_Collection");
 					UnityEngine.Object.DontDestroyOnLoad(DescavatorCollection);
@@ -217,6 +225,7 @@ namespace Planetside
 						SpriteBuilder.AddSpriteToCollection(spritePaths[i], DescavatorCollection);
 					}
 					*/
+					/*
 					SpriteBuilder.AddAnimation(companion.spriteAnimator, Collection, new List<int>
 					{
 
@@ -333,9 +342,13 @@ namespace Planetside
 				24
 				}, "awaken", tk2dSpriteAnimationClip.WrapMode.Once).fps = 12f;
 				}
-				
-				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.GetComponent<tk2dSpriteAnimator>(), "charge", new Dictionary<int, string> { {3, "Play_ENM_hammer_target_01" }, { 5, "Play_ENM_hammer_target_01" } , { 7, "Play_ENM_hammer_target_01" } });
+				*/
 
+				EnemyToolbox.AddSoundsToAnimationFrame(companion.aiActor.GetComponent<tk2dSpriteAnimator>(), "charge", new Dictionary<int, string> { {3, "Play_ENM_hammer_target_01" }, { 5, "Play_ENM_hammer_target_01" } , { 7, "Play_ENM_hammer_target_01" } });
+				EnemyToolbox.AddOffsetToFrames(companion.aiActor.GetComponent<tk2dSpriteAnimator>(), "die", new Dictionary<int, Vector3>()
+				{
+					{0, new Vector3(-0.125f, 0) }
+				});
 
 				var bs = prefab.GetComponent<BehaviorSpeculator>();
 				prefab.GetComponent<ObjectVisibilityManager>();
@@ -401,7 +414,6 @@ namespace Planetside
 					PostFireAnimation = "finishlaser",
 					beamSelection = ShootBeamBehavior.BeamSelection.Random,
 					trackingType = CustomBeholsterLaserBehavior.TrackingType.Follow,
-				//initialAimType = CustomShootBeamBehavior.InitialAimType.Aim,
 
 					unitCatchUpSpeed = 3,
 					maxTurnRate = 3,
@@ -417,15 +429,9 @@ namespace Planetside
 					firingType = CustomBeholsterLaserBehavior.FiringType.TOWARDS_PLAYER_AND_NORTHANGLEVARIANCE,
 					unitOvershootTime = 0.25f,
 					unitOvershootSpeed = 3,
-					//ShootPoint = m_CachedGunAttachPoint.transform,
-					//BulletScript = new CustomBulletScriptSelector(typeof(Wailer.Wail))
 				}
 				};
-				/*
-				 * 	public string ChargeAnimation;
-	public string FireAnimation;
 
-				*/
 				bs.InstantFirstTick = behaviorSpeculator.InstantFirstTick;
 				bs.TickInterval = behaviorSpeculator.TickInterval;
 				bs.PostAwakenDelay = behaviorSpeculator.PostAwakenDelay;
@@ -436,8 +442,9 @@ namespace Planetside
 				Game.Enemies.Add("psog:detscavator", companion.aiActor);
 
 
-				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Detscavator/detscavator_idle-001.png", SpriteBuilder.ammonomiconCollection);
-				if (companion.GetComponent<EncounterTrackable>() != null)
+                SpriteBuilder.AddSpriteToCollection(Collection.GetSpriteDefinition("detscavator_charge_001"), SpriteBuilder.ammonomiconCollection);
+                //SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Enemies/Detscavator/detscavator_idle-001.png", SpriteBuilder.ammonomiconCollection);
+                if (companion.GetComponent<EncounterTrackable>() != null)
 				{
 					UnityEngine.Object.Destroy(companion.GetComponent<EncounterTrackable>());
 				}
@@ -449,7 +456,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "Planetside/Resources/Enemies/Detscavator/detscavator_idle-001";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "detscavator_charge_001";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("detscavatorivonammo");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\detscavatorivonammo.png");
                 PlanetsideModule.Strings.Enemies.Set("#DETSCAVATOR", "Detscavator");
 				PlanetsideModule.Strings.Enemies.Set("#DETSCAVATOR_SHORTDESC", "Subtract And Divide");

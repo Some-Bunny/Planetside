@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 
 using UnityEngine.Serialization;
 using Brave.BulletScript;
+using Alexandria.Integrations;
 
 namespace Planetside
 {
@@ -107,9 +108,11 @@ namespace Planetside
 			{
 				"psog:lucky_charm",
 				"seven_leaf_clover"
-			};		
-			CustomSynergies.Add("1 in 177 Billion", mandatoryConsoleIDs, null, true);
-		}
+			};
+			CustomSynergies.Add("1 in 177 Billion", mandatoryConsoleIDs, null, true).AddItemTip("Higher tier items have an increased chance of appearing in shops and boss pedestals.");
+			item.AddItemTip("Prevents chests from being fused. Shops and bosses will no longer have D tier items. Enemies that hurt you no longer drop less money.");
+
+        }
 
 		public static FloorRewardData CustomFloorRewardData;
 

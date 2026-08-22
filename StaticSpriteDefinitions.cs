@@ -33,6 +33,7 @@ namespace Planetside
         public static tk2dSpriteCollectionData SpecialVFX_Sheet_Data;
         public static tk2dSpriteCollectionData Trespass_Room_Object_Data;
 
+        public static tk2dSpriteCollectionData Forgotten_Enemmy_Data;
 
         public static tk2dSpriteAnimation VFX_Animation_Data;
         public static tk2dSpriteAnimation Gun_Animation_Data;
@@ -142,6 +143,8 @@ namespace Planetside
 
             Companion_Sheet_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CompanionCollection").GetComponent<tk2dSpriteCollectionData>();
             Companion_Animation = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("CompanionAnimation").GetComponent<tk2dSpriteAnimation>();
+
+            Forgotten_Enemmy_Data = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("ForgottenEnemyCollection").GetComponent<tk2dSpriteCollectionData>();
         }
         public static void SetupSpritesFromAssembly(Assembly asmb, string path, tk2dSpriteCollectionData data)
         {

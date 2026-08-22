@@ -35,7 +35,7 @@ namespace Planetside
                     {
                         BlastProjectiles blast = perk as BlastProjectiles;
                         float RNG = UnityEngine.Random.Range(-180, 180);
-                        int projectileToSpawn = blast.MinToSpawn + (int)(data.damage / (data.ignoreList.Contains(player.specRigidbody) ? 10f : 15));
+                        int projectileToSpawn = Mathf.Max(blast.MinToSpawn, (int)(data.damage / (data.ignoreList.Contains(player.specRigidbody) ? 12f : 18)));
                         if (projectileToSpawn >= blast.Cap) { projectileToSpawn = blast.Cap; }
                         for (int e = 0; e < projectileToSpawn; e++)
                         {
@@ -46,7 +46,7 @@ namespace Planetside
                             Projectile component = spawnedBulletOBJ.GetComponent<Projectile>();
                             if (component != null)
                             {
-                                component.baseData.speed = 12;
+                                component.baseData.speed = 10;
                                 component.Owner = player;
                                 component.Shooter = player.specRigidbody;
                                 SpriteOutlineManager.AddOutlineToSprite(component.sprite, Color.black);
