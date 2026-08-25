@@ -158,6 +158,18 @@ namespace Planetside
             {
                 name = "EmergencyAnnotationName";
             }
+
+            RequiredRoom.prerequisites = new List<DungeonPrerequisite>()
+            {
+                    new DungeonGenToolbox.AdvancedDungeonPrerequisite
+                    {
+                       advancedAdvancedPrerequisiteType = DungeonGenToolbox.AdvancedDungeonPrerequisite.AdvancedAdvancedPrerequisiteType.PASSIVE_ITEM_FLAG,
+                       requiredPassiveFlag = typeof(PrayerAmulet),
+                       requiredTileset = Tileset,
+                       requireTileset = true
+                    }
+            };
+
             ProceduralFlowModifierData PrayerRoomMines = new ProceduralFlowModifierData()
             {
                 annotation = name,

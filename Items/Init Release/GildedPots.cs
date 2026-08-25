@@ -9,6 +9,7 @@ using MonoMod.RuntimeDetour;
 using GungeonAPI;
 using Planetside.Controllers;
 using Alexandria.Integrations;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -47,7 +48,8 @@ namespace Planetside
             GildedPots.GildedPotsID = warVase.PickupObjectId;
 			ItemIDs.AddToList(warVase.PickupObjectId);
 			warVase.gameObject.AddComponent<RustyItemPool>();
-			new Hook(typeof(MinorBreakable).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
+			
+			//new Hook(typeof(MinorBreakable).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic), typeof(GildedPots).GetMethod("CoinChance"));
             //new Hook(typeof(MinorBreakable).GetMethod("Break", BindingFlags.Instance | BindingFlags.Public), typeof(GildedPots).GetMethod("BoomChance"));
 
             GameManager.Instance.RainbowRunForceExcludedIDs.Add(warVase.PickupObjectId);
@@ -56,54 +58,62 @@ namespace Planetside
         }
 		public static int GildedPotsID;
 
-     
-		public static void CoinChance(Action<MinorBreakable> orig, MinorBreakable self)
-		{
-			orig(self);
 
-			for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
-			{
-				PlayerController player = GameManager.Instance.AllPlayers[i];
-				if (player != null && player.inventory != null && player.passiveItems.Count >= 0)
-				{
-                    if (player.HasPickupID(GildedPots.GildedPotsID) && self != null)
+        [HarmonyPatch(typeof(MinorBreakable), nameof(MinorBreakable.Awake))]
+        public class Patch_MinorBreakable_Awake
+        {
+            [HarmonyPrefix]
+            private static void Awake(MinorBreakable __instance)
+            {
+                __instance.OnBreak += () =>
+                {
+                    for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
                     {
-                        if (self.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null && self.transform?.parent?.gameObject?.GetComponent<KickableObject>() == null)
+                        PlayerController player = GameManager.Instance.AllPlayers[i];
+                        if (player != null)
                         {
                             bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
-                            float coinchance = Synergy ? 0.05f : 0.035f;
-                            if (self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
+                            if (Synergy && __instance.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < 0.2f)
                             {
-                                Vector2 position = self.transform.position;
-                                DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
-                                StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
-                                bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
-                                Destroy(self.gameObject);
+                                ExplosionData ex = StaticExplosionDatas.genericLargeExplosion.CopyExplosionData();
+                                ex.ignoreList.Add(player.specRigidbody);
+                                Exploder.Explode(__instance.transform.position, ex, __instance.transform.position);
                             }
                         }
+
                     }
-                }
-				
-			}
-			self.OnBreak = () =>
-			{
+                };
                 for (int i = 0; i < GameManager.Instance.AllPlayers.Length; i++)
                 {
                     PlayerController player = GameManager.Instance.AllPlayers[i];
-					if (player != null)
-					{
-                        bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
-                        if (Synergy && self.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < 0.2f)
+                    if (player != null && player.inventory != null && player.passiveItems.Count >= 0)
+                    {
+                        if (player.HasPickupID(GildedPots.GildedPotsID) && __instance != null)
                         {
-                            ExplosionData ex = StaticExplosionDatas.genericLargeExplosion.CopyExplosionData();
-                            ex.ignoreList.Add(player.specRigidbody);
-                            Exploder.Explode(self.transform.position, ex, self.transform.position);
+                            if (__instance.transform?.parent?.gameObject?.GetComponent<MirrorController>() == null && __instance.transform?.parent?.gameObject?.GetComponent<KickableObject>() == null)
+                            {
+                                bool Synergy = player.PlayerHasActiveSynergy("Expert Demolitionist");
+                                float coinchance = Synergy ? 0.05f : 0.035f;
+                                if (__instance.GetComponent<MoneyPots.MoneyPotBehavior>() == null && UnityEngine.Random.value < coinchance)
+                                {
+                                    Vector2 position = __instance.transform.position;
+                                    DungeonPlaceable bom = ScriptableObject.CreateInstance<DungeonPlaceable>();
+                                    StaticReferences.StoredDungeonPlaceables.TryGetValue("moneyPotRandom", out bom);
+                                    bom.InstantiateObject(position.GetAbsoluteRoom(), position.ToIntVector2() - position.GetAbsoluteRoom().area.basePosition);
+                                    Destroy(__instance.gameObject);
+                                }
+                            }
                         }
                     }
-                   
-                }
-            };
+                }              
+            }
         }
+
+
+
+
+
+
         public override void Pickup(PlayerController player)
 		{
 			if (m_pickedUpThisRun == false)

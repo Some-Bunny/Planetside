@@ -85,7 +85,7 @@ namespace Planetside
 				"psog:air_blaster",
 				"cigarettes"
 			};
-			CustomSynergies.Add("Puff", yes, null, false);
+			CustomSynergies.Add("Puff", yes, null, false).AddItemTip("Reload knockback also deals damage, scaling with clip capacity, player damage stat and coolness stat.");
 			/*
 			List<string> syn = new List<string>
 			{
@@ -149,7 +149,7 @@ namespace Planetside
 						float dmg = (player.stats.GetStatValue(PlayerStats.StatType.Damage));
                         float coolness = (player.stats.GetStatValue(PlayerStats.StatType.Coolness));
 
-                        Exploder.DoRadialDamage((gun.ClipShotsRemaining*dmg + coolness) * 2.5f, base.gameObject.transform.PositionVector2(), 5.5f, false, true, true, null);
+                        Exploder.DoRadialDamage(((gun.ClipShotsRemaining + coolness) * dmg) * 2.5f, base.gameObject.transform.PositionVector2(), 5.5f, false, true, true, null);
 					}
 					AkSoundEngine.PostEvent("Play_CHR_weapon_charged_01", gameObject);
 				}

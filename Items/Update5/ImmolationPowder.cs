@@ -66,7 +66,7 @@ namespace Planetside
         public static int ImmolationPowderID;
         public override void Pickup(PlayerController player)
         {
-            player.PostProcessProjectile += PostProcessProjectile; ;
+            player.PostProcessProjectile += PostProcessProjectile;
             player.PostProcessBeam += PostProcessBeam;
 
             base.Pickup(player);   
@@ -108,6 +108,7 @@ namespace Planetside
 
         public StatModifier _;
         public StatModifier __;
+        public StatModifier ___;
 
         private bool LastFireCheck = false;
         public override void Update()
@@ -124,12 +125,15 @@ namespace Planetside
                     {
                         _ = this.AddStat(PlayerStats.StatType.RateOfFire, .2f, StatModifier.ModifyMethod.ADDITIVE);
                         __ = this.AddStat(PlayerStats.StatType.Accuracy, 0.5f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+                        ___ = this.AddStat(PlayerStats.StatType.MovementSpeed, 1.15f, StatModifier.ModifyMethod.MULTIPLICATIVE);
+
                         player.stats.RecalculateStats(player, true, false);
                     }
                     else
                     {
                         this.RemoveStat(_);
                         this.RemoveStat(__);
+                        this.RemoveStat(___);
                         player.stats.RecalculateStats(player, true, false);
                     }
                 }

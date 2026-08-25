@@ -4882,7 +4882,7 @@ MonoBehaviour:
   SpriteIDsWithAttachPoints: 
   SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
-  material: {fileID: 2100000, guid: fc59a5473a7fa9445b73e62081299bb3, type: 2}
+  material: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: fc59a5473a7fa9445b73e62081299bb3, type: 2}
   textures:
@@ -4898,7 +4898,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 1240581973
+  buildKey: 156948145
   dataGuid: 6399cf1342631ec4993623d9936ab19d
   managedSpriteCollection: 0
   hasPlatformData: 0

@@ -66,7 +66,7 @@ namespace Planetside
 				companion.aiActor.procedurallyOutlined = true;
 				companion.aiActor.CanTargetPlayers = true;
 
-				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.625f, 0.25f), "shadowPos");
+				EnemyToolbox.AddShadowToAIActor(companion.aiActor, StaticEnemyShadows.defaultShadow, new Vector2(0.5f, 0.25f), "shadowPos");
 
 
 				companion.aiActor.healthHaver.SetHealthMaximum(18f, null, false);

@@ -49,7 +49,7 @@ namespace Planetside
                 "glacier",
                 "ice_cube"
             };
-            activeitem.AddItemTip("Damages all enemies and grants immunity to all debuffs for 10 seconds. Any debuffs the player had is inflicted on enemies.");
+            activeitem.AddItemTip("Damages all enemies and grants immunity to all debuffs and negative buildup effects for 10 seconds. Any debuffs the player had are inflicted on enemies.");
             CustomSynergies.Add("Watered Down", mandatoryConsoleIDs, optionalConsoleIDs, true).AddItemTip("A fraction of enemy max HP is inflicted as bonus damage on use.");
             BlastShower.BlastShowerID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
@@ -87,7 +87,28 @@ namespace Planetside
             DamageTypeModifier fire = GenSpecImmunity(CoreDamageTypes.Fire);
             DamageTypeModifier poison = GenSpecImmunity(CoreDamageTypes.Poison);
             player.healthHaver.damageTypeModifiers.AddRange(new List<DamageTypeModifier>() { fire, poison});
-            yield return new WaitForSeconds(10f);
+            float e = 0;
+            float e1 = 0;
+            while (e < 10)
+            {
+
+                e1 += BraveTime.DeltaTime;
+                e += BraveTime.DeltaTime;
+                if (e1 >= 0.1f)
+                {
+                    float ang = BraveUtility.RandomAngle();
+                    e1 -= 0.1f;
+                    for (int i = 0; i < 16;i++)
+                    {
+                        GlobalSparksDoer.DoRandomParticleBurst(1, player.sprite.WorldCenter, player.sprite.WorldCenter,
+                            MathToolbox.GetUnitOnCircle((22.5f * i) + ang, 4f),
+                            1f, 0.05f, 0.125f, 0.25f, Color.cyan * 3, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                    }
+                }
+                player.CurrentStoneGunTimer = 0;
+                player.CurrentCurseMeterValue = 0;
+                yield return null;
+            }
             player.healthHaver.damageTypeModifiers.Remove(fire);
             player.healthHaver.damageTypeModifiers.Remove(poison);
             yield break;
@@ -112,15 +133,11 @@ namespace Planetside
 
                     if (willBurn)
                     {
-                        BulletStatusEffectItem Firecomponent = PickupObjectDatabase.GetById(295).GetComponent<BulletStatusEffectItem>();
-                        GameActorFireEffect gameActorFire = Firecomponent.FireModifierEffect;
-                        target.ApplyEffect(gameActorFire, 5f, null);
+                        target.ApplyEffect(DebuffStatics.hotLeadEffect, 5f, null);
                     }
                     if (willPoison)
                     {
-                        BulletStatusEffectItem PoisonComponent = PickupObjectDatabase.GetById(204).GetComponent<BulletStatusEffectItem>();
-                        GameActorHealthEffect gameActorPOSON = PoisonComponent.HealthModifierEffect;
-                        target.ApplyEffect(gameActorPOSON, 5f, null);
+                        target.ApplyEffect(DebuffStatics.irradiatedLeadEffect, 5f, null);
                     }
                 }
             }

@@ -53,8 +53,8 @@ namespace Planetside
 			{
 				TinyPlanetMotionModule mod = new TinyPlanetMotionModule();
 				mod.ForceInvert = (UnityEngine.Random.value > 0.5f) ? false : true;
-				mod.OrbitTightness = UnityEngine.Random.Range(4.5f, 7.5f);
-                mod.MaxRadius = UnityEngine.Random.Range(3, 10);
+				mod.OrbitTightness = UnityEngine.Random.Range(3f, 6f);
+                mod.MaxRadius = UnityEngine.Random.Range(3, 7);
                 sourceProjectile.OverrideMotionModule = mod;
 			}
 			catch (Exception ex)

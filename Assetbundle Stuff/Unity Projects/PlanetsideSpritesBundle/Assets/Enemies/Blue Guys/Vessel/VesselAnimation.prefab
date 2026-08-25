@@ -1193,7 +1193,7 @@ MonoBehaviour:
       eventOutline: 0
     fps: 13
     loopStart: 0
-    wrapMode: 0
+    wrapMode: 2
     minFidgetDuration: 1
     maxFidgetDuration: 2
   - name: awaken

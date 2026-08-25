@@ -96,11 +96,11 @@ namespace Planetside
                     Vector2 centerPosition = base.Owner.CenterPosition;
                     if (activeEnemies != null && activeEnemies.Count > 0)
                     {
-                        foreach (AIActor aiactor in activeEnemies)
-                        {
-                            if (gunClassCharm.ContainsKey(base.Owner.gameActor.CurrentGun.gunClass))
+                        if (gunClassCharm.ContainsKey(base.Owner.gameActor.CurrentGun.gunClass))
+						{
+                            foreach (AIActor aiactor in activeEnemies)
                             {
-                                if (aiactor != null && Vector2.Distance(aiactor.CenterPosition, centerPosition) < 4)
+                                if (aiactor != null && Vector2.Distance(aiactor.CenterPosition, centerPosition) < 3)
                                 {
                                     aiactor.ApplyEffect(DebuffStatics.charmingRoundsEffect);
                                 }
@@ -278,15 +278,12 @@ namespace Planetside
 					LastStoredImmunity.damageType = damageType;
 					base.Owner.healthHaver.damageTypeModifiers.Add(LastStoredImmunity);
 				}
-				HelmetItem blastProt = new HelmetItem();
-				bool Contains = PassiveItem.ActiveFlagItems[base.Owner].ContainsKey(blastProt.GetType());
-				if (gunClassExplo.ContainsKey(newGun.gunClass) && !Contains)
+
+                Alexandria.Misc.PlayerOverrides.SetImmuneToExplosionDamage(Owner, false, "PSOG:GunslingerRing");
+
+                if (gunClassExplo.ContainsKey(newGun.gunClass))
 				{
-					PassiveItem.ActiveFlagItems[base.Owner].Add(blastProt.GetType(), 1);
-				}
-				else if (!base.Owner.HasPickupID(312) && gunClassExplo.ContainsKey(newGun.gunClass))
-                {
-					PassiveItem.ActiveFlagItems[base.Owner].Remove(blastProt.GetType());
+					Alexandria.Misc.PlayerOverrides.SetImmuneToExplosionDamage(Owner, true, "PSOG:GunslingerRing");
 				}
 			}
 		}

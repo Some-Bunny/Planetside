@@ -168,7 +168,7 @@ namespace Planetside
                                 1f,
                                 0.125f,
                                 0.25f,
-                                Color.red * 3,
+                                GoRedirectMode ? Color.green * 3 : Color.red * 3,
                                 GlobalSparksDoer.SparksType.FLOATY_CHAFF);
                             }
                         }    
