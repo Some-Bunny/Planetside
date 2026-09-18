@@ -16,6 +16,10 @@ using System.Collections;
 using PathologicalGames;
 using UnityEngine.Playables;
 using tk2dRuntime.TileMap;
+using Alexandria.PrefabAPI;
+using Planetside.Static_Storage;
+using HutongGames.PlayMaker.Actions;
+using static Planetside.PrisonerSecondSubPhaseController;
 
 namespace Planetside
 {
@@ -50,10 +54,11 @@ namespace Planetside
                 laserPointer.transform.parent = shootPosition.gameObject.transform;
                 laserPointer.layer = 22;
                 laserPointerTiledSprite = laserPointer.GetComponent<tk2dTiledSprite>();
-                laserPointerTiledSprite.HeightOffGround = 50;
+                laserPointerTiledSprite.HeightOffGround = 10;
                 laserPointerTiledSprite.renderer.enabled = true;
                 laserPointerTiledSprite.transform.localRotation = Quaternion.Euler(0f, 0f, ReturnDirection().ToAngle());
-                laserPointerTiledSprite.SortingOrder = -10;
+                laserPointerTiledSprite.SortingOrder = 10;
+                laserPointerTiledSprite.Awake();
             }
         }
 
@@ -238,44 +243,67 @@ namespace Planetside
 	{
         public static void Init()
         {
-            string defaultFrontPath = "Planetside/Resources/DungeonObjects/SniperTurret/Default/";
-            string[] idlePaths = new string[]
-            {
-                defaultFrontPath+"sniperturret_front_idle1.png",
-                defaultFrontPath+"sniperturret_front_idle2.png",
-                defaultFrontPath+"sniperturret_front_idle1.png",
-                defaultFrontPath+"sniperturret_front_idle4.png",
-            };
-
             AIBulletBank.Entry entrySniper = StaticBulletEntries.CopyBulletBankEntry(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"), "sniperTurret");
 
 
 
-            MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-			EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.3125f, 0.5625f), "laserPoint");
+
+            GameObject sniperTurretDefaultaFront = PrefabBuilder.BuildObject("SniperTurretFront");
+            var sprite = sniperTurretDefaultaFront.AddComponent<tk2dSprite>();
+            var spriteAnimator = sniperTurretDefaultaFront.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "sniperturret_front_idle1");
+            spriteAnimator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("sniperturret_f");
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.HeightOffGround = 2f;
+            sprite.gameObject.layer = Layers.FG_Critical;
+            sprite.SortingOrder = 12;
+            sprite.IsPerpendicular = true;
+            sprite.ShouldDoTilt = false;
+
+             EnemyToolbox.GeneratePrefabbedShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.3125f, 0.5625f), "laserPoint");
+
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController  t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.down.ToAngle();
             t.muzzleFlashPrefab = (PickupObjectDatabase.GetById(370) as Gun).muzzleFlashEffects.effects[0].effects[0].effect;
             sniperTurretDefaultaFront.gameObject.AddComponent<PushImmunity>();
 
+
+
             bulletBankLeft.Bullets = new List<AIBulletBank.Entry>();
 			bulletBankLeft.Bullets.Add(entrySniper);
+
+
 			StaticReferences.StoredRoomObjects.Add("sniperTurretFront", sniperTurretDefaultaFront.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:sniperTurretFront", sniperTurretDefaultaFront.gameObject);
 
 
-            string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
-            string[] idleProfPaths = new string[]
-            {
-                defaultProfessionalPath+"professionalsniperturret_front_idle1.png",
-                defaultProfessionalPath+"professionalsniperturret_front_idle2.png",
-                defaultProfessionalPath+"professionalsniperturret_front_idle3.png",
-                defaultProfessionalPath+"professionalsniperturret_front_idle4.png",
-            };
 
-            MajorBreakable professionalTurretFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idleProfPaths, 5, idleProfPaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.3125f, 0.5625f), "laserPoint");
+
+
+            GameObject professionalTurretFront = PrefabBuilder.BuildObject("SniperTurretFrontProfessional");
+            sprite = professionalTurretFront.AddComponent<tk2dSprite>();
+            spriteAnimator = professionalTurretFront.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "sniperturret_front_idle1");
+            spriteAnimator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("sniperturret_f_p");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.HeightOffGround = 2f;
+            sprite.gameObject.layer = Layers.FG_Critical;
+            sprite.SortingOrder = 12;
+            sprite.IsPerpendicular = true;
+            sprite.ShouldDoTilt = false;
+
+
+            EnemyToolbox.GeneratePrefabbedShootPoint(professionalTurretFront.gameObject, new Vector2(0.3125f, 0.5625f), "laserPoint");
             AIBulletBank bulletBank = professionalTurretFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController turret = professionalTurretFront.gameObject.AddComponent<SniperTurretsController>();
             turret.isProfessional = true;
@@ -288,6 +316,17 @@ namespace Planetside
             StaticReferences.StoredRoomObjects.Add("professionalTurretFront", professionalTurretFront.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:professionalTurretFront", professionalTurretFront.gameObject);
 
+            Dictionary<GameObject, float> dict1 = new Dictionary<GameObject, float>()
+            {
+                { sniperTurretDefaultaFront.gameObject, 1 },
+            };
+            Dictionary<GameObject, float> dict2 = new Dictionary<GameObject, float>()
+            {
+                { professionalTurretFront.gameObject, 1 },
+            };
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:sniperTurretFront", BreakableAPIToolbox.GenerateDungeonPlaceable(dict1));
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:professionalTurretFront", BreakableAPIToolbox.GenerateDungeonPlaceable(dict2));
+
 
             MakeLeft(entrySniper);
             MakeRight(entrySniper);
@@ -295,14 +334,29 @@ namespace Planetside
 
         public static void MakeLeft(AIBulletBank.Entry entry)
         {
-            string defaultFrontPath = "Planetside/Resources/DungeonObjects/SniperTurret/Default/";
-            string[] idlePaths = new string[]
-            {
-                defaultFrontPath+"sniperturret_left_idle1.png",
-            };
 
-            MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000,  true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+
+            //MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000,  true, 0, 0, 0, 0, true, null, null, true, null);
+            GameObject sniperTurretDefaultaFront = PrefabBuilder.BuildObject("SniperTurretLeft");
+            var sprite = sniperTurretDefaultaFront.AddComponent<tk2dSprite>();
+            var spriteAnimator = sniperTurretDefaultaFront.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "sniperturret_front_idle1");
+            spriteAnimator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("sniperturret_l");
+
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.HeightOffGround = 2f;
+            sprite.gameObject.layer = Layers.FG_Critical;
+            sprite.SortingOrder = 12;
+            sprite.IsPerpendicular = true;
+            sprite.ShouldDoTilt = false;
+
+            EnemyToolbox.GeneratePrefabbedShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+
+
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.left.ToAngle();
@@ -314,14 +368,26 @@ namespace Planetside
             StaticReferences.StoredRoomObjects.Add("sniperTurretLeft", sniperTurretDefaultaFront.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:sniperTurretLeft", sniperTurretDefaultaFront.gameObject);
 
-            string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
-            string[] idleProfPaths = new string[]
-            {
-                defaultProfessionalPath+"professionalsniperturret_left_idle1.png",
-            };
 
-            MajorBreakable professionalTurretFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idleProfPaths, 5, idleProfPaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+
+            GameObject professionalTurretFront = PrefabBuilder.BuildObject("SniperTurretLeftProfessional");
+            sprite = professionalTurretFront.AddComponent<tk2dSprite>();
+            spriteAnimator = professionalTurretFront.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "sniperturret_front_idle1");
+            spriteAnimator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("sniperturret_l_p");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.HeightOffGround = 2f;
+            sprite.gameObject.layer = Layers.FG_Critical;
+            sprite.SortingOrder = 12;
+            sprite.IsPerpendicular = true;
+            sprite.ShouldDoTilt = false;
+
+            EnemyToolbox.GeneratePrefabbedShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+            
             AIBulletBank bulletBank = professionalTurretFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController turret = professionalTurretFront.gameObject.AddComponent<SniperTurretsController>();
             turret.isProfessional = true;
@@ -335,19 +401,38 @@ namespace Planetside
             StaticReferences.StoredRoomObjects.Add("professionalTurretLeft", professionalTurretFront.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:professionalTurretLeft", professionalTurretFront.gameObject);
 
+            Dictionary<GameObject, float> dict1 = new Dictionary<GameObject, float>()
+            {
+                { sniperTurretDefaultaFront.gameObject, 1 },
+            };
+            Dictionary<GameObject, float> dict2 = new Dictionary<GameObject, float>()
+            {
+                { professionalTurretFront.gameObject, 1 },
+            };
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:sniperTurretLeft", BreakableAPIToolbox.GenerateDungeonPlaceable(dict1));
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:professionalTurretLeft", BreakableAPIToolbox.GenerateDungeonPlaceable(dict2));
+
         }
         public static void MakeRight(AIBulletBank.Entry entry)
         {
-            string defaultFrontPath = "Planetside/Resources/DungeonObjects/SniperTurret/Default/";
-            string[] idlePaths = new string[]
-            {
-                defaultFrontPath+"sniperturret_right_idle1.png",
-                defaultFrontPath+"sniperturret_right_idle2.png",
-                defaultFrontPath+"sniperturret_right_idle3.png",
-                defaultFrontPath+"sniperturret_right_idle4.png",
-            };
-            MajorBreakable sniperTurretDefaultaFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idlePaths, 5, idlePaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+            
+            GameObject sniperTurretDefaultaFront = PrefabBuilder.BuildObject("SniperTurretRight");
+            var sprite = sniperTurretDefaultaFront.AddComponent<tk2dSprite>();
+            var spriteAnimator = sniperTurretDefaultaFront.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "sniperturret_front_idle1");
+            spriteAnimator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("sniperturret_r");
+            sprite.usesOverrideMaterial = true;
+            Material mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.HeightOffGround = 2f;
+            sprite.gameObject.layer = Layers.FG_Critical;
+            sprite.SortingOrder = 12;
+            sprite.IsPerpendicular = true;
+            sprite.ShouldDoTilt = false;
+
+            EnemyToolbox.GeneratePrefabbedShootPoint(sniperTurretDefaultaFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
             AIBulletBank bulletBankLeft = sniperTurretDefaultaFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController t = sniperTurretDefaultaFront.gameObject.AddComponent<SniperTurretsController>();
             t.DirectionToFire = Vector2.right.ToAngle();
@@ -359,7 +444,7 @@ namespace Planetside
             bulletBankLeft.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("31a3ea0c54a745e182e22ea54844a82d").bulletBank.GetBullet("sniper"));
             StaticReferences.StoredRoomObjects.Add("sniperTurretRight", sniperTurretDefaultaFront.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:sniperTurretRight", sniperTurretDefaultaFront.gameObject);
-
+            /*
             string defaultProfessionalPath = "Planetside/Resources/DungeonObjects/SniperTurret/Professional/";
             string[] idleProfPaths = new string[]
             {
@@ -371,7 +456,26 @@ namespace Planetside
             };
 
             MajorBreakable professionalTurretFront = BreakableAPIToolbox.GenerateMajorBreakable("sniperTurretDefaultaFront", idleProfPaths, 5, idleProfPaths, 18, 15000, true, 0, 0, 0, 0, true, null, null, true, null);
-            EnemyToolbox.GenerateShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+            */
+
+            GameObject professionalTurretFront = PrefabBuilder.BuildObject("SniperTurretRightProfessional");
+            sprite = professionalTurretFront.AddComponent<tk2dSprite>();
+            spriteAnimator = professionalTurretFront.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.RoomObject_Sheet_Data, "sniperturret_front_idle1");
+            spriteAnimator.Library = StaticSpriteDefinitions.RoomObject_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = StaticSpriteDefinitions.RoomObject_Animation_Data.GetClipIdByName("sniperturret_r_p");
+            sprite.usesOverrideMaterial = true;
+            mat = new Material(StaticShaders.Default_Shader);
+            sprite.renderer.material = mat;
+            sprite.HeightOffGround = 2f;
+            sprite.gameObject.layer = Layers.FG_Critical;
+            sprite.SortingOrder = 12;
+            sprite.IsPerpendicular = true;
+            sprite.ShouldDoTilt = false;
+
+            EnemyToolbox.GeneratePrefabbedShootPoint(professionalTurretFront.gameObject, new Vector2(0.5f, 0.875f), "laserPoint");
+            
             AIBulletBank bulletBank = professionalTurretFront.gameObject.AddComponent<AIBulletBank>();
             SniperTurretsController turret = professionalTurretFront.gameObject.AddComponent<SniperTurretsController>();
             turret.isProfessional = true;
@@ -383,6 +487,18 @@ namespace Planetside
             bulletBank.Bullets.Add(entry);
             StaticReferences.StoredRoomObjects.Add("professionalTurretRight", professionalTurretFront.gameObject);
             Alexandria.DungeonAPI.StaticReferences.customObjects.Add("psog:professionalTurretRight", professionalTurretFront.gameObject);
+
+
+            Dictionary<GameObject, float> dict1 = new Dictionary<GameObject, float>()
+            {
+                { sniperTurretDefaultaFront.gameObject, 1 },
+            };
+            Dictionary<GameObject, float> dict2 = new Dictionary<GameObject, float>()
+            {
+                { professionalTurretFront.gameObject, 1 },
+            };
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:sniperTurretRight", BreakableAPIToolbox.GenerateDungeonPlaceable(dict1));
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:professionalTurretRight", BreakableAPIToolbox.GenerateDungeonPlaceable(dict2));
 
         }
     }

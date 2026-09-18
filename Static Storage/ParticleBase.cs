@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gungeon;
+using ItemAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -90,6 +92,18 @@ namespace Planetside
         public static void EmitParticles(ParticleSystem particleSystem, int amount, ParticleSystem.EmitParams newParams)
         {
             particleSystem.Emit(newParams, amount);
+        }
+
+
+        public static void DoRandomizedBurstOfParticles(string name, int amount, ParticleSystem.EmitParams newParams, Vector2 AngleMinMax, Vector2 SpeedMinMax, Vector2 LifeTimeMinMax)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Vector2 vel = MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(AngleMinMax.x, AngleMinMax.y), UnityEngine.Random.Range(SpeedMinMax.x, SpeedMinMax.y));
+                newParams.velocity = vel;
+                newParams.startLifetime = UnityEngine.Random.Range(LifeTimeMinMax.x, LifeTimeMinMax.y);
+                EmitParticles(name, 1, newParams);
+            }
         }
     }
 }

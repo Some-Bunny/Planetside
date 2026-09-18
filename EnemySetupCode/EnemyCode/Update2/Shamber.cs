@@ -35,6 +35,7 @@ namespace Planetside
 				var enemy = prefab.AddComponent<EnemyBehavior>();
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(enemy.aiActor, "ghost");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(enemy.aiActor, "PSOG:MaliceUmbralBan");
 
 
 

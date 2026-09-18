@@ -26,7 +26,7 @@ namespace Planetside
 				spritePath = "Planetside/Resources/Shrines/GunOrbitShrinel.png",
 				RoomWeight = 2f,
 				acceptText = "Grant an offering to bestow similar power.",
-				declineText = "Leave",
+				declineText = "<Leave>",
 				OnAccept = Accept,
 				OnDecline = null,
 				CanUse = CanUse,
@@ -36,7 +36,7 @@ namespace Planetside
 				isBreachShrine = false,
 				shadowPath = "Planetside/Resources/Shrines/defaultShrineShadow.png",
 				ShadowOffsetX = 0.3125f,
-				ShadowOffsetY = -0.25f,
+				ShadowOffsetY = -0.5f,
 
 				preRequisites = new DungeonPrerequisite[0],
 				ShrinePercentageChance = 0.2f,
@@ -130,12 +130,12 @@ namespace Planetside
 					bool DorC = currentGun.quality == PickupObject.ItemQuality.D | currentGun.quality == PickupObject.ItemQuality.C | currentGun.quality == PickupObject.ItemQuality.B;
 					if (DorC)
 					{
-						return shrine.GetComponent<CustomShrineController>().numUses == 0;
+						return shrineController.numUses == 0;
 					}
 					bool Sonly = currentGun.quality == PickupObject.ItemQuality.A | currentGun.quality == PickupObject.ItemQuality.S;
 					if (Sonly)
 					{
-						return shrine.GetComponent<CustomShrineController>().numUses == 0;
+						return shrineController.numUses == 0;
 					}
                     shrineController.acceptText = "Grant an offering to bestow similar power. <Reduce Max Ammo>";
 
@@ -148,7 +148,7 @@ namespace Planetside
 						if (player.characterIdentity == PlayableCharacters.Robot)
 						{
                             shrineController.acceptText = "Grant an offering to bestow similar power. <Lose 2 [sprite \"armor_money_icon_001\"]>";
-                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 2;
+                            return shrineController.numUses == 0 && armorInt > 2;
 						}
 						else if (player.characterIdentity == PlayableCharacters.Robot)
 						{
@@ -157,7 +157,7 @@ namespace Planetside
 						else
 						{
                             shrineController.acceptText = "Grant an offering to bestow similar power. <Remove [sprite \"heart_big_idle_001\"]>";
-                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 1;
+                            return shrineController.numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 1;
 						}
 					}
 					bool Sonly = currentGun.quality == PickupObject.ItemQuality.A | currentGun.quality == PickupObject.ItemQuality.S;
@@ -166,12 +166,12 @@ namespace Planetside
 						if (player.characterIdentity == PlayableCharacters.Robot)
 						{
                             shrineController.acceptText = "Grant an offering to bestow similar power. <Lose 4 [sprite \"armor_money_icon_001\"]>";
-                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && armorInt > 4;
+                            return shrineController.numUses == 0 && armorInt > 4;
 						}
 						else
 						{
                             shrineController.acceptText = "Grant an offering to bestow similar power. <Remove 2 [sprite \"heart_big_idle_001\"]>";
-                            return shrine.GetComponent<CustomShrineController>().numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 2;
+                            return shrineController.numUses == 0 && player.stats.GetStatValue(PlayerStats.StatType.Health) > 2;
 						}
 					}
 				}
@@ -230,8 +230,8 @@ namespace Planetside
             _.Position = CustomHoveringGunController.HoverPosition.CIRCULATE;
             _.Aim = CustomHoveringGunController.AimType.PLAYER_AIM;
             _.Trigger = CustomHoveringGunController.FireType.ON_FIRED_GUN;
-            _.CooldownTime = Mathf.Max(6.66f, gun.reloadTime * 3.5f);
-            _.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.25f;
+            _.CooldownTime = Mathf.Max(6.66f, gun.reloadTime * 1.75f);
+            _.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.5f;
 
             _.Initialize(gun, player);
             player.ownerlessStatModifiers.Add(item2);
@@ -240,9 +240,6 @@ namespace Planetside
 
 
 
-            /*
-
-			*/
 
 
             player.inventory.DestroyCurrentGun();
@@ -251,7 +248,7 @@ namespace Planetside
 
 
 
-
+			/*
 			if (player.name == "PlayerShade(Clone)")
             {
 				ImprovedAfterImage yes = player.gameObject.AddComponent<ImprovedAfterImage>();
@@ -268,6 +265,7 @@ namespace Planetside
 				player.ownerlessStatModifiers.Add(money);
 			}
 			player.stats.RecalculateStats(player, false, false);
+			*/
 		}
 	}
 }

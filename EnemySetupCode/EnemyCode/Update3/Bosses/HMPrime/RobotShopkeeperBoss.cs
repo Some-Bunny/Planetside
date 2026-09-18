@@ -3632,10 +3632,14 @@ namespace Planetside
 				};
 				base.healthHaver.healthHaver.OnDeath += (obj) =>
 				{
+					var room = this.transform.position.GetAbsoluteRoom();
+					if (room != null)
+					{
+						room.CompletelyPreventLeaving = false;
 
+                    }
 					SaveAPIManager.RegisterStatChange(CustomTrackedStats.HMPRIME_KILLS, 1);
-					
-					DungeonDoorSubsidiaryBlocker[] blockers = UnityEngine.Object.FindObjectsOfType<DungeonDoorSubsidiaryBlocker>();
+                    DungeonDoorSubsidiaryBlocker[] blockers = UnityEngine.Object.FindObjectsOfType<DungeonDoorSubsidiaryBlocker>();
 					foreach (var blocker in blockers)
 					{
 						blocker.Unseal();
@@ -3648,7 +3652,7 @@ namespace Planetside
 						int id = BraveUtility.RandomElement<int>(RobotShopkeeperBoss.Lootdrops);
 						LootEngine.SpawnItem(PickupObjectDatabase.GetById(id).gameObject, base.aiActor.sprite.WorldCenter, MathToolbox.GetUnitOnCircle((360 / amountOfitemsToSpawn) * i, 1), 3f, false, true, false);
 					}
-					ETGModConsole.Log("HM-PRIME TIER: "+ pruch);
+					//ETGModConsole.Log("HM-PRIME TIER: "+ pruch);
 					if (pruch > 3)
                     {
 						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);//Done

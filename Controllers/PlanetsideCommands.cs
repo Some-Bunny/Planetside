@@ -48,7 +48,7 @@ namespace Planetside
 				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.UMBRAL_ENEMIES_KILLED, 10);
 				AdvancedGameStatsManager.Instance.SetStat(CustomTrackedStats.JAMMED_ARCHGUNJURERS_KILLED, 20);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED_T4, true);
-				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED, false);
+				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HM_PRIME_DEFEATED, true);
 
 			});
 

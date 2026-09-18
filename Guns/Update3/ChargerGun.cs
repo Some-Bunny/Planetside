@@ -49,21 +49,27 @@ namespace Planetside
 			//GunExt.SetAnimationFPS(gun, gun.chargeAnimation, 6);
 
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_RatMech_Cannon_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
+			gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[0].eventAudio = "Play_BOSS_RatMech_Cannon_01";
+			gun.spriteAnimator.GetClipByName(gun.shootAnimation).frames[0].triggerEvent = true;
 
 
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_frostgiant_reload_01";
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
+			gun.spriteAnimator.GetClipByName(gun.reloadAnimation).frames[0].eventAudio = "Play_WPN_frostgiant_reload_01";
+			gun.spriteAnimator.GetClipByName(gun.reloadAnimation).frames[0].triggerEvent = true;
 
 			for (int i = 0; i < 20; i++)
 			{
 				gun.AddProjectileModuleFrom(PickupObjectDatabase.GetById(88) as Gun, true, true);
 			}
 			gun.DefaultModule.chargeProjectiles = new List<ProjectileModule.ChargeProjectile>();
+
+
+
+
 			foreach (ProjectileModule projectileModule in gun.Volley.projectiles)
 			{
-				projectileModule.ammoCost = 1;
+
+
+                projectileModule.ammoCost = 1;
 				projectileModule.shootStyle = ProjectileModule.ShootStyle.Charged;
 				projectileModule.sequenceStyle = ProjectileModule.ProjectileSequenceStyle.Random;
 				projectileModule.cooldownTime = 0.1f;
@@ -91,11 +97,10 @@ namespace Planetside
                 mat_.SetFloat("_EmissivePower", 100);
                 projectile.sprite.renderer.material = mat_;
 
-                //SpeedMULT = UnityEngine.Random.Range(0.85f, 1.15f);
                 ImprovedAfterImage yes = projectile.gameObject.AddComponent<ImprovedAfterImage>();
                 yes.spawnShadows = true;
-                yes.shadowLifetime = 0.3f;
-                yes.shadowTimeDelay = 0.1f;
+                yes.shadowLifetime = 0.25f;
+                yes.shadowTimeDelay = 0.01f;
                 yes.dashColor = new Color(1, 0.8f, 0.55f, 0.3f);
                 yes.name = "Gun Trail";
 
@@ -115,18 +120,18 @@ namespace Planetside
 				gun.DefaultModule.chargeProjectiles.Add(item2);
 			}
 			gun.Volley.UsesShotgunStyleVelocityRandomizer = true;
-			gun.Volley.DecreaseFinalSpeedPercentMin = 0.8f;
-            gun.Volley.IncreaseFinalSpeedPercentMax = 1.2f;
+            gun.Volley.DecreaseFinalSpeedPercentMin = 70f;
+            gun.Volley.IncreaseFinalSpeedPercentMax = 110f;
 
 
-
-            gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
-			gun.GetComponent<tk2dSpriteAnimator>().GetClipByName(gun.chargeAnimation).loopStart = 5;
+            gun.spriteAnimator.GetClipByName(gun.chargeAnimation).wrapMode = tk2dSpriteAnimationClip.WrapMode.LoopSection;
+			gun.spriteAnimator.GetClipByName(gun.chargeAnimation).loopStart = 5;
 
 
 			gun.gunSwitchGroup = "Railgun";
 			gun.gunClass = GunClass.CHARGE;
 
+			
 
 			gun.barrelOffset.transform.localPosition = new Vector3(1.875f, 0.5f, 0f);
 			gun.reloadTime = 1.1f;

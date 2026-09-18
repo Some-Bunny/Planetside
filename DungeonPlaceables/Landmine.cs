@@ -181,35 +181,54 @@ namespace Planetside.DungeonPlaceables
             amorPickup.RevealednessBeforeFullReveal = 0.3f;
             amorPickup.MinePrefab = mineController;
             UnityEngine.Object.DontDestroyOnLoad(amorPickup);
-
-
-
-
             var place2 = BreakableAPI_Bundled.GenerateDungeonPlaceable(new Dictionary<GameObject, float>()
             {
                 { amorPickup.gameObject, 1 }
             }, 1, 1);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:buriedbasiclandmine_100", place2);
-            
-            
+
+            amorPickup = PrefabBuilder.BuildObject("BuriedBasicLandmine_50").AddComponent<BuriedLandmine>();
+            amorPickup.Tiles = new IntVector2(1, 1);
+            amorPickup.gameObject.layer = Layers.BG_Critical;
+            amorPickup.RandomObjectsToSpawn = 0;
+            amorPickup.RevealednessBeforeFullReveal = 0.3f;
+            amorPickup.MinePrefab = mineController;
+            amorPickup.Chance = 0.5f;
+            UnityEngine.Object.DontDestroyOnLoad(amorPickup);        
             place2 = BreakableAPI_Bundled.GenerateDungeonPlaceable(new Dictionary<GameObject, float>()
             {
-                { amorPickup.gameObject, 1 },
-                { EMPTY, 1 }
+                { amorPickup.gameObject, 1 }
             }, 1, 1);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:buriedbasiclandmine_50", place2);
 
-            place2 = BreakableAPI_Bundled.GenerateDungeonPlaceable(new Dictionary<GameObject, float>()
-            {
-                { amorPickup.gameObject, 1 },
-                { EMPTY, 3 }
-            }, 1, 1);
-            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:buriedbasiclandmine_25", place2);
+            amorPickup = PrefabBuilder.BuildObject("BuriedBasicLandmine_25").AddComponent<BuriedLandmine>();
+            amorPickup.Tiles = new IntVector2(1, 1);
+            amorPickup.gameObject.layer = Layers.BG_Critical;
+            amorPickup.RandomObjectsToSpawn = 0;
+            amorPickup.RevealednessBeforeFullReveal = 0.3f;
+            amorPickup.MinePrefab = mineController;
+            amorPickup.Chance = 0.25f;
+            UnityEngine.Object.DontDestroyOnLoad(amorPickup);
+
 
             place2 = BreakableAPI_Bundled.GenerateDungeonPlaceable(new Dictionary<GameObject, float>()
             {
-                { amorPickup.gameObject, 3 },
-                { EMPTY, 1 }
+                { amorPickup.gameObject, 1 }
+            }, 1, 1);
+            Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:buriedbasiclandmine_25", place2);
+
+            amorPickup = PrefabBuilder.BuildObject("BuriedBasicLandmine_75").AddComponent<BuriedLandmine>();
+            amorPickup.Tiles = new IntVector2(1, 1);
+            amorPickup.gameObject.layer = Layers.BG_Critical;
+            amorPickup.RandomObjectsToSpawn = 0;
+            amorPickup.RevealednessBeforeFullReveal = 0.3f;
+            amorPickup.MinePrefab = mineController;
+            amorPickup.Chance = 0.75f;
+            UnityEngine.Object.DontDestroyOnLoad(amorPickup);
+
+            place2 = BreakableAPI_Bundled.GenerateDungeonPlaceable(new Dictionary<GameObject, float>()
+            {
+                { amorPickup.gameObject, 3 }
             }, 1, 1);
             Alexandria.DungeonAPI.StaticReferences.customPlaceables.Add("psog:buriedbasiclandmine_75", place2);
 
@@ -538,8 +557,21 @@ namespace Planetside.DungeonPlaceables
 
             public bool isForgeVent = false;
 
+            public float Chance = 1;
+
+            public override bool PreSetup()
+            {
+                bool b = UnityEngine.Random.value <= Chance;
+                Debug.Log($"{Chance} : {b}");
+
+                return b;
+            }
+
+
             public override void OnControllerSpawned()
             {
+                Debug.Log("attempt spawn landmine...");
+
                 MineInst = UnityEngine.Object.Instantiate(MinePrefab, this.transform.position, Quaternion.identity);
                 oldLayer = MineInst.sprite.renderLayer;
                 oldGameObjectLayer = MineInst.gameObject.layer;

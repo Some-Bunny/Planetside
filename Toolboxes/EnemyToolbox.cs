@@ -10,6 +10,7 @@ using AnimationType = ItemAPI.EnemyBuilder.AnimationType;
 using System.Collections;
 using Dungeonator;
 using Brave.BulletScript;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -418,8 +419,15 @@ namespace Planetside
 			shootpoint.transform.position = attachpoint;
 			return attacher.transform.Find(name).gameObject;
 		}
+        public static GameObject GeneratePrefabbedShootPoint(GameObject attacher, Vector2 attachpoint, string name = "shootPoint")
+        {
+			GameObject shootpoint = PrefabBuilder.BuildObject(name);
+            shootpoint.transform.SetParent(attacher.transform);
+            shootpoint.transform.position = attachpoint;
+            return attacher.transform.Find(name).gameObject;
+        }
 
-		public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f, float attackFPS = 6f)
+        public static AIActor CreateNewBulletBankerEnemy(string guid, string DisplayName,int sizeX, int sizeY,List<int> IdleFrameKeys, List<int> DeathFrameKeys, List<int> AttackFrameKeys,Script bulletScript = null, float MovementSpeed = 2.5f, float HP = 14, float IdleFPS = 5f,float MovementFPS = 10f, float DeathFPS = 8f, float attackFPS = 6f)
         {
 
 			var collectionData = StaticSpriteDefinitions.Modder_Bullet_Sheet_Data;

@@ -318,7 +318,7 @@ namespace Planetside
             return 1;
         }
 
-        public IEnumerator Delay(CustomShopController shop)
+        public IEnumerator Delay(CustomShopController shop, BaseShopController baseShopController)
         {
             yield return null;
             var list = shop.m_itemControllers;
@@ -337,6 +337,11 @@ namespace Planetside
 
                 }
             }
+            foreach (var iten in baseShopController.m_itemControllers)
+            {
+                iten.m_baseParentShop = shop;
+            }
+            shop.m_itemControllers.AddRange(baseShopController.m_itemControllers);
             yield break;
         }
 
@@ -345,242 +350,223 @@ namespace Planetside
         {
             if (CurrentState == States.ALLOWED && AdvancedGameStatsManager.Instance.GetSessionStatValue(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED) == 1)
             {
-
-
                 SaveAPIManager.RegisterStatChange(CustomTrackedStats.INFECTION_FLOORS_ACTIVATED, 1);
 
                 CurrentState = States.ENABLED;
                 bool ShopPlaced = false;
                 bool triggered = false;
-
-                List<RoomHandler> rooms = GameManager.Instance.Dungeon.data.rooms;
-
-                foreach (RoomHandler roomHandler in rooms)
+                if (GameManager.Instance.Dungeon)
                 {
-                    List<BaseShopController> componentsInChildren = roomHandler.GetComponentsAbsoluteInRoom<BaseShopController>();
-                    if (componentsInChildren != null && componentsInChildren.Count != 0)
+                    List<RoomHandler> rooms = GameManager.Instance.Dungeon.data.rooms;
+
+                    foreach (RoomHandler roomHandler in rooms)
+                    
                     {
-                        foreach (BaseShopController shope in componentsInChildren)
+                        List<BaseShopController> componentsInChildren = roomHandler.GetComponentsAbsoluteInRoom<BaseShopController>();
+                        if (componentsInChildren != null && componentsInChildren.Count != 0)
                         {
-
-
-                            var obja = Minimap.Instance.roomToIconsMap[roomHandler].Where(x => x != null && Minimap.Instance.gameObject.name.Contains(x.name)).FirstOrDefault();
-                            if (obja != null)
+                            foreach (BaseShopController shope in componentsInChildren)
                             {
-                                Minimap.Instance.DeregisterRoomIcon(roomHandler, obja);
 
-                            }
-                            List<ShopItemController> shopitem = PlanetsideReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
-                            for (int i = 0; i < shopitem.Count; i++)
-                            {
-                                if (shopitem[i] && shopitem[i].IsResourcefulRatKey == false)
+
+                                var obja = Minimap.Instance.roomToIconsMap[roomHandler].Where(x => x != null && Minimap.Instance.gameObject.name.Contains(x.name)).FirstOrDefault();
+                                if (obja != null)
                                 {
-                                    Destroy(shopitem[i].gameObject);
+                                    Minimap.Instance.DeregisterRoomIcon(roomHandler, obja);
+
                                 }
-                            }
-                            if (shope.cat == true || shope.baseShopType== BaseShopController.AdditionalShopType.BLACKSMITH)
-                            {
-
-                                if (ShopPlaced == false)
+                                List<ShopItemController> shopitem = PlanetsideReflectionHelper.ReflectGetField<List<ShopItemController>>(typeof(BaseShopController), "m_itemControllers", shope);
+                                for (int i = 0; i < shopitem.Count; i++)
                                 {
-                                    ShopPlaced = !ShopPlaced;
-                                    GameObject obj = new GameObject();
-                                    StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
-
-                                    bool b = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON;
-                                    IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(6, -2);
-
-
-
-                                    GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) - offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
-                                    CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
-                                    if (shopCont != null)
+                                    if (shopitem[i] && shopitem[i].IsResourcefulRatKey == false)
                                     {
-                                        List<Vector2> itemPositions = new List<Vector2>()
-                                    {
-                                   shopObj.transform.PositionVector2() +  new Vector2(-1f, -0.25f),
-                                   shopObj.transform.PositionVector2() +  new Vector2(0.5f, -1f),
-                                   shopObj.transform.PositionVector2() + new Vector2(2.25f, -1.5f),
-                                   shopObj.transform.PositionVector2() +  new Vector2(4f, -1f),
-                                   shopObj.transform.PositionVector2() +  new Vector2(5.5f, -0.25f)
-                                    };
-                                        var posList = new List<Transform>();
-                                        for (int i = 0; i < itemPositions.Count; i++)
-                                        {
-                                            var ItemPoint = new GameObject("ItemPoint" + i);
-                                            ItemPoint.transform.position = itemPositions[i];
-                                            ItemPoint.SetActive(true);
-                                            posList.Add(ItemPoint.transform);
-                                        }
-                                        shopCont.spawnPositions = posList.ToArray();
-                                        shopCont.currencyType = CustomShopItemController.ShopCurrencyType.COINS;
-                                        shopCont.customCanBuy = MasterTraderCustomCanBuyOverride;
-                                        shopCont.customPrice = MasterTraderCustomPriceOverride;
-                                        shopCont.removeCurrency = MasterTraderRemoveCurrency;
-                                        //shopCont.
-                                        foreach (var pos in shopCont.spawnPositions)
-                                        {
-                                            pos.parent = shopObj.gameObject.transform;
-                                        }
-
-                                        GameManager.Instance.StartCoroutine(Delay(shopCont));
-
-                                        //StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
-
-                                        GameObject objAbscond = null;
-                                        Alexandria.DungeonAPI.StaticReferences.customObjects.TryGetValue("psog:absconditus", out objAbscond);
-                                        if (objAbscond != null)
-                                        {
-                                            offset = b == true ? new IntVector2(8, 3) : new IntVector2(1, -1);
-
-                                            var obj_ = UnityEngine.Object.Instantiate(objAbscond, (new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) - offset.y)).ToCenterVector3(1), Quaternion.identity);// DungeonPlaceableUtility.InstantiateDungeonPlaceable(objAbscond, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) + offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
-
-
-                                            IPlayerInteractable[] interfacesInChildren = obj_.gameObject.GetComponentsInParent<IPlayerInteractable>();
-                                            for (int j = 0; j < interfacesInChildren.Length; j++)
-                                            {
-                                                roomHandler.RegisterInteractable(interfacesInChildren[j]);
-                                            }
-
-                                        }
-                                        //var list = shopCont.m_itemControllers;
-                                        /*
-                                        foreach (var item in list)
-                                        {
-                                            ETGModConsole.Log(5);
-
-                                            if (item is CustomShopItemController customShopItem)
-                                            {
-                                                customShopItem.customCanBuy = null;
-                                                customShopItem.customPrice = null;
-                                                customShopItem.removeCurrency = null;
-                                                ETGModConsole.Log(6);
-
-                                                customShopItem.customCanBuy = MasterTraderCustomCanBuyOverride;
-                                                customShopItem.customPrice = MasterTraderCustomPriceOverride;
-                                                customShopItem.removeCurrency = MasterTraderRemoveCurrency;
-                                            }
-                                            ETGModConsole.Log(7);
-
-                                        }
-                                        */
+                                        Destroy(shopitem[i].gameObject);
                                     }
                                 }
-                                if (shope.OptionalMinimapIcon)
+                                if (shope.cat == true || shope.baseShopType == BaseShopController.AdditionalShopType.BLACKSMITH)
                                 {
-                                    Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
-                                }
-                            }
-                            
-                            
-    
-                            Destroy(shope.gameObject);                    
-                        }
-                    }
 
-                    GunberMuncherController[] muncher = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<GunberMuncherController>(true);
-                    if (muncher != null && muncher.Length > 0)
-                    {
-                        foreach (GunberMuncherController shope in muncher)
-                        {
-                            if (triggered == false)
-                            {
-                                RoomHandler room = shope.transform.position.GetAbsoluteRoom();
-                                List<GameObject> ICONS = new List<GameObject>();
-                                var rTI = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, List<GameObject>>>(typeof(Minimap), "roomToIconsMap", Minimap.Instance);
-                                if (rTI.ContainsKey(room))
-                                {
-                                    rTI.TryGetValue(room, out ICONS);
-                                    if (ICONS != null && ICONS.Count > 0)
+                                    if (ShopPlaced == false)
                                     {
-                                        for (int i = 0; i < ICONS.Count; i++)
+                                        ShopPlaced = !ShopPlaced;
+                                        GameObject obj = new GameObject();
+                                        StaticReferences.StoredRoomObjects.TryGetValue("masteryRewardTrader", out obj);
+
+                                        bool b = GameManager.Instance.Dungeon.tileIndices.tilesetId == GlobalDungeonData.ValidTilesets.FORGEGEON;
+                                        IntVector2 offset = b == true ? new IntVector2(1, -2) : new IntVector2(6, -2);
+
+
+
+                                        GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) - offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+                                        CustomShopController shopCont = shopObj.GetComponent<CustomShopController>();
+                                        if (shopCont != null)
                                         {
-                                            if (ICONS[i].name.ToLower().Contains("muncher"))
+                                            List<Vector2> itemPositions = new List<Vector2>()
+                                        {
+                                            shopObj.transform.PositionVector2() +  new Vector2(-1f, -0.25f),
+                                            shopObj.transform.PositionVector2() +  new Vector2(0.5f, -1f),
+                                            shopObj.transform.PositionVector2() + new Vector2(2.25f, -1.5f),
+                                            shopObj.transform.PositionVector2() +  new Vector2(4f, -1f),
+                                            shopObj.transform.PositionVector2() +  new Vector2(5.5f, -0.25f)
+                                        };
+                                            var posList = new List<Transform>();
+                                            for (int i = 0; i < itemPositions.Count; i++)
                                             {
-                                                Minimap.Instance.DeregisterRoomIcon(room, ICONS[i]);
+                                                var ItemPoint = new GameObject("ItemPoint" + i);
+                                                ItemPoint.transform.position = itemPositions[i];
+                                                ItemPoint.SetActive(true);
+                                                posList.Add(ItemPoint.transform);
+                                            }
+                                            shopCont.spawnPositions = posList.ToArray();
+                                            shopCont.currencyType = CustomShopItemController.ShopCurrencyType.COINS;
+                                            shopCont.customCanBuy = MasterTraderCustomCanBuyOverride;
+                                            shopCont.customPrice = MasterTraderCustomPriceOverride;
+                                            shopCont.removeCurrency = MasterTraderRemoveCurrency;
+                                            //shopCont.
+                                            foreach (var pos in shopCont.spawnPositions)
+                                            {
+                                                pos.parent = shopObj.gameObject.transform;
+                                            }
+
+                                            GameManager.Instance.StartCoroutine(Delay(shopCont, shope));
+
+                                            GameObject objAbscond = null;
+                                            Alexandria.DungeonAPI.StaticReferences.customObjects.TryGetValue("psog:absconditus", out objAbscond);
+                                            if (objAbscond != null)
+                                            {
+                                                offset = b == true ? new IntVector2(8, 3) : new IntVector2(1, -1);
+
+                                                var obj_ = UnityEngine.Object.Instantiate(objAbscond, (new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) - offset.y)).ToCenterVector3(1), Quaternion.identity);// DungeonPlaceableUtility.InstantiateDungeonPlaceable(objAbscond, shope.GetAbsoluteParentRoom(), new IntVector2((int)shope.gameObject.transform.position.x + (offset.x), ((int)shope.gameObject.transform.position.y) + offset.y) - shope.GetAbsoluteParentRoom().area.basePosition, false);
+
+
+                                                IPlayerInteractable[] interfacesInChildren = obj_.gameObject.GetComponentsInParent<IPlayerInteractable>();
+                                                for (int j = 0; j < interfacesInChildren.Length; j++)
+                                                {
+                                                    roomHandler.RegisterInteractable(interfacesInChildren[j]);
+                                                }
 
                                             }
                                         }
-                                    }                 
+                                    }
+                                    if (shope.OptionalMinimapIcon)
+                                    {
+                                        Minimap.Instance.DeregisterRoomIcon(roomHandler, shope.OptionalMinimapIcon);
+                                    }
                                 }
 
-                                GameObject obj = new GameObject();
-                                RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
-                                StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
-                                GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x +1, (int)shope.gameObject.transform.position.y + 1) - roomIn.area.basePosition, false);
-                                IPlayerInteractable[] interfaces = shopObj.GetInterfaces<IPlayerInteractable>();
-                                for (int j = 0; j < interfaces.Length; j++)
-                                {
-                                    room.RegisterInteractable(interfaces[j]);
-                                }
-                                triggered = true;
+
+
+                                Destroy(shope.gameObject, 0.01f);
                             }
-                            Destroy(shope.gameObject);
                         }
-                    }
-                    /*
-                    SellCellController[] sellcreep = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<SellCellController>(true);
-                    bool sellcreepflag = sellcreep != null && sellcreep.Length != 0;
-                    if (sellcreepflag)
-                    {
-                        foreach (SellCellController shope in sellcreep)
-                        {
-                            Destroy(shope.gameObject);
-                        }
-                    }
-                    */
-                    TalkDoerLite[] talkers = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<TalkDoerLite>(true);
-                    if (talkers != null && talkers.Length > 0)
-                    {
-                        foreach (TalkDoerLite shope in talkers)
-                        {
-                            //God fucking damnit i hate room icons so goddamn much
-                            ShopController shopController = shope.GetComponent<ShopController>();
-                            SellCellController sellCellController = shope.GetComponentInChildren<SellCellController>();
-                            //Debug.Log(shope.name);
-                            if (shopController != null)
-                            {
-                                continue;
-                            }
-                            if (sellCellController != null)
-                            {
-                                continue;
-                            }
-                            sellCellController = shope.GetComponent<SellCellController>();
-                            if (sellCellController != null)
-                            {
-                                continue;
-                            }
-                            sellCellController = shope.GetComponentInParent<SellCellController>();
-                            if (sellCellController != null)
-                            {
-                                continue;
-                            }
 
-                            if (sellCellController != null)
+                        GunberMuncherController[] muncher = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<GunberMuncherController>(true);
+                        if (muncher != null && muncher.Length > 0)
+                        {
+                            foreach (GunberMuncherController shope in muncher)
                             {
-                                continue;
-                            }
-                            if (shope.name.Contains("Truth_Knower"))
-                            {
-                                continue;
-                            }
-                            if (shope.gameObject.name.ToLower().Contains("red") && shope.gameObject.name.ToLower().Contains("button"))
-                            {
-                                continue;
-                            }
-
-                            if (!shope.gameObject.name.ToLower().Contains("jailed"))
-                            {
-                                if (!shope.gameObject.name.ToLower().Contains("bowlercell"))
+                                if (triggered == false)
                                 {
-                                    Destroy(shope.gameObject);
+                                    RoomHandler room = shope.transform.position.GetAbsoluteRoom();
+                                    List<GameObject> ICONS = new List<GameObject>();
+                                    var rTI = PlanetsideReflectionHelper.ReflectGetField<Dictionary<RoomHandler, List<GameObject>>>(typeof(Minimap), "roomToIconsMap", Minimap.Instance);
+                                    if (rTI.ContainsKey(room))
+                                    {
+                                        rTI.TryGetValue(room, out ICONS);
+                                        if (ICONS != null && ICONS.Count > 0)
+                                        {
+                                            for (int i = 0; i < ICONS.Count; i++)
+                                            {
+                                                if (ICONS[i].name.ToLower().Contains("muncher"))
+                                                {
+                                                    Minimap.Instance.DeregisterRoomIcon(room, ICONS[i]);
+
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    GameObject obj = new GameObject();
+                                    RoomHandler roomIn = GameManager.Instance.Dungeon.data.GetAbsoluteRoomFromPosition(base.transform.position.IntXY(VectorConversions.Floor));
+                                    StaticReferences.StoredRoomObjects.TryGetValue("VoidMuncher", out obj);
+                                    GameObject shopObj = DungeonPlaceableUtility.InstantiateDungeonPlaceable(obj, roomIn, new IntVector2((int)shope.gameObject.transform.position.x + 1, (int)shope.gameObject.transform.position.y + 1) - roomIn.area.basePosition, false);
+                                    IPlayerInteractable[] interfaces = shopObj.GetInterfaces<IPlayerInteractable>();
+                                    for (int j = 0; j < interfaces.Length; j++)
+                                    {
+                                        room.RegisterInteractable(interfaces[j]);
+                                    }
+                                    triggered = true;
                                 }
+                                Destroy(shope.gameObject);
                             }
-   
+                        }
+
+                        /*
+                        SellCellController[] sellcreep = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<SellCellController>(true);
+                        bool sellcreepflag = sellcreep != null && sellcreep.Length != 0;
+                        if (sellcreepflag)
+                        {
+                            foreach (SellCellController shope in sellcreep)
+                            {
+                                Destroy(shope.gameObject);
+                            }
+                        }
+                        */
+
+                        TalkDoerLite[] talkers = GameManager.Instance.Dungeon.data.Entrance.hierarchyParent.parent.GetComponentsInChildren<TalkDoerLite>(true);
+                        if (talkers != null && talkers.Length > 0)
+                        {
+                            foreach (TalkDoerLite shope in talkers)
+                            {
+                                //God fucking damnit i hate room icons so goddamn much
+                                ShopController shopController = shope.GetComponent<ShopController>();
+                                SellCellController sellCellController = shope.GetComponentInChildren<SellCellController>();
+                                //Debug.Log(shope.name);
+                                if (shopController != null)
+                                {
+                                    continue;
+                                }
+                                if (sellCellController != null)
+                                {
+                                    continue;
+                                }
+                                sellCellController = shope.GetComponent<SellCellController>();
+                                if (sellCellController != null)
+                                {
+                                    continue;
+                                }
+                                sellCellController = shope.GetComponentInParent<SellCellController>();
+                                if (sellCellController != null)
+                                {
+                                    continue;
+                                }
+
+                                if (sellCellController != null)
+                                {
+                                    continue;
+                                }
+                                if (shope.name.Contains("Truth_Knower"))
+                                {
+                                    continue;
+                                }
+                                if (shope.gameObject.name.ToLower().Contains("red") && shope.gameObject.name.ToLower().Contains("button"))
+                                {
+                                    continue;
+                                }
+
+                                if (!shope.gameObject.name.ToLower().Contains("jailed"))
+                                {
+                                    if (!shope.gameObject.name.ToLower().Contains("bowlercell"))
+                                    {
+                                        Destroy(shope.gameObject);
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
+                
             }
             else if (CurrentState == States.ENABLED)
             {

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2165839254
+CRC: 1440420086
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 34c079ca1732d8b61938f6895ff2d8c1
+    Hash: b6db7d30e391be2d4237eea24e6cc870
   TypeTreeHash:
     serializedVersion: 2
     Hash: 458548b0fa917ebe1d600c5fabf7780a
@@ -40,6 +40,7 @@ Assets:
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/annihichamber material.mat
 - Assets/Companions/CompanionCollection Data/CompanionCollection.prefab
 - Assets/Enemies/Skullvenant/SkullvenantCollection Data/SkullvenantCollection.prefab
+- Assets/Challenges/Landmines.png
 - Assets/Ammonomicon/Ammonomicon Icons/archgunjurericonsilly.png
 - Assets/Enemies/Blue Guys/Stagnant/StagnantAnimation.prefab
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0.png
@@ -100,6 +101,7 @@ Assets:
 - Assets/Items/Active Items/Active_Collection Data/Active_Collection.prefab
 - Assets/BossCards/shellrax_bosscard.png
 - Assets/UI/Alphabet Letters/letter_22.png
+- Assets/Challenges/shamberWatchman.png
 - Assets/UI/Alphabet Letters/letter_06.png
 - Assets/Enemies/Barretina/BarretinaAnimation.prefab
 - Assets/Ammonomicon/Ammonomicon Icons/stagnantTrespass.png
@@ -164,6 +166,7 @@ Assets:
 - Assets/Items/Guon Stones/PSOGGuonCollection Data/guonpsog material.mat
 - Assets/VFX/Random Bits/OddmentsCollection Data/OddmentsCollection.prefab
 - Assets/RoomObjects/RoomObjectAnimation.prefab
+- Assets/Challenges/leadStorm.png
 - Assets/UI/Alphabet Letters/letter_21.png
 - Assets/Enemies/Jammed Guardian/JammedGuardianCollection Data/JammedGuardianCollection.prefab
 - Assets/Enemies/Fodder/FodderCollection Data/atlas0 material.mat
@@ -183,6 +186,7 @@ Assets:
 - Assets/Ammonomicon/Ammonomicon Icons/barretinaiconthing.png
 - Assets/UI/Alphabet Letters/letter_24.png
 - Assets/Enemies/Fodder/fodder_die_007.png
+- Assets/Challenges/DiamondHeist.png
 - Assets/Enemies/Blue Guys/Oppressor/OppressorRightHandAnimation.prefab
 - Assets/Minibosses/Shellrax/ShellraxCollection Data/shellrax material.mat
 - Assets/Minibosses/AnnihiChamber/AnnihiChamberCollection Data/AnnihiChamberCollection.prefab
@@ -193,6 +197,7 @@ Assets:
 - Assets/VFX/Gradient_Round_White.png
 - Assets/Bosses/Ophanaim/OphanaimAnimation.prefab
 - Assets/Enemies/Blue Guys/Nemesis/NemesisAnimation.prefab
+- Assets/Bosses/Ophanaim/OphanaimBabyAnimation.prefab
 - Assets/UI/Alphabet Letters/letter_23.png
 - Assets/Bosses/Ophanaim/OphanaimCollection Data/OphanaimCollection.prefab
 - Assets/Enemies/SpecificEnemyAnimation.prefab

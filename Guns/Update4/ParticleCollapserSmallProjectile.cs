@@ -18,16 +18,12 @@ using UnityEngine.Serialization;
 
 namespace Planetside
 {
-	internal class ParticleCollapserSmallProjectile : MonoBehaviour
+	internal class ParticleCollapserSmallProjectile : Projectile
 	{
 		public ParticleCollapserSmallProjectile()
 		{
+
 		}
-        public void Start()
-        {
-            this.projectile = base.GetComponent<Projectile>();
-        } 
-        private Projectile projectile;
 	}
 }
 

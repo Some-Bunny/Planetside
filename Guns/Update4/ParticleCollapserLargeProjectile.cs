@@ -42,12 +42,6 @@ namespace Planetside
 				this.m_distortMaterial.SetVector("_WaveCenter", this.GetCenterPointInScreenUV(projectile.sprite.WorldCenter));
 				Pixelator.Instance.RegisterAdditionalRenderPass(this.m_distortMaterial);
 
-				Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-				mat.mainTexture = this.projectile.sprite.renderer.material.mainTexture;
-				mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-				mat.SetFloat("_EmissiveColorPower", 15.5f);
-				mat.SetFloat("_EmissivePower", 100);
-				this.projectile.sprite.renderer.material = mat;
 
 				ParticleCollapser.allRifts.Add(this.projectile);
 			}
@@ -71,7 +65,7 @@ namespace Planetside
 			}
 		}
 
-		public void Update()
+		public void FixedUpdate()
         {
             if (this.projectile != null)
             {
@@ -80,18 +74,24 @@ namespace Planetside
 					this.m_distortMaterial.SetVector("_WaveCenter", this.GetCenterPointInScreenUV(projectile.sprite.WorldCenter));
 				}
 
-				for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
-				{
-					if (StaticReferenceManager.AllProjectiles[i].gameObject.activeSelf)
-					{
-						if (StaticReferenceManager.AllProjectiles[i].enabled)
-						{
-							this.AdjustRigidbodyVelocity(StaticReferenceManager.AllProjectiles[i].specRigidbody);
-						}
-					}
-				}
 			}
         }
+
+		public void Update()
+		{
+
+            for (int i = 0; i < StaticReferenceManager.AllProjectiles.Count; i++)
+            {
+                if (StaticReferenceManager.AllProjectiles[i].gameObject.activeSelf)
+                {
+                    if (StaticReferenceManager.AllProjectiles[i].enabled)
+                    {
+                        this.AdjustRigidbodyVelocity(StaticReferenceManager.AllProjectiles[i].specRigidbody);
+                    }
+                }
+            }
+        }
+
 
 		public float damageRadius;
 		public float gravitationalForce;
@@ -110,56 +110,44 @@ namespace Planetside
 				Projectile projectile = other.projectile;
 				if (projectile)
 				{
-					if (other.GetComponent<BlackHoleDoer>() != null)
+
+					if (projectile is ParticleCollapserSmallProjectile needle)
 					{
-						return false;
-					}
-					if (other.GetComponent<ParticleCollapserSmallProjectile>() == null)
-					{
-						return false;
-					}
-					if (other.GetComponent<ParticleCollapserLargeProjectile>() != null)
-					{
-						return false;
-					}
-					if (velocity == Vector2.zero)
-					{
-						return false;
-					}
-					g = this.gravitationalForce;
-				}
-				
-				Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(other.UnitCenter, Mathf.Sqrt(num), g);
-				float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
-				Vector2 b = frameAccelerationForRigidbody * d;
-				Vector2 vector = velocity + b;
-				if (BraveTime.DeltaTime > 0.02f)
-				{
-					vector *= 0.02f / BraveTime.DeltaTime;
-				}
-				other.Velocity = vector;
-				if (projectile != null)
-				{
-					if (vector != Vector2.zero)
-					{
-						projectile.Direction = vector.normalized;
-						projectile.Speed = Mathf.Max(13f, vector.magnitude);
-						other.Velocity = projectile.Direction * projectile.Speed;
-						if (projectile.shouldRotate && (vector.x != 0f || vector.y != 0f))
-						{
-							float num2 = BraveMathCollege.Atan2Degrees(projectile.Direction);
-							if (!float.IsNaN(num2) && !float.IsInfinity(num2))
-							{
-								Quaternion rotation = Quaternion.Euler(0f, 0f, num2);
-								if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y))
-								{
-									projectile.transform.rotation = rotation;
-								}
-							}
-						}
+                        g = this.gravitationalForce;
+                        Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(other.UnitCenter, Mathf.Sqrt(num), g * Mathf.Min(1, needle.ElapsedTime));
+                        float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
+                        Vector2 b = frameAccelerationForRigidbody * d;
+                        Vector2 vector = velocity + b;
+                        if (BraveTime.DeltaTime > 0.02f)
+                        {
+                            vector *= 0.02f / BraveTime.DeltaTime;
+                        }
+                        other.Velocity = vector;
+                        if (projectile != null)
+                        {
+                            if (vector != Vector2.zero)
+                            {
+                                projectile.Direction = vector.normalized;
+                                projectile.Speed = Mathf.Max(13f, vector.magnitude);
+                                other.Velocity = projectile.Direction * projectile.Speed;
+                                if (projectile.shouldRotate && (vector.x != 0f || vector.y != 0f))
+                                {
+                                    float num2 = BraveMathCollege.Atan2Degrees(projectile.Direction);
+                                    if (!float.IsNaN(num2) && !float.IsInfinity(num2))
+                                    {
+                                        Quaternion rotation = Quaternion.Euler(0f, 0f, num2);
+                                        if (!float.IsNaN(rotation.x) && !float.IsNaN(rotation.y))
+                                        {
+                                            projectile.transform.rotation = rotation;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return true;
 					}
 				}
-				return true;
+
 			}
 			return false;
 		}

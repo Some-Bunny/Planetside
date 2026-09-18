@@ -32,7 +32,7 @@ namespace Planetside
 			if (!flag2)
 			{
 				prefab = EnemyBuilder.BuildPrefabBundle("Skullvenant", guid, Collection, 0, new IntVector2(0, 0), new IntVector2(8, 9),  false);
-				var companion = prefab.AddComponent<EnemyBehavior>();
+				var companion = prefab.GetComponent<AIActor>();
                 EnemyToolbox.QuickAssetBundleSpriteSetup(companion.aiActor, Collection, mat);
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
@@ -404,50 +404,7 @@ namespace Planetside
 
 		};
 
-		public class EnemyBehavior : BraveBehaviour
-		{
 
-			private RoomHandler m_StartRoom;
-
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
-			private void Start()
-			{
-
-                m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				base.aiActor.healthHaver.OnPreDeath += (obj) =>
-				{ 
-
-				};
-			}
-
-		}
 
 		public class EatPants : Script 
 		{

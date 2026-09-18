@@ -13,6 +13,10 @@ using AnimationType = ItemAPI.BossBuilder.AnimationType;
 using System.Collections;
 using Brave.BulletScript;
 using static UnityEngine.UI.GridLayoutGroup;
+using HarmonyLib;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using Alexandria.ItemAPI;
 
 namespace Planetside
 {
@@ -49,7 +53,7 @@ namespace Planetside
             new Hook(typeof(RatPackItem).GetMethod("EatBullet", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("EatBulletHook"));
 
 
-            new Hook(typeof(Chest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("OpenHook"));
+            //new Hook(typeof(Chest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic), typeof(PickupHooks).GetMethod("OpenHook"));
 
         }
 
@@ -59,8 +63,10 @@ namespace Planetside
             {
                 third.ForceHurtPlayer(self.LastOwner, p);
                 p.DieInAir(false, true, true, false);
-                PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self) + 1, self);
-                PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", Mathf.Clamp(PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self), 0, PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "MaxContainedBullets", self)), self);
+                self.m_containedBullets = Mathf.Min(self.m_containedBullets + 1, self.MaxContainedBullets);
+
+                //PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self) + 1, self);
+                //PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", Mathf.Clamp(PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self), 0, PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "MaxContainedBullets", self)), self);
             }
 
             var un = p.GetComponent<MarkForUndodgeAbleBullet>();
@@ -68,8 +74,10 @@ namespace Planetside
             {
                 un.ForceHurtPlayer(self.LastOwner, p);
                 p.DieInAir(false, true, true, false);
-                PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self)+1, self);
-                PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", Mathf.Clamp(PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self), 0, PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "MaxContainedBullets", self)), self);
+                self.m_containedBullets = Mathf.Min(self.m_containedBullets + 1, self.MaxContainedBullets);
+
+                //PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self)+1, self);
+                //PlanetsideReflectionHelper.ReflectSetField<int>(typeof(RatPackItem), "m_containedBullets", Mathf.Clamp(PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "m_containedBullets", self), 0, PlanetsideReflectionHelper.ReflectGetField<int>(typeof(RatPackItem), "MaxContainedBullets", self)), self);
             }
             else
             { orig(self, p); }
@@ -248,7 +256,7 @@ namespace Planetside
 
 
         public static void CanINotHaveTwoHookMethodsWithTheSameName(Action<AmmoPickup, PlayerController> orig, AmmoPickup self, PlayerController player)
-        {       
+        {
             orig(self, player);
             try
             {
@@ -257,6 +265,7 @@ namespace Planetside
                 var perl = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
                 if (perl != null)
                 {
+
                     SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_AMMO, true);
 
                     var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptedWealth.CorruptionVFXObject, self.sprite.WorldCenter, Quaternion.identity);
@@ -268,6 +277,7 @@ namespace Planetside
 
                     //int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.75f), 1);
                     //gungeon.SetBaseMaxAmmo(amo);
+ 
 
                     AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
                     DroneHover.Activate = true;
@@ -282,40 +292,6 @@ namespace Planetside
                     DroneHover.NumToTrigger = 1;
                     b = true;
                 }
-                /*
-                    //bool b = false;
-                if (b == false && player.GetComponent<CorruptedWealthController>() != null && player.CurrentGun != null)
-                {
-                    SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_AMMO, true);
-
-                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(365) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                    vfx.transform.position = player.sprite.WorldCenter;
-                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                    vfx.transform.localScale *= 1.5f;
-                    UnityEngine.Object.Destroy(vfx, 1);
-
-                    AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Capture_01", player.gameObject);
-
-                    Gun gungeon = player.CurrentGun;
-
-                    //int amo = Mathf.Max((int)(gungeon.AdjustedMaxAmmo * 0.75f), 1);
-                    //gungeon.SetBaseMaxAmmo(amo);
-
-                    AdvancedHoveringGunProcessor DroneHover = gungeon.gameObject.AddComponent<AdvancedHoveringGunProcessor>();
-                    DroneHover.Activate = true;
-                    DroneHover.ConsumesTargetGunAmmo = true;
-                    DroneHover.AimType = CustomHoveringGunController.AimType.PLAYER_AIM;
-                    DroneHover.PositionType = CustomHoveringGunController.HoverPosition.CIRCULATE;
-                    DroneHover.FireType = CustomHoveringGunController.FireType.ON_FIRED_GUN;
-                    DroneHover.UsesMultipleGuns = true;
-                    DroneHover.TargetGunIDs = new List<int> { gungeon.PickupObjectId };
-                    DroneHover.FireCooldown = player.CurrentGun.DefaultModule != null ? player.CurrentGun.DefaultModule.cooldownTime * 0.85f : 0.1f;
-                    DroneHover.FireDuration = 0.1f;
-                    DroneHover.NumToTrigger = 1;
-                    //gungeon.ammo = Mathf.Max(gungeon.ammo, gungeon.AdjustedMaxAmmo);
-                    //b = true;
-                }
-                */
             }
             catch (Exception e)
             {
@@ -327,43 +303,50 @@ namespace Planetside
 
 
 
-        public static void OpenHook(Action<Chest, PlayerController> orig, Chest self, PlayerController player)
+        [HarmonyPatch(typeof(Chest), nameof(Chest.Open))]
+        public class Patch_Chest_Open
         {
-
-            var perk = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
-            if (perk != null)
+            [HarmonyPrefix]
+            private static void OverrideCanTeleport(Chest __instance, PlayerController player)
             {
-                if (self.ChestIdentifier != Chest.SpecialChestIdentifier.NORMAL )
+
+                var perk = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
+                if (perk != null)
                 {
-                    float amountKeysCurrent = perk.AmountOfCorruptKeys;
-                    if (amountKeysCurrent > 1)
+                    if (__instance.ChestIdentifier == Chest.SpecialChestIdentifier.NORMAL)
                     {
-                        SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
-                        var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptedWealth.CorruptionVFXObject, self.sprite.WorldCenter, Quaternion.identity);
-                        obj.PlayAndDestroyObject("corrupt_key");
-                        AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
-                        for (int i = 0; i < amountKeysCurrent; i++)
+                        float amountKeysCurrent = perk.AmountOfCorruptKeys;
+                        if (amountKeysCurrent > 1)
                         {
-                            if (self.contents == null)
+                            SaveAPI.AdvancedGameStatsManager.Instance.SetFlag(SaveAPI.CustomDungeonFlags.CORRUPTEDWEALTH_FLAG_KEY, true);
+                            var obj = UnityEngine.Object.Instantiate<tk2dSpriteAnimator>(CorruptedWealth.CorruptionVFXObject, __instance.sprite.WorldCenter, Quaternion.identity);
+                            obj.PlayAndDestroyObject("corrupt_key");
+                            AkSoundEngine.PostEvent("Play_BOSS_DragunGold_Crackle_01", player.gameObject);
+                            for (int i = 0; i < amountKeysCurrent; i++)
                             {
-                                self.contents = new List<PickupObject>();
-                            }
-                            self.contents.Add(self.lootTable.GetItemsForPlayer(player, 0, null).First());
-                            perk.AmountOfCorruptKeys--;
-                            if (i > 0)
-                            {
-                                player.carriedConsumables.KeyBullets--;
+                                if (__instance.contents == null)
+                                {
+                                    __instance.contents = new List<PickupObject>();
+                                }
+                                __instance.contents.Add(__instance.lootTable.GetItemsForPlayer(player, 0, null).First());
+                                perk.AmountOfCorruptKeys--;
+                                if (i > 0)
+                                {
+                                    player.carriedConsumables.KeyBullets--;
+                                }
                             }
                         }
+                        else
+                        {
+                            perk.AmountOfCorruptKeys--;
+                        }
                     }
-                    else
-                    {
-                        perk.AmountOfCorruptKeys--;
-                    }
-                }        
+                }
             }
-            orig(self, player);
         }
+
+
+
 
 
         public static void UpdateBlanksHook(Action<GameUIRoot, PlayerController> orig, GameUIRoot self, PlayerController player)
@@ -455,25 +438,6 @@ namespace Planetside
                 }
                 perl.AmountOfArmorConsumed += self.armorAmount;
             }
-            /*
-            CorruptedWealthController c = player.GetComponent<CorruptedWealthController>();
-            if (c != null)
-            {
-
-
-                c.ProcessDamageModsRedHP(self.healAmount);
-                if (self.armorAmount > 0)
-                {
-                    GameObject vfx = SpawnManager.SpawnVFX((PickupObjectDatabase.GetById(385) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapVertical.effects.First().effects.First().effect, true);
-                    vfx.transform.position = player.sprite.WorldCenter;
-                    vfx.GetComponent<tk2dBaseSprite>().HeightOffGround = 22;
-                    vfx.transform.localScale *= 2;
-                    vfx.transform.localRotation = Quaternion.Euler(0, 0, Vector2.up.ToAngle()); 
-                    UnityEngine.Object.Destroy(vfx, 2);
-                }
-                c.AmountOfArmorConsumed += self.armorAmount;
-            }
-            */
         }
 
         public static void KeyBulletPickupUpdateHook(Action<KeyBulletPickup> orig, KeyBulletPickup self)
@@ -599,6 +563,46 @@ namespace Planetside
                 else
                 {
                     orig(self, player, selfBody);
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch]
+        private static class SpawnItemOnRoomClearItem_RoomCleared_Patch
+        {
+            [HarmonyPatch(typeof(LootEngine), nameof(LootEngine.SpawnItem))]
+            [HarmonyILManipulator]
+            private static void GameUIAmmoControllerUpdateUIGunIL(ILContext il)
+            {
+                ILCursor cursor = new ILCursor(il);
+
+                if (!cursor.TryGotoNext(MoveType.Before,
+                    instr => instr.MatchLdloc(8)))
+                    return;
+
+                cursor.Emit(OpCodes.Ldloc_2);
+                cursor.Emit(OpCodes.Call, typeof(SpawnItemOnRoomClearItem_RoomCleared_Patch).GetMethod("ModifyPickup", BindingFlags.Static | BindingFlags.NonPublic));
+            }
+
+            private static void ModifyPickup(GameObject regenerationPassiveItem)
+            {
+                var pickup = regenerationPassiveItem.GetComponent<PickupObject>();
+                if (pickup)
+                {
+                    if (pickup.PickupObjectId == Pickups.Key.PickupObjectId)
+                    {
+                        foreach (PlayerController player in GameManager.Instance.AllPlayers)
+                        {
+                            var perl = player.HasPerk(CorruptedWealth.CorruptedWealthID) as CorruptedWealth;
+                            if (perl != null)
+                            {
+                                CorruptedPickupController corruptedPickup = pickup.GetOrAddComponent<CorruptedPickupController>();
+                                corruptedPickup.pickup = CorruptedPickupController.PickupType.KEY;
+                            }
+                        }
+                    }
                 }
             }
         }

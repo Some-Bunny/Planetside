@@ -16,6 +16,7 @@ using Pathfinding;
 using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
+using Alexandria.PrefabAPI;
 namespace Planetside
 {
 	public class SpawnAdditionalBulletScript : OverrideBehaviorBase
@@ -430,81 +431,36 @@ namespace Planetside
 		public static List<GameObject> BuildVFX()
 		{
             GeneratedInfectionCrystals = new List<GameObject>();
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", new List<string>()
-            {
-                "bigblob1_001",
-                "bigblob1_002",
-                "bigblob1_003",
-                "bigblob1_004",
-
-            }, 6));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", new List<string>()
-            {
-                "bigblob1_001",
-                "bigblob1_002",
-                "bigblob1_003",
-                "bigblob1_004",
-
-            }, 3));
-
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", new List<string>()
-            {
-                "bigblob2_001",
-                "bigblob2_002",
-                "bigblob2_003",
-                "bigblob2_004",
-
-            }, 4));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob4", new List<string>()
-            {
-                "bigblob2_001",
-                "bigblob2_002",
-                "bigblob2_003",
-                "bigblob2_004",
-
-            }, 7));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob5", new List<string>()
-            {
-                "bigblob3_001",
-                "bigblob3_002",
-                "bigblob3_003",
-                "bigblob3_004",
-            }, 5));
-			return GeneratedInfectionCrystals;
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", "bigBlob_1"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", "bigBlob_2"));
+            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", "bigBlob_3"));
+            return GeneratedInfectionCrystals;
         }
 
 
-		private static GameObject GenerateInfectionCrystalFromPath(string name, List<string> spritePaths, int FPS)
+		private static GameObject GenerateInfectionCrystalFromPath(string name, string AnimationName)
 		{
-            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
-            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle(name, debuffCollection.GetSpriteIdByName(spritePaths.First()), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
-            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
-            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
-            tk2dBaseSprite vfxSprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
-            vfxSprite.GetCurrentSpriteDef().ConstructOffsetsFromAnchor(tk2dBaseSprite.Anchor.LowerCenter, vfxSprite.GetCurrentSpriteDef().position3);
 
-            BrokenArmorVFXObject.GetOrAddComponent<tk2dBaseSprite>();
-            tk2dSpriteAnimator animator = BrokenArmorVFXObject.GetOrAddComponent<tk2dSpriteAnimator>();
-            var clip = SpriteBuilder.AddAnimation(animator, debuffCollection, new List<int>()
-            {
-				debuffCollection.GetSpriteIdByName(spritePaths[0]),
-                debuffCollection.GetSpriteIdByName(spritePaths[1]),
-                debuffCollection.GetSpriteIdByName(spritePaths[2]),
-                debuffCollection.GetSpriteIdByName(spritePaths[3]),
-            }, "start", tk2dSpriteAnimationClip.WrapMode.Loop, FPS);
+            GameObject gameObject = PrefabBuilder.BuildObject($"InfectionBlob {name}");
+            var sprite = gameObject.AddComponent<tk2dSprite>();
+            var spriteAnimator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "blob_1");
+            spriteAnimator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = spriteAnimator.GetClipIdByName(AnimationName);
 
-
-            vfxSprite.usesOverrideMaterial = true;
+            sprite.usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            mat.mainTexture = vfxSprite.renderer.material.mainTexture;
+            mat.mainTexture = sprite.renderer.material.mainTexture;
             mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
-            mat.SetFloat("_EmissiveColorPower", 2f);
-            mat.SetFloat("_EmissivePower", 35);
-            vfxSprite.renderer.material = mat;
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 8);
+            mat.SetFloat("_EmissiveThresholdSensitivity", 0.25f);
+            sprite.renderer.material = mat;
 
-            animator.DefaultClipId = animator.GetClipIdByName("start");
-            animator.playAutomatically = true;
-            return BrokenArmorVFXObject;
+
+
+            return gameObject;
         }
 
 		public static List<GameObject> GeneratedInfectionCrystals;

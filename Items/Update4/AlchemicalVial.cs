@@ -48,10 +48,10 @@ namespace Planetside
             AlchemicalVial.spriteIDs.Add("tarnish", data.GetSpriteIdByName("precursor6"));//SpriteBuilder.AddSpriteToCollection(AlchemicalVial.spritePaths[5], activeitem.sprite.Collection));
 
 
-            AlchemicalVial.ActiveIDS.Add("fire");
-            AlchemicalVial.ActiveIDS.Add("poison");
+            //activeitem.ActiveIDS.Add("fire");
+            //activeitem.ActiveIDS.Add("poison");
 
-            CurrentCount = 1;
+            activeitem.CurrentCount = 0;
             List<string> mandatoryConsoleIDs = new List<string>
             {
                 "psog:projectile_transmutator",
@@ -117,7 +117,7 @@ namespace Planetside
             {"frail", Color.magenta},
             {"cheese", Color.yellow},
             {"nAn", Color.white},
-            {"tarnish", Color.green},
+            {"tarnish", Color.yellow},
         };
 
         private Dictionary<string, string> SynergyKeys = new Dictionary<string, string>()
@@ -134,6 +134,10 @@ namespace Planetside
             CanSwitch = true;
             base.Pickup(player);
             player.OnReloadPressed += reloadPressed;
+            string c = this.ActiveIDS[CurrentCount] != null ? this.ActiveIDS[CurrentCount] : "nAn";
+            int yes;
+            AlchemicalVial.spriteIDs.TryGetValue(c, out yes);
+            base.sprite.SetSprite(yes);
         }
         public void reloadPressed(PlayerController player, Gun gun)
         {
@@ -141,15 +145,18 @@ namespace Planetside
             {
                 AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", player.gameObject);
                 CurrentCount++;
-                if (CurrentCount == ActiveIDS.Count+1) { CurrentCount = 1; }
+                if (CurrentCount >= ActiveIDS.Count) { CurrentCount = 0; }
                 int yes;
-                string c = AlchemicalVial.ActiveIDS[CurrentCount - 1] != null ? AlchemicalVial.ActiveIDS[CurrentCount - 1] : "nAn";
+                string c = this.ActiveIDS[CurrentCount] != null ? this.ActiveIDS[CurrentCount] : "nAn";
                 AlchemicalVial.spriteIDs.TryGetValue(c, out yes);
                 base.sprite.SetSprite(yes);
                 player.BloopItemAboveHead(base.sprite);
                 player.StartCoroutine(Cooldown());
             }
         }
+
+        //private bool 
+
         public override void Update()
         {
             base.Update();
@@ -167,9 +174,9 @@ namespace Planetside
                 if (CurrentCount == ActiveIDS.Count + 1) 
                 {
                     AkSoundEngine.PostEvent("Play_ENM_wizardred_appear_01", base.LastOwner.gameObject);
-                    CurrentCount = 1;
+                    CurrentCount = 0;
                     int yes;
-                    AlchemicalVial.spriteIDs.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount-1], out yes);
+                    AlchemicalVial.spriteIDs.TryGetValue(this.ActiveIDS[CurrentCount], out yes);
                     base.sprite.SetSprite(yes);
                     base.LastOwner.BloopItemAboveHead(base.sprite);
                 }              
@@ -180,6 +187,12 @@ namespace Planetside
             CanSwitch = true;
             player.OnReloadPressed -= reloadPressed;
             base.OnPreDrop(player);
+
+            CurrentCount = 0;
+
+
+            base.sprite.SetSprite(AlchemicalVial.spriteIDs["nAn"]);
+            //AlchemicalVial.spriteIDs
         }
 
         public override void OnDestroy()
@@ -206,10 +219,10 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_OBJ_bottle_cork_01", user.gameObject);
 
             GoopDefinition goop = null;
-            AlchemicalVial.GoopKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1], out goop);
+            AlchemicalVial.GoopKeys.TryGetValue(this.ActiveIDS[CurrentCount], out goop);
 
             Color color = new Color();
-            ColorKeys.TryGetValue(AlchemicalVial.ActiveIDS[CurrentCount - 1] != null ? AlchemicalVial.ActiveIDS[CurrentCount - 1] : "nAn", out color);
+            ColorKeys.TryGetValue(this.ActiveIDS[CurrentCount] != null ? this.ActiveIDS[CurrentCount] : "nAn", out color);
             float rad = user.PlayerHasActiveSynergy("You Killed Us All!") == true ? 4.5f : 2.25f;
             for (int i = StaticReferenceManager.AllProjectiles.Count - 1; i > -1; i--)
             {
@@ -227,10 +240,10 @@ namespace Planetside
         private IEnumerator DoTinyDelay(PlayerController user, Projectile proj, GoopDefinition goop, Color color, float  Rad)
         {
             float r = UnityEngine.Random.Range(0.01f, 0.2f);
+            proj.baseData.range += proj.baseData.speed * r;
             yield return new WaitForSeconds(r);
             if (proj)
             {
-                proj.baseData.range += proj.baseData.speed * r;
 
                 DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(goop != null ? goop : EasyGoopDefinitions.FireDef).TimedAddGoopCircle(proj.transform.PositionVector2(), Rad, 0.5f, false);
                 GameObject PoofVFX = (GameObject)UnityEngine.Object.Instantiate(StaticVFXStorage.BlueSynergyPoofVFX, proj.transform.position, Quaternion.identity);
@@ -284,8 +297,12 @@ namespace Planetside
 
 
         private static Dictionary<string, int> spriteIDs = new Dictionary<string, int>();
-        private static List<string> ActiveIDS = new List<string>();
-        private static int CurrentCount;
+        public List<string> ActiveIDS = new List<string>()
+        {
+            "fire",
+            "poison"
+        };
+        public int CurrentCount = 0;
 
 
     }

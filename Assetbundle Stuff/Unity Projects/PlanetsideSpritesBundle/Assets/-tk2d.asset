@@ -193,6 +193,10 @@ MonoBehaviour:
     dataGUID: 
     managed: 0
     loadable: 0
+  - assetGUID: ee4cb1bcf15bf1645a26b63c7ceb1864
+    dataGUID: 
+    managed: 0
+    loadable: 0
   fontIndex:
   - assetGUID: 063b15d80dbb4604d890600a64c79cf8
     dataGUID: e7a6b09a73c6b2b4f8060096ddbd3b5e
@@ -5761,6 +5765,7 @@ MonoBehaviour:
     - GreedyPsog
     - geomancy
     - allSeeingEyeFun
+    - psogmalice
     spriteTextureGUIDs:
     - 85686bfc703725c409d237262dc01017
     - f118b8a9002009f40878edb5887f3ab8
@@ -5781,6 +5786,7 @@ MonoBehaviour:
     - 0ccf83ab06672284d9051b711ef48529
     - 3e736d161203bda438ef111ab54c1067
     - 5d395ec1bba601841b44b3ed42fc4fe9
+    - f28397a9a395c214ca2bf172d4f214fd
     spriteTextureTimeStamps:
     - 1738023068.24029
     - 1738023068.24029
@@ -5801,6 +5807,7 @@ MonoBehaviour:
     - 1753296480.05608
     - 1753299363.4916
     - 1768756244.58079
+    - 1789509246.23414
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -11824,6 +11831,25 @@ MonoBehaviour:
     - oldvent_basic_003
     - oldvent_basic_004
     - oldvent_coverAround_001
+    - professionalsniperturret_front_idle3
+    - sniperturret_left_idle1
+    - sniperturret_right_idle1
+    - professionalsniperturret_front_idle1
+    - sniperturret_front_idle1
+    - professionalsniperturret_right_idle2
+    - professionalsniperturret_right_idle3
+    - professionalsniperturret_right_idle4
+    - professionalsniperturret_left_idle1
+    - professionalsniperturret_right_idle1
+    - sniperturret_front_idle
+    - professionalsniperturret_front_idle2
+    - sniperturret_right_idle2
+    - sniperturret_right_idle3
+    - sniperturret_right_idle4
+    - sniperturret_front_idle4
+    - sniperturret_front_idle2
+    - sniperturret_front_idle3
+    - professionalsniperturret_front_idle4
     spriteTextureGUIDs:
     - 23c6a39626d58c94d85d5d5b1642ccf7
     - c8968b40667d1a6459270644e9bb90f3
@@ -12524,6 +12550,25 @@ MonoBehaviour:
     - 8414386b2c930bf419ad575c2b5a372c
     - 6644daa3c2f9dc343988a6957c35d7ac
     - b3e0761661854dd4b8a60bcd3d159872
+    - fb4bae9b0f3026e4896d83b0ca0aae33
+    - b4669ea449508be4da1c89106e052b95
+    - e1bb1d6e0dadd204da8878a968c810c6
+    - 8249a6a97ce0aee4e95ba0d9706efa6e
+    - 2ad34d8ddf33b18448567dcc9e8a862f
+    - 860c702bf07ff3e4f8d4caa114336947
+    - a4d5317ca7a68534a8a8c67f32fa3445
+    - e42a5f7b5c8c15c4b9eb95b23593e802
+    - d126bd44b0127b54d81c614f3107beb8
+    - 1a534da614a6fc34893598299d321270
+    - 106312bc26c058b4182e94f6e2b2196c
+    - 1057e4a3e29a918418211848bbc1d973
+    - c55d73902fa8bad4a99ec9e77b18db7e
+    - cdfb045b00ae426448a8325796ac66d5
+    - 4fc1a2ba43fbd114db7705b9a4d912a0
+    - b54398b3d0c775342999f4b45dfb73f5
+    - 472fa94e1f4ac874d9883afd9959ed34
+    - d797b11b98adf444fbcf69ce98c88c77
+    - d5813c9362f8eea479dd37563804d7e7
     spriteTextureTimeStamps:
     - 1739376732.80184
     - 1739376732.80529
@@ -13223,7 +13268,26 @@ MonoBehaviour:
     - 1787323990.23984
     - 1787323990.29985
     - 1787323990.35985
-    - 1787353576.84845
+    - 1787353665.39886
+    - 1738023121.27357
+    - 1738023121.27257
+    - 1738023121.27257
+    - 1738023121.27357
+    - 1738023121.27041
+    - 1738023121.2772
+    - 1738023121.2772
+    - 1738023121.27821
+    - 1738023121.2772
+    - 1738023121.2772
+    - 1738023121.27041
+    - 1738023121.27357
+    - 1738023121.27257
+    - 1738023121.27257
+    - 1738023121.27357
+    - 1738023121.27257
+    - 1738023121.27041
+    - 1738023121.27041
+    - 1738023121.2772
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
@@ -13536,6 +13600,14 @@ MonoBehaviour:
     - confusedchamber2
     - confusedchamber3
     - confusedchamber4
+    - mithrixleap_001
+    - mithrixland_006
+    - mithrixland_005
+    - mithrixland_004
+    - mithrixland_002
+    - mithrixfalling_001
+    - mithrixland_001
+    - mithrixland_003
     spriteTextureGUIDs:
     - eca28c23f3bbad849892a7a84325ac13
     - e1e4963a6b208ff4aa52af8f64f78f86
@@ -13780,6 +13852,14 @@ MonoBehaviour:
     - 9c6b08c6190300449aa53b41a7d6689a
     - 437d8d1cb534ac54ea403a02926dd12e
     - 72f06c3bffc5666498842d4b26c15d3f
+    - 2881e3dda607d2647a154fba8dd8cdc2
+    - b9e8e22f545686546b7942f212b0b071
+    - 2c03869f4f906114b8811f453002972d
+    - 2caa6240929ba1f46bea7e403b30aeed
+    - 4c0349faa64253343a759002f99a2b77
+    - c4b8aeb3a55c92f42b0357125763cc64
+    - 3f14ff6a9d4600744b254a0425339667
+    - bedd6e11a75402a40bb7d5e2d3a621df
     spriteTextureTimeStamps:
     - 1738023070.98278
     - 1738023071.08478
@@ -13916,9 +13996,9 @@ MonoBehaviour:
     - 1746024484.99299
     - 1746024484.98061
     - 1746024484.98385
-    - 1746041152.72166
+    - 1789508843.85805
     - 1746041126.74188
-    - 1746041152.71866
+    - 1789508843.79066
     - 1746041126.74586
     - 1751511228.74957
     - 1751511228.74657
@@ -14024,6 +14104,14 @@ MonoBehaviour:
     - 1738023126.04221
     - 1738023126.04221
     - 1738023126.04221
+    - 1738023126.31635
+    - 1738023126.31538
+    - 1738023126.31538
+    - 1738023126.28839
+    - 1738023126.28839
+    - 1738023126.28839
+    - 1738023126.28839
+    - 1738023126.28839
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

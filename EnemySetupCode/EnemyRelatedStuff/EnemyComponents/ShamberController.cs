@@ -413,9 +413,9 @@ public class ShamberController : BraveBehaviour
                     proj.ManualControl = false;
 
                     proj.collidesWithEnemies = base.aiActor.CanTargetEnemies;
+                    proj.UpdateCollisionMask();
                     proj.specRigidbody.CollideWithTileMap = true;
                     proj.collidesWithPlayer = true;
-                    proj.UpdateCollisionMask();
                     proj.Direction = proj.transform.PositionVector2() - this.aiActor.sprite.WorldCenter;
                     proj.baseData.range = 100;
                     proj.ResetDistance();
@@ -430,7 +430,7 @@ public class ShamberController : BraveBehaviour
                     {
                         proj.baseData.UsesCustomAccelerationCurve = true;
                         proj.baseData.CustomAccelerationCurveDuration = 2.5f;
-
+                        proj.m_timeElapsed = 0;
                         proj.baseData.AccelerationCurve = new AnimationCurve()
                         {
                             postWrapMode = WrapMode.ClampForever,
@@ -444,7 +444,6 @@ public class ShamberController : BraveBehaviour
                         proj.baseData.speed = Mathf.Min(this.m_bulletPositions[i].speed, 25);
                     }
                     proj.UpdateSpeed();
-                    proj.IgnoreTileCollisionsFor(0.25f);
                 }
             }
         }

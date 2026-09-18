@@ -16,6 +16,7 @@ using MonoMod;
 using Brave.BulletScript;
 using GungeonAPI;
 using Alexandria;
+using Alexandria.PrefabAPI;
 
 namespace Planetside
 {
@@ -97,12 +98,6 @@ namespace Planetside
 		{
             GeneratedInfectionCrystals = new List<GameObject>();
             GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob1", "blob_1"));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob2", "blob_2"));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob3", "blob_3"));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob4", "blob_4"));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob5", "blob_5"));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob6", "blob_6"));
-            GeneratedInfectionCrystals.Add(GenerateInfectionCrystalFromPath("Blob7", "blob_7"));
             return GeneratedInfectionCrystals;
         }
 
@@ -110,19 +105,26 @@ namespace Planetside
 
         private static GameObject GenerateInfectionCrystalFromPath(string name, string fileName)
         {
-            var debuffCollection = StaticSpriteDefinitions.VFX_Sheet_Data;
-            var BrokenArmorVFXObject = ItemBuilder.AddSpriteToObjectAssetbundle(name, debuffCollection.GetSpriteIdByName(fileName), debuffCollection);//new GameObject("Broken Armor");//SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/Debuffs/brokenarmor", new GameObject("BrokenArmorEffect"));
-            FakePrefab.MarkAsFakePrefab(BrokenArmorVFXObject);
-            UnityEngine.Object.DontDestroyOnLoad(BrokenArmorVFXObject);
-			var sprite = BrokenArmorVFXObject.GetComponent<tk2dBaseSprite>();
+
+            GameObject gameObject = PrefabBuilder.BuildObject("InfectionBlob");
+            var sprite = gameObject.AddComponent<tk2dSprite>();
+            var spriteAnimator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "blob_1");
+            spriteAnimator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+            spriteAnimator.playAutomatically = true;
+            spriteAnimator.defaultClipId = spriteAnimator.GetClipIdByName("blob_rand");
+
             sprite.usesOverrideMaterial = true;
             Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
             mat.mainTexture = sprite.renderer.material.mainTexture;
             mat.SetColor("_EmissiveColor", new Color32(0, 255, 255, 255));
-            mat.SetFloat("_EmissiveColorPower", 2f);
-            mat.SetFloat("_EmissivePower", 35);
+            mat.SetFloat("_EmissiveColorPower", 8f);
+            mat.SetFloat("_EmissivePower", 8);
+            mat.SetFloat("_EmissiveThresholdSensitivity", 0.25f);
             sprite.renderer.material = mat;
-            return BrokenArmorVFXObject;
+
+
+            return gameObject;
         }
 
         public static List<GameObject> GeneratedInfectionCrystals;

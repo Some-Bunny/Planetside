@@ -57,7 +57,18 @@ namespace Planetside
 			templateDef.baseColor32 = new Color32(120, 30, 10, 255);
 			templateDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
 			templateDef.lifespan = 7;
-			item.AddItemTip("Grants a small damage up and projectile speed up. Slain enemies create a pool of goop of whatever debuff they currently have. If the enemy has multiple debuffs, one is chosen at random.");
+			templateDef.goopDamageTypeInteractions = new List<GoopDefinition.GoopDamageTypeInteraction>()
+			{
+				new GoopDefinition.GoopDamageTypeInteraction()
+				{
+					damageType = CoreDamageTypes.None,
+					electrifiesGoop = false,
+					freezesGoop = false,
+					ignitionMode = GoopDefinition.GoopDamageTypeInteraction.GoopIgnitionMode.NONE
+				}
+			};
+
+            item.AddItemTip("Grants a small damage up and projectile speed up. Slain enemies create a pool of goop of whatever debuff they currently have. If the enemy has multiple debuffs, one is chosen at random.");
 
         }
 

@@ -346,6 +346,11 @@ namespace Planetside.DungeonPlaceables
                 InitializeStart_ = this.StartCoroutine(InitializeStart());
             }
 
+            public virtual bool PreSetup()
+            {
+                return true;
+            }
+
             public IEnumerator InitializeStart()
             {
                 allBurieds.Add(this);
@@ -359,8 +364,14 @@ namespace Planetside.DungeonPlaceables
                 {
                     yield return null;
                 }
-
+                if (!PreSetup())
+                {
+                    Destroy(this.gameObject);
+                    yield break;
+                }
                 
+
+
 
                 yield return null;
                 yield return null;
@@ -453,6 +464,7 @@ namespace Planetside.DungeonPlaceables
             public override void OnDestroy()
             {
                 base.OnDestroy();
+                allBurieds.Remove(this);
                 Actions.OnConsumableBlank -= OnBlank;
                 Actions.OnExplosionCompleted -= OnNearbyExplosion;
             }

@@ -37,7 +37,6 @@ namespace Planetside
                 PickupObjectDatabase.GetById(EyeOfAnnihilation.EyeOfAnnihilationID).PickupObjectId,
                 PickupObjectDatabase.GetById(EyeOfAnnihilation.EyeOfAnnihilationID).PickupObjectId,
                 PickupObjectDatabase.GetById(EyeOfAnnihilation.EyeOfAnnihilationID).PickupObjectId,
-                PickupObjectDatabase.GetById(EyeOfAnnihilation.EyeOfAnnihilationID).PickupObjectId,
                 PickupObjectDatabase.GetById(EyeOfAnnihilation.EyeOfAnnihilationID).PickupObjectId,};
             DroneHover.FireCooldown = .25f;
             DroneHover.FireDuration = 0;

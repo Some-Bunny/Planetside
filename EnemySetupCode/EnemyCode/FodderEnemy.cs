@@ -66,11 +66,12 @@ namespace Planetside
 				companion.aiActor.IgnoreForRoomClear = true;
 
 				Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:MaliceUmbralBan");
 
 
-				//companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
+                //companion.gameObject.GetOrAddComponent<TeleportationImmunity>();
 
-				companion.aiActor.healthHaver.SetHealthMaximum(2f, null, false);
+                companion.aiActor.healthHaver.SetHealthMaximum(2f, null, false);
 				companion.aiActor.specRigidbody.PixelColliders.Clear();
 				companion.aiActor.specRigidbody.PixelColliders.Add(new PixelCollider
 				{
@@ -235,8 +236,13 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:fodder").ForcedPositionInAmmonomicon = 80;
 				EnemyDatabase.GetEntry("psog:fodder").isInBossTab = false;
 				EnemyDatabase.GetEntry("psog:fodder").isNormalEnemy = true;
-				//EnemyBuilder.SetupEntry(companion.aiActor, "Hells Bells", "These urns of past Gundead can be seen scattered around the Gungeon, with Gungeonners showing little respect to the contents inside.", "Planetside/Resources/Ammocom/johan", "Planetside/Resources/Fodder/fodder_idle_001", "Fodder");
-				/*
+
+
+                companion.aiActor.knockbackDoer.SetImmobile(true, "IM A BELL.");
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
+                companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
+                //EnemyBuilder.SetupEntry(companion.aiActor, "Hells Bells", "These urns of past Gundead can be seen scattered around the Gungeon, with Gungeonners showing little respect to the contents inside.", "Planetside/Resources/Ammocom/johan", "Planetside/Resources/Fodder/fodder_idle_001", "Fodder");
+                /*
 				SpriteBuilder.AddSpriteToCollection("Planetside/Resources/Fodder/fodder_idle_001.png", SpriteBuilder.ammonomiconCollection);
 				//FOR BOSSES USE BOSS ICONS
 				if (companion.GetComponent<EncounterTrackable>() != null)
@@ -266,7 +272,7 @@ namespace Planetside
 				EnemyDatabase.GetEntry("psog:fodder").isNormalEnemy = true;
 				*/
 
-			}
+            }
 		}
 
 
@@ -300,15 +306,9 @@ namespace Planetside
 		public class EnemyBehavior : BraveBehaviour
 		{
 
-			private RoomHandler m_StartRoom;
 
 			public void Update()
 			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
 				/*
                 Material outlineMaterial1 = SpriteOutlineManager.GetOutlineMaterial(this.aiActor.sprite);
                 if (outlineMaterial1 != null)
@@ -322,33 +322,11 @@ namespace Planetside
 				*/
 
             }
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+
 			private void Start()
 			{
-				this.aiActor.knockbackDoer.SetImmobile(true, "IM A BELL.");
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("796a7ed4ad804984859088fc91672c7f").bulletBank.bulletBank.GetBullet("default"));
-				base.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("6c43fddfd401456c916089fdd1c99b1c").bulletBank.GetBullet("sweep"));
 
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
+
 				base.aiActor.healthHaver.OnPreDeath += (obj) =>
 				{ 
 				  AkSoundEngine.PostEvent("Play_WPN_Life_Orb_Fade_01", base.aiActor.gameObject);

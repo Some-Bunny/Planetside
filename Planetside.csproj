@@ -305,6 +305,7 @@
     <Compile Include="NPC Stuff\ExampleFSM.cs" />
     <Compile Include="NPC Stuff\Helper\AdvancedDialogueBox.cs" />
     <Compile Include="Pickups\AllSeeingEyeMiniPickup.cs" />
+    <Compile Include="Pickups\Perkthings\Malice.cs" />
     <Compile Include="Pickups\Perkthings\HollowWalls.cs" />
     <Compile Include="Pickups\Perkthings\PerkHelper.cs" />
     <Compile Include="Static Storage\CustomSlash\CustomSlashDoer.cs" />

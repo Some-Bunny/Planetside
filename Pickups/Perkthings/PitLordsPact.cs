@@ -7,6 +7,7 @@ using System.Reflection;
 using MonoMod.RuntimeDetour;
 using System.Collections.Generic;
 using SaveAPI;
+using HarmonyLib;
 
 namespace Planetside
 {
@@ -838,5 +839,22 @@ namespace Planetside
 
             this.TemporaryFlightTime = 1;
         */
+
+        [HarmonyPatch(typeof(DebrisObject), nameof(DebrisObject.HandleWallOrPitDeflection))]
+        public class Patch_AIActor_TeleportSomewhere
+        {
+            [HarmonyPrefix]
+            private static bool OverrideCanTeleport(DebrisObject __instance, IntVector2 currentGridCell, CellData nextCell, float adjustedDeltaTime)
+            {
+                if (__instance.m_isPickupObject)
+                {
+                    if (PerkHelper.GetGlobalStacksFromAllPlayers(PitLordsPactID) > 0)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 }

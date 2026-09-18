@@ -106,6 +106,7 @@ namespace Planetside
                 UnbreakableSpirit.UnbreakableSpiritID,
                 Gunslinger.GunslingerID,
                 HollowWalls.ItemID,
+                Malice.MaliceID,
             };
 
             Exploder.DoDistortionWave(player.sprite.WorldTopCenter, 30, 0.5f, 50, 1);

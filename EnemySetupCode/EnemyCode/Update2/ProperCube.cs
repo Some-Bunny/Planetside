@@ -44,6 +44,7 @@ namespace Planetside
                 var companion = prefab.GetComponent<AIActor>();
 				var trapper = prefab.AddComponent<TrapperCubeBehaviour>();
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "sliding_cube");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:MaliceUmbralBan");
 
                 //companion.AddComponent<TeleportationImmunity>();
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");

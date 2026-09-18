@@ -189,54 +189,111 @@ namespace NpcApi
 
 		public override void PurchaseItem(ShopItemController itemBad, bool actualPurchase = true, bool allowSign = true)
 		{
-			var item = itemBad as CustomShopItemController;
-			float heightOffGround = -1f;
-			if (item && item.sprite)
-			{
-				heightOffGround = item.sprite.HeightOffGround;
-			}
-			if (actualPurchase)
-			{
-				if (giveStatsOnPurchase)
-				{
-					foreach (var stat in statsToGive)
-					{
-						item.LastInteractingPlayer.ownerlessStatModifiers.Add(stat);
-					}
-					item.LastInteractingPlayer.stats.RecalculateStats(item.LastInteractingPlayer, false, false);
-				}
-				if (this.shopkeepFSM != null)
-				{
-					FsmObject fsmObject = this.shopkeepFSM.FsmVariables.FindFsmObject("referencedItem");
-					if (fsmObject != null)
-					{
-						fsmObject.Value = item;
-					}
-					this.shopkeepFSM.SendEvent("succeedPurchase");
-				}
-			}
-			
 
-			if (!item.item.PersistsOnPurchase)
+			if (itemBad is CustomShopItemController)
 			{
-				if (allowSign)
-				{
-					GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("Global Prefabs/Sign_SoldOut", ".prefab"));
-					tk2dBaseSprite component = gameObject.GetComponent<tk2dBaseSprite>();
-					component.PlaceAtPositionByAnchor(item.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
-					gameObject.transform.position = gameObject.transform.position.Quantize(0.0625f);
-					component.HeightOffGround = heightOffGround;
-					component.UpdateZDepth();
-				}
-				GameObject gameObject2 = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
-				tk2dBaseSprite component2 = gameObject2.GetComponent<tk2dBaseSprite>();
-				component2.PlaceAtPositionByAnchor(item.sprite.WorldCenter.ToVector3ZUp(0f), tk2dBaseSprite.Anchor.MiddleCenter);
-				component2.transform.position = component2.transform.position.Quantize(0.0625f);
-				component2.HeightOffGround = 5f;
-				component2.UpdateZDepth();
-				this.m_room.DeregisterInteractable(item);
-				UnityEngine.Object.Destroy(item.gameObject);
-			}
+                var item = itemBad as CustomShopItemController;
+                float heightOffGround = -1f;
+                if (item && item.sprite)
+                {
+                    heightOffGround = item.sprite.HeightOffGround;
+                }
+                if (actualPurchase)
+                {
+                    if (giveStatsOnPurchase)
+                    {
+                        foreach (var stat in statsToGive)
+                        {
+                            item.LastInteractingPlayer.ownerlessStatModifiers.Add(stat);
+                        }
+                        item.LastInteractingPlayer.stats.RecalculateStats(item.LastInteractingPlayer, false, false);
+                    }
+                    if (this.shopkeepFSM != null)
+                    {
+                        FsmObject fsmObject = this.shopkeepFSM.FsmVariables.FindFsmObject("referencedItem");
+                        if (fsmObject != null)
+                        {
+                            fsmObject.Value = item;
+                        }
+                        this.shopkeepFSM.SendEvent("succeedPurchase");
+
+                    }
+                }
+
+                if (!item.item.PersistsOnPurchase)
+                {
+                    if (allowSign)
+                    {
+                        GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("Global Prefabs/Sign_SoldOut", ".prefab"));
+                        tk2dBaseSprite component = gameObject.GetComponent<tk2dBaseSprite>();
+                        component.PlaceAtPositionByAnchor(item.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
+                        gameObject.transform.position = gameObject.transform.position.Quantize(0.0625f);
+                        component.HeightOffGround = heightOffGround;
+                        component.UpdateZDepth();
+                    }
+                    GameObject gameObject2 = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
+                    tk2dBaseSprite component2 = gameObject2.GetComponent<tk2dBaseSprite>();
+                    component2.PlaceAtPositionByAnchor(item.sprite.WorldCenter.ToVector3ZUp(0f), tk2dBaseSprite.Anchor.MiddleCenter);
+                    component2.transform.position = component2.transform.position.Quantize(0.0625f);
+                    component2.HeightOffGround = 5f;
+                    component2.UpdateZDepth();
+                    this.m_room.DeregisterInteractable(item);
+                    UnityEngine.Object.Destroy(item.gameObject);
+                }
+            }
+			else
+			{
+                var item = itemBad;
+                float heightOffGround = -1f;
+                if (item && item.sprite)
+                {
+                    heightOffGround = item.sprite.HeightOffGround;
+                }
+                if (actualPurchase)
+                {
+                    if (giveStatsOnPurchase)
+                    {
+                        foreach (var stat in statsToGive)
+                        {
+                            item.LastInteractingPlayer.ownerlessStatModifiers.Add(stat);
+                        }
+                        item.LastInteractingPlayer.stats.RecalculateStats(item.LastInteractingPlayer, false, false);
+                    }
+                    if (this.shopkeepFSM != null)
+                    {
+                        FsmObject fsmObject = this.shopkeepFSM.FsmVariables.FindFsmObject("referencedItem");
+                        if (fsmObject != null)
+                        {
+                            fsmObject.Value = item;
+                        }
+                        this.shopkeepFSM.SendEvent("succeedPurchase");
+
+                    }
+                }
+
+                if (!item.item.PersistsOnPurchase)
+                {
+                    if (allowSign)
+                    {
+                        GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(BraveResources.Load("Global Prefabs/Sign_SoldOut", ".prefab"));
+                        tk2dBaseSprite component = gameObject.GetComponent<tk2dBaseSprite>();
+                        component.PlaceAtPositionByAnchor(item.sprite.WorldCenter, tk2dBaseSprite.Anchor.MiddleCenter);
+                        gameObject.transform.position = gameObject.transform.position.Quantize(0.0625f);
+                        component.HeightOffGround = heightOffGround;
+                        component.UpdateZDepth();
+                    }
+                    GameObject gameObject2 = (GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/VFX_Item_Spawn_Poof"));
+                    tk2dBaseSprite component2 = gameObject2.GetComponent<tk2dBaseSprite>();
+                    component2.PlaceAtPositionByAnchor(item.sprite.WorldCenter.ToVector3ZUp(0f), tk2dBaseSprite.Anchor.MiddleCenter);
+                    component2.transform.position = component2.transform.position.Quantize(0.0625f);
+                    component2.HeightOffGround = 5f;
+                    component2.UpdateZDepth();
+                    this.m_room.DeregisterInteractable(item);
+                    UnityEngine.Object.Destroy(item.gameObject);
+                }
+            }
+
+			
 		}
 
 		public void ActionAndFuncSetUp(Func<CustomShopController, PlayerController, int, bool> CustomCanBuySetUp, Func<CustomShopController, PlayerController, int, int> RemoveCurrencySetUp, Func<CustomShopController, CustomShopItemController, PickupObject, int> CustomPriceSetUp,

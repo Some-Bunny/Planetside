@@ -19,10 +19,8 @@ namespace Planetside
 		public static void Init()
 		{
 			string name = "Prayer Amulet";
-			//string resourcePath = "Planetside/Resources/prayeramulet.png";
 			GameObject gameObject = new GameObject(name);
 			PrayerAmulet warVase = gameObject.AddComponent<PrayerAmulet>();
-			//ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
 			string shortDesc = "Vow To The Cult";
 			string longDesc = "Adds a shrine room to every floor.\n\nAn amulet similar to that worn by the High Priest, embedded with perfectly cut bullets.";
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
@@ -158,7 +156,7 @@ namespace Planetside
             {
                 name = "EmergencyAnnotationName";
             }
-
+            
             RequiredRoom.prerequisites = new List<DungeonPrerequisite>()
             {
                     new DungeonGenToolbox.AdvancedDungeonPrerequisite
@@ -167,8 +165,15 @@ namespace Planetside
                        requiredPassiveFlag = typeof(PrayerAmulet),
                        requiredTileset = Tileset,
                        requireTileset = true
+                    },
+                    new DungeonPrerequisite()
+                    {
+                        prerequisiteType = DungeonPrerequisite.PrerequisiteType.TILESET,
+                        requiredTileset = Tileset,
+                        requireTileset = true
                     }
             };
+            
 
             ProceduralFlowModifierData PrayerRoomMines = new ProceduralFlowModifierData()
             {

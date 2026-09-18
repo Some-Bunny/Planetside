@@ -18,6 +18,8 @@ using static EnemyBulletBuilder.BulletBuilderFakePrefabHooks;
 using ChallengeAPI;
 using Brave.BulletScript;
 using static HutongGames.PlayMaker.Actions.Teleport;
+using Pathfinding;
+using UnityEngine.Playables;
 
 
 namespace Planetside
@@ -30,22 +32,37 @@ namespace Planetside
             try
             {
                 ChallengeBuilder.Init();
-                //ChallengeBuilder.EnableDebugMode();
+                ChallengeBuilder.EnableDebugMode();
                 //-------------BUILDING CHALLENGES----------
                 //Builds a basic challenge.
-
-                ChallengeBuilder.BuildChallenge<BulletStormChallengeModifier>("Planetside/Resources/ChallengeModeIcons/leadStorm.png", "Lead Storm", true, new List<ChallengeModifier>
+                /*
+                ChallengeBuilder.BuildChallenge<BulletStormChallengeModifier>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("leadStorm"), "Lead Storm", true, new List<ChallengeModifier>
                 {
                     ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<KingEnemyChallengeModifier>().challenge,
                     ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<BestForLastChallengeModifier>().challenge,
                 }, null, null, true, true);
                 
-                ChallengeBuilder.BuildChallenge<ShamberBodyguard>("Planetside/Resources/ChallengeModeIcons/shamberWatchman.png", "Bullet Sponge", false, new List<ChallengeModifier> 
+                ChallengeBuilder.BuildChallenge<ShamberBodyguard>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("shamberWatchman"), "Bullet Sponge", false, new List<ChallengeModifier> 
                 {
                      ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<KingEnemyChallengeModifier>().challenge,
                      ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<BestForLastChallengeModifier>().challenge,
 
                 }, null, null, true, true);
+                */
+                ChallengeBuilder.BuildChallenge<LandminesAhoy>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("Landmines"), "Watch Your Step", false, new List<ChallengeModifier>
+                {
+                     ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<DarknessChallengeModifier>().challenge,
+                     ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<FlameTrapChallengeModifier>().challenge,
+                     ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<BooRoomChallengeModifier>().challenge,
+
+                }, null, null, true, true);
+                /*
+                ChallengeBuilder.BuildChallenge<OopsAllLasers>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("DiamondHeist"), "Diamond Heist", true, new List<ChallengeModifier>
+                {
+                     
+
+                }, null, null, true, true);
+                */
                 Debug.Log("Finished ChallengeModeExtraChallenges setup without failure!");
 
             }
@@ -54,6 +71,170 @@ namespace Planetside
                 Debug.Log("Unable to finish ChallengeModeExtraChallenges setup!");
                 Debug.Log(e);
             }
+        }
+    }
+
+    public class OopsAllLasers: ChallengeModifier
+    {
+        public float ProfessionalChance = 0.25f;
+        public void Start()
+        {
+            ProfessionalChance = UnityEngine.Random.value;
+            PlayerController player = GameManager.Instance.PrimaryPlayer;
+            if (player.CurrentRoom != null)
+            {
+                var currentRoom = player.CurrentRoom;
+                int num = currentRoom.CellsWithoutExits.Count / 60;
+                num = Mathf.Max(5, num);
+                CellValidator cellValidator = delegate (IntVector2 pos)
+                {
+                    for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
+                    {
+                        if (Vector2.Distance(GameManager.Instance.AllPlayers[j].CenterPosition, pos.ToCenterVector2()) < 3f)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+                int attempts = 250;
+                for (int i = 0; i < num; i++)
+                {
+                    attempts--;
+                    if (attempts == 0)
+                        break;
+
+                    IntVector2? randomAvailableCell = currentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One), new CellTypes?(CellTypes.FLOOR), false, cellValidator);
+                    if (randomAvailableCell != null)
+                    {
+                        CellData cellData = GameManager.Instance.Dungeon.data[randomAvailableCell.Value];
+                        CellData cellDataTop = GameManager.Instance.Dungeon.data[randomAvailableCell.Value + new IntVector2(0, 1)];
+                        CellData cellDataLeft = GameManager.Instance.Dungeon.data[randomAvailableCell.Value + new IntVector2(1, 0)];
+                        CellData cellDataRight = GameManager.Instance.Dungeon.data[randomAvailableCell.Value + new IntVector2(-1, 0)];
+
+
+                        if (cellData.parentRoom == currentRoom && cellData.type == CellType.FLOOR && cellDataTop.type == CellType.WALL)
+                        {
+                            cellData.containsTrap = true;
+
+                            var r = Alexandria.DungeonAPI.StaticReferences.customPlaceables[UnityEngine.Random.value < ProfessionalChance ? "psog:professionalTurretFront" : "psog:sniperTurretFront"].InstantiateObject(currentRoom, (cellData.position - currentRoom.area.basePosition) + new IntVector2(0, 1));
+                            r.gameObject.SetActive(true);
+                            r.transform.SetParent(currentRoom.hierarchyParent, true);
+                            continue;
+                           
+                        }
+                        if (cellData.parentRoom == currentRoom && cellData.type == CellType.FLOOR && cellDataLeft.type == CellType.WALL)
+                        {
+                            cellData.containsTrap = true;
+                            var r = Alexandria.DungeonAPI.StaticReferences.customPlaceables[UnityEngine.Random.value < ProfessionalChance ? "psog:professionalTurretLeft" : "psog:sniperTurretLeft"].InstantiateObject(currentRoom, cellData.position - currentRoom.area.basePosition);
+                            r.gameObject.SetActive(true);
+                            r.transform.SetParent(currentRoom.hierarchyParent, true);
+        
+                            continue;
+
+                        }
+                        if (cellData.parentRoom == currentRoom && cellData.type == CellType.FLOOR && cellDataRight.type == CellType.WALL)
+                        {
+                            cellData.containsTrap = true;
+                            var r = Alexandria.DungeonAPI.StaticReferences.customPlaceables[UnityEngine.Random.value < ProfessionalChance ? "psog:professionalTurretRight" : "psog:sniperTurretRight"].InstantiateObject(currentRoom, cellData.position - currentRoom.area.basePosition);
+                            r.gameObject.SetActive(true);
+                            r.transform.SetParent(currentRoom.hierarchyParent, true); 
+                            continue;
+
+                        }
+                        i--;
+                    }
+                }
+            }
+        }
+
+        public void Update()
+        { }
+
+        public void OnDestroy()
+        { }
+
+        public override bool IsValid(RoomHandler room)
+        {
+            return true;
+        }
+    }
+
+    public class LandminesAhoy : ChallengeModifier
+    {
+        public void Start()
+        {
+            PlayerController player = GameManager.Instance.PrimaryPlayer;
+            if (player.CurrentRoom != null)
+            {
+                var currentRoom = player.CurrentRoom;
+                int num = currentRoom.CellsWithoutExits.Count / 150;
+                num = Mathf.Min(6, Mathf.Max(1, num));
+                CellValidator cellValidator = delegate (IntVector2 pos)
+                {
+                    for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
+                    {
+                        if (Vector2.Distance(GameManager.Instance.AllPlayers[j].CenterPosition, pos.ToCenterVector2()) < 3f)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+                for (int i = 0; i < num; i++)
+                {
+                    IntVector2? randomAvailableCell = currentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One), new CellTypes?(CellTypes.FLOOR), false, cellValidator);
+                    if (randomAvailableCell != null)
+                    {
+                        CellData cellData = GameManager.Instance.Dungeon.data[randomAvailableCell.Value];
+                        if (cellData.parentRoom == currentRoom && cellData.type == CellType.FLOOR && !cellData.isOccupied && !cellData.containsTrap && !cellData.isOccludedByTopWall)
+                        {
+                            Alexandria.DungeonAPI.StaticReferences.customPlaceables["psog:randomminefieldsign"].InstantiateObject(currentRoom, cellData.position - currentRoom.area.basePosition, false, false);
+                        }
+                    }
+                }
+
+                num = currentRoom.CellsWithoutExits.Count / 40;
+                num = Mathf.Max(6, num);
+                cellValidator = delegate (IntVector2 pos)
+                {
+                    for (int j = 0; j < GameManager.Instance.AllPlayers.Length; j++)
+                    {
+                        if (Vector2.Distance(GameManager.Instance.AllPlayers[j].CenterPosition, pos.ToCenterVector2()) < 3f)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                };
+                for (int i = 0; i < num; i++)
+                {
+                    IntVector2? randomAvailableCell = currentRoom.GetRandomAvailableCell(new IntVector2?(IntVector2.One), new CellTypes?(CellTypes.FLOOR), false, cellValidator);
+                    if (randomAvailableCell != null)
+                    {
+                        CellData cellData = GameManager.Instance.Dungeon.data[randomAvailableCell.Value];
+                        if (!cellData.isNextToWall && !cellData.HasPitNeighbor(GameManager.Instance.Dungeon.data))
+                        {
+                            if (cellData.parentRoom == currentRoom && cellData.type == CellType.FLOOR && !cellData.isOccupied && !cellData.containsTrap && !cellData.isOccludedByTopWall)
+                            {
+                                cellData.containsTrap = true;
+                                Alexandria.DungeonAPI.StaticReferences.customPlaceables["psog:buriedbasiclandmine_100"].InstantiateObject(currentRoom, cellData.position - currentRoom.area.basePosition, false, false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Update()
+        { }
+
+        public void OnDestroy()
+        { }
+
+        public override bool IsValid(RoomHandler room)
+        {
+            return true;
         }
     }
 

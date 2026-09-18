@@ -157,9 +157,12 @@ namespace Planetside
                             for (int i = 0; i < activeEnemies.Count; i++)
                             {
                                 AIActor aiactor = activeEnemies[i];
-                                if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
+                                if (aiactor.State == AIActor.ActorState.Normal)
                                 {
-                                    aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
+                                    if (Vector2.Distance(aiactor.CenterPosition, centerPosition) < 20 && aiactor.healthHaver.GetMaxHealth() > 0f && aiactor != null)
+                                    {
+                                        aiactor.ApplyEffect(DebuffLibrary.HeatStroke, 1f, null);
+                                    }
                                 }
                             }
                         }

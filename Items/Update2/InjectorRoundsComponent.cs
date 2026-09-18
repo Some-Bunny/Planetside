@@ -125,8 +125,18 @@ public class InjectorRoundsComponent : BraveBehaviour
 						def.damagesPlayers = false;
                         def.AppliesDamageOverTime = false;
 						def.damageToPlayers = 0;
-                         
+                        def.goopDamageTypeInteractions = new List<GoopDefinition.GoopDamageTypeInteraction>()
 
+                        {
+                            new GoopDefinition.GoopDamageTypeInteraction()
+                            {
+                                damageType = CoreDamageTypes.None,
+                                electrifiesGoop = false,
+                                freezesGoop = false,
+                                ignitionMode = GoopDefinition.GoopDamageTypeInteraction.GoopIgnitionMode.NONE
+                            }
+
+							};
                         def.lifespan = Mathf.Max(7f, effectToCopy.duration);
 						DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(def).TimedAddGoopCircle(base.aiActor.sprite.WorldBottomCenter, GoopPoolSize, 0.5f, false);
 					}

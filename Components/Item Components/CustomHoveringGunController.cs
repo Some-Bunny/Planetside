@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections;
 using Dungeonator;
 using UnityEngine;
+using Alexandria.Misc;
 
 namespace Planetside
 {
@@ -48,10 +49,12 @@ namespace Planetside
             }
             if (this.Position == CustomHoveringGunController.HoverPosition.CIRCULATE)
             {
-                this.SetOrbitalTier(PlayerOrbital.CalculateTargetTier(this.m_owner, this) + 10);
-                this.SetOrbitalTierIndex(PlayerOrbital.GetNumberOfOrbitalsInTier(this.m_owner, this.GetOrbitalTier()));
+
+                this.SetOrbitalTier(67);
+                this.SetOrbitalTierIndex(PlayerOrbital.GetNumberOfOrbitalsInTier(this.m_owner, 67));
                 this.m_owner.orbitals.Add(this);
                 this.m_ownerCenterAverage = attachObject != null ? attachObject.transform.PositionVector2() : this.m_owner.CenterPosition;
+                this.m_owner.RecalculateOrbitals();
             }
             if (this.Trigger == CustomHoveringGunController.FireType.ON_DODGED_BULLET)
             {
@@ -72,6 +75,13 @@ namespace Planetside
 
         private void HandleFiredGun(Projectile arg1, float arg2)
         {
+            if (arg1.Shooter)
+            {
+                if (arg1.Shooter.gameActor is AIActor)
+                    return;
+            }
+
+
             if (this.m_fireCooldown <= 0f)
             {
                 this.Fire();

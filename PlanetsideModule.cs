@@ -41,7 +41,7 @@ namespace Planetside
     {
         public const string GUID = "somebunny.etg.planetsideofgunymede";
         public const string NAME = "Planetside Of Gunymede Pre-Release";
-        public const string VERSION = "1.3.204";
+        public const string VERSION = "1.3.205";
         //9006FF
         public static readonly string TEXT_COLOR = "#00d0ff";
         //00d0ff
@@ -279,7 +279,6 @@ namespace Planetside
             //LoaderPylonSynergyFormeController.Init();
 
             DeadKingsDesparation.Init();
-            DeadKingsDesparation.BuildPrefab();
 
             //Debuff Icons
 
@@ -397,6 +396,7 @@ namespace Planetside
             Patience.Init();
             CorruptedWealth.Init();
             HollowWalls.Init();
+            Malice.Init();
 
             CandyHeart.Init();
             CanisterLauncher.Add();
@@ -696,9 +696,7 @@ namespace Planetside
                 "Another Night...",
                 "skibidi bop mm dada",
                 "I coded most of this after 1am.",
-                "Planetside Supports Trans Rights",
-                "bepis",
-                "pootis",
+                "Planetside Supports Trans Rights!",
                 "Frogs are cool!",
                 "Poor aim, and a poor Reaper.",
                 "The Sun! The Sun! The Sun!",
@@ -738,7 +736,7 @@ namespace Planetside
                 "Check out Project Hail Mary!",
                 "Amaze. Amaze. Amaze.",
                 "Time go fishing, question?",
-                "Grumpy Angry Stupid, when last sleep, question?"
+                "Grumpy, Angry, Stupid, how long since last sleep, question?"
             };
             Random r = new Random();
             int index = r.Next(RandomFunnys.Count);

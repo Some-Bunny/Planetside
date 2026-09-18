@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using UnityEngine.Serialization;
 using Alexandria.Assetbundle;
 using Alexandria.Integrations;
+using Alexandria.cAPI;
 
 namespace Planetside
 {
@@ -87,23 +88,33 @@ namespace Planetside
 			yes.shadowLifetime = 0.1875f;
 			yes.shadowTimeDelay = 0.01f;
 			yes.dashColor = new Color(1f, 0f, 0.66f, 1f);
-			projectile.gameObject.AddComponent<ParticleCollapserSmallProjectile>();
-			projectile.shouldRotate = true;
-			projectile.baseData.range = 200;
 
-			projectile.objectImpactEventName = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
-			projectile.enemyImpactEventName = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
-			PierceProjModifier spook = projectile.gameObject.GetOrAddComponent<PierceProjModifier>();
+
+
+			var needle = projectile.gameObject.AddComponent<ParticleCollapserSmallProjectile>();
+
+            needle.baseData = new ProjectileData();
+            needle.CopyFrom<Projectile>(projectile);
+            needle.baseData.CopyFrom<ProjectileData>(projectile.baseData);
+
+			Destroy(projectile);
+
+            needle.shouldRotate = true;
+            needle.baseData.range = 200;
+
+            needle.objectImpactEventName = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
+            needle.enemyImpactEventName = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
+			PierceProjModifier spook = needle.gameObject.GetOrAddComponent<PierceProjModifier>();
 			spook.penetration = 5;
 			spook.penetratesBreakables = true;
-			MaintainDamageOnPierce noDamageLoss = projectile.gameObject.GetOrAddComponent<MaintainDamageOnPierce>();
+			MaintainDamageOnPierce noDamageLoss = needle.gameObject.GetOrAddComponent<MaintainDamageOnPierce>();
 			noDamageLoss.damageMultOnPierce = 1f;
-			BounceProjModifier BounceProjMod = projectile.gameObject.GetOrAddComponent<BounceProjModifier>();
+			BounceProjModifier BounceProjMod = needle.gameObject.GetOrAddComponent<BounceProjModifier>();
 			BounceProjMod.bouncesTrackEnemies = false;
 			BounceProjMod.numberOfBounces = 3;
 
 			gun.DefaultModule.numberOfFinalProjectiles = 20;
-			gun.DefaultModule.finalProjectile = projectile;
+			gun.DefaultModule.finalProjectile = needle;
 			gun.DefaultModule.finalAmmoType = GameUIAmmoType.AmmoType.CUSTOM;
 			gun.DefaultModule.finalCustomAmmoType = (PickupObjectDatabase.GetById(334) as Gun).DefaultModule.customAmmoType;
 			gun.DefaultModule.ammoCost = 1;
@@ -130,8 +141,8 @@ namespace Planetside
             AnimateBullet.ConstructListOfSameValues(true, Length),
             AnimateBullet.ConstructListOfSameValues(false, Length),
             AnimateBullet.ConstructListOfSameValues<Vector3?>(null, Length),
-            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(11, 11), Length),
-            AnimateBullet.ConstructListOfSameValues<IntVector2?>(new IntVector2(-1, -1), Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, Length),
+            AnimateBullet.ConstructListOfSameValues<IntVector2?>(null, Length),
             AnimateBullet.ConstructListOfSameValues<Projectile>(null, Length));
 
             /*
@@ -169,8 +180,8 @@ namespace Planetside
 				MaintainDamageOnPierce noDamageLossCollapse = CollapseProjectile.gameObject.GetOrAddComponent<MaintainDamageOnPierce>();
 			noDamageLossCollapse.damageMultOnPierce = 1f;
 				BounceProjModifier BounceProjModCollapse = CollapseProjectile.gameObject.GetOrAddComponent<BounceProjModifier>();
-			BounceProjModCollapse.bouncesTrackEnemies = false;
-			BounceProjModCollapse.numberOfBounces = 4;
+			BounceProjModCollapse.bouncesTrackEnemies = true;
+			BounceProjModCollapse.numberOfBounces = 10;
 
 			CollapseProjectile.hitEffects.tileMapHorizontal = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
 			CollapseProjectile.hitEffects.tileMapVertical = ObjectMakers.MakeObjectIntoVFX((PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].hitEffects.tileMapHorizontal.effects.First().effects.First().effect);
@@ -180,8 +191,15 @@ namespace Planetside
 			CollapseProjectile.objectImpactEventName = (PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].objectImpactEventName;
 			CollapseProjectile.enemyImpactEventName = (PickupObjectDatabase.GetById(169) as Gun).DefaultModule.projectiles[0].enemyImpactEventName;
 
+            Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+            mat.mainTexture = CollapseProjectile.sprite.renderer.material.mainTexture;
+            mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+            mat.SetFloat("_EmissiveColorPower", 15.5f);
+            mat.SetFloat("_EmissivePower", 100);
+            CollapseProjectile.sprite.renderer.material = mat;
 
-			gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.1875f, 0.4375f);
+
+            gun.gameObject.transform.Find("Casing").transform.position = new Vector3(1.1875f, 0.4375f);
 			gun.shellCasing = BreakAbleAPI.BreakableAPI_Bundled.GenerateDebrisObject("collapsercasing", StaticSpriteDefinitions.Gun_2_Sheet_Data).gameObject;
 			gun.shellsToLaunchOnFire = 1;
 			gun.shellsToLaunchOnReload = 0;

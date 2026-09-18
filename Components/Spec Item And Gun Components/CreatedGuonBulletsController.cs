@@ -50,8 +50,15 @@ namespace Planetside
             {
 				this.StartEffect(sourcePlayer);
 			}
-			LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
-			actor.StartCoroutine(this.HandleTimedDestroy());
+            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+            {
+                position = actor.sprite.WorldCenter,
+                startSize = 4,
+                rotation = 0,
+                startLifetime = 0.333f,
+                startColor = Color.white.WithAlpha(0.333f)
+            });
+            actor.StartCoroutine(this.HandleTimedDestroy());
 		}
 		private void StartEffect(PlayerController user)
 		{
@@ -73,27 +80,27 @@ namespace Planetside
 
 		public void Update()
 		{
-			if (this.actor == null)
-			{
-				this.actor = base.GetComponent<PlayerOrbital>();
-			}
 			if(ClearsGoop == true)
             {
 				DeadlyDeadlyGoopManager.DelayedClearGoopsInRadius(this.actor.sprite.WorldCenter, 1.5f);
 			}
 		}
 
-		public void NotifyDropped()
-		{
-			this.HandleRoomCleared();
-		}
 
 		private IEnumerator HandleTimedDestroy()
 		{
 			yield return new WaitForSeconds(this.maxDuration);
 			AkSoundEngine.PostEvent("Play_OBJ_cursepot_shatter_01", actor.gameObject);
-			LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
-			UnityEngine.Object.Destroy(base.gameObject);
+            ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+            {
+                position = actor.sprite.WorldCenter,
+                startSize = 4,
+                rotation = 0,
+                startLifetime = 0.333f,
+                startColor = Color.white.WithAlpha(0.333f)
+            });
+
+            UnityEngine.Object.Destroy(base.gameObject);
 			if (SpawnsCharmGoop == true)
             {
 				DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.CharmGoopDef).TimedAddGoopCircle(this.actor.sprite.WorldCenter, 3.5f, 1f, false);
@@ -165,8 +172,18 @@ namespace Planetside
 			if (this.actor)
 			{
 				AkSoundEngine.PostEvent("Play_OBJ_cursepot_shatter_01", actor.gameObject);
-				LootEngine.DoDefaultItemPoof(actor.sprite.WorldCenter, false, true);
-				UnityEngine.Object.Destroy(base.gameObject);
+
+
+                ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
+                {
+                    position = actor.sprite.WorldCenter,
+                    startSize = 4,
+                    rotation = 0,
+                    startLifetime = 0.333f,
+                    startColor = Color.white.WithAlpha(0.333f)
+                });
+
+                UnityEngine.Object.Destroy(base.gameObject);
 				if (SpawnsCharmGoop == true)
 				{
 					DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(EasyGoopDefinitions.CharmGoopDef).TimedAddGoopCircle(this.actor.sprite.WorldCenter, 3.5f, 1f, false);

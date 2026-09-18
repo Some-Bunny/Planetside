@@ -120,7 +120,7 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
-      spriteId: 109
+      spriteId: 124
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
-      spriteId: 110
+      spriteId: 109
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -571,6 +571,25 @@ MonoBehaviour:
     frames:
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
+      spriteId: 149
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
       spriteId: 170
       invulnerableFrame: 0
       groundedFrame: 1
@@ -610,25 +629,6 @@ MonoBehaviour:
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
       spriteId: 171
-      invulnerableFrame: 0
-      groundedFrame: 1
-      requiresOffscreenUpdate: 0
-      eventAudio: 
-      eventVfx: 
-      eventStopVfx: 
-      eventLerpEmissive: 0
-      eventLerpEmissiveTime: 0.5
-      eventLerpEmissivePower: 30
-      forceMaterialUpdate: 0
-      finishedSpawning: 0
-      triggerEvent: 0
-      eventInfo: 
-      eventInt: 0
-      eventFloat: 0
-      eventOutline: 0
-    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
-        type: 2}
-      spriteId: 149
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -1378,6 +1378,44 @@ MonoBehaviour:
     frames:
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
+      spriteId: 106
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 106
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
       spriteId: 92
       invulnerableFrame: 0
       groundedFrame: 1
@@ -1398,25 +1436,6 @@ MonoBehaviour:
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
       spriteId: 93
-      invulnerableFrame: 0
-      groundedFrame: 1
-      requiresOffscreenUpdate: 0
-      eventAudio: 
-      eventVfx: 
-      eventStopVfx: 
-      eventLerpEmissive: 0
-      eventLerpEmissiveTime: 0.5
-      eventLerpEmissivePower: 30
-      forceMaterialUpdate: 0
-      finishedSpawning: 0
-      triggerEvent: 0
-      eventInfo: 
-      eventInt: 0
-      eventFloat: 0
-      eventOutline: 0
-    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
-        type: 2}
-      spriteId: 106
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -2826,6 +2845,25 @@ MonoBehaviour:
     frames:
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
+      spriteId: 179
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
       spriteId: 186
       invulnerableFrame: 0
       groundedFrame: 1
@@ -2846,25 +2884,6 @@ MonoBehaviour:
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
       spriteId: 187
-      invulnerableFrame: 0
-      groundedFrame: 1
-      requiresOffscreenUpdate: 0
-      eventAudio: 
-      eventVfx: 
-      eventStopVfx: 
-      eventLerpEmissive: 0
-      eventLerpEmissiveTime: 0.5
-      eventLerpEmissivePower: 30
-      forceMaterialUpdate: 0
-      finishedSpawning: 0
-      triggerEvent: 0
-      eventInfo: 
-      eventInt: 0
-      eventFloat: 0
-      eventOutline: 0
-    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
-        type: 2}
-      spriteId: 179
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -3391,7 +3410,7 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
-      spriteId: 38
+      spriteId: 24
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -3695,7 +3714,64 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
+      spriteId: 49
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
       spriteId: 35
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 35
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 37
       invulnerableFrame: 0
       groundedFrame: 1
       requiresOffscreenUpdate: 0
@@ -3752,6 +3828,44 @@ MonoBehaviour:
       eventOutline: 0
     - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
         type: 2}
+      spriteId: 29
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 30
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
       spriteId: 30
       invulnerableFrame: 0
       groundedFrame: 1
@@ -3788,8 +3902,27 @@ MonoBehaviour:
       eventInt: 0
       eventFloat: 0
       eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 36
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
     fps: 10
-    loopStart: 18
+    loopStart: 20
     wrapMode: 1
     minFidgetDuration: 1
     maxFidgetDuration: 2
@@ -16888,6 +17021,390 @@ MonoBehaviour:
       eventOutline: 0
     fps: 3
     loopStart: 8
+    wrapMode: 0
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: sniperturret_f
+    frames:
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 703
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 715
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 716
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 714
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 3
+    loopStart: 0
+    wrapMode: 0
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: sniperturret_f_p
+    frames:
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 702
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 710
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 699
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 717
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 3
+    loopStart: 0
+    wrapMode: 0
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: sniperturret_l
+    frames:
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 700
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 3
+    loopStart: 0
+    wrapMode: 0
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: sniperturret_l_p
+    frames:
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 707
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 3
+    loopStart: 0
+    wrapMode: 0
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: sniperturret_r
+    frames:
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 701
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 711
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 712
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 713
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 3
+    loopStart: 0
+    wrapMode: 0
+    minFidgetDuration: 1
+    maxFidgetDuration: 2
+  - name: sniperturret_r_p
+    frames:
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 708
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 704
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 705
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    - spriteCollection: {fileID: 114461086826559744, guid: d7aeb082685338a489192ba9f8c17bd5,
+        type: 2}
+      spriteId: 706
+      invulnerableFrame: 0
+      groundedFrame: 1
+      requiresOffscreenUpdate: 0
+      eventAudio: 
+      eventVfx: 
+      eventStopVfx: 
+      eventLerpEmissive: 0
+      eventLerpEmissiveTime: 0.5
+      eventLerpEmissivePower: 30
+      forceMaterialUpdate: 0
+      finishedSpawning: 0
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+      eventOutline: 0
+    fps: 3
+    loopStart: 0
     wrapMode: 0
     minFidgetDuration: 1
     maxFidgetDuration: 2

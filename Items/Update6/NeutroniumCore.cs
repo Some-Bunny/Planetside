@@ -125,8 +125,11 @@ namespace Planetside
             float t = 0;
             public void Update()
             {
-                Elapsed += BraveTime.DeltaTime;
-                gravitationalForceActors = Mathf.Lerp(0, cachedgravitationalForceActors, Elapsed);
+                if (Elapsed <= 1)
+                {
+                    Elapsed += BraveTime.DeltaTime;
+                    gravitationalForceActors = Mathf.Lerp(0, cachedgravitationalForceActors, Elapsed);
+                }
                 if (gravitationalForceActors > 0)
                 {
                     var room = this.transform.position.GetAbsoluteRoom();
@@ -170,20 +173,18 @@ namespace Planetside
                             }
                         }
                     }
-                    for (int j = 0; j < StaticReferenceManager.AllDebris.Count; j++)
-                    {
-                        this.AdjustDebrisVelocity(StaticReferenceManager.AllDebris[j]);
-                    }
-                    Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(RadiusVisual, RadiusVisual * 1.4f));
+
 
                     t -= BraveTime.DeltaTime;
                     if (t < 0)
                     {
+                        Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(RadiusVisual, RadiusVisual * 1.4f));
                         t = 0.1f;
+                        var __ = this.transform.position + _;
                         ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
                         {
-                            position = this.transform.position + _,
-                            velocity = (this.transform.position - (this.transform.position + _)).normalized * (RadiusVisual * 2),
+                            position = __,
+                            velocity = (this.transform.position - (__)).normalized * (RadiusVisual * 2),
                             startColor = Color.white.WithAlpha(0.5f),
                             startLifetime = 0.5f,
                             startSize = 0.1f
@@ -213,46 +214,7 @@ namespace Planetside
                 return normalized * d;
             }
 
-            private bool AdjustDebrisVelocity(DebrisObject debris)
-            {
-                if (debris == null)
-                {
-                    return false;
-                }
-
-                if (debris.IsPickupObject)
-                {
-                    return false;
-                }
-                if (self == null)
-                {
-                    return false;
-                }
-
-                Vector2 a = debris.sprite.WorldCenter - (self.specRigidbody != null ? self.specRigidbody.UnitCenter : new Vector2(self.transform.position.x, self.transform.position.y));
-                float num = Vector2.SqrMagnitude(a);
-                if (num >= this.m_radiusSquared)
-                {
-                    return false;
-                }
-                float g = this.gravitationalForce;
-                float num2 = Mathf.Sqrt(num);
-                if (num2 < 1)
-                {
-                    return true;
-                }
-                Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(debris.sprite.WorldCenter, num2, g);
-                float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
-                if (debris.HasBeenTriggered)
-                {
-                    debris.ApplyVelocity(frameAccelerationForRigidbody * d);
-                }
-                else if (num2 < radius / 2f)
-                {
-                    debris.Trigger(frameAccelerationForRigidbody * d, 0.5f, 1f);
-                }
-                return true;
-            }
+            
         }
 
         public class EnemyGravityWellBeam : MonoBehaviour
@@ -281,8 +243,11 @@ namespace Planetside
             public void Update()
             {
                 DoTick();
-                Elapsed += BraveTime.DeltaTime;
-                gravitationalForceActors = Mathf.Lerp(0, cachedgravitationalForceActors, Elapsed);
+                if (Elapsed <= 1)
+                {
+                    Elapsed += BraveTime.DeltaTime;
+                    gravitationalForceActors = Mathf.Lerp(0, cachedgravitationalForceActors, Elapsed);
+                }
                 if (gravitationalForceActors > 0)
                 {
                     var room = this.transform.position.GetAbsoluteRoom();
@@ -329,16 +294,13 @@ namespace Planetside
 
 
 
-                    for (int j = 0; j < StaticReferenceManager.AllDebris.Count; j++)
-                    {
-                        this.AdjustDebrisVelocity(StaticReferenceManager.AllDebris[j]);
-                    }
-                    Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(RadiusVisual, RadiusVisual * 1.4f));
+                    
 
                     t -= BraveTime.DeltaTime;
                     if (t < 0)
                     {
-                        t = 0.03f;
+                        Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(RadiusVisual, RadiusVisual * 1.4f));
+                        t = 0.05f;
                         ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
                         {
                             position = LastPosition + _,
@@ -363,46 +325,7 @@ namespace Planetside
                 return normalized * d;
             }
 
-            private bool AdjustDebrisVelocity(DebrisObject debris)
-            {
-                if (debris == null)
-                {
-                    return false;
-                }
-
-                if (debris.IsPickupObject)
-                {
-                    return false;
-                }
-                if (self == null)
-                {
-                    return false;
-                }
-
-                Vector2 a = debris.sprite.WorldCenter - new Vector2(LastPosition.x, LastPosition.y);
-                float num = Vector2.SqrMagnitude(a);
-                if (num >= this.m_radiusSquared)
-                {
-                    return false;
-                }
-                float g = this.gravitationalForce;
-                float num2 = Mathf.Sqrt(num);
-                if (num2 < 1)
-                {
-                    return true;
-                }
-                Vector2 frameAccelerationForRigidbody = this.GetFrameAccelerationForRigidbody(debris.sprite.WorldCenter, num2, g);
-                float d = Mathf.Clamp(BraveTime.DeltaTime, 0f, 0.02f);
-                if (debris.HasBeenTriggered)
-                {
-                    debris.ApplyVelocity(frameAccelerationForRigidbody * d);
-                }
-                else if (num2 < radius / 2f)
-                {
-                    debris.Trigger(frameAccelerationForRigidbody * d, 0.5f, 1f);
-                }
-                return true;
-            }
+            
 
             private void DoTick()
             {

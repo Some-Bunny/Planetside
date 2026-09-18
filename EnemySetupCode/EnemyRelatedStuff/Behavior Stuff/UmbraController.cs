@@ -440,6 +440,9 @@ public class UmbraController : BraveBehaviour
             Destroy(umbraEffect.lockOnInst, 0.5f);
         }
     }
+    public bool SilentSpawn = false;
+    private float CooldownBlastMult = 1;
+    private float CooldownNearMult = 1;
 
     public void Start()
 	{
@@ -462,6 +465,14 @@ public class UmbraController : BraveBehaviour
         umbraEffect = base.aiActor.SmarterPlayEffectOnActor(UmbralEye, new Vector3(0, 1.5f, 3)).GetComponent<UmbraVFX>();
 		umbraEffect.Owner = base.aiActor;
 
+        if (this.aiActor.healthHaver)
+        {
+            if (this.aiActor.healthHaver.IsBoss || this.aiActor.healthHaver.IsSubboss)
+            {
+                CooldownBlastMult = 0.66f;
+                CooldownNearMult = 0.2f;
+            }
+        }
         
         this.StartCoroutine(DoWait());
 
@@ -571,12 +582,19 @@ public class UmbraController : BraveBehaviour
 
     public IEnumerator DoWait()
 	{
-        this.aiActor.SmarterPlayEffectOnActor(StaticVFXStorage.JammedDeathVFX, Vector2.zero).transform.localScale *= 1.6f;
-        this.aiActor?.behaviorSpeculator?.Stun(1f);
-        //AkSoundEngine.PostEvent("Play_ENM_cannonarmor_charge_01", this.aiActor.gameObject);
-        AkSoundEngine.PostEvent("Play_ENM_cannonball_intro_01", this.aiActor.gameObject);
+        while (this.aiActor.State != AIActor.ActorState.Normal)
+        {
+            yield return null;
+        }
 
-        this.aiActor.healthHaver.invulnerabilityPeriod = 3.5f;
+        this.aiActor.SmarterPlayEffectOnActor(StaticVFXStorage.JammedDeathVFX, Vector2.zero).transform.localScale *= 1.6f;
+        if (!SilentSpawn)
+            this.aiActor?.behaviorSpeculator?.Stun(1f);
+
+        if (!SilentSpawn)
+            AkSoundEngine.PostEvent("Play_ENM_cannonball_intro_01", this.aiActor.gameObject);
+
+        this.aiActor.healthHaver.invulnerabilityPeriod = -3.5f;
         float cached = this.aiActor.MovementSpeed;
 		this.aiActor.MovementSpeed = 0;
         umbraEffect.StartUp();
@@ -584,40 +602,47 @@ public class UmbraController : BraveBehaviour
 
         float rng = UnityEngine.Random.Range(0.85f, 1.15f);
 
-		while (e < 1)
-		{
-            e += Time.deltaTime * rng;
-
-            if (base.aiActor && base.aiActor.specRigidbody)
+        if (!SilentSpawn)
+        {
+            while (e < 1)
             {
-                Vector2 unitDimensions = base.aiActor.specRigidbody.HitboxPixelCollider.UnitDimensions;
-                Vector2 a = unitDimensions * 0.5f;
-                int num2 = Mathf.RoundToInt((float)12* 0.5f * Mathf.Min(30f, Mathf.Min(new float[]
-                {
-                unitDimensions.x * unitDimensions.y
-                })));
-				int num3 = 2;
-                Vector2 vector = base.aiActor.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
-                Vector2 vector2 = base.aiActor.specRigidbody.HitboxPixelCollider.UnitTopRight;
-                PixelCollider pixelCollider = base.aiActor.specRigidbody.GetPixelCollider(ColliderType.Ground);
-                if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
-                {
-                    vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
-                    vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
-                }
-                vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
-                vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
-                vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
-                GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 11f - (e * 10f)), 0f, 0.5f, 0.3f, 1, Color.black, GlobalSparksDoer.SparksType.BLACK_PHANTOM_SMOKE);
-                GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector2.up * (31f - (e * 30f)), 0f, 0.5f, 0.3f, 1, Color.black, GlobalSparksDoer.SparksType.BLACK_PHANTOM_SMOKE);
+                e += Time.deltaTime * rng;
 
+                if (base.aiActor && base.aiActor.specRigidbody)
+                {
+                    Vector2 unitDimensions = base.aiActor.specRigidbody.HitboxPixelCollider.UnitDimensions;
+                    Vector2 a = unitDimensions * 0.5f;
+                    int num2 = Mathf.RoundToInt((float)12 * 0.5f * Mathf.Min(30f, Mathf.Min(new float[]
+                    {
+                    unitDimensions.x * unitDimensions.y
+                    })));
+                    int num3 = 2;
+                    Vector2 vector = base.aiActor.specRigidbody.HitboxPixelCollider.UnitBottomLeft;
+                    Vector2 vector2 = base.aiActor.specRigidbody.HitboxPixelCollider.UnitTopRight;
+                    PixelCollider pixelCollider = base.aiActor.specRigidbody.GetPixelCollider(ColliderType.Ground);
+                    if (pixelCollider != null && pixelCollider.ColliderGenerationMode == PixelCollider.PixelColliderGeneration.Manual)
+                    {
+                        vector = Vector2.Min(vector, pixelCollider.UnitBottomLeft);
+                        vector2 = Vector2.Max(vector2, pixelCollider.UnitTopRight);
+                    }
+                    vector += Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2 -= Vector2.Min(a * 0.15f, new Vector2(0.25f, 0.25f));
+                    vector2.y -= Mathf.Min(a.y * 0.1f, 0.1f);
+                    GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 11f - (e * 10f)), 0f, 0.5f, 0.3f, 1, Color.black, GlobalSparksDoer.SparksType.BLACK_PHANTOM_SMOKE);
+                    GlobalSparksDoer.DoRandomParticleBurst(num3, vector, vector2, Vector2.up * (31f - (e * 30f)), 0f, 0.5f, 0.3f, 1, Color.black, GlobalSparksDoer.SparksType.BLACK_PHANTOM_SMOKE);
+
+                }
+                yield return null;
             }
-            yield return null;
-		}
-        AkSoundEngine.PostEvent("Play_ENM_kali_blast_01", this.aiActor.gameObject);
-        AkSoundEngine.PostEvent("Play_ENM_kali_blast_01", this.aiActor.gameObject);
+            AkSoundEngine.PostEvent("Play_ENM_kali_blast_01", this.aiActor.gameObject);
+            AkSoundEngine.PostEvent("Play_ENM_kali_blast_01", this.aiActor.gameObject);
+        }
+
+		
         umbraEffect.isActive = true;
-        Exploder.DoDistortionWave(this.transform.position, 100, 0.333f, 50f, 0.3f);
+        if (!SilentSpawn)
+            Exploder.DoDistortionWave(this.transform.position, 100, 0.333f, 50f, 0.3f);
+
         e = 0;
 		while (e < 1)
 		{
@@ -643,8 +668,23 @@ public class UmbraController : BraveBehaviour
 		}
         if (umbraEffect == null) { return; }
         if (umbraEffect.IsDying) { return; }
-        if (CooldownAttackBullet > 0) { CooldownAttackBullet -= Time.deltaTime; }
-        if (CooldownAttackRadius > 0) { CooldownAttackRadius -= Time.deltaTime; }
+
+        if (this.aiActor?.behaviorSpeculator)
+        {
+            DoUmbraTicks(this.aiActor.behaviorSpeculator.IsStunned ? 0.33f : 1);
+        }
+        else
+        {
+            DoUmbraTicks(1);
+        }
+
+       
+    }
+
+    private void DoUmbraTicks(float mult)
+    {
+        if (CooldownAttackBullet > 0) { CooldownAttackBullet -= BraveTime.DeltaTime * mult * CooldownBlastMult; }
+        if (CooldownAttackRadius > 0) { CooldownAttackRadius -= BraveTime.DeltaTime * mult * CooldownNearMult; }
 
         if (Ammo < 6)
         {
@@ -724,7 +764,7 @@ public class UmbraController : BraveBehaviour
             }
             e += Time.deltaTime;
             var newPosition = Vector3.Lerp(start, end, e) + (m.ToVector3ZUp() * MathToolbox.EaseInAndBack(e));
-            GlobalSparksDoer.DoSingleParticle(newPosition, Vector3.zero, (MathToolbox.EaseInAndBack(e) + 0.25f) * 0.5f, 2f, Color.red * 2, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+            GlobalSparksDoer.DoSingleParticle(newPosition, Vector3.zero, (MathToolbox.EaseInAndBack(e) + 0.25f) * 0.5f, 2f, Color.red * 1.25f, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
             yield return null;
         }
 
@@ -734,7 +774,7 @@ public class UmbraController : BraveBehaviour
             GameObject effect = UnityEngine.Object.Instantiate(StaticVFXStorage.DragunBoulderLandVFX, end, Quaternion.identity);
             Destroy(effect, 2.5f);
             AkSoundEngine.PostEvent("Play_ENM_bulletking_skull_01", t.gameObject);
-            EnemyToolbox.SpawnBulletScript(base.aiActor, base.aiActor.sprite.WorldCenter, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SmallSlam)), "Reflection");
+            EnemyToolbox.SpawnBulletScript(base.aiActor, end, OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), new CustomBulletScriptSelector(typeof(SmallSlam)), "Reflection");
         }
 
 
@@ -838,7 +878,7 @@ public class UmbraController : BraveBehaviour
         }
         public class OopsANull : Bullet
         {
-            public OopsANull(string BulletType, SmallSlam parent, float angle = 0f, float aradius = 0) : base(BulletType, false, false, false)
+            public OopsANull(string BulletType, SmallSlam parent, float angle = 0f, float aradius = 0) : base(BulletType, false, false, true)
             {
                 this.m_parent = parent;
                 this.m_angle = angle;

@@ -126,23 +126,23 @@ namespace Planetside
             base.sprite.UpdateZDepth();
 
             if (extantLabel != null) { Destroy(extantLabel.gameObject); }
-
+            StringBuilder stringBuilder = new StringBuilder();
             string Text = StringTableManager.GetItemsString(this.encounterTrackable.journalData.PrimaryDisplayName);
+            stringBuilder.Append(Text); 
             foreach (var enrty in this.perkDisplayContainers)
             {
                 bool req = enrty.requiresFlag == false ? false : SaveAPI.AdvancedGameStatsManager.Instance.GetFlag(enrty.FlagToTrack);
-                bool req2 = enrty.requiresStack == false ? false : GameStatsManager.Instance.m_encounteredTrackables[this.encounterTrackable.EncounterGuid].encounterCount >= enrty.AmountToBuyBeforeReveal;
+                bool req2 = enrty.requiresStack == false ? false : (GameStatsManager.Instance.m_encounteredTrackables.ContainsKey(this.encounterTrackable.EncounterGuid) ? GameStatsManager.Instance.m_encounteredTrackables[this.encounterTrackable.EncounterGuid].encounterCount : 0) >= enrty.AmountToBuyBeforeReveal;
                 if (req == true || req2 == true)
                 {
-                    Text += "\n- " + enrty.UnlockedString;
+                    stringBuilder.Append("\n- " + enrty.UnlockedString);
                 }
                 else
                 {
-                    Text += "\n- " + enrty.LockedString;
+                    stringBuilder.Append("\n- " + enrty.LockedString);
                 }
             }
-            extantLabel = UIToolbox.GenerateText(this.transform, new Vector2(1.25f, -0.25f), 0.5f, Text, new Color32(0, 12, 50, 200));
-
+            extantLabel = UIToolbox.GenerateText(this.transform, new Vector2(1.25f, -0.25f), 0.5f, stringBuilder.ToString(), new Color32(0, 12, 50, 200));
         }
 
         public new void OnExitRange(PlayerController interactor)

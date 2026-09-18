@@ -20,6 +20,7 @@ using Brave.BulletScript;
 using GungeonAPI;
 using SaveAPI;
 using Alexandria.Integrations;
+using Alexandria.PrefabAPI;
 
 //Garbage Code Incoming
 namespace Planetside
@@ -83,56 +84,18 @@ namespace Planetside
             DeadKingsDesparation.DeadKingsDesparationID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
             activeitem.AddItemTip("Usable once per room. When used, all enemies for the room will have reduced HP, have their debuff resistances stripped, and grant the player increased damage for each enemy encountered. Effect lasts for 1 room.");
+
+
+            GameObject gameObject = PrefabBuilder.BuildObject("Mithrix");
+            var sprite = gameObject.AddComponent<tk2dSprite>();
+            var spriteAnimator = gameObject.AddComponent<tk2dSpriteAnimator>();
+            sprite.SetSprite(StaticSpriteDefinitions.VFX_Sheet_Data, "mithrixfalling_001");
+            spriteAnimator.Library = StaticSpriteDefinitions.VFX_Animation_Data;
+
+            DeadKingsDesparation.CalldownPrefab = gameObject;
         }
         public static int DeadKingsDesparationID;
-        public static void BuildPrefab()
-        {
-            GameObject gameObject = SpriteBuilder.SpriteFromResource("Planetside/Resources/VFX/MithrixCalldown/mithrixfalling_001", null, true);
-            gameObject.SetActive(false);
-            FakePrefab.MarkAsFakePrefab(gameObject);
-            UnityEngine.Object.DontDestroyOnLoad(gameObject);
-            GameObject gameObject2 = new GameObject("Mithrix Calldown");
-            tk2dSprite tk2dSprite = gameObject2.AddComponent<tk2dSprite>();
-            tk2dSprite.SetSprite(gameObject.GetComponent<tk2dBaseSprite>().Collection, gameObject.GetComponent<tk2dBaseSprite>().spriteId);
 
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixfalling_001", tk2dSprite.Collection));
-
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixland_001", tk2dSprite.Collection));
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixland_002", tk2dSprite.Collection));
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixland_003", tk2dSprite.Collection));
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixland_004", tk2dSprite.Collection));
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixland_005", tk2dSprite.Collection));
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixland_006", tk2dSprite.Collection));
-
-            DeadKingsDesparation.spriteIds1.Add(SpriteBuilder.AddSpriteToCollection("Planetside/Resources/VFX/MithrixCalldown/mithrixleap_001", tk2dSprite.Collection));
-
-
-            Material mat = tk2dSprite.GetCurrentSpriteDef().material = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-            mat.mainTexture = tk2dSprite.sprite.renderer.material.mainTexture;
-            mat.SetColor("_EmissiveColor", new Color32(104, 182, 255, 255));
-            mat.SetFloat("_EmissiveColorPower", 1.55f);
-            mat.SetFloat("_EmissivePower", 100);
-            tk2dSprite.sprite.renderer.material = mat;
-
-            DeadKingsDesparation.spriteIds1.Add(tk2dSprite.spriteId);
-            gameObject2.SetActive(false);
-
-
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[0]); //Mithrix Fall
-
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[1]); //Mithrix Land
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[2]);
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[3]);
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[4]);
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[5]);
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[6]);
-
-            tk2dSprite.SetSprite(DeadKingsDesparation.spriteIds1[7]); //Mithrix Leap
-
-            FakePrefab.MarkAsFakePrefab(gameObject2);
-            UnityEngine.Object.DontDestroyOnLoad(gameObject2);
-            DeadKingsDesparation.CalldownPrefab = gameObject2;
-        }
 
         public static GameObject CalldownPrefab;
         public static List<int> spriteIds1 = new List<int>();
@@ -199,14 +162,20 @@ namespace Planetside
             if (activeEnemies1 != null)
             {
                 AIActor randomActiveEnemy1 = player.CurrentRoom.GetRandomActiveEnemy(true);
-                Vector2 targetPoint = randomActiveEnemy1.sprite.WorldBottomCenter;
+                Vector2 targetPoint = randomActiveEnemy1.sprite.WorldBottomCenter - new Vector2(1, 0);
                 {
-                    GameObject fuck = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.CalldownPrefab, targetPoint + new Vector2(0, 30), Quaternion.identity);
-                    fuck.GetComponent<tk2dBaseSprite>().PlaceAtLocalPositionByAnchor(targetPoint + new Vector2(0f, 30f), tk2dBaseSprite.Anchor.LowerCenter);
+                    tk2dBaseSprite mithrixSprite = UnityEngine.Object.Instantiate<GameObject>(DeadKingsDesparation.CalldownPrefab, targetPoint + new Vector2(0, 30), Quaternion.identity).GetComponent<tk2dBaseSprite>();
+                    mithrixSprite.transform.position = targetPoint + new Vector2(0, 30);
+                    var animator = mithrixSprite.GetComponent<tk2dSpriteAnimator>();
+                    animator.Play("mithrixFall");
 
                     AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", base.gameObject);
-                    fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[0]);
 
+                    ParticleBase.DoRandomizedBurstOfParticles("ChaffParticle_BG", 32, new ParticleSystem.EmitParams()
+                    {
+                        position = mithrixSprite.WorldBottomCenter,
+                        startColor = Color.gray,
+                    }, new Vector2(0, 360), new Vector2(3, 12), new Vector2(0.25f, 0.5f));
 
                     float Time = 0.7f;
                     float elapsed = 0;
@@ -214,51 +183,53 @@ namespace Planetside
                     {
                         elapsed += BraveTime.DeltaTime;
                         float t = (float)elapsed / (float)Time;
-                        Vector3 pos = Vector3.Lerp(targetPoint + new Vector2(0f, 30f), targetPoint, t);
-                        fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.LowerCenter);
+                        mithrixSprite.transform.position = Vector3.Lerp(targetPoint + new Vector2(0f, 30f), targetPoint, t);
+                        ParticleBase.EmitParticles("ChaffParticle_BG", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = mithrixSprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1),
+                            startColor = Color.gray,
+                            startLifetime = 0.75f
+                        });
                         yield return null;
                     }
-
+                    animator.Play("mithrixLand");
+                    AkSoundEngine.PostEvent("Play_ENM_rock_blast_01", base.gameObject);
+                    ParticleBase.DoRandomizedBurstOfParticles("ChaffParticle_BG", 32, new ParticleSystem.EmitParams()
                     {
-                        AkSoundEngine.PostEvent("Play_ENM_rock_blast_01", base.gameObject);
-                        Exploder.DoDistortionWave(targetPoint, 6f, 0.6f, 0.2f, 0.1f);
-                        if (randomActiveEnemy1 != null)
-                        {
-                            randomActiveEnemy1.healthHaver.ApplyDamage(250f, Vector2.zero, "Erasure", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+                        position = mithrixSprite.WorldBottomCenter,
+                        startColor = Color.gray,
+                    }, new Vector2(0, 360), new Vector2(1, 6), new Vector2(0.75f, 1.5f));
+                    Exploder.DoDistortionWave(targetPoint, 3f, 0.125f, 12, 0.125f);
+                    if (randomActiveEnemy1 != null)
+                    {
+                        randomActiveEnemy1.healthHaver.ApplyDamage(250f, Vector2.zero, "Erasure", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
 
-                        }
-                        for (int q = 0; q < 5; q++)
-                        {
-
-                            fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[q]);
-                            Time = 0.35f;
-                            elapsed = 0;
-                            while (elapsed < Time)
-                            {
-                                elapsed += BraveTime.DeltaTime;
-                                float t = (float)elapsed / (float)Time;
-                                //Vector3 pos = Vector3.Lerp(targetPoint + new Vector2(0f, 30f), targetPoint, t);
-                                fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(targetPoint, tk2dBaseSprite.Anchor.LowerCenter);
-                                yield return null;
-                            }
-                        }
-                        fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[6]);
-                        Exploder.DoDistortionWave(targetPoint, 6f, 0.6f, 0.2f, 0.1f);
-                        AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", base.gameObject);
-                        fuck.GetComponent<tk2dBaseSprite>().SetSprite(DeadKingsDesparation.spriteIds1[7]);
-
-                        Time = 1.5f;
-                        elapsed = 0;
-                        while (elapsed < Time)
-                        {
-                            elapsed += BraveTime.DeltaTime;
-                            float t = (float)elapsed / (float)Time;
-                            Vector3 pos = Vector3.Lerp(targetPoint, targetPoint + new Vector2(0f, 50f), t);
-                            fuck.GetComponent<tk2dBaseSprite>().PlaceAtPositionByAnchor(pos, tk2dBaseSprite.Anchor.LowerCenter);
-                            yield return null;
-                        }
                     }
-                    UnityEngine.Object.Destroy(fuck);
+
+                    while (animator.IsPlaying("mithrixLand"))
+                    {
+                        yield return null;
+                    }
+                    yield return new WaitForSeconds(1.25f);
+                    animator.Play("mithrixLeap");
+                    Exploder.DoDistortionWave(targetPoint, 3f, 0.125f, 12, 0.125f);
+                    AkSoundEngine.PostEvent("Play_BOSS_doormimic_land_01", animator.gameObject);
+                    Time = 1.5f;
+                    elapsed = 0;
+                    while (elapsed < Time)
+                    {
+                        elapsed += BraveTime.DeltaTime;
+                        float t = (float)elapsed / (float)Time;
+                        ParticleBase.EmitParticles("ChaffParticle_BG", 1, new ParticleSystem.EmitParams()
+                        {
+                            position = mithrixSprite.WorldBottomCenter + MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), 1),
+                            startColor = Color.gray,
+                            startLifetime = 0.5f
+                        });
+                        mithrixSprite.transform.position = Vector3.Lerp(targetPoint, targetPoint + new Vector2(0f, 50f), t);
+                        yield return null;
+                    }
+                    UnityEngine.Object.Destroy(mithrixSprite.gameObject);
                 }
             }
             yield break;

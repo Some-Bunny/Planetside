@@ -76,9 +76,14 @@ namespace Planetside
                     base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
                     base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 60, -1, true));
 
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle - 2.5f) + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
-                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 30, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle - 2.5f) + 40, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 40, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction((angle + 2.5f) + 40, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 16f, 120, -1, true));
+
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 40, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 20f, 120, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle + 20, DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet(StaticBulletEntries.UnDodgeableCheese.Name, 22f, 60, -1, true));
+                    base.Fire(new Offset(offset, 0f, string.Empty, DirectionType.Absolute), new Direction(angle, DirectionType.Absolute, -1f), new Speed(16, SpeedType.Absolute), new Bullet(StaticBulletEntries.UnDodgeableCheese.Name, true, false, false));
+
 
                     i++;
                 }
@@ -157,15 +162,17 @@ namespace Planetside
                     }
                     yield return base.Wait(15);
                     this.CleanupReticles();
-                    yield return base.Wait(25);
+                    yield return base.Wait(5);
                     for (int l = 0; l < DaggerCap; l++)
                     {
                         if (!float.IsNaN(angles[l]))
                         {
-                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 160));
-                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 120));
-                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 80));
-                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 40));
+                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 60));
+                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 50));
+                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 40));
+                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 30));
+                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 20));
+                            base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 10));
                         }
                     }
 
@@ -203,7 +210,7 @@ namespace Planetside
         {
             public override IEnumerator Top()
             {
-                int DaggerCap = 3;
+                int DaggerCap = 4;
 
                 yield return base.Wait(18);
                 float[] angles = new float[DaggerCap];
@@ -218,7 +225,7 @@ namespace Planetside
                         int num = j / 2;
                         bool flag = j % 2 == 1;
                         Vector2 vector = IntVector2.CardinalsAndOrdinals[num].ToVector2();
-                        float d = (!flag) ? 5f : 6.5f;
+                        float d = (!flag) ? 5f : 8f;
                         Vector2 vector2 = this.BulletManager.PlayerPosition();
                         Vector2 a = vector.normalized * d;
                         vector2 += a * timeUntilFire;
@@ -265,18 +272,18 @@ namespace Planetside
                         yield return base.Wait(1);
                     }
                 }
-                yield return base.Wait(20);
+                yield return base.Wait(10);
                 this.CleanupReticles();
                 for (int l = 0; l < DaggerCap; l++)
                 {
                     if (!float.IsNaN(angles[l]))
                     {
-                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 240));
-                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 200));
-                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 160));
-                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 120));
-                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 80));
-                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 30, 40));
+                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 60));
+                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 50));
+                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 40));
+                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 30));
+                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 20));
+                        base.Fire(new Offset(new Vector2(0.5f, 0f), angles[l], string.Empty, DirectionType.Absolute), new Direction(angles[l], DirectionType.Absolute, -1f), new Speed(0f, SpeedType.Absolute), new SpeedChangingBullet("UnDodgeableDagger", 40, 10));
 
                     }
                 }
@@ -319,7 +326,7 @@ namespace Planetside
                 Vector2 roomCenter = area.UnitCenter - new Vector2(0f, 2.5f);
                 base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Summon_01", null);
 
-                int AmountOfCheese = 5;
+                int AmountOfCheese = 6;
                 for (int i = 0; i < 3; i++)
                 {
                     int misfireIndex = UnityEngine.Random.Range(0, 15);
@@ -503,7 +510,6 @@ namespace Planetside
                 private float m_additionalRampHeight;
             }
 
-            // Token: 0x020002CA RID: 714
             public class CheeseWheelBullet : Bullet
             {
                 public CheeseWheelBullet() : base("UnDodgeableCheeseWheel", true, false, false)
@@ -518,19 +524,30 @@ namespace Planetside
                     this.Projectile.Ramp(-1.5f, 100f);
                     yield return base.Wait(80);
 
-                    for (int f = 0; f < 24; f++)
+                    for (int f = 0; f < 18; f++)
                     {
-                        SpeedChangingBullet bullet = new SpeedChangingBullet("UnDodgeableCheese", 16, 120);
-                        base.Fire(new Direction((15 * f), DirectionType.Absolute, -1f), new Speed(9, SpeedType.Absolute), bullet);
+                        SpeedChangingBullet bullet = new SpeedChangingBullet("UnDodgeableCheese", 22, 60);
+                        base.Fire(new Direction((20 * f), DirectionType.Absolute, -1f), new Speed(4, SpeedType.Absolute), bullet);
                         bullet.Projectile.ImmuneToSustainedBlanks = true;
 
-                        SpeedChangingBullet bullet_1 = new SpeedChangingBullet("UnDodgeableCheese", 7, 120);
-                        base.Fire(new Direction((15 * f) + 7.5f, DirectionType.Absolute, -1f), new Speed(15, SpeedType.Absolute), bullet_1);
+                        SpeedChangingBullet bullet_1 = new SpeedChangingBullet("UnDodgeableCheese", 16, 60);
+                        base.Fire(new Direction((20 * f) + 6.66f, DirectionType.Absolute, -1f), new Speed(12, SpeedType.Absolute), bullet_1);
                         bullet_1.Projectile.ImmuneToSustainedBlanks = true;
+
+                        SpeedChangingBullet bullet_2 = new SpeedChangingBullet("UnDodgeableCheese", 4, 60);
+                        base.Fire(new Direction((20 * f) + 13.33f, DirectionType.Absolute, -1f), new Speed(18, SpeedType.Absolute), bullet_2);
+                        bullet_2.Projectile.ImmuneToSustainedBlanks = true;
+                    }
+
+                    for (int f = 0; f < 32; f++)
+                    {
+                        Bullet bullet = new Bullet("UnDodgeableCheese");
+                        base.Fire(new Direction(BraveUtility.RandomAngle(), DirectionType.Absolute, -1f), new Speed(UnityEngine.Random.Range(5.1f, 12.1f), SpeedType.Absolute), bullet);
+                        bullet.Projectile.ImmuneToSustainedBlanks = true;
                     }
 
 
-                    if (base.BulletBank)
+                        if (base.BulletBank)
                     {
                         ResourcefulRatController component = base.BulletBank.GetComponent<ResourcefulRatController>();
                         if (component)

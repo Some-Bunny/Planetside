@@ -141,7 +141,6 @@ namespace Planetside
         public void DetermineRoomDrop(RoomHandler roomHandler, Alexandria.RoomRewardAPI.ValidRoomRewardContents validRoomRewardContents, float a)
         {
             int amount = PerkHelper.GetGlobalStacksFromAllPlayers(AllSeeingEyeID);
-            Debug.Log(1);
             if (1 - 1 / (1 + 0.17f * amount) > UnityEngine.Random.value)
             {
                 validRoomRewardContents.overrideItemPool = new List<Tuple<float, int>>() 

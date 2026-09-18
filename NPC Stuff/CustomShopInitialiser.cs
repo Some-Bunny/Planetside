@@ -336,9 +336,11 @@ namespace Planetside
                 { Gunslinger.GunslingerID, 1 }, 
                 { PitLordsPact.PitLordsPactID, 1 }, 
                 { UnbreakableSpirit.UnbreakableSpiritID, 1 }, 
-                { Patience.PatienceID, 1 }, 
+                { Patience.PatienceID, 0.8f }, 
                 { CorruptedWealth.CorruptedWealthID, 1 }, 
-                { HollowWalls.ItemID, 1} });
+                { HollowWalls.ItemID, 1},
+                { Malice.MaliceID, 1},});
+
             GameObject masteryShop = ItsDaFuckinShopApi.SetUpShop(
                   "masteryRewardTrader"
                 , "psog"

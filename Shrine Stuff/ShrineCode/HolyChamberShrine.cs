@@ -35,7 +35,7 @@ namespace Planetside
 				OnAccept = Accept,
 				OnDecline = null,
 				CanUse = CanUse,
-				offset = new Vector3(-1, -1, 0),
+				offset = new Vector3(0, 0, 0),
 				talkPointOffset = new Vector3(0, 3, 0),
 				isToggle = false,
 				isBreachShrine = false,

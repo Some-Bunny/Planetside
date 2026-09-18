@@ -9,6 +9,7 @@ using UnityEngine;
 using ItemAPI;
 using Alexandria.Assetbundle;
 using Alexandria.Integrations;
+using Alexandria.Misc;
 
 
 
@@ -171,7 +172,7 @@ namespace Planetside
             this.maxRadius = 5;
             radiusIncreasePerSecond = 1.33f;
         }
-
+        private AdditionalBraveLight easyLight;
         private void Start()
         {
             radialIndicator = ((GameObject)UnityEngine.Object.Instantiate(ResourceCache.Acquire("Global VFX/HeatIndicator"), base.transform.position, Quaternion.identity)).GetComponent<HeatIndicatorController>();
@@ -186,6 +187,10 @@ namespace Planetside
             {
                 this.owner = (this.projectile.Owner as PlayerController);
             }
+            easyLight = radialIndicator.gameObject.AddComponent<AdditionalBraveLight>();
+            easyLight.LightColor = new Color(1, 0.6f, 0, 1);
+            easyLight.LightIntensity = 15;
+            easyLight.LightRadius = 0;
         }
         private void Update()
         {
@@ -200,6 +205,7 @@ namespace Planetside
             radiusValue += (radiusIncreasePerSecond * BraveTime.DeltaTime);
             if (maxRadius >= radiusValue) { radialIndicator.CurrentRadius = radiusValue; }
             radialIndicator.transform.position = bonePosition;
+            easyLight.LightRadius = radiusValue;
         }
 
         private void Explode(Vector2 pos)
@@ -233,7 +239,7 @@ namespace Planetside
             AkSoundEngine.PostEvent("Play_BOSS_RatMech_Bomb_01", silencerVFX.gameObject);
             Destroy(blankObj, 2f);
             blankObj.transform.localScale = Vector3.one * (radialIndicator.CurrentRadius / 4);
-            Exploder.DoDistortionWave(pos, 10f, 0.4f, radialIndicator.CurrentRadius, 0.066f);
+            Exploder.DoDistortionWave(pos, 10f, 0.2f, radialIndicator.CurrentRadius, 0.066f);
             Destroy(radialIndicator.gameObject);
         }
         public void OnDestroy()

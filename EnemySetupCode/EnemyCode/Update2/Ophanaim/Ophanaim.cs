@@ -1695,10 +1695,10 @@ namespace Planetside
 				enemy.encounterTrackable.journalData.PrimaryDisplayName = "#OPHANAIMAMMONOMICON";
 				enemy.encounterTrackable.journalData.NotificationPanelDescription = "#OPHANAIMAMMONOMICONSHORT";
 				enemy.encounterTrackable.journalData.AmmonomiconFullEntry = "#OPHANAIMAMMONOMICONLONG";
-				EnemyBuilder.AddEnemyToDatabase(enemy.gameObject, "psog:ophanaim");
-				EnemyDatabase.GetEntry("psog:ophanaim").ForcedPositionInAmmonomicon = 8;
-				EnemyDatabase.GetEntry("psog:ophanaim").isInBossTab = true;
-				EnemyDatabase.GetEntry("psog:ophanaim").isNormalEnemy = true;
+				var en = EnemyBuilder.AddEnemyToDatabase(enemy.gameObject, "psog:ophanaim");
+                en.ForcedPositionInAmmonomicon = 8;
+                en.isInBossTab = true;
+                en.isNormalEnemy = true;
 
 
                 Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
@@ -1836,9 +1836,10 @@ namespace Planetside
                     SolarClap = blessingObj;
                 }
                 {
-                    //string eyeDefString = "Planetside/Resources/VFX/Ophanaim/Minion/";
-                    //GameObject vfxObj = ItemBuilder.SpriteFromBundle("EyeballMinion", Collection.GetSpriteIdByName("babyeye_idle_front_001"), Collection);//ItemBuilder.AddSpriteToObject("EyeballMinion", eyeDefString + "babyeye_idle_front_001", null);
-                    //tk2dSpriteAnimator eyeAnimator = vfxObj.GetOrAddComponent<tk2dSpriteAnimator>();
+
+                    var h1 = PlanetsideModule.SpriteCollectionAssets.LoadAsset<GameObject>("OphanaimBabyAnimation").GetComponent<tk2dSpriteAnimation>();
+
+
                     var vfxObj = PrefabBuilder.BuildObject("Lenshot");
                     FakePrefab.MarkAsFakePrefab(vfxObj);
                     UnityEngine.Object.DontDestroyOnLoad(vfxObj);
@@ -1848,8 +1849,8 @@ namespace Planetside
 
                     tk2dSpriteAnimator eyeAnimator = vfxObj.AddComponent<tk2dSpriteAnimator>();
 
-                    eyeAnimator.Library = h;
-                    eyeAnimator.library = h;
+                    eyeAnimator.Library = h1;
+                    eyeAnimator.library = h1;
 
 
                     AIAnimator aiAnimatorBody = vfxObj.AddComponent<AIAnimator>();
@@ -1877,15 +1878,16 @@ namespace Planetside
                         Flipped = new DirectionalAnimation.FlipType[6],
                         AnimNames = new string[]
                         {
-                        "babyeye_right",
-                        "babyeye_right",
-                        "babyeye_right",
-                        "babyeye_front",
-                        "babyeye_left",
-                        "babyeye_left"
+                        "right",
+                        "right",
+                        "right",
+                        "front",
+                        "left",
+                        "left"
                         }
                     };
-                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "babyeye_die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.Single);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "die", new string[] { "die" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.None);
+                    EnemyToolbox.AddNewDirectionAnimation(aiAnimatorBody, "awaken", new string[] { "awaken" }, new DirectionalAnimation.FlipType[1], DirectionalAnimation.DirectionType.None);
 
                     vfxObj.AddComponent<MeshFilter>();
                     vfxObj.AddComponent<MeshRenderer>();
@@ -2049,7 +2051,8 @@ namespace Planetside
         public static GameObject EyeBallMinion;
 
         public static GameObject SolarClap;
-		private static string DefPath = "Planetside/Resources/Bosses/OphanaimUltra/";
+		/*
+        private static string DefPath = "Planetside/Resources/Bosses/OphanaimUltra/";
 		private static string[] spritePaths = new string[]
 		{
 			DefPath+"ophanaimultra_idle_001.png",//0
@@ -2163,6 +2166,8 @@ namespace Planetside
 
 
         };
+
+        */
 		public class EyeEnemyBehavior : BraveBehaviour
 		{
 			//public List<GameObject> extantReticles = new List<GameObject>();

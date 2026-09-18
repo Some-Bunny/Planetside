@@ -36,7 +36,7 @@ namespace Planetside
             string shortDesc = "Irony On Another Level";
             string longDesc = "Captures nearby bullets and turns them into defensive orbitals. Despite being long forgotten and Guonmancy virtually dying out, the tome still holds up.\n\nSome say that Guonmancy still lives on and is secretly practiced by some.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
-            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 250f);
+            activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 300f);
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.B;
             activeitem.gameObject.AddComponent<IronsideItemPool>();
@@ -92,7 +92,7 @@ namespace Planetside
             BulletGuonMaker.BuildBasePrefab();
             BulletGuonMaker.TomeOfGuonmancyID = activeitem.PickupObjectId;
             ItemIDs.AddToList(activeitem.PickupObjectId);
-            activeitem.AddItemTip("On use, temporarily turns nearby enemy projectiles into protective orbitals that last 15 seconds.");
+            activeitem.AddItemTip("On use, temporarily turns nearby enemy projectiles into protective orbitals that last 10 seconds.");
 
         }
         public static int TomeOfGuonmancyID;
@@ -100,6 +100,30 @@ namespace Planetside
         {
             base.Pickup(player);
         }
+        float E;
+        private float CaptureRadius = 3.5f;
+        public override void Update()
+        {
+            base.Update();
+            if (LastOwner)
+            {
+                if (LastOwner.CurrentItem == this || Active == true)
+                {
+                    E += (Active ? 480 : 48) * BraveTime.DeltaTime;
+                    var m = MathToolbox.GetUnitOnCircle(E, CaptureRadius);
+                    var m1 = MathToolbox.GetUnitOnCircle(E + 120, CaptureRadius);
+                    var m2 = MathToolbox.GetUnitOnCircle(E + 240, CaptureRadius);
+                    float a = Active ? 0.2f : 0.5f;
+                    var Col = Active ? new Color(1, 0.06f, 0.1f, 0.5f) : new Color(0.3f, 0.06f, 0, 0.125f);
+                    GlobalSparksDoer.DoSingleParticle((LastOwner.sprite.WorldCenter) + m, Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, a, Col, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                    GlobalSparksDoer.DoSingleParticle((LastOwner.sprite.WorldCenter) + m1, Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, a, Col, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                    GlobalSparksDoer.DoSingleParticle((LastOwner.sprite.WorldCenter) + m2, Vector3.up * UnityEngine.Random.Range(0.2f, 0.4f), 0.1f, a, Col, GlobalSparksDoer.SparksType.FLOATY_CHAFF);
+                }
+            }
+        }
+
+        
+
 
         public static void BuildBasePrefab()
         {
@@ -111,7 +135,9 @@ namespace Planetside
 
 
             sprite.CachedPerpState = tk2dBaseSprite.PerpendicularState.FLAT;
-
+            sprite.usesOverrideMaterial = true;
+            sprite.renderer.material.shader = ShaderCache.Acquire("tk2d/CutoutVertexColorTintableTilted");
+            sprite.renderer.material.SetColor("_OverrideColor", Color.white);
 
             SpeculativeRigidbody speculativeRigidbody = gameObject.GetComponent<tk2dSprite>().SetUpSpeculativeRigidbody(IntVector2.Zero, new IntVector2(12, 12));
             PlayerOrbital orbitalPrefab = gameObject.AddComponent<PlayerOrbital>();
@@ -120,6 +146,8 @@ namespace Planetside
             speculativeRigidbody.PrimaryPixelCollider.CollisionLayer = CollisionLayer.EnemyBulletBlocker;
             orbitalPrefab.shouldRotate = false;
             orbitalPrefab.orbitRadius = 2f;
+
+
 
             orbitalPrefab.orbitDegreesPerSecond = 60;
             orbitalPrefab.SetOrbitalTier(0);
@@ -130,30 +158,7 @@ namespace Planetside
         }
 
         public static GameObject BaseBulletGuon;
-        public override bool CanBeUsed(PlayerController user)
-        {
-            bool flag3 = user.CurrentRoom != null;
-            if (flag3)
-            {
-                ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-                if (allProjectiles != null)
-                {
-                    for (int i = 0; i < allProjectiles.Count; i++)
-                    {
-                        Projectile proj = allProjectiles[i];
-                        if (Vector2.Distance(proj.sprite.WorldCenter, user.sprite.WorldCenter) < 3.25f && proj != null && proj.specRigidbody != null && user != null && proj.Owner != user)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                return false;
-            }
-            return false;
-        }
+
         public override void DoEffect(PlayerController user)
         {
 
@@ -186,51 +191,46 @@ namespace Planetside
                             LootEngine.GivePrefabToPlayer(PickupObjectDatabase.GetById(565).gameObject, user);
                         }
                     }
-                    user.StartCoroutine(this.HandleBulletDeletionFrames(user.sprite.WorldCenter, 3.25f, 0.5f));   
+                    user.StartCoroutine(this.HandleBulletDeletionFrames( CaptureRadius + 0.25f, 0.5f));   
                 }         
             }
         }
-        private IEnumerator HandleBulletDeletionFrames(Vector3 centerPosition, float bulletDeletionSqrRadius, float duration)
+        private bool Active = false;
+        private IEnumerator HandleBulletDeletionFrames(float bulletDeletionSqrRadius, float duration)
         {
+            Active = true;
             float elapsed = 0f;
             while (elapsed < duration)
             {
+                if (LastOwner == null)
+                    break;
+
                 elapsed += BraveTime.DeltaTime;
                 ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
-                for (int i = allProjectiles.Count - 1; i >= 0; i--)
+                for (int i = allProjectiles.Count - 1; i > -1; i--)
                 {
                     Projectile projectile = allProjectiles[i];
-                    if (projectile)
+                    if (projectile && projectile.gameObject.activeSelf)
                     {
                         if (!(projectile.Owner is PlayerController))
                         {
-                            Vector2 vector = (projectile.transform.position - centerPosition).XY();
-                            if (projectile.CanBeKilledByExplosions && vector.sqrMagnitude < bulletDeletionSqrRadius)
+
+                            if (Vector2.Distance(LastOwner.sprite.WorldCenter, projectile.transform.position) <= bulletDeletionSqrRadius)
                             {
-                                GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(projectile));
+                                GameManager.Instance.Dungeon.StartCoroutine(this.HandleBulletSuck(projectile, elapsed));
                             }
                         }
                     }
                 }
                 yield return null;
             }
+            Active = false;
             yield break;
         }
-        private IEnumerator HandleBulletSuck(Projectile target)
+        private IEnumerator HandleBulletSuck(Projectile sprite, float ActiveTime)
         {
-            GameObject gameObject = new GameObject("suck image");
-            gameObject.layer = target.gameObject.layer;
-            tk2dSprite tk2dSprite = gameObject.AddComponent<tk2dSprite>();
-            gameObject.transform.parent = SpawnManager.Instance.VFX;
-            tk2dSprite.SetSprite(target.sprite.Collection, target.sprite.spriteId);
-            this.BuildPrefab(tk2dSprite, base.LastOwner, target.baseData.speed);
 
-            target.DieInAir(false, true, true, false);
-            yield break;
-        }
-        public GameObject BuildPrefab(tk2dSprite sprite, PlayerController User, float Speed)
-        {
-            GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(User, BaseBulletGuon, false);
+            GameObject gameobject2 = PlayerOrbitalItem.CreateOrbital(LastOwner, BaseBulletGuon, false);
             PlayerOrbital orb = gameobject2.GetComponent<PlayerOrbital>();
             orb.orbitDegreesPerSecond = base.LastOwner.PlayerHasActiveSynergy("Chapter Of Time") == true ? 120 : 60;
 
@@ -238,18 +238,20 @@ namespace Planetside
             tk2dSprite.SetSprite(sprite.sprite.Collection, sprite.sprite.spriteId);
 
             CreatedGuonBulletsController yes = gameobject2.AddComponent<CreatedGuonBulletsController>();
-            yes.sourcePlayer = User;
-            yes.maxDuration = 15f;
-            orb.orbitDegreesPerSecond = Mathf.Max(60, Speed * 5);
+            yes.sourcePlayer = LastOwner;
+            yes.maxDuration = 10f - ActiveTime;
 
-            yes.SpawnsCharmGoop = User.PlayerHasActiveSynergy("Chapter Of Love");
-            yes.ClearsGoop = User.PlayerHasActiveSynergy("Chapter Of Purity");
-            yes.ShootsOnDestruction = User.PlayerHasActiveSynergy("Chapter Of War");
-            yes.ChanceToBlank = User.PlayerHasActiveSynergy("Chapter Of Silence");
-            yes.AddSpeed = User.PlayerHasActiveSynergy("Chapter Of Speed");
 
-            return gameobject2;
+            yes.SpawnsCharmGoop = LastOwner.PlayerHasActiveSynergy("Chapter Of Love");
+            yes.ClearsGoop = LastOwner.PlayerHasActiveSynergy("Chapter Of Purity");
+            yes.ShootsOnDestruction = LastOwner.PlayerHasActiveSynergy("Chapter Of War");
+            yes.ChanceToBlank = LastOwner.PlayerHasActiveSynergy("Chapter Of Silence");
+            yes.AddSpeed = LastOwner.PlayerHasActiveSynergy("Chapter Of Speed");
+
+            sprite.DieInAir(false, true, true, false);
+            yield break;
         }
+
     }
 }
 

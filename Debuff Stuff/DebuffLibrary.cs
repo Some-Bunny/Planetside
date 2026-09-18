@@ -303,7 +303,7 @@ namespace Planetside
 			GoopDef.CanBeIgnited = false;
 			GoopDef.damagesEnemies = false;
 			GoopDef.damagesPlayers = false;
-			GoopDef.lifespan = 6f;
+			GoopDef.lifespan = 7.5f;
 			GoopDef.baseColor32 = new Color32(156, 155, 0, byte.MaxValue);
 			GoopDef.goopTexture = ResourceExtractor.GetTextureFromResource("Planetside/Resources/goop_standard_base_001.png");
 			GoopDef.AppliesDamageOverTime = true;
