@@ -47,6 +47,7 @@ namespace Planetside
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:MaliceUmbralBan");
 
                 companion.gameObject.layer = 22;
                 companion.sprite.SortingOrder = 2;

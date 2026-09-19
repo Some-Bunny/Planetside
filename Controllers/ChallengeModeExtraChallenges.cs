@@ -32,10 +32,10 @@ namespace Planetside
             try
             {
                 ChallengeBuilder.Init();
-                ChallengeBuilder.EnableDebugMode();
+                //ChallengeBuilder.EnableDebugMode();
                 //-------------BUILDING CHALLENGES----------
                 //Builds a basic challenge.
-                /*
+                
                 ChallengeBuilder.BuildChallenge<BulletStormChallengeModifier>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("leadStorm"), "Lead Storm", true, new List<ChallengeModifier>
                 {
                     ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<KingEnemyChallengeModifier>().challenge,
@@ -48,7 +48,7 @@ namespace Planetside
                      ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<BestForLastChallengeModifier>().challenge,
 
                 }, null, null, true, true);
-                */
+                
                 ChallengeBuilder.BuildChallenge<LandminesAhoy>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("Landmines"), "Watch Your Step", false, new List<ChallengeModifier>
                 {
                      ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<DarknessChallengeModifier>().challenge,
@@ -56,13 +56,13 @@ namespace Planetside
                      ChallengeBuilder.ChallengeManagerPrefab.FindChallenge<BooRoomChallengeModifier>().challenge,
 
                 }, null, null, true, true);
-                /*
+                
                 ChallengeBuilder.BuildChallenge<OopsAllLasers>(PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("DiamondHeist"), "Diamond Heist", true, new List<ChallengeModifier>
                 {
                      
 
                 }, null, null, true, true);
-                */
+                
                 Debug.Log("Finished ChallengeModeExtraChallenges setup without failure!");
 
             }

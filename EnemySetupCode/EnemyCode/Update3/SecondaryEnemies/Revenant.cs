@@ -87,6 +87,7 @@ namespace Planetside
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "skeleton");
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "RelocationImmunity");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:MaliceUmbralBan");
 
                 //prefab.AddComponent<TeleportationImmunity>();
 

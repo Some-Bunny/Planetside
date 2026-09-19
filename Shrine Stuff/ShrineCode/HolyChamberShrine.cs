@@ -99,7 +99,9 @@ namespace Planetside
 				PitLordsPact.PitLordsPactID,
 				UnbreakableSpirit.UnbreakableSpiritID,
 				Gunslinger.GunslingerID,
-				Patience.PatienceID
+				Patience.PatienceID,
+				HollowWalls.ItemID,
+				Malice.MaliceID
 			};
 			int PerksToSpawn = UnityEngine.Random.Range(2, 5);
 			for (int e = 0; e < PerksToSpawn; e++)

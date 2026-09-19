@@ -230,8 +230,8 @@ namespace Planetside
             _.Position = CustomHoveringGunController.HoverPosition.CIRCULATE;
             _.Aim = CustomHoveringGunController.AimType.PLAYER_AIM;
             _.Trigger = CustomHoveringGunController.FireType.ON_FIRED_GUN;
-            _.CooldownTime = Mathf.Max(6.66f, gun.reloadTime * 1.75f);
-            _.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.5f;
+            _.CooldownTime = Mathf.Min(6.66f, gun.reloadTime * 1.5f);
+            _.ShootDuration = ((float)gun.DefaultModule.numberOfShotsInClip * gun.DefaultModule.cooldownTime) * 0.75f;
 
             _.Initialize(gun, player);
             player.ownerlessStatModifiers.Add(item2);

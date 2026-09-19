@@ -18,6 +18,7 @@ using static UmbraController;
 using Alexandria.VisualAPI;
 using Pathfinding;
 using ChallengeAPI;
+using Alexandria;
 
 namespace Planetside
 {
@@ -52,6 +53,16 @@ namespace Planetside
             item.StackPickupNotificationText = "Curse is more fruitful.";
             item.InitialPickupNotificationText = "Curse is more potent and rewarding.";
             CursePot = (((GameObject)BraveResources.Load("Global Prefabs/_ChallengeManager", ".prefab")).GetComponent<ChallengeManager>().FindChallenge<CursePotChallengeModifier>().challenge as CursePotChallengeModifier).CursePot;
+
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Advanced_Dragun_Knife_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Draguns_Knife_GUID).aiActor, "PSOG:MaliceUmbralBan");
+
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Bullat_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Chicken_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Bombshee_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Rat_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Spirat_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Tombstoner_GUID).aiActor, "PSOG:MaliceUmbralBan");
 
         }
         private static DungeonPlaceable CursePot;

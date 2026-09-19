@@ -48,6 +48,8 @@ namespace Planetside
                 companion.aiActor.aiAnimator.spriteAnimator = companion.aiActor.spriteAnimator;
 
                 Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:Forgotten");
+                Alexandria.ItemAPI.AlexandriaTags.SetTag(companion.aiActor, "PSOG:MaliceUmbralBan");
+
                 companion.aiActor.knockbackDoer.weight = 1000;
 				companion.aiActor.MovementSpeed = 1.2f;
 				companion.aiActor.healthHaver.PreventAllDamage = false;

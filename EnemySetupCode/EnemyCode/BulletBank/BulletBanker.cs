@@ -785,6 +785,15 @@ namespace Planetside
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("da797878d215453abba824ff902e21b4").bulletBank.GetBullet("snakeBullet"));
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("41ee1c8538e8474a82a74c4aff99c712").bulletBank.GetBullet("big"));
                 companion.aiActor.bulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("68a238ed6a82467ea85474c595c49c6e").bulletBank.GetBullet("ring"));
+
+                mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
+                mat.mainTexture = companion.aiActor.sprite.renderer.material.mainTexture;
+                mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
+                mat.SetFloat("_EmissiveColorPower", 1.55f);
+                mat.SetFloat("_EmissivePower", 30);
+                mat.SetFloat("_EmissiveThresholdSensitivity", 0.6f);
+
+                companion.aiActor.sprite.renderer.material = mat;
             }
 
 		}
@@ -819,9 +828,9 @@ namespace Planetside
 						base.PostWwiseEvent("Play_BOSS_Rat_Cheese_Burst_02", null);
 						string guid = BraveUtility.RandomElement<string>(StaticInformation.ModderBulletGUIDs);
 						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
-                        Enemy.healthHaver.SetHealthMaximum(14f);
+                        //Enemy.healthHaver.SetHealthMaximum(14f);
                         var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-                        base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
+                        //base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
 
                         float num = base.RandomAngle();
 						float Amount = 12;
@@ -894,7 +903,7 @@ namespace Planetside
 						var Enemy = EnemyDatabase.GetOrLoadByGuid(guid);
 						Enemy.healthHaver.SetHealthMaximum(14f);
 						var en = AIActor.Spawn(Enemy.aiActor, this.Projectile.sprite.WorldCenter, GameManager.Instance.PrimaryPlayer.CurrentRoom, true, AIActor.AwakenAnimationType.Default, true);
-						base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
+						//base.BulletBank.aiActor.GetComponent<BankerEnemyBehavior>().spawnBullets.Add(en);
 
 						float num = base.RandomAngle();
 						for (int i = 0; i < 12; i++)
@@ -1172,38 +1181,10 @@ namespace Planetside
 
 		public class BankerEnemyBehavior : BraveBehaviour
 		{
-			private RoomHandler m_StartRoom;
 			public List<AIActor> spawnBullets = new List<AIActor>();
 
 
-			public void Update()
-			{
-				m_StartRoom = aiActor.GetAbsoluteParentRoom();
-				if (!base.aiActor.HasBeenEngaged)
-				{
-					CheckPlayerRoom();
-				}
-			}
-			private void CheckPlayerRoom()
-			{
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					GameManager.Instance.StartCoroutine(LateEngage());
-				}
-				else
-				{
-					base.aiActor.HasBeenEngaged = false;
-				}
-			}
-			private IEnumerator LateEngage()
-			{
-				yield return new WaitForSeconds(0.5f);
-				if (GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() != null && GameManager.Instance.PrimaryPlayer.GetAbsoluteParentRoom() == m_StartRoom)
-				{
-					base.aiActor.HasBeenEngaged = true;
-				}
-				yield break;
-			}
+			
 			public void LerpMaterialGlow(Material targetMaterial, float startGlow, float targetGlow, float duration)
 			{
 				base.StartCoroutine(this.LerpMaterialGlowCR(targetMaterial, startGlow, targetGlow, duration));
@@ -1231,14 +1212,7 @@ namespace Planetside
 					if (base.aiActor.sprite && base.aiActor.sprite.renderer)
 					{
 
-						Material mat = new Material(EnemyDatabase.GetOrLoadByName("GunNut").sprite.renderer.material);
-						mat.mainTexture = base.aiActor.sprite.renderer.material.mainTexture;
-						mat.SetColor("_EmissiveColor", new Color32(255, 255, 255, 255));
-						mat.SetFloat("_EmissiveColorPower", 1.55f);
-						mat.SetFloat("_EmissivePower", 30);
-						mat.SetFloat("_EmissiveThresholdSensitivity", 0.6f);
 
-						base.aiActor.sprite.renderer.material = mat;
 						/*
 						Material sharedMaterial = base.aiActor.sprite.renderer.sharedMaterial;
 						base.aiActor.sprite.usesOverrideMaterial = true;
