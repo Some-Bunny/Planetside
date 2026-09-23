@@ -63,6 +63,10 @@ namespace Planetside
             Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Rat_GUID).aiActor, "PSOG:MaliceUmbralBan");
             Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Spirat_GUID).aiActor, "PSOG:MaliceUmbralBan");
             Alexandria.ItemAPI.AlexandriaTags.SetTag(EnemyDatabase.GetOrLoadByGuid(EnemyGUIDs.Tombstoner_GUID).aiActor, "PSOG:MaliceUmbralBan");
+            GungeonAPI.DungeonHooks.OnPostDungeonGeneration += () =>
+            {
+                RoomHandler_HandleBossClearReward_Patch.PlusPedestals = 0;
+            };
 
         }
         private static DungeonPlaceable CursePot;

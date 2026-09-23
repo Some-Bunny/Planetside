@@ -1127,11 +1127,14 @@ namespace Planetside
                             {
                                 if (aiactor.EnemyGuid != FodderEnemy.guid)
                                 {
-                                    float num2 = Vector2.Distance(this.m_aiActor.CenterPosition, aiactor.CenterPosition);
-                                    if (num2 < 12)
+                                    if (aiactor.CompanionOwner == null)
                                     {
-                                        playerTarget = aiactor;
-                                        num = num2;
+                                        float num2 = Vector2.Distance(this.m_aiActor.CenterPosition, aiactor.CenterPosition);
+                                        if (num2 < 12)
+                                        {
+                                            playerTarget = aiactor;
+                                            num = num2;
+                                        }
                                     }
                                 }
                             }

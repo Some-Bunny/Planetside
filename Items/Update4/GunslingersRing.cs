@@ -49,37 +49,42 @@ namespace Planetside
         [HarmonyPatch(typeof(GameUIRoot), nameof(GameUIRoot.UpdateGunDataInternal))]
         public class NopeOutVisibility
         {
-            public const string ERROR = "[color #ff0000][ERROR]: WEAPON JAM[/color]";
             static void Postfix(GameUIRoot __instance, PlayerController targetPlayer, GunInventory inventory, int inventoryShift, GameUIAmmoController targetAmmoController, int labelTarget)
             {
                 bool HasActiveRing = (PassiveItem.ActiveFlagItems[targetPlayer].ContainsKey(typeof(GunslingersRing)));
                 if (HasActiveRing == false || targetPlayer.CurrentGun == null) { return; }
 
-				string currentHex = ColorUtility.ToHtmlStringRGBA(gunClassRGB[targetPlayer.CurrentGun.gunClass]);
-				string Text = gunClassDecsiptions[targetPlayer.CurrentGun.gunClass];
+				bool isActive =  __instance.CoreUIHidden.Value;
+
+
+
+                string currentHex = gunClassRGB.ContainsKey(targetPlayer.CurrentGun.gunClass) ? ColorUtility.ToHtmlStringRGBA(gunClassRGB[targetPlayer.CurrentGun.gunClass]) : ColorUtility.ToHtmlStringRGBA(Color.white);
+				string Text = gunClassDecsiptions.ContainsKey(targetPlayer.CurrentGun.gunClass) ? gunClassDecsiptions[targetPlayer.CurrentGun.gunClass] : "???";
                 __instance.m_gunNameVisibilityTimers[labelTarget] -= __instance.m_deltaTime;
+
+                var access = __instance.gunNameLabels[labelTarget];
                 if (__instance.m_gunNameVisibilityTimers[labelTarget] > 1f)
                 {
-                    __instance.gunNameLabels[labelTarget].processMarkup = true;
-                    __instance.gunNameLabels[labelTarget].IsVisible = true;
-                    __instance.gunNameLabels[labelTarget].Opacity = 1f;
-                    __instance.gunNameLabels[labelTarget].Text = $"[color #{currentHex}]+{Text}+[/color]\n" + __instance.gunNameLabels[labelTarget].Text;
+                    access.processMarkup = true;
+                    access.IsVisible = true;
+                    access.Opacity = isActive ? 0 : 1f;
+                    access.Text = $"[color #{currentHex}]+{Text}+[/color]\n" + access.Text;
 
                 }
                 else if (__instance.m_gunNameVisibilityTimers[labelTarget] > 0f)
                 {
-                    __instance.gunNameLabels[labelTarget].processMarkup = true;
-                    __instance.gunNameLabels[labelTarget].IsVisible = true;
-                    __instance.gunNameLabels[labelTarget].Opacity = __instance.m_gunNameVisibilityTimers[labelTarget];
-                    __instance.gunNameLabels[labelTarget].Text = $"[color #{currentHex}]+{Text}+[/color]\n" + $"{__instance.gunNameLabels[labelTarget].Text}";
+                    access.processMarkup = true;
+                    access.IsVisible = true;
+                    access.Opacity = isActive ? 0 : __instance.m_gunNameVisibilityTimers[labelTarget];
+                    access.Text = $"[color #{currentHex}]+{Text}+[/color]\n" + $"{access.Text}";
 
                 }
                 else
                 {
-                    __instance.gunNameLabels[labelTarget].processMarkup = true;
-                    __instance.gunNameLabels[labelTarget].IsVisible = true;
-                    __instance.gunNameLabels[labelTarget].Opacity = 1;
-                    __instance.gunNameLabels[labelTarget].Text = $"[color #{currentHex}]+{Text}+";
+                    access.processMarkup = true;
+                    access.IsVisible = true;
+                    access.Opacity = isActive ? 0 : 1f;
+                    access.Text = $"[color #{currentHex}]+{Text}+";
                 }
             }
         }
@@ -141,6 +146,16 @@ namespace Planetside
                     {
                         Values.debuffs.Add(DebuffStatics.frostBulletsEffect, 1);
                     }
+                }
+				if (ChaosFlag)
+				{
+					sourceProjectile.baseData.speed *= UnityEngine.Random.Range(0.1f, 2.1f);
+					sourceProjectile.UpdateSpeed();
+
+                    sourceProjectile.baseData.damage *= UnityEngine.Random.Range(0.8f, 1.4f);
+                    sourceProjectile.baseData.range *= UnityEngine.Random.Range(0.8f, 1.4f);
+                    sourceProjectile.AdditionalScaleMultiplier *= UnityEngine.Random.Range(0.1f, 2.1f);
+					sourceProjectile.AdjustPlayerProjectileTint(new Color(UnityEngine.Random.Range(0.1f, 1.1f), UnityEngine.Random.Range(0.1f, 1.1f), UnityEngine.Random.Range(0.1f, 1.1f), 1), 10);
                 }
             }
         }
@@ -241,7 +256,7 @@ namespace Planetside
 				base.Owner.stats.RecalculateStats(base.Owner, true, false);
 
 
-				Color color = new Color();
+				Color color = Color.white;
 				gunClassRGB.TryGetValue(base.Owner.gameActor.CurrentGun.gunClass, out color);
 				if (color != null)
 				{
@@ -285,18 +300,21 @@ namespace Planetside
 				{
 					Alexandria.Misc.PlayerOverrides.SetImmuneToExplosionDamage(Owner, true, "PSOG:GunslingerRing");
 				}
+				ChaosFlag = !gunClassRGB.ContainsKey(newGun.gunClass);
 			}
 		}
+
+		private bool ChaosFlag = false;
 
 		private static Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>> gunClassStats = new Dictionary<GunClass, Dictionary<PlayerStats.StatType, float>>()
 		{
 			{GunClass.BEAM, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.PlayerBulletScale, 2f}}},
 			{GunClass.CHARGE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ChargeAmountMultiplier, 1.5f}}},			
 			{GunClass.RIFLE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.AdditionalClipCapacityMultiplier, 1.5f}}},
-			{GunClass.FULLAUTO, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.RateOfFire, 1.2f}}},
+			{GunClass.FULLAUTO, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.RateOfFire, 1.25f}}},
 			{GunClass.NONE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Damage, 1.2f}}},
-			{GunClass.PISTOL, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ReloadSpeed, 0.66f}}},
-			{GunClass.SHITTY, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.MoneyMultiplierFromEnemies, 1.15f}}},
+			{GunClass.PISTOL, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.ReloadSpeed, 0.5f}}},
+			{GunClass.SHITTY, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.MoneyMultiplierFromEnemies, 1.20f}}},
 			{GunClass.SHOTGUN, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Accuracy, 0.66f}}},
 			{GunClass.SILLY, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.AdditionalShotBounces, 3f}}},
             {GunClass.ICE, new Dictionary<PlayerStats.StatType, float>{{ PlayerStats.StatType.Coolness, 2f}}},
