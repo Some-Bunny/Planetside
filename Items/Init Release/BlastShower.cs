@@ -23,10 +23,13 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Blast Shower";
-            string resourceName = "Planetside/Resources/blashshower.png";
+            //string resourceName = "Planetside/Resources/blashshower.png";
             GameObject obj = new GameObject(itemName);
             BlastShower activeitem = obj.AddComponent<BlastShower>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("blashshower"), data, obj);
+
             string shortDesc = "Comes With Auto-Hairdryer.";
             string longDesc = "Grants temporary immunity to debuffs, and applies any currently applied debuffs onto enemies. A quick and easy portable shower, intended for Gungeoneers to stay somewhat clean for their eventual demise.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -35,7 +38,7 @@ namespace Planetside
             activeitem.quality = PickupObject.ItemQuality.C;
             activeitem.AddToSubShop(ItemBuilder.ShopType.Goopton, 1f);
             activeitem.gameObject.AddComponent<RustyItemPool>();
-            activeitem.sprite.SortingOrder = 3;
+            
 
             List<string> mandatoryConsoleIDs = new List<string>
             {

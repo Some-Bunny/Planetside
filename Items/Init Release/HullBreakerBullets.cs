@@ -31,7 +31,7 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("hullbreaker"), data, obj);
 
-            string shortDesc = "Once More Into The Breach";
+            string shortDesc = "Breach And Clear";
             string longDesc = "First hit on an enemy deals greatly increased damage." +
                 "\n\nThese bullets were initially forged to blast holes into the sides of spaceships, but in violation of the Guneva convention, are now used in the Gungeon.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

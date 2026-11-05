@@ -96,8 +96,8 @@ namespace Planetside
 				new Hook(typeof(FlippableCover).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic),
 					typeof(OuroborosController).GetMethod("StartTableHook"));
 
-				new Hook(typeof(Gun).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public),
-					typeof(OuroborosController).GetMethod("GunAwakeHook"));
+				//new Hook(typeof(Gun).GetMethod("Awake", BindingFlags.Instance | BindingFlags.Public),
+				//	typeof(OuroborosController).GetMethod("GunAwakeHook"));
 
 				/*
 				new Hook(typeof(ShopItemController).GetMethods().Single(
@@ -342,7 +342,7 @@ namespace Planetside
 					{
 						if (CurrentLoop() >= 5)
 						{
-							if (UnityEngine.Random.value < ChanceAccordingToGivenValues(0.01f, 0.05f, 100))
+							if (UnityEngine.Random.value < ChanceAccordingToGivenValues(0.01f, 0.08f, 250))
 							{
 								Debug.Log("Activating One Elite Type Floor Mod!");
 								currentlyOneEliteType = basicEliteTypes[UnityEngine.Random.Range(0, basicEliteTypes.Count)];
@@ -480,78 +480,6 @@ namespace Planetside
 
         public static GameObject BulletBankDummy;
 
-		/*
-        public static void UpdatePageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
-		{
-            orig(self);
-            if (ExtantWinIcon)
-            {
-                ExtantWinIcon.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
-            }
-            if (ExtantText)
-            {
-                ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
-            }
-        }
-		*/
-		/*
-        public static void InitializeRightPageHook(Action<AmmonomiconDeathPageController> orig, AmmonomiconDeathPageController self)
-		{
-			orig(self);
-            if (ExtantWinIcon == null)
-            {
-                ExtantWinIcon = UnityEngine.Object.Instantiate(WinIcon, self.transform.position, Quaternion.Euler(0 ,0 , 90), self.transform);
-            }
-            if (ExtantWinIcon)
-            {
-                ExtantWinIcon.transform.position = self.transform.position.WithZ(0) + new Vector3(-0.5631f, -0.18f, 0);
-                ExtantWinIcon.GetComponent<dfSprite>().enabled = true;
-                ExtantWinIcon.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
-            }
-
-			if (ExtantText == null)
-			{
-                ExtantText = UnityEngine.Object.Instantiate(Text, self.transform.position, Quaternion.identity, self.transform);
-
-            }
-            if (ExtantText)
-            {
-				ExtantText.transform.position = self.transform.position.WithZ(0)+ new Vector3(-0.2502f, -0.07f, 0);
-                ExtantText.transform.position += new Vector3(0.025f, 0f);
-
-                ExtantText.GetComponent<dfLabel>().enabled = true;
-                ExtantText.GetComponent<dfLabel>().Opacity = OuroborosMode() == true ? 1 : 0;
-                ExtantText.GetComponent<dfLabel>().Text = CurrentLoop().ToString();
-            }
-
-            if (ExtantWinIcon2Right == null)
-            {
-                ExtantWinIcon2Right = UnityEngine.Object.Instantiate(WinIconTwoRight, self.transform.position, Quaternion.identity, self.transform);
-            }
-            if (ExtantWinIcon2Right)
-            {
-                ExtantWinIcon2Right.transform.position = (self.transform.position.WithZ(0)) + new Vector3(Mathf.Max(200, self.killedByLabel.Size.x) / 640, 0.128f, 0);
-                ExtantWinIcon2Right.transform.position += new Vector3(-0.3f, 0f);
-
-                ExtantWinIcon2Right.GetComponent<dfSprite>().enabled = true;
-                ExtantWinIcon2Right.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
-            }
-
-
-            if (ExtantWinIcon2Left == null)
-            {
-                ExtantWinIcon2Left = UnityEngine.Object.Instantiate(WinIconTwoLeft, self.transform.position, Quaternion.identity, self.transform);
-            }
-            if (ExtantWinIcon2Left)
-            {
-                ExtantWinIcon2Left.transform.position = (self.transform.position.WithZ(0)) - new Vector3(Mathf.Max(200, self.killedByLabel.Size.x) / 640, -0.128f, 0) ;
-				ExtantWinIcon2Left.transform.position += new Vector3(-0.2502f, 0f);
-                ExtantWinIcon2Left.GetComponent<dfSprite>().enabled = true;
-                ExtantWinIcon2Left.GetComponent<dfSprite>().Opacity = OuroborosMode() == true ? 1 : 0;
-
-            }
-        }
-		*/
 
 
 		public static void OnRunStartMethod(PlayerController player, PlayerController player2, GameManager.GameMode gameMode)
@@ -635,7 +563,7 @@ namespace Planetside
 							{
                                 if (self.ClipShotsRemaining > self.ammo)
                                 {
-                                    self.m_moduleData[self.DefaultModule].numberShotsFired -= self.ammo;//self.DefaultModule.GetModNumberOfShotsInClip(self.CurrentOwner) - value;
+                                    self.m_moduleData[self.DefaultModule].numberShotsFired -= self.ammo;
                                 }
                             }
                         }
@@ -649,7 +577,7 @@ namespace Planetside
 			if (self != null && OuroborosMode() == true)
             {
 				if (self.majorBreakable != null)
-                {self.majorBreakable.HitPoints = ChanceAccordingToGivenValues(1, 0.33f, 25);}
+                {self.majorBreakable.HitPoints *= ChanceAccordingToGivenValues(1, 0.33f, 25);}
 			}
         }
 		public static void MimicGunScaler(Action<Gun> orig, Gun spawnedGun)
@@ -720,9 +648,9 @@ namespace Planetside
 						return;
 
                     if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.MovementSpeed *= ChanceAccordingToGivenValues(1f, 1.5f, 250); }
-                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.66f, 250); }
-                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.3f, 250)); }
-                    if (self != null && self.aiActor != null && RoomSuitable(self.aiActor) == true && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.0075f, 0.45f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid) && self.behaviorSpeculator != null) { self.behaviorSpeculator.CooldownScale *= ChanceAccordingToGivenValues(1f, 0.8f, 250); }
+                    if (!enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid)) { self.healthHaver.SetHealthMaximum(self.healthHaver.GetCurrentHealth() * ChanceAccordingToGivenValues(1f, 1.2f, 250)); }
+                    if (self != null && self.aiActor != null && RoomSuitable(self.aiActor) == true && EnemyIsValid(self.aiActor) == true && !bannedEnemiesForOrbitingSkulls.Contains(self.aiActor.EnemyGuid) && UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.01f, 0.1f, 75) && !enemiesNotAffectedByBehaviorSpecMultiplier.Contains(self.EnemyGuid))
                     {
                         Transform transPos = self.aiActor.transform.Find("SkullAttackPointOuroboros");
                         if (transPos != null && self.bulletBank != null)
@@ -786,10 +714,10 @@ namespace Planetside
                     if (self.aiActor.HasTag("PSOG:OuroborousEliteBlacklist"))
                         return;
 
-                    if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.05f, 0.75f, 50))
+                    if (UnityEngine.Random.value <= ChanceAccordingToGivenValues(0.02f, 0.33f, 250))
                     {
                         bool BossCheck = self.aiActor.healthHaver.IsBoss | self.aiActor.healthHaver.IsSubboss;
-                        float specialChance = ChanceAccordingToGivenValues(0.005f, 0.25f, 100);
+                        float specialChance = ChanceAccordingToGivenValues(0.005f, 0.05f, 100);
 
 						Type EliteType = currentlyOneEliteType;
 
@@ -1064,7 +992,7 @@ namespace Planetside
             float AmountOfSkulls = 3;
             for (int i = 0; i < Loop; i++)
             {
-                if (i % 20 == 0)
+                if (i % 10 == 0)
                 {AmountOfSkulls++;}
             }
             return AmountOfSkulls;
@@ -1258,9 +1186,19 @@ namespace Planetside
 
         public override void OnDamaged(float resultValue, float maxValue, CoreDamageTypes damageTypes, DamageCategory damageCategory, Vector2 damageDirection)
         {
+			if (this.aiActor.TargetRigidbody == null)
+				return;
+
+			var d = Vector2.Distance(this.aiActor.TargetRigidbody.UnitCenter, this.aiActor.transform.position);
+
+            if (d > 16 | d < 2f)
+				return;
+
             if (Timer <= 0)
             {
                 Timer = Cooldown;
+
+
                 SpawnManager.SpawnBulletScript(null, 
 					this.aiActor.sprite.WorldCenter + new Vector2(0, 0.25f), 
 					OuroborosController.BulletBankDummy.GetComponent<AIBulletBank>(), 
@@ -1283,23 +1221,46 @@ namespace Planetside
         public class SpewGrenade : Script
         {
             public override IEnumerator Top()
+
+
             {
-                //float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
-                Vector2 vector = base.GetPredictedTargetPositionExact(1, 15);
+
+				
+
+                Vector2 vector = base.GetPredictedTargetPositionExact(1, 1000);
+
+				var dist = Vector2.Distance(vector, base.Position);
+                float d = 1 / Mathf.Max(1, dist / 10f);
+
+
                 Bullet bullet2 = new Bullet("grenade", false, false, false);
                 float direction2 = (vector - base.Position).ToAngle();
                 base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
-                (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
-                (bullet2.Projectile as ArcProjectile).gravity *= 0.9f;
+
+				var p = (bullet2.Projectile as ArcProjectile);
+
+
+				p.gravity *= d;
+				p.m_current3DVelocity.z = p.m_current3DVelocity.z * d;
+                p.AdjustSpeedToHit(vector);
+                p.UpdateTargetPosition(true);
+
                 bullet2.Projectile.ImmuneToSustainedBlanks = true;
 				if (IsHard)
 				{
-                    vector = base.GetPredictedTargetPosition(1, 18);
+                    d = 1 / Mathf.Max(1, dist / 12.5f);
+
+
+                    vector = base.GetPredictedTargetPosition(1, 1000);
                     bullet2 = new Bullet("grenade", false, false, false);
                     direction2 = (vector - base.Position).ToAngle();
                     base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
-					(bullet2.Projectile as ArcProjectile).gravity *= 0.666f;
-                    (bullet2.Projectile as ArcProjectile).AdjustSpeedToHit(vector);
+
+                    p = (bullet2.Projectile as ArcProjectile);
+                    p.gravity *= d;
+                    p.m_current3DVelocity.z = p.m_current3DVelocity.z * d;
+                    p.AdjustSpeedToHit(vector);
+                    p.UpdateTargetPosition(true);
                     bullet2.Projectile.ImmuneToSustainedBlanks = true;
                 }
                 yield break;
@@ -1333,7 +1294,7 @@ namespace Planetside
                 {
                     base.BulletBank.Bullets.Add(EnemyDatabase.GetOrLoadByGuid("880bbe4ce1014740ba6b4e2ea521e49d").bulletBank.GetBullet("grenade"));
                     float airTime = base.BulletBank.GetBullet("grenade").BulletObject.GetComponent<ArcProjectile>().GetTimeInFlight();
-                    Vector2 vector = base.BulletBank.transform.PositionVector2() + MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(1, 6));
+                    Vector2 vector = base.BulletBank.transform.PositionVector2() + MathToolbox.GetUnitOnCircle(UnityEngine.Random.Range(-180, 180), UnityEngine.Random.Range(1, 3));
                     Bullet bullet2 = new Bullet("grenade", false, false, false);
                     float direction2 = (vector - base.Position).ToAngle();
                     base.Fire(new Direction(direction2, DirectionType.Absolute, -1f), new Speed(1f, SpeedType.Absolute), bullet2);
@@ -1487,8 +1448,8 @@ namespace Planetside
 	}
 	public class ResistantElite : BasicEliteType
 	{
-        public override float DamageMultiplier => 1f;
-        public override float HealthMultiplier => 1.3f;
+        public override float DamageMultiplier => 0.8f;
+        public override float HealthMultiplier => 1f;
 		public override float CooldownMultiplier => 0.9f;
 		public override float MovementSpeedMultiplier => 1.15f;
 		public override Color EliteOutlineColor => Color.white;
@@ -1540,10 +1501,10 @@ namespace Planetside
     }
 	public class CursedElite : BasicEliteType
 	{
-        public override float DamageMultiplier => 1.1f;
+        public override float DamageMultiplier => 0.9f;
         public override float HealthMultiplier => 1f;
 		public override float CooldownMultiplier => 1f;
-		public override float MovementSpeedMultiplier => 1.33f;
+		public override float MovementSpeedMultiplier => 1.25f;
 		public override Color EliteOutlineColor => new Color(50, 0, 50);
 		public override Color EliteParticleColor => Color.magenta;
 		public override Color SecondaryEliteParticleColor => new Color(10, 0, 10);
@@ -1558,11 +1519,11 @@ namespace Planetside
 		public override void Start()
 		{
 			base.Start();
-			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 3.5f;
+			EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 3f;
 
 			if (IsBoss == true)
 			{
-                EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 2.25f;
+                EnrageHP = base.aiActor.healthHaver.GetMaxHealth() / 2f;
 
             }
 
@@ -1573,7 +1534,7 @@ namespace Planetside
         public override void OnPreDeath(Vector2 obj)
 		{
 			DeadlyDeadlyGoopManager goopManagerForGoopType = DeadlyDeadlyGoopManager.GetGoopManagerForGoopType(DebuffLibrary.CursebulonGoop);
-			goopManagerForGoopType.TimedAddGoopCircle(base.aiActor.transform.PositionVector2(), OuroborosController.ChanceAccordingToGivenValues(3.5f, 7f, 100), 1f, false);
+			goopManagerForGoopType.TimedAddGoopCircle(base.aiActor.transform.PositionVector2(), 4.5f, 1f, false);
 		}
 		public override void Update()
 		{
@@ -1604,8 +1565,8 @@ namespace Planetside
 	}
 	public class ReflectiveElite : BasicEliteType
 	{
-        public override float DamageMultiplier => 1;
-        public override float HealthMultiplier => 1.35f;
+        public override float DamageMultiplier => 0.75f;
+        public override float HealthMultiplier => 1;
 		public override float CooldownMultiplier => 1f;
 		public override float MovementSpeedMultiplier => 0.85f;
         public override Color EliteOutlineColor => new Color(0, 10, 50);
@@ -1777,14 +1738,14 @@ namespace Planetside
 			{
 				modifyDamageEventArgs.ModifiedDamage = 0;
                 modifyDamageEventArgs.InitialDamage = 0;
-				aiActor.healthHaver.TriggerInvulnerabilityPeriod(IsBoss ? 1 : 0.25f);
+				aiActor.healthHaver.TriggerInvulnerabilityPeriod(IsBoss ? 1.25f : 0.75f);
                 currentShieldInst.GetComponent<tk2dSpriteAnimator>().PlayAndDestroyObject("pointnull_shield_down");
                 AkSoundEngine.PostEvent("Play_BOSS_agunim_deflect_01", base.aiActor.gameObject);
 				//AkSoundEngine.PostEvent("Stop_OBJ_cursepot_loop_01", currentShieldInst.gameObject);
-				float Dist = IsBoss ? 5 : 2;
+				float Dist = IsBoss ? 6 : 4;
                 float Max = IsBoss ? 35 : 25;
-                float Pwe = IsBoss ? 0.7f : 0.3f;
-				int Cap = IsBoss ? 12 : 3;
+                float Pwe = IsBoss ? 0.4f : 0.25f;
+				int Cap = IsBoss ? 1000 : 1000;
                 ReadOnlyCollection<Projectile> allProjectiles = StaticReferenceManager.AllProjectiles;
                 if (allProjectiles != null && allProjectiles.Count > 0)
                 {
@@ -1796,7 +1757,7 @@ namespace Planetside
 							//Debug.Log(i);
                             Vector2 position = proj.sprite != null ? proj.sprite.WorldCenter : proj.transform.PositionVector2();
 
-							Debug.Log(Vector2.Distance(position, base.aiActor.sprite.WorldCenter));
+							//Debug.Log(Vector2.Distance(position, base.aiActor.sprite.WorldCenter));
                             if (Vector2.Distance(position, base.aiActor.sprite.WorldCenter) < Dist)
                             {
                                 BeamController beamController = proj.GetComponent<BeamController>();
@@ -1856,29 +1817,24 @@ namespace Planetside
 
 				if (Timer <= 0 && !currentShieldInst)
 				{
-					//e = 0;
-
-                    //var objec = UnityEngine.Object.Instantiate(PointNull.PointNullShield, GameManager.Instance.PrimaryPlayer.specRigidbody.UnitCenter.ToVector3ZUp(6), Quaternion.identity, GameManager.Instance.PrimaryPlayer.transform);
                     var objec = UnityEngine.Object.Instantiate(PointNull.PointNullShield,aiActor.transform);
-
+                    
                     var _ = aiActor.sprite.GetBounds().size;
 					float max =Mathf.Max(Mathf.Max(_.x * 0.5f, _.y * 0.5f), 1);
-                    objec.transform.localScale = new Vector3(max, max, max);
-                    
+                    objec.transform.localScale = new Vector3(max, max, max) * 0.875f;               
                     //AkSoundEngine.PostEvent("Play_OBJ_cursepot_loop_01", objec.gameObject);
                     currentShieldInst = objec.GetComponent<tk2dBaseSprite>();
-					//currentShieldInst.HeightOffGround = 2;
-					//currentShieldInst.Awake();
-					//currentShieldInst.PlaceAtLocalPositionByAnchor(this.aiActor.specRigidbody.UnitCenter, tk2dBaseSprite.Anchor.MiddleCenter);
+					currentShieldInst.HeightOffGround = -100;
+					currentShieldInst.IsPerpendicular = true;
+					currentShieldInst.Awake();
                     aiActor.healthHaver.TriggerInvulnerabilityPeriod(0.75f);
 
                 }
                 if (currentShieldInst)
 				{
-					currentShieldInst.transform.position = this.aiActor.specRigidbody.UnitCenter + new Vector2(0, 0.5f);
+					currentShieldInst.transform.position = this.aiActor.sprite.WorldCenter;// + new Vector2(0, 0.625f);
 
-                    //currentShieldInst.renderer.material.SetColor("_DashColor", Color.cyan * 255);
-                    currentShieldInst.renderer.material.SetColor("_DashColor", Color.Lerp(Color.cyan * 5, Color.white * 5, Mathf.PingPong(Time.timeSinceLevelLoad, 1)));
+                    currentShieldInst.renderer.material.SetColor("_DashColor", Color.Lerp(Color.cyan * 3, Color.green * 3, Mathf.PingPong(Time.timeSinceLevelLoad, 1)).WithAlpha(0.5f));
 
                 }
             }
@@ -1891,9 +1847,9 @@ namespace Planetside
 { 
 	public class DetonatorElite : SpecialEliteType
     {
-        public override float HealthMultiplier => 3f;
+        public override float HealthMultiplier => 2.25f;
         public override float CooldownMultiplier => 0.5f;
-        public override float MovementSpeedMultiplier => 0.7f;
+        public override float MovementSpeedMultiplier => 0.6f;
         public override Color EliteOutlineColor => Color.red;
         public override Color EliteParticleColor => Color.red;
         public override Color SecondaryEliteParticleColor => Color.red;

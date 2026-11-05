@@ -30,10 +30,15 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Dead Kings Desparation";
-            string resourceName = "Planetside/Resources/deadkingsdesparation.png";
+            //string resourceName = "Planetside/Resources/deadkingsdesparation.png";
             GameObject obj = new GameObject(itemName);
+            
+            
             DeadKingsDesparation activeitem = obj.AddComponent<DeadKingsDesparation>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("deadkingsdesparation"), data, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Strengths Falsified";
             string longDesc = "Steals the strength and resistances of all foes in the room.\n\nA simple war helmet worn by an old King, who in his final act of desparation stole the empowering trinkets the Challenger brought with them.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
@@ -41,7 +46,6 @@ namespace Planetside
             activeitem.consumable = false;
             activeitem.quality = PickupObject.ItemQuality.A;
 
-            activeitem.sprite.SortingOrder = 3;
 
 
             var Collection = StaticSpriteDefinitions.Oddments_Sheet_Data;

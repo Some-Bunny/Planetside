@@ -30,7 +30,6 @@ namespace Planetside
             var item = obj.AddComponent<AoEBullets>();
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("aurabullets"), data, obj);
-            item.sprite.SortingOrder = 3;
 
 
 

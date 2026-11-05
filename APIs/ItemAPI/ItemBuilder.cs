@@ -85,10 +85,9 @@ namespace ItemAPI
             tk2dSprite sprite;
             sprite = obj.AddComponent<tk2dSprite>();
             sprite.SetSprite(data, CollectionID);
-            sprite.SortingOrder = 0;
             sprite.IsPerpendicular = true;
-            sprite.sprite.SortingOrder = 3;
-
+            sprite.SortingOrder = 0;
+            sprite.HeightOffGround = -0.5f;
             obj.GetComponent<BraveBehaviour>().sprite = sprite;
 
             return obj;

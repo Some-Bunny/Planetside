@@ -33,7 +33,6 @@ namespace Planetside
             string shortDesc = "Chaos! Chaos!";
             string longDesc = "An incredibly volatile potion capable of transmogrifying enemies on a whim, with incredibly unpredictable results. A note reads on the back: 'Getting any on your skin will result in near guaranteed death.'";
             ItemAPI.ItemBuilder.SetupItem(activeitem, shortDesc, longDesc, "psog");
-            activeitem.sprite.SortingOrder = 3;
 
 
             activeitem.SetCooldownType(ItemAPI.ItemBuilder.CooldownType.Damage, 200f);

@@ -158,31 +158,5 @@ namespace Planetside
 			gun.PreventNormalFireAudio = true;
 
 		}
-		private bool HasReloaded;
-
-		public override void Update()
-		{
-			if (gun.CurrentOwner)
-			{
-				if (!gun.PreventNormalFireAudio)
-				{
-					this.gun.PreventNormalFireAudio = true;
-				}
-				if (!gun.IsReloading && !HasReloaded)
-				{
-					this.HasReloaded = true;
-				}
-			}
-
-		}
-		public override void OnReloadPressed(PlayerController player, Gun bruhgun, bool bSOMETHING)
-		{
-			if (gun.IsReloading && this.HasReloaded)
-			{
-				AkSoundEngine.PostEvent("Stop_WPN_All", base.gameObject);
-				HasReloaded = false;
-				base.OnReloadPressed(player, gun, bSOMETHING);
-			}
-		}
 	}
 }

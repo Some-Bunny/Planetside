@@ -31,8 +31,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("unstab-ullets"), data, obj);
             //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
             string shortDesc = "Quantum Mechanics";
-			string longDesc = "These bullets were forged with lead from beyond the Curtain." +
-				"\n\nThey seem to shift their positions fairly unpredictably.";
+			string longDesc = "These bullets were forged with lead from beyond the Curtain. Despite the craftmanship that has gone into them, they are quite unstable.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
 			ItemBuilder.AddPassiveStatModifier(item, PlayerStats.StatType.Damage, 1.1f, StatModifier.ModifyMethod.MULTIPLICATIVE);
 			item.quality = PickupObject.ItemQuality.B;

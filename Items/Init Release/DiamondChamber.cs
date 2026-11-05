@@ -27,7 +27,6 @@ namespace Planetside
 			ItemBuilder.SetupItem(chamber, shortDesc, longDesc, "psog");
 			chamber.quality = PickupObject.ItemQuality.S;
 			chamber.SetupUnlockOnCustomFlag(CustomDungeonFlags.BROKEN_CHAMBER_RUN_COMPLETED, true);
-            chamber.sprite.SortingOrder = 3;
             DiamondChamber.DiamondChamberID = chamber.PickupObjectId;
 			ItemIDs.AddToList(chamber.PickupObjectId);
 			chamber.AddItemTip("Master Rounds grant an additional Heart Container and increase money earned by 10%. All items with the word 'Chamber' in it grant +20% damage, including itself.");

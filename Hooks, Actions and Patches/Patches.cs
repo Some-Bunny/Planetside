@@ -1,11 +1,13 @@
 ﻿using HarmonyLib;
-using System.Reflection.Emit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using System.Reflection;
+using AmmonomiconAPI;
 
 namespace Planetside.Hooks_And_Actions
 {
@@ -301,5 +303,30 @@ namespace Planetside.Hooks_And_Actions
         }
 
         */
+
+        
+        [HarmonyPatch]
+        private static class Chest_PresentItem_Patch
+        {
+            [HarmonyPatch(typeof(Chest), nameof(Chest.PresentItem), MethodType.Enumerator)]
+            [HarmonyILManipulator]
+            private static void DoPreventLJ(ILContext il, MethodBase original)
+            {
+                ILCursor cursor = new ILCursor(il);
+
+                if (!cursor.TryGotoNext(MoveType.After,
+                    instr => instr.MatchCallvirt("tk2dBaseSprite", "UpdateZDepth")))
+                    return;
+                cursor.Emit(OpCodes.Ldloc, 8);
+                cursor.Emit(OpCodes.Call, typeof(Chest_PresentItem_Patch).GetMethod("OverrideLJChecks", BindingFlags.Static | BindingFlags.NonPublic));
+            }
+
+            private static void OverrideLJChecks(tk2dSprite spir)
+            {
+                spir.IsPerpendicular = true;
+                spir.Awake();
+            }
+        }
+
     }
 }

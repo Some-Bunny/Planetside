@@ -42967,6 +42967,78 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  - name: oppressor_ammonomicon
+    boundsData:
+    - {x: 1.5, y: 1.28125, z: 0}
+    - {x: 3, y: 2.4375, z: 0}
+    untrimmedBoundsData:
+    - {x: 1.5, y: 1.5, z: 0}
+    - {x: 3, y: 3, z: 0}
+    boundsDataCenter: {x: 1.5, y: 1.28125, z: 0}
+    boundsDataExtents: {x: 3, y: 2.4375, z: 0}
+    untrimmedBoundsDataCenter: {x: 1.5, y: 1.5, z: 0}
+    untrimmedBoundsDataExtents: {x: 3, y: 3, z: 0}
+    texelSize: {x: 0.0625, y: 0.0625}
+    positions:
+    - {x: 0, y: 0.0625, z: 0}
+    - {x: 3, y: 0.0625, z: 0}
+    - {x: 0, y: 2.5, z: 0}
+    - {x: 3, y: 2.5, z: 0}
+    position0: {x: 0, y: 0.0625, z: 0}
+    position1: {x: 3, y: 0.0625, z: 0}
+    position2: {x: 0, y: 2.5, z: 0}
+    position3: {x: 3, y: 2.5, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.10937695, y: 0.16601661}
+    - {x: 0.20312305, y: 0.16601661}
+    - {x: 0.10937695, y: 0.20410058}
+    - {x: 0.20312305, y: 0.20410058}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: 95b823f631433f94980034bf916b4b1b, type: 2}
+    materialId: 0
+    sourceTextureGUID: 1f83a46be509db843a44c4476477e37c
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    metadata:
+      type: 0
+      weight: 0
+      dungeonRoomSubType: 0
+      secondRoomSubType: 0
+      thirdRoomSubType: 0
+      preventWallStamping: 0
+      usesAnimSequence: 0
+      usesNeighborDependencies: 0
+      usesPerTileVFX: 0
+      tileVFXPlaystyle: 0
+      tileVFXChance: 0
+      tileVFXPrefab: {fileID: 0}
+      tileVFXOffset: {x: 0, y: 0}
+      tileVFXDelayTime: 0
+      tileVFXDelayVariance: 0
+      tileVFXAnimFrame: 0
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
   SpriteIDsWithAttachPoints: 
   SpriteDefinedAttachPoints: []
   premultipliedAlpha: 0
@@ -42986,7 +43058,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 8
-  buildKey: 1188290097
+  buildKey: 2013691787
   dataGuid: 94841df3a38ec5045ad885c99081aa9a
   managedSpriteCollection: 0
   hasPlatformData: 0

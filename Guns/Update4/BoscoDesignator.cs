@@ -657,7 +657,7 @@ namespace Planetside
                 ParticleBase.EmitParticles("WaveParticle", 1, new ParticleSystem.EmitParams()
                 {
                     position = m_aiActor.sprite.WorldCenter,
-                    startColor = Color.cyan.WithAlpha(0.3f),
+                    startColor = Color.cyan.WithAlpha(0.2f),
                     startLifetime = 0.1f,
                     startSize = 2
                 });

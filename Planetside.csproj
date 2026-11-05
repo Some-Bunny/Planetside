@@ -352,6 +352,7 @@
     <Compile Include="Toolboxes\RaycastToolbox.cs" />
     <Compile Include="Toolboxes\SpapisSuperCoolAdvancedCodeToolbox.cs" />
     <Compile Include="Toolboxes\SpriteTrimmer.cs" />
+    <Compile Include="Unsorted Garbage\CrateSpawnController.cs" />
     <Compile Include="Unsorted Garbage\KnuckleBackerUIController.cs" />
     <Compile Include="Components\Projectile Components\PierceDeadActors.cs" />
     <Compile Include="Components\Item Components\CustomScarfDoer.cs" />

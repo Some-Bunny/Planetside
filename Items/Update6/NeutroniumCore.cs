@@ -26,7 +26,7 @@ namespace Planetside
             var data = StaticSpriteDefinitions.Passive_Item_Sheet_Data;
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("neutroniumcore"), data, gameObject); 
 			string shortDesc = "Ultradense Hyperbullets";
-			string longDesc = "Emits a gravitational pull towards enemies.\n\nTiny chunks of neutronium are very carefully inserted into every bullet by severely underpaid neutron gnomes.";
+			string longDesc = "Enemies are pulled towards your bullets.\n\nTiny chunks of neutronium are very carefully inserted into every bullet by severely underpaid neutron gnomes.";
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.C;
             item.AddToSubShop(ItemAPI.ItemBuilder.ShopType.Trorc, 1);
@@ -72,16 +72,17 @@ namespace Planetside
                 arg1.baseData.speed *= 0.7f;
                 arg1.UpdateSpeed();
                 var well = arg1.gameObject.AddComponent<EnemyGravityWell>();
+                well.self = arg1;
                 var ___ = arg1.baseData.damage;
                 if (arg1.sprite != null)
                 {
-                    ___ = (arg1.sprite.GetBounds().size.x * 32) * (arg1.sprite.GetBounds().size.y * 32);
+                    ___ = (arg1.sprite.GetBounds().size.x * 24) * (arg1.sprite.GetBounds().size.y * 24);
 
                 }
 
-                float Pull = arg1.sprite == null ? arg1.baseData.damage * 2 : Mathf.Max(256, Mathf.Sqrt(___) * 12);
-                well.gravitationalForce = Pull * 0.04f;
-                well.gravitationalForceActors = Pull * 0.4f * arg1.AdditionalScaleMultiplier;
+                float Pull = arg1.sprite == null ? arg1.baseData.damage * 32 : Mathf.Max(256, Mathf.Sqrt(___) * 32);
+                well.gravitationalForce = Pull;
+                well.gravitationalForceActors = Pull * arg1.AdditionalScaleMultiplier;
                 well.self = arg1;
                 well.RadiusVisual = ___ * 0.025f;
             }
@@ -96,8 +97,8 @@ namespace Planetside
                 var well = beamC.projectile.gameObject.AddComponent<EnemyGravityWellBeam>();
                 var ___ = (beamC.projectile.sprite.GetBounds().size.x * 32) * (beamC.projectile.sprite.GetBounds().size.y * 32);
                 float Pull = beamC.projectile.sprite == null ? 125f : Mathf.Max(256, Mathf.Sqrt(___) * 4);
-                well.gravitationalForce = Pull * 0.04f;
-                well.gravitationalForceActors = Pull * 0.4f * beamC.projectile.AdditionalScaleMultiplier;
+                well.gravitationalForce = Pull;
+                well.gravitationalForceActors = Pull * beamC.projectile.AdditionalScaleMultiplier;
                 well.self = beamC.projectile;
                 well.RadiusVisual = ___ * 0.01f;
                 well.basicBeamController = beamC.GetComponent<BasicBeamController>();
@@ -111,7 +112,7 @@ namespace Planetside
             public Projectile self;
             public float radius = 50f;
             public float gravitationalForce = 10f;
-            public float gravitationalForceActors = 150f;
+            public float gravitationalForceActors = 500f;
             private float m_radiusSquared;
             public float RadiusVisual;
             public void Start()
@@ -125,6 +126,9 @@ namespace Planetside
             float t = 0;
             public void Update()
             {
+                if (self == null)
+                    return;
+
                 if (Elapsed <= 1)
                 {
                     Elapsed += BraveTime.DeltaTime;
@@ -222,7 +226,7 @@ namespace Planetside
             public Projectile self;
             public float radius = 50f;
             public float gravitationalForce = 10f;
-            public float gravitationalForceActors = 150f;
+            public float gravitationalForceActors = 500f;
             private float m_radiusSquared;
             public float RadiusVisual;
 
@@ -300,7 +304,7 @@ namespace Planetside
                     if (t < 0)
                     {
                         Vector3 _ = MathToolbox.GetUnitOnCircle(BraveUtility.RandomAngle(), UnityEngine.Random.Range(RadiusVisual, RadiusVisual * 1.4f));
-                        t = 0.05f;
+                        t = 0.075f;
                         ParticleBase.EmitParticles("ShellraxEyeParticle", 1, new ParticleSystem.EmitParams()
                         {
                             position = LastPosition + _,

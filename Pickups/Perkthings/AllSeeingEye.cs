@@ -107,8 +107,6 @@ namespace Planetside
         public override void OnInitialPickup(PlayerController playerController)
         {
             GameManager.Instance.OnNewLevelFullyLoaded += this.RevealSecretRooms;
-			//RoomDropModifier.roomDropModifierDatas.Add(dropModifier);
-            //Alexandria.RoomRewardAPI.OnRoomRewardDetermineContents += DetermineRoomDrop;
             playerController.OnRoomClearEvent += Player_OnRoomClearEvent;
         }
         public override void OnStack(PlayerController playerController)
@@ -121,11 +119,7 @@ namespace Planetside
         {
 			base.OnDestroy();
             GameManager.Instance.OnNewLevelFullyLoaded -= this.RevealSecretRooms;
-            //RoomDropModifier.roomDropModifierDatas.Remove(dropModifier);
-
             Owner.OnRoomClearEvent -= Player_OnRoomClearEvent;
-            //Alexandria.RoomRewardAPI.OnRoomRewardDetermineContents -= DetermineRoomDrop;
-
         }
 
         private void Player_OnRoomClearEvent(PlayerController obj)

@@ -436,13 +436,13 @@ namespace Planetside
 
                         if (__instance.healthHaver)
                         {
-                            perc += (__instance.healthHaver.maximumHealth * 0.0025f);
+                            perc += (__instance.healthHaver.maximumHealth * 0.0015f);
                         }
 
 
                         if (__instance.GetComponent<UmbraController>() != null)
                         {
-                            if (UnityEngine.Random.value < GetChestChance(totalCurse, iFloat * 2.5f, perc))
+                            if (UnityEngine.Random.value < GetChestChance(totalCurse, iFloat * 2.25f, perc))
                             {
                                 if (__instance.AdditionalSafeItemDrops == null)
                                     __instance.AdditionalSafeItemDrops = new List<PickupObject> { };
@@ -455,7 +455,7 @@ namespace Planetside
                         }
                         else if (__instance.IsBlackPhantom)
                         {
-                            if (UnityEngine.Random.value < GetChestChance(totalCurse, iFloat * 2.5f, perc))
+                            if (UnityEngine.Random.value < GetChestChance(totalCurse, iFloat * 2.25f, perc))
                             {
                                 if (__instance.AdditionalSafeItemDrops == null)
                                     __instance.AdditionalSafeItemDrops = new List<PickupObject> { };

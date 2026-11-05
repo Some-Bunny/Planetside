@@ -36,7 +36,7 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Never Forgive Me";
-            //string resourceName = "Planetside/Resources/forgivemeplease.png";
+            //string resourceName = "Planetside/Resources/forgivemeplease.png";b
             GameObject obj = new GameObject(itemName);
             ForgiveMePlease activeitem = obj.AddComponent<ForgiveMePlease>();
             var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;

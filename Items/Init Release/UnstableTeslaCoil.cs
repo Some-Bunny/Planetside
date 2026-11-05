@@ -25,7 +25,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("plaetunstableteslacoil"), data, gameObject);
             //ItemBuilder.AddSpriteToObject(name, resourcePath, gameObject);
             string shortDesc = "Hair-Raising Experience";
-            string longDesc = "A very volatile tesla coil that's been hidden away in a chest to prevent harm. The arcs connect to nearby things and can erupt powerfully enough to confuse enemies.";
+            string longDesc = "Shocks and stuns nearby enemies.\n\nHidden inside a chest by responsible Gundead, now being carried around carelessly by an iressponsible Gungeoneer.";
             ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");
             item.quality = PickupObject.ItemQuality.B;
             List<string> mandatoryConsoleIDs = new List<string>

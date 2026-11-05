@@ -66,13 +66,15 @@ namespace Planetside
 					if (Loop == 0 | Loop < 0)
 					{
 						AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BEAT_LOOP_1, true);
-						SaveAPIManager.SetStat(CustomTrackedStats.TIMES_LOOPED, 1);
+						if (AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.OUROBOROUS_LOCK) == false)
+                            SaveAPIManager.SetStat(CustomTrackedStats.TIMES_LOOPED, 1);
 					}
 					else
 					{
                         AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.BEAT_LOOP_1, true);
 
-                        SaveAPIManager.RegisterStatChange(CustomTrackedStats.TIMES_LOOPED, 1);
+                        if (AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.OUROBOROUS_LOCK) == false)
+                            SaveAPIManager.RegisterStatChange(CustomTrackedStats.TIMES_LOOPED, 1);
 					}
 				}
 				//Beat Lich With Broken Chamber

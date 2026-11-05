@@ -868,7 +868,7 @@ namespace Planetside
 				bs.SkipTimingDifferentiator = behaviorSpeculator.SkipTimingDifferentiator;
 				Game.Enemies.Add("psog:oppressor", companion.aiActor);
 
-                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("oppressor_awaken_012"),
+                SpriteBuilder.AddSpriteToCollection(StaticSpriteDefinitions.Forgotten_Enemmy_Data.GetSpriteDefinition("oppressor_ammonomicon"),
                 SpriteBuilder.ammonomiconCollection);
 
 
@@ -884,7 +884,7 @@ namespace Planetside
 				companion.encounterTrackable.journalData.IsEnemy = true;
 				companion.encounterTrackable.journalData.SuppressInAmmonomicon = false;
 				companion.encounterTrackable.ProxyEncounterGuid = "";
-				companion.encounterTrackable.journalData.AmmonomiconSprite = "oppressor_awaken_012";
+				companion.encounterTrackable.journalData.AmmonomiconSprite = "oppressor_ammonomicon";
 				companion.encounterTrackable.journalData.enemyPortraitSprite = PlanetsideModule.SpriteCollectionAssets.LoadAsset<Texture2D>("sheetOppressorTrespass");//ItemAPI.ResourceExtractor.GetTextureFromResource("Planetside\\Resources\\Ammocom\\sheetOppressorTrespass.png");
                 PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR", "Oppressor");
 				PlanetsideModule.Strings.Enemies.Set("#OPPRESSOR_SHORTDESC", "Overpowered");

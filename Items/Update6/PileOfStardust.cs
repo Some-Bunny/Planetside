@@ -25,7 +25,7 @@ namespace Planetside
             ItemBuilder.AddSpriteToObjectAssetbundle(name, data.GetSpriteIdByName("pileofstardust"), data, gameObject); 
 			
 			string shortDesc = "Shimmer And Sparkle";
-			string longDesc = "Create multiple stars upon reloading. Stars attach to your projectiles and grant buffs.\n\nEach type of stardust has a different taste, and every type tastes absolutely horrible.";
+			string longDesc = "Create multiple stars upon reloading. Stars attach to your projectiles and grant buffs.\n\nEach type of stardust has a different taste, and each tastes absolutely horrible.";
 			
 			
 			ItemBuilder.SetupItem(item, shortDesc, longDesc, "psog");

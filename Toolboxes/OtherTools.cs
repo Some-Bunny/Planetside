@@ -22,12 +22,42 @@ using System.Reflection;
 using SaveAPI;
 
 using MonoMod.RuntimeDetour;
+using HarmonyLib;
 
 namespace Planetside
 {
     static class PlanetsideReflectionHelper
     {
+        private static string _SearchString = null;
+        private static bool EnumeratorFieldFinder(FieldInfo f)
+        {
+            string fname = f.Name;
+            if (fname == _SearchString)
+                return true;
+            if (fname[0] != '<')
+                return false;
+            int gtPos = fname.IndexOf('>');
+            int slen = _SearchString.Length;
+            return (gtPos > 0) && (gtPos - 1 == slen) && string.Compare(fname, 1, _SearchString, 0, slen) == 0;
+        }
+
+        public static FieldInfo GetEnumeratorField(this Type t, string s)
+        {
+            _SearchString = s;
+            return AccessTools.GetDeclaredFields(t).Find(EnumeratorFieldFinder);
+        }
+
+        public static string GetEnumeratorFieldName(this Type t, string s)
+        {
+            return t.GetEnumeratorField(s).Name;
+        }
+
+
         /// <summary>Push a rigidbody out of a wall towards a specific direction, returning the number of pixels that were moved</summary>
+
+
+
+
         public static int PullOutOfWalls(this SpeculativeRigidbody body, IntVector2 pushDirection)
         {
             if (!PhysicsEngine.Instance.OverlapCast(body, null, true, false, null, null, false, null, null))

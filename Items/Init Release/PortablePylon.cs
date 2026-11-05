@@ -29,12 +29,16 @@ namespace Planetside
         public static void Init()
         {
             string itemName = "Portable Pylon";
-            string resourceName = "Planetside/Resources/portablepylon.png";
+            //string resourceName = "Planetside/Resources/portablepylon.png";
             GameObject obj = new GameObject(itemName);
             PortablePylon activeitem = obj.AddComponent<PortablePylon>();
-            ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+            //ItemBuilder.AddSpriteToObject(itemName, resourceName, obj);
+
+            var data = StaticSpriteDefinitions.Active_Item_Sheet_Data;
+            ItemBuilder.AddSpriteToObjectAssetbundle(itemName, data.GetSpriteIdByName("portablepylon"), data, obj);
+
             string shortDesc = "Swing By";
-            string longDesc = "A portable tesla pylon that runs a current through the air and into your body.\n\nScience genuinely cannot explain why it doesn't just instantly kill you.";
+            string longDesc = "A portable pylon that generates a damaging current through the air, connecting with your body.\n\nScience genuinely cannot explain why this doesn't instantly kill you.";
             activeitem.SetupItem(shortDesc, longDesc, "psog");
             activeitem.SetCooldownType(ItemBuilder.CooldownType.Damage, 500f);
             activeitem.consumable = false;

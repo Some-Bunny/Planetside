@@ -111,8 +111,13 @@ namespace Planetside
 				ETGModConsole.Log("<size=100><color=#ff0000ff>*Resurfacing...*</color></size>", false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.HAS_TREADED_DEEPER, false);
 			});
-
-			global::ETGModConsole.Commands.GetGroup("psog").AddUnit("lock_all", delegate (string[] args)
+            global::ETGModConsole.Commands.GetGroup("psog").AddUnit("lock_ouroborous", delegate (string[] args)
+            {
+                AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.OUROBOROUS_LOCK, !AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.OUROBOROUS_LOCK));
+				string act = AdvancedGameStatsManager.Instance.GetFlag(CustomDungeonFlags.OUROBOROUS_LOCK) ? "ACTIVE" : "INACTIVE";
+                ETGModConsole.Log($"Ouroborous Lock is currently {act}", false);
+            });
+            global::ETGModConsole.Commands.GetGroup("psog").AddUnit("lock_all", delegate (string[] args)
 			{
 				ETGModConsole.Log("<size=100><color=#ff0000ff>Refitting the locks... don't hit them that hard next time, okay?</color></size>", false);
 				AdvancedGameStatsManager.Instance.SetFlag(CustomDungeonFlags.JAMMED_GUARD_DEFEATED, false);
